@@ -3,5 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" exported="true" path="../LibGDX/gdx.jar" sourcepath="../LibGDX/gdx-sources.jar"/>
+	<classpathentry kind="lib" exported="true" path="libs/gdx.jar" sourcepath="libs/gdx-sources.jar"/>
 </classpath>
