@@ -1,7 +1,10 @@
 package cz.mff.cuni.autickax.entities;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.MyGdxGame;
 
@@ -15,15 +18,20 @@ abstract public class GameObject {
 	private boolean toDispose;
 	protected TextureRegion texture;
 	protected MyGdxGame game;
-	
+
 	public GameObject(float startX, float startY) {
 		this.x = startX;
 		this.y = startY;
 		this.game = MyGdxGame.getInstance();
 	}
-	
-	public float getX() { return x;}
-	public float getY() { return y;}
+
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
 
 	public boolean isToDispose() {
 		return toDispose;
@@ -32,17 +40,24 @@ abstract public class GameObject {
 	public void setToDispose(boolean toDispose) {
 		this.toDispose = toDispose;
 	}
-	
-	public void move(float newX, float newY)
-	{
+
+	public void move(float newX, float newY) {
 		this.x = newX;
 		this.y = newY;
 	}
-	
+
 	abstract public void update(float delta);
-	
-	public void draw(SpriteBatch batch, float delta)
-	{
+
+	public void draw(SpriteBatch batch, float delta) {
 		batch.draw(this.texture, this.getX(), this.getY());
+	}
+	
+	
+	// TODO:
+	public void toXml(XmlWriter writer) throws IOException{
+		writer.element("object");
+			writer.attribute("X", x);
+			writer.attribute("Y", y);
+		writer.pop();
 	}
 }

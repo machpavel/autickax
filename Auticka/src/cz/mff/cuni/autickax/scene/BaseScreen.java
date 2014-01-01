@@ -16,23 +16,24 @@ public class BaseScreen implements Screen {
 
 	public BaseScreen() {
 		game = MyGdxGame.getInstance();
-		stageWidth = 800; //for pixel perfect: Gdx.graphics.getWidth();
-		stageHeight = 480; //Gdx.graphics.getHeight();
+		stageWidth = Gdx.graphics.getWidth();
+		stageHeight = Gdx.graphics.getHeight();
 
-		stage = new Stage(stageWidth,stageHeight,false);  //https://github.com/libgdx/libgdx/wiki/Scene2d
+		stage = new Stage(stageWidth, stageHeight, false); // https://github.com/libgdx/libgdx/wiki/Scene2d
 		Gdx.input.setInputProcessor(stage);
 	}
-	
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		stage.act(delta);   //don't forget to advance the stage ( input + actions )
-		stage.draw();       //and also display it :)
+		stage.act(delta); // don't forget to advance the stage ( input + actions
+							// )
+		stage.draw(); // and also display it :)
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		//stage.setViewport(width, height, true);
+		// stage.setViewport(width, height, true);
 	}
 
 	@Override
