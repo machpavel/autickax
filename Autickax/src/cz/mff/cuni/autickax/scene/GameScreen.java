@@ -11,46 +11,57 @@ import com.badlogic.gdx.math.Vector3;
 import cz.mff.cuni.autickax.Assets;
 import cz.mff.cuni.autickax.MyGdxGame;
 import cz.mff.cuni.autickax.entities.Car;
+import cz.mff.cuni.autickax.entities.GameObject;
+import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.gamelogic.SubLevel1;
+import cz.mff.cuni.autickax.gamelogic.SubLevel2;
 /**
  * This is the screen where the game happens
  * @author Ondrej Paska
  */
 
-public class Level1 extends BaseScreen {
+public class GameScreen extends BaseScreen {
 	// Textures
-	private TextureRegion skyTexture;
+	private TextureRegion backgroundTexture;
 
 	// Rendering
 	protected OrthographicCamera camera;
 	protected SpriteBatch batch;
+	
+	// Levels
+	private SubLevel currentPhase;
 
 	// Entities
-	private Car car;
-
-	// Score
-	private int score = 0;
-	// Time
-	private float timeElapsed = 0;
+	private GameObject[] gameObjects;
 	
 	// Cached font
 	private BitmapFont font;
+	public BitmapFont getFont() {
+		// TODO: consider loading font elsewhere, once for the whole game
+		return font;
+	}
 	
-	public Level1() {
+	public GameScreen() {
 		super();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
 
 		batch = new SpriteBatch();
-
+		
+		this.currentPhase = new SubLevel1(this);
 
 		Assets assets = MyGdxGame.getInstance().assets;
-		this.skyTexture = assets.getGraphics("sky");
+		this.backgroundTexture = assets.getGraphics("sky");
 		
-		// Init entities
-		this.car = new Car(stageWidth * 0.25f, 70, this);
+		// dummy code ------------------------>
 		
-		font = game.assets.getFont();
+		this.gameObjects = new GameObject[1];
+		this.gameObjects[0] = new Car(stageWidth * 0.25f, 70, this);
+		
+		// <------------------------ dummy code
+		
+		this.font = game.assets.getFont();
 		
 		// Start Music!
 		game.assets.music.setLooping(true);
@@ -58,15 +69,25 @@ public class Level1 extends BaseScreen {
 		game.assets.music.play();
 	}
 	
+	public void switchToPhase2() {
+		this.currentPhase = new SubLevel2(this);
+	}
+	
+	public void reset() {
+		// TODO: reseting of all game objects
+	}
+	
 	public void unproject(Vector3 vector) {
 		this.camera.unproject(vector);
 	}
 
-	private void update(float delta) {
+	private void update(float delta) {		
+		// TODO: Consider moving this into sublevels
+		for (int i = 0; i < this.gameObjects.length; ++i) {
+			this.gameObjects[i].update(delta);
+		}
 		
-		timeElapsed += delta;
-		
-		this.car.update(delta);
+		this.currentPhase.update(delta);
 	}
 
 	@Override
@@ -83,17 +104,15 @@ public class Level1 extends BaseScreen {
 		
 		batch.disableBlending(); //performance boost
 		
-		//SKY
-		batch.draw(skyTexture, 0, 0, stageWidth, stageHeight);
+		// background
+		batch.draw(backgroundTexture, 0, 0, stageWidth, stageHeight);
 
 		batch.enableBlending(); //don't forget to enabled this for alpha channel
 
-		this.car.draw(batch, delta);
-		
-		// Draw score
-		font.draw(batch, "score: "+score, 10, (int)stageHeight-32);
-		// Draw time
-		font.draw(batch, "time: "+ ( (int) timeElapsed ), (int) stageWidth/2, (int)stageHeight-32);
+		// TODO: Consider moving this into sublevels
+		for (int i = 0; i < this.gameObjects.length; ++i) {
+			this.gameObjects[i].draw(this.batch, delta);
+		}
 		
 		batch.end();
 	}

@@ -20,7 +20,7 @@ public class Assets {
 	
 	private static final String GRAPHICS_DIR = "images";
 	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images";
-	private static final String FONT_FILE = "font/font.fnt";
+	private static final String FONT_FILE = "fonts/font.fnt";
 	
 	public AssetManager assetManager;
 	
@@ -70,6 +70,8 @@ public class Assets {
 	}
 
 	private void loadGraphics() {
+		// TODO: Break into loading of common controls and level-specific.
+		// TODO: Handle multiple resolution loading.
 		//Figure out which graphics set to load, see http://wiki.starling-framework.org/manual/multi-resolution_development
 		//int screenWidth = Gdx.app.getGraphics().getWidth();
 		/*if( screenWidth >= 1280 ) {

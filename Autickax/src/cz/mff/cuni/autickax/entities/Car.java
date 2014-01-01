@@ -3,16 +3,16 @@ package cz.mff.cuni.autickax.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
-import cz.mff.cuni.autickax.scene.Level1;
+import cz.mff.cuni.autickax.scene.GameScreen;
 
 
 public class Car extends GameObject {
 
 	private boolean isDragged = false;
 	
-	private Level1 level;
+	private GameScreen level;
 	
-	public Car( float x, float y, Level1 level) {
+	public Car( float x, float y, GameScreen level) {
 		super(x, y);
 		super.texture = super.game.assets.getGraphics("car");
 		this.level = level;
