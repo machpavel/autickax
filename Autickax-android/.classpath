@@ -6,7 +6,7 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Auticka"/>
-	<classpathentry exported="true" kind="lib" path="/Auticka/libs/gdx.jar" sourcepath="/Auticka/libs/gdx-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Autickax/libs/gdx.jar" sourcepath="/Autickax/libs/gdx-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-android.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
