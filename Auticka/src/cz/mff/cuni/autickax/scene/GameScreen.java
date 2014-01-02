@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.GameObject;
-import cz.mff.cuni.cz.autickax.pathway.Pathway;
+import cz.mff.cuni.autickax.pathway.Pathway;
 
 /**
  * This is the screen where the game happens

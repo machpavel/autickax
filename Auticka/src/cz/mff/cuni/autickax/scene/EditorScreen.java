@@ -17,8 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.entities.GameObject;
-import cz.mff.cuni.cz.autickax.pathway.DistanceMap;
-import cz.mff.cuni.cz.autickax.pathway.Pathway;
+import cz.mff.cuni.autickax.pathway.DistanceMap;
+import cz.mff.cuni.autickax.pathway.Pathway;
 
 public class EditorScreen extends GameScreen {
 

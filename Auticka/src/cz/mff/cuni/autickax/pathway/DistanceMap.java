@@ -1,4 +1,4 @@
-package cz.mff.cuni.cz.autickax.pathway;
+package cz.mff.cuni.autickax.pathway;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
