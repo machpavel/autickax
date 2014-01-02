@@ -112,6 +112,6 @@ public class Assets {
 	}
 
 	public GameScreen loadLevel(String name){
-		return new GameScreen(Gdx.files.internal("levels/"+ name + "xml"));
+		return new GameScreen(Gdx.files.internal("levels/"+ name + ".xml"));
 	}
 }

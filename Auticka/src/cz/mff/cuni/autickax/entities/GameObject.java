@@ -47,15 +47,21 @@ abstract public class GameObject {
 	}
 
 	abstract public void update(float delta);
+	abstract public String getName();
 
 	public void draw(SpriteBatch batch, float delta) {
 		batch.draw(this.texture, this.getX(), this.getY());
 	}
 	
 	
+	
+	
+	public String toString(){
+		return getName() + " " + x + " " + y;
+	}
 	// TODO:
 	public void toXml(XmlWriter writer) throws IOException{
-		writer.element("object");
+		writer.element(this.getName());
 			writer.attribute("X", x);
 			writer.attribute("Y", y);
 		writer.pop();

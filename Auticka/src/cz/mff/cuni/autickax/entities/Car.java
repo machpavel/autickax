@@ -26,6 +26,11 @@ public class Car extends GameObject {
 	}
 
 	@Override
+	public String getName() {		
+		return "car";
+	}
+	
+	@Override
 	public void update(float delta) {
 		if (Gdx.input.justTouched()) {
 			Vector3 touchPos = new Vector3();
