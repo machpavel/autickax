@@ -54,7 +54,7 @@ public class GameScreen extends BaseScreen {
 		super();
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
+		camera.setToOrtho(false, stageWidth, stageHeight);
 
 		//graphics
 		batch = new SpriteBatch();
@@ -82,7 +82,7 @@ public class GameScreen extends BaseScreen {
 		super();
 		try {
 			camera = new OrthographicCamera();
-			camera.setToOrtho(false, 800, 480);
+			camera.setToOrtho(false, stageWidth, stageHeight);
 
 			//graphics
 			batch = new SpriteBatch();
@@ -112,9 +112,9 @@ public class GameScreen extends BaseScreen {
 			Element controlPoints = pathwayElement.getChildByName("controlPoints");						
 			for(int i = 0; i < controlPoints.getChildCount(); i++){
 				Element controlPoint = controlPoints.getChild(i);
-				pathway.controlPoints.add(new Vector2(controlPoint.getFloat("X"), controlPoint.getFloat("Y")));
+				pathway.getControlPoints().add(new Vector2(controlPoint.getFloat("X"), controlPoint.getFloat("Y")));
 			}			
-			for (Vector2 point : pathway.controlPoints) {
+			for (Vector2 point : pathway.getControlPoints()) {
 				System.out.println("point " + point);
 			}
 			
