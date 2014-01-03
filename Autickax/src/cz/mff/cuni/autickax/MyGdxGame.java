@@ -9,18 +9,18 @@ public class MyGdxGame extends Game {
 	private static MyGdxGame _instance;
 
 	public Assets assets;
-	
-	public MyGdxGame () {
+
+	public MyGdxGame() {
 		_instance = this;
 		assets = new Assets();
 	}
-	
+
 	@Override
-	public void create() {		
-		setScreen( new LoadingScreen() );
+	public void create() {
+		setScreen(new LoadingScreen());
 	}
-	
+
 	public static MyGdxGame getInstance() {
-		return _instance; //will get created when app starts
+		return _instance; // will get created when app starts
 	}
 }

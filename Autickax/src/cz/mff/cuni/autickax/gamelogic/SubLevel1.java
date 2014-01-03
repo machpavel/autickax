@@ -18,6 +18,7 @@ public class SubLevel1 extends SubLevel {
 	@Override
 	public void update(float delta) {
 		timeElapsed += delta;
+		this.Level.getCar().update(delta);
 	}
 
 	@Override
@@ -25,6 +26,8 @@ public class SubLevel1 extends SubLevel {
 		BitmapFont font = this.Level.getFont();
 		float stageHeight = this.Level.getStageHeight();
 		float stageWidth = this.Level.getStageWidth();
+		
+		this.Level.getCar().draw(batch);
 		
 		// Draw score
 		font.draw(batch, "score: " + score, 10, (int)stageHeight-32);

@@ -11,61 +11,68 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import cz.mff.cuni.autickax.scene.GameScreen;
+
 /**
- * This class takes care of all asset loading and parsing
- * Call load to load graphics, sounds, fonts etc
+ * This class takes care of all asset loading and parsing Call load to load
+ * graphics, sounds, fonts etc
+ * 
  * @author Ondrej Paska
  */
 public class Assets {
-	
+
 	private static final String GRAPHICS_DIR = "images";
 	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images";
 	private static final String FONT_FILE = "fonts/font.fnt";
-	
 	public AssetManager assetManager;
-	
+
 	private Map<String, TextureRegion> graphicsCacheMap;
-	
+
 	private TextureAtlas atlas;
-	
+
 	private Map<String, Sound> soundsMap;
 	
 	public Music music;
-	
-	public Assets () {
+
+	public Assets() {
 		assetManager = new AssetManager();
 		graphicsCacheMap = new HashMap<String, TextureRegion>();
 	}
-	
+
 	public boolean update() {
 		return assetManager.update();
 	}
-	
-	//return progress from 0 to 1
+
+	// return progress from 0 to 1
 	public float getProgress() {
 		return assetManager.getProgress();
 	}
-	
-	public void load () {
+
+	public void load() {
 		loadGraphics();
 		loadFont();
 		loadSounds();
+		//loadLevels(); it has to be loaded manually after loading whole assets because levels uses these assets 
 	}
 
-	public TextureRegion getGraphics( String name ){
-		if( graphicsCacheMap.containsKey(name) ){ //We have called this already, so we can reuse the cached result from last time
+	public TextureRegion getGraphics(String name) {
+		if (graphicsCacheMap.containsKey(name)) { // We have called this
+													// already, so we can reuse
+													// the cached result from
+													// last time
 			return graphicsCacheMap.get(name);
 		}
-		if( atlas == null ) {
+		if (atlas == null) {
 			atlas = assetManager.get(GRAPHICS_FILE, TextureAtlas.class);
 		}
 		TextureRegion tr = atlas.findRegion(name);
-		
-		if(tr == null){
-			throw new RuntimeException("Graphic "+name+" not found it atlas");
+
+		if (tr == null) {
+			throw new RuntimeException("Graphic " + name
+					+ " not found it atlas");
 		}
-		
-		graphicsCacheMap.put(name, tr); //cache the result
+
+		graphicsCacheMap.put(name, tr); // cache the result
 		return tr;
 	}
 
@@ -83,27 +90,30 @@ public class Assets {
 		}*/
 		assetManager.load(GRAPHICS_FILE , TextureAtlas.class);
 	}
-	
+
 	private void loadSounds() {
 		soundsMap = new HashMap<String, Sound>();
-		soundsMap.put("jump",  Gdx.audio.newSound(Gdx.files.internal("sfx/jump.wav")) );
-		soundsMap.put("hit",  Gdx.audio.newSound(Gdx.files.internal("sfx/hit.wav")) );
+		soundsMap.put("jump", Gdx.audio.newSound(Gdx.files.internal("sfx/jump.wav")));
+		soundsMap.put("hit", Gdx.audio.newSound(Gdx.files.internal("sfx/hit.wav")));
 		music = Gdx.audio.newMusic(Gdx.files.internal("sfx/music.mp3"));
 	}
 
 	public Sound getSound(String name) {
-		if( soundsMap.containsKey(name) ){ //Reuse cached result
+		if (soundsMap.containsKey(name)) { // Reuse cached result
 			return soundsMap.get(name);
 		}
-		throw new RuntimeException("Sound " +name+" not loaded");
+		throw new RuntimeException("Sound " + name + " not loaded");
 	}
-	
+
 	private void loadFont() {
-		 assetManager.load(FONT_FILE, BitmapFont.class);
+		assetManager.load(FONT_FILE, BitmapFont.class);
 	}
-	
+
 	public BitmapFont getFont() {
 		return assetManager.get(FONT_FILE, BitmapFont.class);
 	}
 
+	public GameScreen loadLevel(String name){
+		return new GameScreen(Gdx.files.internal("levels/"+ name + ".xml"));
+	}
 }
