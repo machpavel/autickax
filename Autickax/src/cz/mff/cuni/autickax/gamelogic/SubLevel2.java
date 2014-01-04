@@ -1,13 +1,21 @@
 package cz.mff.cuni.autickax.gamelogic;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class SubLevel2 extends SubLevel {
 
-	public SubLevel2(GameScreen gameScreen) {
+	private CheckPoint[] checkpoints;
+	private double pathFollowingAccuracy = 0;
+	private double pathFollowingTime = 0;
+
+	public SubLevel2(GameScreen gameScreen, CheckPoint[] checkpoints, double pathFollowingAccuracy, double pathFollowingTime) {
 		super(gameScreen);
-		// TODO Auto-generated constructor stub
+
+		this.checkpoints = checkpoints;
+		this.pathFollowingAccuracy = pathFollowingAccuracy;
+		this.pathFollowingTime = pathFollowingTime;
 	}
 
 	@Override

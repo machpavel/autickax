@@ -20,6 +20,7 @@ import cz.mff.cuni.autickax.Assets;
 import cz.mff.cuni.autickax.MyGdxGame;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.GameObject;
+import cz.mff.cuni.autickax.gamelogic.CheckPoint;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.gamelogic.SubLevel1;
 import cz.mff.cuni.autickax.gamelogic.SubLevel2;
@@ -164,8 +165,8 @@ public class GameScreen extends BaseScreen {
 		
 	}
 	
-	public void switchToPhase2() {
-		this.currentPhase = new SubLevel2(this);
+	public void switchToPhase2(CheckPoint[] checkpoints, double pathFollowingAccuracy, double pathFollowingTime) {
+		this.currentPhase = new SubLevel2(this, checkpoints, pathFollowingAccuracy, pathFollowingTime);
 	}
 	
 	public void reset() {
