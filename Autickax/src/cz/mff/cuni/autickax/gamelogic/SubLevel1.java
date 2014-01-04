@@ -2,6 +2,11 @@ package cz.mff.cuni.autickax.gamelogic;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+
+import cz.mff.cuni.autickax.pathway.DistanceMap;
+import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class SubLevel1 extends SubLevel {
@@ -11,8 +16,11 @@ public class SubLevel1 extends SubLevel {
 	// Time
 	private float timeElapsed = 0;
 	
+
+	
 	public SubLevel1(GameScreen gameScreen) {
 		super(gameScreen);
+		
 	}
 
 	@Override
@@ -28,7 +36,7 @@ public class SubLevel1 extends SubLevel {
 		float stageWidth = this.Level.getStageWidth();
 		
 		this.Level.getCar().draw(batch);
-		
+	
 		// Draw score
 		font.draw(batch, "score: " + score, 10, (int)stageHeight-32);
 		// Draw time

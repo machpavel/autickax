@@ -91,6 +91,11 @@ public class GameScreen extends BaseScreen {
 		game.assets.music.play();
 	}
 	
+	public Pathway getPathWay()
+	{
+		return pathway;
+	}
+	
 	// Creates instance according to a given xml file
 	public GameScreen(FileHandle file) {
 		super();

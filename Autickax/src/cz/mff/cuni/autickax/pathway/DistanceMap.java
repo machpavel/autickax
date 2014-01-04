@@ -46,6 +46,18 @@ public class DistanceMap {
 				}
 			}
 	}
+	
+	public int getWidth()
+	{
+		return width;
+	}
+	
+	public int getHeight()
+	{
+		return height;
+	}
+	
+	
 
 	// Creates the main distances structure for given control points.  
 	public void CreateDistances(ArrayList<Vector2> controlPoints){
@@ -115,6 +127,8 @@ public class DistanceMap {
 	public static void setTypeOfInterpolation(Splines.TypeOfInterpolation typeOfInterpolation) {
 		DistanceMap.typeOfInterpolation = typeOfInterpolation;
 	}
+	
+	
 
 	class Vector2i{
 		public int x,y;
