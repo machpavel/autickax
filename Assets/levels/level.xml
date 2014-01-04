@@ -1,0 +1,63 @@
+<AutickaX>
+        <pathway>
+                <controlPoints>
+                        <point X="80.0" Y="191.0"/>
+                        <point X="114.0" Y="314.0"/>
+                        <point X="552.0" Y="356.0"/>
+                        <point X="709.0" Y="224.0"/>
+                </controlPoints>
+        </pathway>
+        <entities>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+                <object X="12.0" Y="13.0"/>
+        </entities>
+        <car X="200.0" Y="70.0"/>
+</AutickaX>
