@@ -17,4 +17,5 @@ public abstract class SubLevel {
 	public abstract void update(float delta);
 	
 	public abstract void draw(SpriteBatch batch);
+	public abstract void render();
 }

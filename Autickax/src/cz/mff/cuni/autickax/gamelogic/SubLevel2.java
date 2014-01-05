@@ -32,4 +32,10 @@ public class SubLevel2 extends SubLevel {
 		
 	}
 
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

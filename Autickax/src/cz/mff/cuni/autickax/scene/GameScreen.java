@@ -224,6 +224,8 @@ public class GameScreen extends BaseScreen {
 		// When Michal repairs it, uncomment
 		
 		batch.end();
+		
+		this.currentPhase.render();
 	}
 
 }

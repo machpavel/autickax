@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 
 
+import LinePackage.MyLine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -91,6 +92,13 @@ public class SubLevel1 extends SubLevel {
 	private LinkedList<Vector2> wayPoints;
 	
 	/**
+	 * Player must cross these
+	 */
+	private LinkedList<MyLine> wayLines;
+	private int currentLine = 0;
+
+	
+	/**
 	 * Record of movement through the track; 
 	 */
 	private LinkedList<CheckPoint> checkPoints;
@@ -109,23 +117,28 @@ public class SubLevel1 extends SubLevel {
 	 */
 	private String status = "";
 	
+	private Vector2 lastPoint;
+	
+	
 	public SubLevel1(GameScreen gameScreen) {
 		super(gameScreen);
 		gameScr = gameScreen;
 		pathway = gameScreen.getPathWay();
 		maxDistance = 40;
 		map = this.Level.getPathWay().getDistanceMap();
-		start = 0.3f;
-		finish = 0.8f;
+		start = 0.1f;
+		finish = 0.75f;
 		startPoint = pathway.GetPosition(start);
 		finishPoint = pathway.GetPosition(finish);
-		nofWayPoints = 20;
+		nofWayPoints = 40;
 
 		initWayPoints(finish, start, nofWayPoints);
-
+		wayLines = createWayPointLines(finish, start, nofWayPoints);
 		
 		checkPoints = new LinkedList<CheckPoint>();
 		this.Level.getCar().move(startPoint.x, startPoint.y);
+		lastPoint = new Vector2(startPoint);
+		
 	}
 
 	@Override
@@ -160,7 +173,12 @@ public class SubLevel1 extends SubLevel {
 				return;
 			}
 			
+			
 			this.Level.getCar().update(delta);
+			if(Gdx.input.getDeltaX() == 0 && Gdx.input.getDeltaY() == 0)
+				return;
+			
+			
 			int x = (int)this.Level.getCar().getX();
 			int y = (int)this.Level.getCar().getY();
 			//coordinates ok
@@ -175,11 +193,15 @@ public class SubLevel1 extends SubLevel {
 				{
 					checkPoints.add(new CheckPoint(timeElapsed, x, y));
 					score += 1/(map.At(x, y)+0.3);
-					if (checkWayPoints(x, y))
+				
+					//if (checkWayPoints(x, y))
+					if(checkForIntersections(lastPoint, x, y))
 					{
 						state = FINISH_STATE;
 						timeMeasured = false;
 					}
+					lastPoint.x = x;
+					lastPoint.y = y;
 				
 			}
 }
@@ -190,8 +212,10 @@ public class SubLevel1 extends SubLevel {
 			//switch whenever ready
 			if(Gdx.input.justTouched()) 
 			{
-
-				gameScr.switchToPhase2(checkPoints, score, timeElapsed);
+				state =BEGINNING_STATE;
+				reset();
+				currentLine = 0;
+				//gameScr.switchToPhase2(checkPoints, score, timeElapsed);
 			}
 		}
 		
@@ -199,6 +223,7 @@ public class SubLevel1 extends SubLevel {
 
 	}
 
+	
 	@Override
 	public void draw(SpriteBatch batch) {
 		BitmapFont font = this.Level.getFont();
@@ -208,8 +233,9 @@ public class SubLevel1 extends SubLevel {
 		this.Level.getCar().draw(batch);
 		
 		//render the track
-		shapeRenderer.begin(ShapeType.Point);
-		shapeRenderer.setColor(new Color(Color.BLACK));
+		//TODO render quick
+		/*shapeRenderer.begin(ShapeType.Point);
+		shapeRenderer.setColor(new Color(Color.WHITE));
 		for (int x = 0; x < (int) stageWidth; x++) {
 			for (int y = 0; y < (int) stageHeight; y++) {
 				if (map.At(x, y) < maxDistance)
@@ -217,27 +243,9 @@ public class SubLevel1 extends SubLevel {
 
 			}
 		}
-		shapeRenderer.end();
+		shapeRenderer.end();*/
 		
-		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(Color.BLUE);
-		shapeRenderer.circle(startPoint.x, startPoint.y, maxDistance);
-		shapeRenderer.setColor(Color.YELLOW);
-		shapeRenderer.circle(finishPoint.x, finishPoint.y, maxDistance);
 		
-		shapeRenderer.setColor(new Color(Color.DARK_GRAY));
-		for (Vector2 vec: wayPoints)
-		{
-			shapeRenderer.circle(vec.x, vec.y, 10);
-		}
-		
-		shapeRenderer.setColor(Color.RED);
-		for(CheckPoint ce: checkPoints)
-		{
-			shapeRenderer.circle((float)ce.x, (float)ce.y,2);
-		}
-		
-		shapeRenderer.end();
 		// Draw score
 		font.draw(batch, "score: " + score, 10, (int)stageHeight-32);
 		// Draw time
@@ -246,6 +254,8 @@ public class SubLevel1 extends SubLevel {
 		//status = "Phase: " + getStateString() + " dragged: " + this.Level.getCar().isDragged();
 		status = updateStatus();
 		font.draw(batch, status, 10, 64);
+		
+		
 	}
 	/**
 	 * Sets this game phase to its beginning
@@ -261,7 +271,7 @@ public class SubLevel1 extends SubLevel {
 			this.Level.getCar().setDragged(false);
 			this.score = 1;
 			checkPoints.clear();
-			
+			currentLine = 0;
 			timeMeasured = false;
 			initWayPoints(finish, start, nofWayPoints);
 			
@@ -292,7 +302,7 @@ public class SubLevel1 extends SubLevel {
 			break;
 			case DRIVING_STATE: status =  "Driving";
 			break;
-			case FINISH_STATE: status = "Finished - well done!";
+			case FINISH_STATE: status = "Finished - well done! " + checkPoints.size();
 			break;
 			case MISTAKE_STATE: status = "Mistake";
 			break;
@@ -303,9 +313,10 @@ public class SubLevel1 extends SubLevel {
 	}
 	
 	/**
-	 * 
-	 * @param x
-	 * @param y
+	 * Checks distance to next waypoint. Removes it if small enough.
+	 * Also checks if finish was reached
+	 * @param x xcoordinate of the car
+	 * @param y ycoordinate of the car
 	 * @return true if all checkpoints were reached
 	 */
 	private boolean checkWayPoints(int x, int y)
@@ -337,11 +348,101 @@ public class SubLevel1 extends SubLevel {
 			lastAdded = pathway.GetPosition(f);
 			wayPoints.add(lastAdded);
 		}
-		if (lastAdded != finishPoint)
-			wayPoints.add(finishPoint);
+		/*if (lastAdded != finishPoint)
+			wayPoints.add(finishPoint);*/
+	}
+
+	@Override
+	public void render() {
+		shapeRenderer.begin(ShapeType.Filled);
+		shapeRenderer.setColor(Color.BLUE);
+		shapeRenderer.circle(startPoint.x, startPoint.y, maxDistance);
+		shapeRenderer.setColor(Color.YELLOW);
+		shapeRenderer.circle(finishPoint.x, finishPoint.y, maxDistance);
+		
+		shapeRenderer.setColor(new Color(Color.DARK_GRAY));
+		for (Vector2 vec: wayPoints)
+		{
+			shapeRenderer.circle(vec.x, vec.y, 10);
+
+		}
+		
+		shapeRenderer.setColor(Color.RED);
+		for(CheckPoint ce: checkPoints)
+		{
+			shapeRenderer.circle((float)ce.x, (float)ce.y,2);
+		}
+		
+		shapeRenderer.end();
+		
+
+		shapeRenderer.begin(ShapeType.Line);
+		for(int i = currentLine; i < wayLines.size(); i++)
+		{
+			MyLine line = wayLines.get(i);
+			Vector2 vec1 = line.getSeg1();
+			Vector2 vec2 = line.getSeg2();
+			shapeRenderer.line(vec1, vec2);
+		}
+		shapeRenderer.end();
+
 	}
 	
+	/**
+	 * Computes lines perpendicular to points through the race. Intersection will be computed
+	 * in order to determine if a line was crossed
+	 * @param finish finishing point
+	 * @param start starting point
+	 * @param nofWayPoints number of thresholds to be crossed
+	 * @return lines across the race serving as waypoints
+	 */
+	private LinkedList<MyLine> createWayPointLines(float finish,float start,int nofWayPoints)
+	{
+		LinkedList<MyLine> lines = new LinkedList<MyLine>();
+	
+		float step = (finish-start)/nofWayPoints; 
+		Vector2 prev = pathway.GetPosition(start);
+		
+		
 
+
+		
+		for(float f = start + step; f < finish; f += step)
+		{
+			Vector2 vec = pathway.GetPosition(f);
+			Vector2 perp = new Vector2(vec).sub(prev).rotate(-90);
+			perp.nor().scl(maxDistance);
+			Vector2 perp2 = new Vector2(perp).rotate(180);
+
+			lines.add(new MyLine(perp.add(vec),perp2.add(vec)));
+			prev = vec;
+		}
+
+		
+		return lines;
+	}
+	
+	private boolean checkForIntersections(Vector2 lastPosition, float currentX, float currentY)
+	{
+		boolean test = true;
+		
+		MyLine carMove = new MyLine(lastPosition, new Vector2(currentX,currentY));
+		while(test && currentLine != wayLines.size())
+		{
+			MyLine wayLine = wayLines.get(currentLine);
+			if (carMove.intersectsLine(wayLine))
+			{
+				currentLine++;
+			}
+			else
+				test = false;
+		}
+		return currentLine == wayLines.size();
+	}
+	
+	
+	
+	
 	
 
 }
