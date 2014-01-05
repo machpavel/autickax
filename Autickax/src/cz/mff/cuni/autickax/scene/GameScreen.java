@@ -92,6 +92,10 @@ public class GameScreen extends BaseScreen {
 		game.assets.music.play();
 	}
 	
+	public Pathway getPathWay()
+	{
+		return pathway;
+	}
 	
 	// Creates instance according to a given xml file
 	public GameScreen(FileHandle file) {
@@ -104,7 +108,7 @@ public class GameScreen extends BaseScreen {
 			batch = new SpriteBatch();
 			shapeRenderer = new ShapeRenderer();
 			
-			this.currentPhase = new SubLevel1(this);
+
 			
 			this.backgroundTexture = game.assets.getGraphics("sky");
 
@@ -116,11 +120,11 @@ public class GameScreen extends BaseScreen {
 			
 			// Pathway
 			this.pathway = new Pathway();
-
+			
 			// Start Music!
 			game.assets.music.setLooping(true);
 			game.assets.music.setVolume(0.3f);
-			game.assets.music.play();				
+			//game.assets.music.play();				
 			
 			System.out.println("Loading level...");
 			Element root = new XmlReader().parse(file);			
@@ -135,6 +139,8 @@ public class GameScreen extends BaseScreen {
 			for (Vector2 point : pathway.getControlPoints()) {
 				System.out.println("point " + point);
 			}
+			pathway.CreateDistances();
+			
 			
 			/*// Loading game objects
 			Element entities = root.getChildByName("entities");
@@ -157,6 +163,7 @@ public class GameScreen extends BaseScreen {
 			Element car = root.getChildByName("car");
 			this.car = new Car(car.getFloat("X"), car.getFloat("Y"), this);
 			System.out.println(car.toString());
+			this.currentPhase = new SubLevel1(this);
 						
 			System.out.println("Loading done...");
 		} catch (IOException e) {

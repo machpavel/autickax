@@ -2,7 +2,6 @@ package cz.mff.cuni.autickax.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
-
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class Car extends GameObject {
@@ -29,15 +28,19 @@ public class Car extends GameObject {
 		return "car";
 	}
 	
+	
+	
 	@Override
 	public void update(float delta) {
-		if (Gdx.input.justTouched()) {
+		/*if (Gdx.input.justTouched()) {
 			Vector3 touchPos = new Vector3();
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			this.level.unproject(touchPos);
 
 			this.setDragged(true);
-		}
+		}*/
+		
+		
 
 		if (this.isDragged()) {
 			if (Gdx.input.isTouched()) {
@@ -47,6 +50,9 @@ public class Car extends GameObject {
 				this.move(touchPos.x, touchPos.y);
 			}
 		}
+		
+		if (!Gdx.input.isTouched())
+			setDragged(false);
 	}
 
 }
