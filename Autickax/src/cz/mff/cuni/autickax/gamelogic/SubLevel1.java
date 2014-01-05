@@ -187,15 +187,11 @@ public class SubLevel1 extends SubLevel {
 		//Finish state
 		else
 		{
-			//stop time etc
+			//switch whenever ready
 			if(Gdx.input.justTouched()) 
 			{
-				CheckPoint [] arrayCheckPoint = new CheckPoint[checkPoints.size()];
-				for(int i = 0; i < checkPoints.size(); i++)
-				{
-					arrayCheckPoint[i] = checkPoints.get(i);
-				}
-				gameScr.switchToPhase2(arrayCheckPoint, score, timeElapsed);
+
+				gameScr.switchToPhase2(checkPoints, score, timeElapsed);
 			}
 		}
 		

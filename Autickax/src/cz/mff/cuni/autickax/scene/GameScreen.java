@@ -2,6 +2,7 @@ package cz.mff.cuni.autickax.scene;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -173,7 +174,7 @@ public class GameScreen extends BaseScreen {
 		
 	}
 	
-	public void switchToPhase2(CheckPoint[] checkpoints, double pathFollowingAccuracy, double pathFollowingTime) {
+	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, double pathFollowingAccuracy, double pathFollowingTime) {
 		this.currentPhase = new SubLevel2(this, checkpoints, pathFollowingAccuracy, pathFollowingTime);
 	}
 	
