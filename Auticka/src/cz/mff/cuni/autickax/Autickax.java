@@ -5,15 +5,17 @@ import com.badlogic.gdx.Game;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.LoadingScreen;
 
-public class MyGdxGame extends Game {
-	
-	private static MyGdxGame _instance;
+public class Autickax extends Game {
+
+	private static Autickax _instance;
+	public GameConfiguration cfg;
 
 	public Assets assets;
 
-	public MyGdxGame() {
+	public Autickax(GameConfiguration cfg) {
 		_instance = this;
 		assets = new Assets();
+		this.cfg = cfg;
 	}
 
 	@Override
@@ -22,7 +24,7 @@ public class MyGdxGame extends Game {
 		Input.InitDimensions();
 	}
 
-	public static MyGdxGame getInstance() {
+	public static Autickax getInstance() {
 		return _instance; // will get created when app starts
 	}
 }
