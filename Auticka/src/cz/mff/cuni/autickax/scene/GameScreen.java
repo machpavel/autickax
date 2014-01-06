@@ -18,9 +18,12 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.Assets;
-import cz.mff.cuni.autickax.MyGdxGame;
+import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.GameObject;
+import cz.mff.cuni.autickax.entities.Mud;
+import cz.mff.cuni.autickax.entities.Stone;
+import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.gamelogic.CheckPoint;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.gamelogic.SubLevel1;
@@ -44,7 +47,7 @@ public class GameScreen extends BaseScreen {
 	private SubLevel currentPhase;
 
 	// Entities
-	protected ArrayList<GameObject> gameObjects;
+	private ArrayList<GameObject> gameObjects;
 	protected Car car;
 	public Car getCar()
 	{
@@ -72,20 +75,21 @@ public class GameScreen extends BaseScreen {
 		
 		this.currentPhase = new SubLevel1(this);
 
-		Assets assets = MyGdxGame.getInstance().assets;
+		Assets assets = Autickax.getInstance().assets;
 		this.backgroundTexture = assets.getGraphics("sky");
 		
-		// dummy code ------------------------>
-		
+		// dummy code ------------------------>		
 		this.gameObjects = new ArrayList<GameObject>();
-		this.gameObjects.add(new Car(stageWidth * 0.25f, 70, this));
-		
+				
 		// <------------------------ dummy code
 		
 		this.font = game.assets.getFont();
 		
 		// Pathway
 		pathway = new Pathway();
+		
+		// Car
+		car = new Car(0, 0, this, "car");
 		
 		// Start Music!
 		game.assets.music.setLooping(true);
@@ -109,12 +113,10 @@ public class GameScreen extends BaseScreen {
 			batch = new SpriteBatch();
 			shapeRenderer = new ShapeRenderer();
 			
-
-			
+			// Background
 			this.backgroundTexture = game.assets.getGraphics("sky");
 
 			// Init entities
-			//this.car = new Car(stageWidth * 0.25f, 70, this);
 			this.gameObjects = new ArrayList<GameObject>();
 
 			font = game.assets.getFont();
@@ -143,30 +145,34 @@ public class GameScreen extends BaseScreen {
 			pathway.CreateDistances();
 			
 			
-			/*// Loading game objects
+			// Loading game objects
 			Element entities = root.getChildByName("entities");
 			for(int i = 0; i < entities.getChildCount() ; i++){
 				Element gameObject = entities.getChild(i);
-				gameObjects.add(new GameObject(gameObject.getFloat("X"),gameObject.getFloat("Y")){
-					@Override
-					public void update(float delta) {}					
-					@Override
-					public String getName() {						
-						return "blabla";
-					}
-				});
+				String name = gameObject.getName(); 
+				if(name == "mud"){
+					gameObjects.add(new Mud(gameObject, this));
+				}
+				else if (name == "stone"){
+					gameObjects.add(new Stone(gameObject, this));
+				}
+				else if (name == "tree"){
+					gameObjects.add(new Tree(gameObject, this));
+				}
+				else throw new IOException("Loading object failed: Unknown type");
 			}
 			for (GameObject gameObject : gameObjects) {
 				System.out.println(gameObject.toString());
-			}*/
+			}
 			
 			// Loading car
 			Element car = root.getChildByName("car");
-			this.car = new Car(car.getFloat("X"), car.getFloat("Y"), this);
+			this.car = new Car(car, this);			
 			System.out.println(car.toString());
-			this.currentPhase = new SubLevel1(this);
-						
+			
+			this.currentPhase = new SubLevel1(this);					
 			System.out.println("Loading done...");
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -188,10 +194,9 @@ public class GameScreen extends BaseScreen {
 
 	private void update(float delta) {		
 		// TODO: Consider moving this into sublevels
-		/*for (int i = 0; i < this.gameObjects.size(); ++i) {
-			this.gameObjects.get(i).update(delta);
-		}*/
-		// When Michal repairs it, uncomment
+		for (GameObject gameObject : this.getGameObjects()) {
+			gameObject.update(delta);
+		}
 		
 		this.currentPhase.update(delta);
 	}
@@ -215,6 +220,8 @@ public class GameScreen extends BaseScreen {
 		
 		batch.enableBlending(); //don't forget to enabled this for alpha channel
 		
+
+		
 		this.currentPhase.draw(batch);
 
 		// TODO: Consider moving this into sublevels
@@ -227,5 +234,10 @@ public class GameScreen extends BaseScreen {
 		
 		this.currentPhase.render();
 	}
+
+	public ArrayList<GameObject> getGameObjects() {
+		return gameObjects;
+	}
+
 
 }

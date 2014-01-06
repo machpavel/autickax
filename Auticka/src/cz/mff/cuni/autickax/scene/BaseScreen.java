@@ -5,11 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cz.mff.cuni.autickax.MyGdxGame;
+import cz.mff.cuni.autickax.Autickax;
 
 public class BaseScreen implements Screen {
 
-	protected MyGdxGame game;
+	protected Autickax game;
 	protected float stageWidth;
 	protected float stageHeight;
 	protected final Stage stage;
@@ -23,7 +23,7 @@ public class BaseScreen implements Screen {
 	}
 
 	public BaseScreen() {
-		game = MyGdxGame.getInstance();
+		game = Autickax.getInstance();
 		stageWidth = Gdx.graphics.getWidth();
 		stageHeight = Gdx.graphics.getHeight();
 

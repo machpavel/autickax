@@ -13,6 +13,10 @@ public class MainActivity extends AndroidApplication {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         cfg.useGL20 = false;
         
-        initialize(new MyGdxGame(), cfg);
+		/** Custom game configuration */
+		GameConfiguration gameCfg = new GameConfiguration();
+		gameCfg.gameType = GameConfiguration.GameType.NormalGame;
+		
+        initialize(new Autickax(gameCfg), cfg);
     }
 }

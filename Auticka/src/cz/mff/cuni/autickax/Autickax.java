@@ -4,15 +4,17 @@ import com.badlogic.gdx.Game;
 
 import cz.mff.cuni.autickax.scene.LoadingScreen;
 
-public class MyGdxGame extends Game {
+public class Autickax extends Game {
 
-	private static MyGdxGame _instance;
+	private static Autickax _instance;
+	public GameConfiguration cfg;
 
 	public Assets assets;
 
-	public MyGdxGame() {
+	public Autickax(GameConfiguration cfg) {
 		_instance = this;
 		assets = new Assets();
+		this.cfg = cfg;
 	}
 
 	@Override
@@ -20,7 +22,7 @@ public class MyGdxGame extends Game {
 		setScreen(new LoadingScreen());
 	}
 
-	public static MyGdxGame getInstance() {
+	public static Autickax getInstance() {
 		return _instance; // will get created when app starts
 	}
 }

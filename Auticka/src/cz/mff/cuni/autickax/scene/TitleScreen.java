@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class TitleScreen extends BaseScreen {
 
 	Button buttonPlay;
-	Button buttonEditor;
 
 	public TitleScreen() {
 		super();
@@ -46,8 +45,18 @@ public class TitleScreen extends BaseScreen {
 				return true;
 			}
 			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {				
-				game.setScreen(game.assets.loadLevel("level"));
+					int pointer, int button) {	
+				switch (game.cfg.gameType) {
+				case NormalGame:
+					game.setScreen(game.assets.loadLevel("level"));
+					break;
+				case Editor:
+					game.setScreen(new EditorScreen());
+					break;
+				default:
+					break;
+				}
+				
 			}
 		});
 
@@ -56,36 +65,6 @@ public class TitleScreen extends BaseScreen {
 		buttonPlay.addAction(Actions.moveTo(buttonPlay.getX(), targetYplay, 3,
 				Interpolation.elasticOut));
 		//End of Play Button-------------------------------------------------
-		
-		// Editor Button-----------------------------------------------------
-		buttonEditor = new TextButton("Editor", new TextButtonStyle(new TextureRegionDrawable(
-				game.assets.getGraphics("play")),new TextureRegionDrawable(
-						game.assets.getGraphics("play")),new TextureRegionDrawable(
-								game.assets.getGraphics("play")),game.assets.getFont()));
-
-		buttonEditor.setPosition(350, 250);
-		stage.addActor(buttonEditor);
-
-		// User Input for Play Button
-		buttonEditor.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				return true;
-			}
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {										
-				game.setScreen(new EditorScreen());
-			}
-		});
-
-		// Action
-		float targetYeditor = (stageHeight - buttonEditor.getHeight()) / 2;
-		buttonEditor.addAction(Actions.moveTo(buttonEditor.getX(), targetYeditor, 3,
-				Interpolation.elasticOut));
-		//End of Editor Button-------------------------------------------------
-
-		
-
 	}
 
 	@Override

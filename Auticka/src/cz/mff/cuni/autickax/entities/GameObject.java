@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
-import cz.mff.cuni.autickax.MyGdxGame;
+import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.scene.GameScreen;
 
 /**
  * Base class for all game entities
@@ -17,13 +19,25 @@ abstract public class GameObject {
 	protected float y;
 	private boolean toDispose;
 	protected TextureRegion texture;
-	protected MyGdxGame game;
+	protected String textureName;
+	protected Autickax game;
+	protected GameScreen gameScreen;
 
-	public GameObject(float startX, float startY) {
+	private GameObject(float startX, float startY) {
 		this.x = startX;
 		this.y = startY;
-		this.game = MyGdxGame.getInstance();
+		this.game = Autickax.getInstance();
 	}
+		
+	
+	public GameObject(float startX, float startY, GameScreen gameScreen, String textureName) {
+		this(startX, startY);
+		this.gameScreen = gameScreen;
+		
+		this.textureName = textureName;
+		this.texture = this.game.assets.getGraphics(textureName);
+	}
+		
 
 	public float getX() {
 		return x;
@@ -48,22 +62,25 @@ abstract public class GameObject {
 
 	abstract public void update(float delta);
 	abstract public String getName();
+	
 
 	public void draw(SpriteBatch batch) {
 		batch.draw(this.texture, this.getX(), this.getY());
 	}
 	
 	
-	
-	
 	public String toString(){
 		return getName() + " " + x + " " + y;
 	}
-	// TODO:
+	
 	public void toXml(XmlWriter writer) throws IOException{
 		writer.element(this.getName());
 			writer.attribute("X", x);
 			writer.attribute("Y", y);
+			writer.attribute("textureName", textureName);
+			aditionalsToXml(writer);
 		writer.pop();
 	}
+	
+	abstract void aditionalsToXml(XmlWriter writer) throws IOException;	
 }

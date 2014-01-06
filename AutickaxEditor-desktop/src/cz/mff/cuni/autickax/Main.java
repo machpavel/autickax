@@ -16,7 +16,7 @@ public class Main {
 		
 		/** Custom game configuration */
 		GameConfiguration gameCfg = new GameConfiguration();
-		gameCfg.gameType = GameConfiguration.GameType.NormalGame;
+		gameCfg.gameType = GameConfiguration.GameType.Editor;
 		
 		new LwjglApplication(new Autickax(gameCfg), cfg);
 	}
