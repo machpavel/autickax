@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 
 
+
+
 import LinePackage.MyLine;
 
 import com.badlogic.gdx.Gdx;
@@ -13,10 +15,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
+import cz.mff.cuni.autickax.drawing.Font;
+import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class SubLevel1 extends SubLevel {
@@ -145,9 +148,7 @@ public class SubLevel1 extends SubLevel {
 		{
 			if (Gdx.input.justTouched()) 
 			{
-				Vector3 touchPos = new Vector3();
-				touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-				this.Level.unproject(touchPos);
+				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 				
 				if (startPoint.dst(touchPos.x, touchPos.y) <= maxDistance)
 				{
@@ -182,7 +183,6 @@ public class SubLevel1 extends SubLevel {
 				if (map.At(x, y) > maxDistance)
 				{
 				    reset();
-				   
 				}
 				else
 				{
@@ -221,9 +221,9 @@ public class SubLevel1 extends SubLevel {
 	
 	@Override
 	public void draw(SpriteBatch batch) {
-		BitmapFont font = this.Level.getFont();
-		float stageHeight = this.Level.getStageHeight();
-		float stageWidth = this.Level.getStageWidth();
+		Font font = new Font(this.Level.getFont());
+		float stageHeight = Gdx.graphics.getHeight();
+		float stageWidth = Gdx.graphics.getWidth();
 		
 		this.Level.getCar().draw(batch);
 		
@@ -351,21 +351,21 @@ public class SubLevel1 extends SubLevel {
 	public void render() {
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(Color.BLUE);
-		shapeRenderer.circle(startPoint.x, startPoint.y, maxDistance);
+		shapeRenderer.circle(startPoint.x / Input.xStretchFactor, startPoint.y / Input.yStretchFactor, maxDistance);
 		shapeRenderer.setColor(Color.YELLOW);
-		shapeRenderer.circle(finishPoint.x, finishPoint.y, maxDistance);
+		shapeRenderer.circle(finishPoint.x / Input.xStretchFactor, finishPoint.y / Input.yStretchFactor, maxDistance);
 		
 		shapeRenderer.setColor(new Color(Color.DARK_GRAY));
 		for (Vector2 vec: wayPoints)
 		{
-			shapeRenderer.circle(vec.x, vec.y, 10);
+			shapeRenderer.circle(vec.x / Input.xStretchFactor, vec.y / Input.yStretchFactor, 10);
 
 		}
 		
 		shapeRenderer.setColor(Color.RED);
 		for(CheckPoint ce: checkPoints)
 		{
-			shapeRenderer.circle((float)ce.x, (float)ce.y,2);
+			shapeRenderer.circle((float)ce.x / Input.xStretchFactor, (float)ce.y / Input.yStretchFactor,2);
 		}
 		
 		shapeRenderer.end();
@@ -375,8 +375,8 @@ public class SubLevel1 extends SubLevel {
 		for(int i = currentLine; i < wayLines.size(); i++)
 		{
 			MyLine line = wayLines.get(i);
-			Vector2 vec1 = line.getSeg1();
-			Vector2 vec2 = line.getSeg2();
+			Vector2 vec1 = new Vector2(line.getSeg1().x / Input.xStretchFactor, line.getSeg1().y / Input.yStretchFactor);
+			Vector2 vec2 = new Vector2(line.getSeg2().x / Input.xStretchFactor, line.getSeg2().y / Input.yStretchFactor);
 			shapeRenderer.line(vec1, vec2);
 		}
 		shapeRenderer.end();

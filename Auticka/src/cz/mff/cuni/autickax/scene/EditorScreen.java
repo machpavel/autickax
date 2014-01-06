@@ -108,7 +108,7 @@ public class EditorScreen extends GameScreen {
 			xml.pop();
 			xml.pop();
 
-			gameObjects.add(new GameObject(12.f, 13.f) {
+			/*gameObjects.add(new GameObject(12.f, 13.f) {
 				@Override
 				public void update(float delta) {
 				}
@@ -117,7 +117,7 @@ public class EditorScreen extends GameScreen {
 				public String getName() {
 					return "object";
 				}
-			});
+			});*/
 
 			xml.element("entities");
 			for (GameObject gameObject : gameObjects) {

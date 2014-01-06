@@ -2,10 +2,11 @@ package cz.mff.cuni.autickax;
 
 import com.badlogic.gdx.Game;
 
+import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.LoadingScreen;
 
 public class MyGdxGame extends Game {
-
+	
 	private static MyGdxGame _instance;
 
 	public Assets assets;
@@ -18,6 +19,7 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create() {
 		setScreen(new LoadingScreen());
+		Input.InitDimensions();
 	}
 
 	public static MyGdxGame getInstance() {
