@@ -78,6 +78,9 @@ public class EditorScreen extends BaseScreen {
 
 		// Pathway
 		pathway = new Pathway();
+		
+		game.assets.music.stop();
+		
 
 		// Car
 		car = new Car(0, 0, null, "car");		

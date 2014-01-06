@@ -1,6 +1,7 @@
 <AutickaX>
 	<pathway>
 		<controlPoints>
+<<<<<<< HEAD
 			<point X="423.0" Y="379.0"/>
 			<point X="701.0" Y="208.0"/>
 			<point X="533.0" Y="108.0"/>
@@ -10,4 +11,24 @@
 	<entities/>
 	<car X="0.0" Y="0.0" textureName="car"/>
 	<backgroundTexture>sky</backgroundTexture>
+=======
+			<point X="235.0" Y="369.0"/>
+			<point X="176.0" Y="160.0"/>
+			<point X="402.0" Y="49.0"/>
+			<point X="634.0" Y="200.0"/>
+			<point X="500.0" Y="374.0"/>
+			<point X="135.0" Y="20.0"/>
+		</controlPoints>
+	</pathway>
+	<entities>
+		<car X="200.0" Y="70.0"/>
+		<object X="12.0" Y="13.0"/>
+		<object X="12.0" Y="13.0"/>
+		<object X="12.0" Y="13.0"/>
+		<object X="12.0" Y="13.0"/>
+		<object X="12.0" Y="13.0"/>
+		<object X="12.0" Y="13.0"/>
+	</entities>
+	<car X="0.0" Y="0.0"/>
+>>>>>>> b29ab39a6bca69a8e442b288af3bf0bb2aa42e4a
 </AutickaX>

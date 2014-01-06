@@ -50,16 +50,23 @@ public class SubLevel1 extends SubLevel {
 	 */
 	private SubLevel1States state;
 
+
 	/**
 	 * Player just starts this phase or made a mistake and was moved again
 	 */
 
-	public enum SubLevel1States {
-		BEGINNING_STATE, DRIVING_STATE, // Driving in progress
-		FINISH_STATE, // Player successfully finished the race
-		MISTAKE_STATE;
-	}
 
+	/**
+	 * Player just starts this phase or made a mistake and was moved again 
+	 */
+	
+	public enum SubLevel1States{
+				BEGINNING_STATE, 	
+				DRIVING_STATE,		//Driving in progress
+				FINISH_STATE,		//Player successfully finished the race
+				MISTAKE_STATE;
+	}
+	
 	/**
 	 * Number of waypoints that check if the player raced through all the track
 	 */
@@ -124,6 +131,7 @@ public class SubLevel1 extends SubLevel {
 		lastPoint = new Vector2(startPoint);
 
 		state = SubLevel1States.BEGINNING_STATE;
+
 
 	}
 
@@ -241,6 +249,7 @@ public class SubLevel1 extends SubLevel {
 	 */
 	public void reset() {
 		if (state != SubLevel1States.FINISH_STATE) {
+
 			state = SubLevel1States.BEGINNING_STATE;
 			this.timeElapsed = 0;
 			this.Level.getCar().move(startPoint.x, startPoint.y);
