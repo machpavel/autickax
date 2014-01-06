@@ -27,8 +27,10 @@ public class EditorScreen extends GameScreen {
 
 	public EditorScreen() {
 		super();
-		game.assets.music.stop();
 		pathway = new Pathway();
+		
+		game.assets.music.stop();
+		
 
 		createGenerateButton();
 		createRestartButton();

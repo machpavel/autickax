@@ -48,29 +48,22 @@ public class SubLevel1 extends SubLevel {
 	 */
 	private Pathway pathway;
 	
-	/**
-	 * Array of distances from the curve that represents the track
-	 */
-	private DistanceMap map;
 	
 	/**
 	 * state of the phase: beginning, driving, finish, mistake - must repeat
 	 */
-	private int state;
+	private SubLevel1States state;
 	
 	/**
 	 * Player just starts this phase or made a mistake and was moved again 
 	 */
-	private static final int BEGINNING_STATE = 0;
-	/**
-	 * Driving in progress
-	 */
-	private static final int DRIVING_STATE = 1;
-	/**
-	 * Player successfully finished the race
-	 */
-	private static final int FINISH_STATE = 2;
-	private static final int MISTAKE_STATE = 3;
+	
+	public enum SubLevel1States{
+				BEGINNING_STATE, 	
+				DRIVING_STATE,		//Driving in progress
+				FINISH_STATE,		//Player successfully finished the race
+				MISTAKE_STATE;
+	}
 	
 	
 	/**
@@ -125,7 +118,6 @@ public class SubLevel1 extends SubLevel {
 		gameScr = gameScreen;
 		pathway = gameScreen.getPathWay();
 		maxDistance = 40;
-		map = this.Level.getPathWay().getDistanceMap();
 		start = 0.1f;
 		finish = 0.75f;
 		startPoint = pathway.GetPosition(start);
@@ -139,6 +131,8 @@ public class SubLevel1 extends SubLevel {
 		this.Level.getCar().move(startPoint.x, startPoint.y);
 		lastPoint = new Vector2(startPoint);
 		
+		state = SubLevel1States.BEGINNING_STATE;
+		
 	}
 
 	@Override
@@ -147,7 +141,7 @@ public class SubLevel1 extends SubLevel {
 			timeElapsed += delta;
 		
 		//allow dragging in the beginning state
-		if (state == BEGINNING_STATE)
+		if (state == SubLevel1States.BEGINNING_STATE)
 		{
 			if (Gdx.input.justTouched()) 
 			{
@@ -159,12 +153,12 @@ public class SubLevel1 extends SubLevel {
 				{
 					
 					this.Level.getCar().setDragged(true);
-					state = DRIVING_STATE;
+					state = SubLevel1States.DRIVING_STATE;
 					timeMeasured = true;
 				}
 			}
 		}
-		else if (state == DRIVING_STATE)
+		else if (state == SubLevel1States.DRIVING_STATE)
 		{
 			//stopped dragging
 			if (!this.Level.getCar().isDragged())
@@ -182,6 +176,7 @@ public class SubLevel1 extends SubLevel {
 			int x = (int)this.Level.getCar().getX();
 			int y = (int)this.Level.getCar().getY();
 			//coordinates ok
+			DistanceMap map = pathway.getDistanceMap(); 
 			if (x >= 0 && x < map.getWidth() && y >= 0 && y < map.getHeight())
 			{
 				if (map.At(x, y) > maxDistance)
@@ -197,7 +192,7 @@ public class SubLevel1 extends SubLevel {
 					//if (checkWayPoints(x, y))
 					if(checkForIntersections(lastPoint, x, y))
 					{
-						state = FINISH_STATE;
+						state = SubLevel1States.FINISH_STATE;
 						timeMeasured = false;
 					}
 					lastPoint.x = x;
@@ -212,7 +207,7 @@ public class SubLevel1 extends SubLevel {
 			//switch whenever ready
 			if(Gdx.input.justTouched()) 
 			{
-				state =BEGINNING_STATE;
+				state = SubLevel1States.BEGINNING_STATE;
 				reset();
 				currentLine = 0;
 				//gameScr.switchToPhase2(checkPoints, score, timeElapsed);
@@ -263,9 +258,9 @@ public class SubLevel1 extends SubLevel {
 	 */
 	public void reset()
 	{
-		if (state != FINISH_STATE)
+		if (state != SubLevel1States.FINISH_STATE)
 		{
-			state = BEGINNING_STATE;
+			state = SubLevel1States.BEGINNING_STATE;
 			this.timeElapsed = 0;
 			this.Level.getCar().move(startPoint.x, startPoint.y);
 			this.Level.getCar().setDragged(false);

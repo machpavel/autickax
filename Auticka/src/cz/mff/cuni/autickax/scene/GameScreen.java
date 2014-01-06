@@ -70,6 +70,7 @@ public class GameScreen extends BaseScreen {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 		
+		// TODO: don't load phase 1 here, but after initialization. because of editor
 		this.currentPhase = new SubLevel1(this);
 
 		Assets assets = MyGdxGame.getInstance().assets;
@@ -86,6 +87,9 @@ public class GameScreen extends BaseScreen {
 		
 		// Pathway
 		pathway = new Pathway();
+		
+		// Car
+		car = new Car(0, 0, this);
 		
 		// Start Music!
 		game.assets.music.setLooping(true);
