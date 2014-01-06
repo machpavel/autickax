@@ -14,13 +14,13 @@ public class BaseScreen implements Screen {
 	protected float stageHeight;
 	protected final Stage stage;
 	
-	public float getStageWidth() {
+	/*public float getStageWidth() {
 		return this.stageWidth;
 	}
 	
 	public float getStageHeight() {
 		return this.stageHeight;
-	}
+	}*/
 
 	public BaseScreen() {
 		game = Autickax.getInstance();

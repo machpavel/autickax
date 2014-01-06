@@ -37,6 +37,7 @@ import cz.mff.cuni.autickax.pathway.Pathway;
 public class GameScreen extends BaseScreen {
 	// Textures
 	private TextureRegion backgroundTexture;
+	private String backGroundTextureString;
 
 	// Rendering
 	protected OrthographicCamera camera;
@@ -77,7 +78,8 @@ public class GameScreen extends BaseScreen {
 		this.currentPhase = new SubLevel1(this);
 
 		Assets assets = Autickax.getInstance().assets;
-		this.backgroundTexture = assets.getGraphics("sky");
+		this.backGroundTextureString = "sky";
+		this.backgroundTexture = assets.getGraphics(backGroundTextureString);
 		
 		// dummy code ------------------------>		
 		this.gameObjects = new ArrayList<GameObject>();
@@ -90,7 +92,7 @@ public class GameScreen extends BaseScreen {
 		pathway = new Pathway();
 		
 		// Car
-		car = new Car(0, 0, this, "car");
+		car = new Car(0, 0, 100, 63, this, "car");
 
 		
 		// Start Music!
@@ -114,10 +116,7 @@ public class GameScreen extends BaseScreen {
 			//graphics
 			batch = new SpriteBatch();
 			shapeRenderer = new ShapeRenderer();
-			
-			// Background
-			this.backgroundTexture = game.assets.getGraphics("sky");
-
+						
 			// Init entities
 			this.gameObjects = new ArrayList<GameObject>();
 
@@ -152,13 +151,13 @@ public class GameScreen extends BaseScreen {
 			for(int i = 0; i < entities.getChildCount() ; i++){
 				Element gameObject = entities.getChild(i);
 				String name = gameObject.getName(); 
-				if(name == "mud"){
+				if(name.equals("mud")){
 					gameObjects.add(new Mud(gameObject, this));
 				}
-				else if (name == "stone"){
+				else if (name.equals("stone")){
 					gameObjects.add(new Stone(gameObject, this));
 				}
-				else if (name == "tree"){
+				else if (name.equals("tree")){
 					gameObjects.add(new Tree(gameObject, this));
 				}
 				else throw new IOException("Loading object failed: Unknown type");
@@ -171,6 +170,12 @@ public class GameScreen extends BaseScreen {
 			Element car = root.getChildByName("car");
 			this.car = new Car(car, this);			
 			System.out.println(car.toString());
+			
+			// Background
+			Element backgroundTexture = root.getChildByName("backgroundTexture");
+			this.backGroundTextureString = backgroundTexture.get("textureName");
+			this.backgroundTexture = game.assets.getGraphics(backGroundTextureString);
+			System.out.println(backGroundTextureString);
 			
 			this.currentPhase = new SubLevel1(this);					
 			System.out.println("Loading done...");

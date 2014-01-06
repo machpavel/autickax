@@ -2,6 +2,7 @@ package cz.mff.cuni.autickax;
 
 import com.badlogic.gdx.Game;
 
+import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.LoadingScreen;
 
 public class Autickax extends Game {
@@ -20,6 +21,7 @@ public class Autickax extends Game {
 	@Override
 	public void create() {
 		setScreen(new LoadingScreen());
+		Input.InitDimensions();
 	}
 
 	public static Autickax getInstance() {

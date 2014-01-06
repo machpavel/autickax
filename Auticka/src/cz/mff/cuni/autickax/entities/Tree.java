@@ -10,12 +10,12 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public final class Tree extends GameObject {
 
 
-	public Tree(float x, float y, GameScreen gameScreen, String textureName) {
-		super(x, y, gameScreen, textureName);		
+	public Tree(float x, float y, int width, int height, GameScreen gameScreen, String textureName){
+		super(x, y, width, height, gameScreen, textureName);		
 	}
 	
 	public Tree(Element element, GameScreen gameScreen) {
-		super(element.getFloat("X"), element.getFloat("Y"), gameScreen, element.getAttribute("textureName"));
+		super(element, gameScreen);
 	}
 
 	@Override

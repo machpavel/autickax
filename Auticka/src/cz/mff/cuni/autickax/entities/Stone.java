@@ -9,12 +9,12 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Stone extends GameObject {
 
-	public Stone(float x, float y, GameScreen gameScreen, String textureName) {
-		super(x, y, gameScreen, textureName);		
+	public Stone(float x, float y, int width, int height, GameScreen gameScreen, String textureName) {
+		super(x, y, width, height, gameScreen, textureName);		
 	}
 	
 	public Stone(Element element, GameScreen gameScreen) {
-		super(element.getFloat("X"), element.getFloat("Y"), gameScreen, element.getAttribute("textureName"));
+		super(element, gameScreen);
 	}
 
 	@Override

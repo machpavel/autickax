@@ -26,7 +26,9 @@ import cz.mff.cuni.autickax.Assets;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.GameObject;
-import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.entities.Mud;
+import cz.mff.cuni.autickax.entities.Stone;
+import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
 
@@ -83,7 +85,7 @@ public class EditorScreen extends BaseScreen {
 		
 
 		// Car
-		car = new Car(0, 0, null, "car");		
+		car = new Car(0, 0, 100, 63, null, "car");		
 
 		// Start Music!
 		game.assets.music.setLooping(true);
@@ -93,6 +95,10 @@ public class EditorScreen extends BaseScreen {
 
 		createGenerateButton();
 		createRestartButton();
+		
+		gameObjects.add(new Mud(100,100,50,50,null, "mud"));
+		gameObjects.add(new Stone(200,200,50,50,null, "stone"));
+		gameObjects.add(new Tree(300,300,50,50,null, "tree"));
 	}
 
 	private void update(float delta) {
@@ -142,6 +148,14 @@ public class EditorScreen extends BaseScreen {
 		shapeRenderer.end();
 
 		stage.draw(); // and also display it :)
+		
+		batch.begin();
+		for (GameObject gameObject : gameObjects) {
+			gameObject.draw(batch);
+			
+		}
+		car.draw(batch);
+		batch.end();
 	}
 
 	public void generateXml(String fileName) {
@@ -172,7 +186,7 @@ public class EditorScreen extends BaseScreen {
 
 			car.toXml(xml);
 
-			xml.element("backgroundTexture", backGroundTextureString);
+			xml.element("backgroundTexture").attribute("textureName", backGroundTextureString).pop();
 
 			xml.pop();
 			xml.close();

@@ -3,7 +3,10 @@ package cz.mff.cuni.autickax.entities;
 import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
+
+import cz.mff.cuni.autickax.input.Input;
+
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -12,13 +15,17 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public final class Car extends GameObject {
 
 	private boolean isDragged = false;
-
-	public Car(float x, float y, GameScreen gameScreen, String textureName) {
-		super(x, y, gameScreen, textureName);		
+	private GameScreen level;	
+	
+	public Car(float x, float y, int width, int height, GameScreen gameScreen, String textureName) {
+		super(x, y, width, height);
+		super.textureName = "car";
+		super.texture = super.game.assets.getGraphics(textureName);
+		this.gameScreen = gameScreen;
 	}
 
 	public Car(Element element, GameScreen gameScreen) {
-		super(element.getFloat("X"), element.getFloat("Y"), gameScreen, element.getAttribute("textureName"));
+		super(element, gameScreen);
 	}
 
 	public boolean isDragged() {
@@ -46,9 +53,7 @@ public final class Car extends GameObject {
 
 		if (this.isDragged()) {
 			if (Gdx.input.isTouched()) {
-				Vector3 touchPos = new Vector3();
-				touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-				this.gameScreen.unproject(touchPos);
+				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 				this.move(touchPos.x, touchPos.y);
 			}
 		}
