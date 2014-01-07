@@ -7,11 +7,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import cz.mff.cuni.autickax.scene.GameScreen;
 
 /**
  * This class takes care of all asset loading and parsing Call load to load
@@ -113,7 +112,7 @@ public class Assets {
 		return assetManager.get(FONT_FILE, BitmapFont.class);
 	}
 
-	public GameScreen loadLevel(String name){
-		return new GameScreen(Gdx.files.internal("levels/"+ name + ".xml"));
+	public FileHandle loadLevel(String name){
+		return Gdx.files.internal("levels/"+ name + ".xml");
 	}
 }

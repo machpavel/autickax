@@ -48,7 +48,7 @@ public class TitleScreen extends BaseScreen {
 					int pointer, int button) {	
 				switch (game.cfg.gameType) {
 				case NormalGame:
-					game.setScreen(game.assets.loadLevel("level"));
+					game.setScreen(new GameScreen("level"));
 					break;
 				case Editor:
 					game.setScreen(new EditorScreen());
