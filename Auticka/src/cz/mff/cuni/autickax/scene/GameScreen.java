@@ -28,6 +28,7 @@ import cz.mff.cuni.autickax.gamelogic.CheckPoint;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.gamelogic.SubLevel1;
 import cz.mff.cuni.autickax.gamelogic.SubLevel2;
+import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
 /**
  * This is the screen where the game happens
@@ -187,8 +188,8 @@ public class GameScreen extends BaseScreen {
 		
 	}
 	
-	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, double pathFollowingAccuracy, double pathFollowingTime) {
-		this.currentPhase = new SubLevel2(this, checkpoints, pathFollowingAccuracy, pathFollowingTime);
+	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, double pathFollowingTime) {
+		this.currentPhase = new SubLevel2(this, checkpoints, map, pathFollowingTime);
 	}
 	
 	public void reset() {
