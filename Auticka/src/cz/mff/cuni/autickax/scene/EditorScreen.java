@@ -54,7 +54,7 @@ public class EditorScreen extends BaseScreen {
 
 	// Pathway
 	private Pathway pathway;
-	Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
+	Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;	
 
 	// Buttons
 	Button buttonGeneratePoints;
@@ -172,7 +172,7 @@ public class EditorScreen extends BaseScreen {
 			xml.element("AutickaX");
 
 			xml.element("pathway");
-			xml.attribute("pathwayType", pathway.getType());
+			xml.attribute("pathwayType", pathway.getType().toString());
 			xml.element("controlPoints");
 			for (Vector2 point : pathway.getControlPoints()) {
 				xml.element("point");

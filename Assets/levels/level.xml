@@ -1,10 +1,10 @@
 <AutickaX>
 	<pathway pathwayType="OPENED">
 		<controlPoints>
-			<point X="319.0" Y="233.0"/>
-			<point X="663.0" Y="272.0"/>
-			<point X="537.0" Y="391.0"/>
-			<point X="330.0" Y="345.0"/>
+			<point X="229.0" Y="347.0"/>
+			<point X="483.0" Y="361.0"/>
+			<point X="472.0" Y="133.0"/>
+			<point X="275.0" Y="154.0"/>
 		</controlPoints>
 	</pathway>
 	<entities>
