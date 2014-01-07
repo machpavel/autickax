@@ -191,10 +191,10 @@ public class SubLevel1 extends SubLevel {
 		else {
 			// switch whenever ready
 			if (Gdx.input.justTouched()) {
-				state = SubLevel1States.BEGINNING_STATE;
+				/*state = SubLevel1States.BEGINNING_STATE;
 				reset();
-				currentLine = 0;
-				// gameScr.switchToPhase2(checkPoints, score, timeElapsed);
+				currentLine = 0;*/
+				gameScr.switchToPhase2(checkPoints, pathway.getDistanceMap(), timeElapsed);
 			}
 		}
 		
@@ -220,14 +220,15 @@ public class SubLevel1 extends SubLevel {
 		// render the track
 		// TODO render quick
 		// TODO move this to gamescreen class
-		/*
-		 * shapeRenderer.begin(ShapeType.Point); shapeRenderer.setColor(new
-		 * Color(Color.WHITE)); for (int x = 0; x < (int) stageWidth; x++) { for
-		 * (int y = 0; y < (int) stageHeight; y++) { if (map.At(x, y) <
-		 * maxDistance) shapeRenderer.point(x, y, 0);
-		 * 
-		 * } } shapeRenderer.end();
-		 */
+		
+		 /* shapeRenderer.begin(ShapeType.Point); shapeRenderer.setColor(new
+		  Color(Color.WHITE)); for (int x = 0; x < (int) stageWidth; x++) { for
+		  (int y = 0; y < (int) stageHeight; y++) { 
+			  if (pathway.getDistanceMap().At(x, y) < Float.MAX_VALUE
+		  ) shapeRenderer.point(x, y, 0);
+		  
+		  } } shapeRenderer.end();*/
+		 
 
 		// Draw score
 		font.draw(batch, "score: " + score, 10, (int) stageHeight - 32);
