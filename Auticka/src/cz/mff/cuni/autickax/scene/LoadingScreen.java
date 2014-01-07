@@ -3,8 +3,6 @@ package cz.mff.cuni.autickax.scene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 
-import cz.mff.cuni.autickax.Autickax;
-
 /**
  * In this screen we load all our assets and then switch to TitleScreen
  * 
@@ -24,8 +22,17 @@ public class LoadingScreen extends BaseScreen {
 		Gdx.gl.glClearColor(0f, 1f, 0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		if (game.assets.update()) { // Keep calling this, until returns true			
-			Autickax.getInstance().setScreen(new TitleScreen());
+		if (game.assets.update()) { // Keep calling this, until returns true
+			switch (game.cfg.gameType) {
+			case NormalGame:
+				game.setScreen(new TitleScreen());
+				break;
+			case Editor:
+				game.setScreen(new EditorScreen());
+				break;
+			default:
+				break;
+			}			
 			return;
 		}
 		// trace("loading progress:"+Assets.getProgress()); //TODO visualize

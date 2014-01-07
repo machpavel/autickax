@@ -34,6 +34,8 @@ import cz.mff.cuni.autickax.pathway.Pathway;
 
 public class EditorScreen extends BaseScreen {
 
+	
+	
 	// Textures
 	private TextureRegion backgroundTexture;
 	private String backGroundTextureString = "sky";
@@ -52,6 +54,7 @@ public class EditorScreen extends BaseScreen {
 
 	// Pathway
 	private Pathway pathway;
+	Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
 
 	// Buttons
 	Button buttonGeneratePoints;
@@ -80,12 +83,13 @@ public class EditorScreen extends BaseScreen {
 
 		// Pathway
 		pathway = new Pathway();
+		pathway.setType(pathwayType);
 		
 		game.assets.music.stop();
 		
 
 		// Car
-		car = new Car(0, 0, 100, 63, null, "car");		
+		car = new Car(0, 0, null, 0);		
 
 		// Start Music!
 		game.assets.music.setLooping(true);
@@ -96,9 +100,9 @@ public class EditorScreen extends BaseScreen {
 		createGenerateButton();
 		createRestartButton();
 		
-		gameObjects.add(new Mud(100,100,50,50,null, "mud"));
-		gameObjects.add(new Stone(200,200,50,50,null, "stone"));
-		gameObjects.add(new Tree(300,300,50,50,null, "tree"));
+		gameObjects.add(new Mud(100,100,null, 0));
+		gameObjects.add(new Stone(200,200,null, 0));
+		gameObjects.add(new Tree(300,300,null, 0));
 	}
 
 	private void update(float delta) {
@@ -168,6 +172,7 @@ public class EditorScreen extends BaseScreen {
 			xml.element("AutickaX");
 
 			xml.element("pathway");
+			xml.attribute("pathwayType", pathway.getType());
 			xml.element("controlPoints");
 			for (Vector2 point : pathway.getControlPoints()) {
 				xml.element("point");

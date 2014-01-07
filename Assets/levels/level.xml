@@ -1,17 +1,17 @@
 <AutickaX>
-	<pathway>
+	<pathway pathwayType="OPENED">
 		<controlPoints>
-			<point X="417.0" Y="334.0"/>
-			<point X="568.0" Y="259.0"/>
-			<point X="465.0" Y="122.0"/>
-			<point X="285.0" Y="190.0"/>
+			<point X="319.0" Y="233.0"/>
+			<point X="663.0" Y="272.0"/>
+			<point X="537.0" Y="391.0"/>
+			<point X="330.0" Y="345.0"/>
 		</controlPoints>
 	</pathway>
 	<entities>
-		<mud X="100.0" Y="100.0" width="50" height="50" textureName="mud"/>
-		<stone X="200.0" Y="200.0" width="50" height="50" textureName="stone"/>
-		<tree X="300.0" Y="300.0" width="50" height="50" textureName="tree"/>
+		<mud X="100.0" Y="100.0" type="0"/>
+		<stone X="200.0" Y="200.0" type="0"/>
+		<tree X="300.0" Y="300.0" type="0"/>
 	</entities>
-	<car X="0.0" Y="0.0" width="100" height="63" textureName="car"/>
+	<car X="0.0" Y="0.0" type="0"/>
 	<backgroundTexture textureName="sky"/>
 </AutickaX>

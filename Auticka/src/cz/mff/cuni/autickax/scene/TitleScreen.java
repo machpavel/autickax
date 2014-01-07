@@ -46,17 +46,7 @@ public class TitleScreen extends BaseScreen {
 			}
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {	
-				switch (game.cfg.gameType) {
-				case NormalGame:
 					game.setScreen(game.assets.loadLevel("level"));
-					break;
-				case Editor:
-					game.setScreen(new EditorScreen());
-					break;
-				default:
-					break;
-				}
-				
 			}
 		});
 

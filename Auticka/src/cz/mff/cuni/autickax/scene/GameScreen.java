@@ -92,7 +92,7 @@ public class GameScreen extends BaseScreen {
 		pathway = new Pathway();
 		
 		// Car
-		car = new Car(0, 0, 100, 63, this, "car");
+		car = new Car(0, 0, this, 0);
 
 		
 		// Start Music!
@@ -128,13 +128,14 @@ public class GameScreen extends BaseScreen {
 			// Start Music!
 			game.assets.music.setLooping(true);
 			game.assets.music.setVolume(0.3f);
-			//game.assets.music.play();				
+			game.assets.music.play();				
 			
 			System.out.println("Loading level...");
 			Element root = new XmlReader().parse(file);			
 			
 			// Loading pathway
-			Element pathwayElement = root.getChildByName("pathway");									
+			Element pathwayElement = root.getChildByName("pathway");	
+			pathway.setType(pathwayElement.getAttribute("pathwayType"));
 			Element controlPoints = pathwayElement.getChildByName("controlPoints");						
 			for(int i = 0; i < controlPoints.getChildCount(); i++){
 				Element controlPoint = controlPoints.getChild(i);
@@ -152,13 +153,13 @@ public class GameScreen extends BaseScreen {
 				Element gameObject = entities.getChild(i);
 				String name = gameObject.getName(); 
 				if(name.equals("mud")){
-					gameObjects.add(new Mud(gameObject, this));
+					gameObjects.add(new Mud(gameObject.getFloat("X"), gameObject.getFloat("Y"), this, gameObject.getInt("type", 0)));
 				}
 				else if (name.equals("stone")){
-					gameObjects.add(new Stone(gameObject, this));
+					gameObjects.add(new Stone(gameObject.getFloat("X"), gameObject.getFloat("Y"), this, gameObject.getInt("type", 0)));
 				}
 				else if (name.equals("tree")){
-					gameObjects.add(new Tree(gameObject, this));
+					gameObjects.add(new Tree(gameObject.getFloat("X"), gameObject.getFloat("Y"), this, gameObject.getInt("type", 0)));
 				}
 				else throw new IOException("Loading object failed: Unknown type");
 			}
@@ -168,8 +169,8 @@ public class GameScreen extends BaseScreen {
 			
 			// Loading car
 			Element car = root.getChildByName("car");
-			this.car = new Car(car, this);			
-			System.out.println(car.toString());
+			this.car = new Car(car.getFloat("X"), car.getFloat("Y"), this, car.getInt("type", 0));			
+			System.out.println(this.car.toString());
 			
 			// Background
 			Element backgroundTexture = root.getChildByName("backgroundTexture");
@@ -181,6 +182,9 @@ public class GameScreen extends BaseScreen {
 			System.out.println("Loading done...");
 			
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
