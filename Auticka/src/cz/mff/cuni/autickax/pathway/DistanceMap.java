@@ -60,7 +60,7 @@ public class DistanceMap {
 	
 
 	// Creates the main distances structure for given control points.  
-	public void CreateDistances(ArrayList<Vector2> controlPoints){
+	public void CreateDistances(ArrayList<Vector2> controlPoints, Pathway.PathwayType pathwayType){
 		if(controlPoints.size() < 4) return;
 		
 		ClearMap();
@@ -70,7 +70,7 @@ public class DistanceMap {
 		int totalLines = controlPoints.size() * LINE_SEGMENTATION;				
 		Vector2 point;				
 		for (float i = 0; i <= totalLines; i++) {
-			point = Splines.GetPoint(controlPoints, i / totalLines, getTypeOfInterpolation());
+			point = Splines.GetPoint(controlPoints, i / totalLines, getTypeOfInterpolation(), pathwayType);
 			if(point.x >=0 && point.y > 0 && point.x <= width && point.y <= height)
 				this.map[(int)point.x][(int)point.y] = 0f;					
 		}

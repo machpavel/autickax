@@ -65,10 +65,12 @@ public class Level {
 		// Loading pathway
 		Element pathwayElement = root.getChildByName("pathway");
 		pathway.setType(pathwayElement.getAttribute("pathwayType"));
-		Element controlPoints = pathwayElement.getChildByName("controlPoints");						
-		for(int i = 0; i < controlPoints.getChildCount(); i++){
+		Element controlPoints = pathwayElement.getChildByName("controlPoints");
+		int controlPointsCount = controlPoints.getChildCount(); 
+		for(int i = 0; i < controlPointsCount; i++){			
 			Element controlPoint = controlPoints.getChild(i);
-			this.pathway.getControlPoints().add(new Vector2(controlPoint.getFloat("X"), controlPoint.getFloat("Y")));
+			Vector2 controlPointPosition = new Vector2(controlPoint.getFloat("X"), controlPoint.getFloat("Y"));
+			this.pathway.getControlPoints().add(controlPointPosition);			
 		}			
 		for (Vector2 point : this.pathway.getControlPoints()) {
 			System.out.println("point " + point);

@@ -13,15 +13,19 @@ import com.badlogic.gdx.math.Vector2;
 public class Pathway {	
 	private DistanceMap distanceMap;
 	private ArrayList<Vector2> controlPoints;
-	private PathwayType type;
+	private PathwayType pathwayType;
 	
 	public enum PathwayType{
 		CLOSED, OPENED;
 	}
-	
-	public Pathway() {
+		
+	public Pathway() {		
 		 setDistanceMap(new DistanceMap((int)Gdx.graphics.getHeight(), (int)Gdx.graphics.getWidth()));
 		 setControlPoints(new ArrayList<Vector2>());
+	}
+	public Pathway(PathwayType pathwayType) {
+		this();
+		this.pathwayType = pathwayType;		 
 	}
 
 	
@@ -30,7 +34,7 @@ public class Pathway {
 	 *  Method must be called if controlPoints are changed.
 	 */
 	public void CreateDistances() {
-		getDistanceMap().CreateDistances(getControlPoints());		
+		getDistanceMap().CreateDistances(getControlPoints(), pathwayType);		
 	}
 	
 	
@@ -39,7 +43,7 @@ public class Pathway {
 	 * @return Point in screen coordinates.
 	 */
 	public Vector2 GetPosition(float u){
-		return Splines.GetPoint(getControlPoints(), u, DistanceMap.getTypeOfInterpolation());
+		return Splines.GetPoint(getControlPoints(), u, DistanceMap.getTypeOfInterpolation(), pathwayType);
 	}
 
 	public ArrayList<Vector2> getControlPoints() {
@@ -60,18 +64,18 @@ public class Pathway {
 
 
 	public PathwayType getType() {
-		return type;
+		return pathwayType;
 	}
 
 
 	public void setType(PathwayType type) {
-		this.type = type;
+		this.pathwayType = type;
 	}
 	public void setType(String type) throws Exception {
 		if(type.equals("OPENED"))
-			this.type = PathwayType.OPENED;
+			this.pathwayType = PathwayType.OPENED;
 		else if(type.equals("CLOSED"))
-			this.type = PathwayType.CLOSED;
+			this.pathwayType = PathwayType.CLOSED;
 		else throw new Exception("Unknown type of pathway type");
 	}
 	

@@ -67,10 +67,25 @@ public class Splines {
 	}
 
 	public static Vector2 GetPoint(ArrayList<Vector2> points, float u,
-			TypeOfInterpolation type) {
-		float part = 1f / points.size();
+			TypeOfInterpolation type, Pathway.PathwayType pathwayType) {
+		float part = 1f / (points.size());
 		int index = (int) (u / part);
 		float localU = (u - (float) index * part) / part;
+		
+		switch (pathwayType) {
+		case CLOSED:
+			part = 1f / (points.size());
+			index = (int) (u / part);
+			localU = (u - (float) index * part) / part;
+			break;
+		case OPENED:
+			// Counts indexes
+			part = 1f / (points.size() - 3);
+			index = (int) (u / part);			
+			localU = (u - (float) index * part) / part;
+		default:			
+			break;
+		}
 
 		switch (type) {
 		case CUBIC_B_SPLINE:

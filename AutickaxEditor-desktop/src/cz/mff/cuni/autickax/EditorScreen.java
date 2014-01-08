@@ -82,8 +82,7 @@ public class EditorScreen extends BaseScreenEditor {
 		this.font = game.assets.getFont();
 
 		// Pathway
-		pathway = new Pathway();
-		pathway.setType(pathwayType);
+		pathway = new Pathway(pathwayType);		
 		
 		game.assets.music.stop();
 		
@@ -108,9 +107,8 @@ public class EditorScreen extends BaseScreenEditor {
 	private void update(float delta) {
 		// Checks if user created a new point
 		if (Gdx.input.justTouched()) {
-			pathway.getControlPoints().add(
-					new Vector2(Gdx.input.getX(), stageHeight
-							- Gdx.input.getY()));
+			Vector2 point = new Vector2(Gdx.input.getX(), stageHeight - Gdx.input.getY());
+			pathway.getControlPoints().add(point);
 			game.assets.getSound("hit").play();
 			generateXml("level.xml");
 		}
@@ -227,7 +225,7 @@ public class EditorScreen extends BaseScreenEditor {
 			}
 
 			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
+					int pointer, int button) {				
 				pathway.CreateDistances();
 			}
 		});
@@ -256,7 +254,7 @@ public class EditorScreen extends BaseScreenEditor {
 
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				pathway = new Pathway();
+				pathway = new Pathway(pathwayType);
 			}
 		});
 	}
