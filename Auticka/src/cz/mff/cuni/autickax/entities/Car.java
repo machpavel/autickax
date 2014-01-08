@@ -7,26 +7,28 @@ import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.input.Input;
 
-import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Car extends GameObject {
 
-	private boolean isDragged = false;
-	private GameScreen level;	
+	private boolean isDragged = false;	
 	
-	public Car(float x, float y, int width, int height, GameScreen gameScreen, String textureName) {
-		super(x, y, width, height);
-		super.textureName = "car";
-		super.texture = super.game.assets.getGraphics(textureName);
-		this.gameScreen = gameScreen;
+	public Car(float x, float y, GameScreen gameScreen, int type) {	
+		super(x,y,gameScreen);
+		switch (type) {
+		case 0:
+			this.width = 100;
+			this.height = 63;	
+			this.textureName = "car";
+			this.texture = this.game.assets.getGraphics(textureName);			
+			break;
+		default:
+			break;
+		}
 	}
 
-	public Car(Element element, GameScreen gameScreen) {
-		super(element, gameScreen);
-	}
 
 	public boolean isDragged() {
 		return this.isDragged;

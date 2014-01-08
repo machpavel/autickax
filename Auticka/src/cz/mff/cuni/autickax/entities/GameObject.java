@@ -5,7 +5,6 @@ import java.io.IOException;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Autickax;
@@ -23,30 +22,30 @@ abstract public class GameObject {
 	private boolean toDispose;
 	protected TextureRegion texture;
 
-	protected final int width;
-	protected final int height;
+	protected int width;
+	protected int height;
 	protected String textureName;
 	protected Autickax game;
 	protected GameScreen gameScreen;
+	protected byte type;
 
-	public GameObject(float startX, float startY, int width, int height) {
+	
+	public GameObject(float startX, float startY, GameScreen gameScreen) {
 		this.position = new Vector2(startX, startY);
 		this.game = Autickax.getInstance();
-		this.width = width;
-		this.height = height;
+		this.gameScreen = gameScreen;		
 	}
-		
 	
 	public GameObject(float startX, float startY, int width, int height, GameScreen gameScreen, String textureName) {
-		this(startX, startY, width, height);
-		this.gameScreen = gameScreen;		
+		this(startX, startY, gameScreen);
+		this.width = width;
+		this.height = height;	
 		this.textureName = textureName;
 		this.texture = this.game.assets.getGraphics(textureName);
 	}
 	
-	public GameObject(Element element, GameScreen gameScreen) {
-		this(element.getFloat("X"), element.getFloat("Y"), element.getInt("width"), element.getInt("height"), gameScreen, element.getAttribute("textureName"));
-	}
+
+
 		
 
 	/** Returns x-coordinate of the objects center. */
@@ -99,9 +98,7 @@ abstract public class GameObject {
 		writer.element(this.getName());
 			writer.attribute("X", this.position.x);
 			writer.attribute("Y", this.position.y);
-			writer.attribute("width", this.width);
-			writer.attribute("height", this.height);
-			writer.attribute("textureName", textureName);
+			writer.attribute("type", this.type);
 			aditionalsToXml(writer);
 		writer.pop();
 	}

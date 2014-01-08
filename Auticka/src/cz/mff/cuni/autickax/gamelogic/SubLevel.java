@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public abstract class SubLevel {
+	public static float START = 0;
+	public static float FINISH = 1;
 	
 	protected GameScreen Level;
 	protected ShapeRenderer shapeRenderer;

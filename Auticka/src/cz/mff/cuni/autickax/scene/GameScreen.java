@@ -21,8 +21,10 @@ import cz.mff.cuni.autickax.Assets;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.entities.Car;
+import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.Mud;
+import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.gamelogic.CheckPoint;
@@ -31,10 +33,6 @@ import cz.mff.cuni.autickax.gamelogic.SubLevel1;
 import cz.mff.cuni.autickax.gamelogic.SubLevel2;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
-/**
- * This is the screen where the game happens
- * @author Ondrej Paska
- */
 
 public class GameScreen extends BaseScreen {
 	// Textures
@@ -52,11 +50,10 @@ public class GameScreen extends BaseScreen {
 	// Entities
 	private ArrayList<GameObject> gameObjects;
 	protected Car car;
-	public Car getCar()
-	{
-		return this.car;
-	}
+	protected Start start;
+	protected Finish finish;
 	
+		
 	// Cached font
 	private BitmapFont font;
 	public BitmapFont getFont() {
@@ -66,43 +63,7 @@ public class GameScreen extends BaseScreen {
 	
 	// Pathway
 	protected Pathway pathway;
-	
-	public GameScreen() {
-		super();
-
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
-
-		batch = new SpriteBatch();
-		shapeRenderer = new ShapeRenderer();
 		
-		// TODO: don't load phase 1 here, but after initialization. because of editor
-		this.currentPhase = new SubLevel1(this);
-
-		Assets assets = Autickax.getInstance().assets;
-		this.backGroundTextureString = "sky";
-		this.backgroundTexture = assets.getGraphics(backGroundTextureString);
-		
-		// dummy code ------------------------>		
-		this.gameObjects = new ArrayList<GameObject>();
-				
-		// <------------------------ dummy code
-		
-		this.font = game.assets.getFont();
-		
-		// Pathway
-		pathway = new Pathway();
-		
-		// Car
-		car = new Car(0, 0, 100, 63, this, "car");
-
-		
-		// Start Music!
-		game.assets.music.setLooping(true);
-		game.assets.music.setVolume(0.3f);
-		game.assets.music.play();
-	}
-	
 	public Pathway getPathWay()
 	{
 		return pathway;
@@ -130,7 +91,12 @@ public class GameScreen extends BaseScreen {
 			this.backGroundTextureString = level.getBackgroundTextureName();
 			this.backgroundTexture = game.assets.getGraphics(this.backGroundTextureString);
 			this.car = level.getCar();
+			this.start = level.getStart();
+			this.finish = level.getFinish();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
@@ -141,6 +107,19 @@ public class GameScreen extends BaseScreen {
 		game.assets.music.play();
 		
 		this.currentPhase = new SubLevel1(this);	
+	}
+	
+	public Start getStart(){
+		return this.start;
+	}
+	
+	public Finish getFinish(){
+		return this.finish;
+	}
+	
+	public Car getCar()
+	{
+		return this.car;
 	}
 	
 	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, double pathFollowingTime) {
@@ -186,12 +165,6 @@ public class GameScreen extends BaseScreen {
 
 		
 		this.currentPhase.draw(batch);
-
-		// TODO: Consider moving this into sublevels
-		/*for (int i = 0; i < this.gameObjects.size(); ++i) {
-			this.gameObjects.get(i).draw(this.batch);
-		}*/
-		// When Michal repairs it, uncomment
 		
 		batch.end();
 		

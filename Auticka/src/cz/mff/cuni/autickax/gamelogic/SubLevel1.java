@@ -40,6 +40,8 @@ public class SubLevel1 extends SubLevel {
 	 * Finnish of the track
 	 */
 	private Vector2 finishPoint;
+	
+
 
 	/**
 	 * Path representation
@@ -72,14 +74,7 @@ public class SubLevel1 extends SubLevel {
 	 * Number of waypoints that check if the player raced through all the track
 	 */
 	private int nofWayPoints;
-	/**
-	 * between 0-1 determines the part of path where the race ends
-	 */
-	private float finish;
-	/**
-	 * between 0-1 determines the part of path where the race starts
-	 */
-	private float start;
+
 
 	/**
 	 * Coordinates to check whether whole track was raced through
@@ -118,14 +113,13 @@ public class SubLevel1 extends SubLevel {
 		gameScr = gameScreen;
 		pathway = gameScreen.getPathWay();
 		maxDistance = 40;
-		start = 0.1f;
-		finish = 0.75f;
-		startPoint = pathway.GetPosition(start);
-		finishPoint = pathway.GetPosition(finish);
+		
+		startPoint = new Vector2(gameScreen.getStart().getX(), gameScreen.getStart().getY());
+		finishPoint = new Vector2(gameScreen.getFinish().getX(), gameScreen.getFinish().getY());
 		nofWayPoints = 40;
 
-		initWayPoints(finish, start, nofWayPoints);
-		wayLines = createWayPointLines(finish, start, nofWayPoints);
+		initWayPoints(FINISH, START, nofWayPoints);
+		wayLines = createWayPointLines(FINISH, START, nofWayPoints);
 
 		checkPoints = new LinkedList<CheckPoint>();
 		this.Level.getCar().move(startPoint.x, startPoint.y);
@@ -258,7 +252,7 @@ public class SubLevel1 extends SubLevel {
 			checkPoints.clear();
 			currentLine = 0;
 			timeMeasured = false;
-			initWayPoints(finish, start, nofWayPoints);
+			initWayPoints(FINISH, START, nofWayPoints);
 
 		}
 	}
