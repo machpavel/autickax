@@ -16,8 +16,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public class SubLevel2 extends SubLevel {
 
 	private LinkedList<CheckPoint> checkpoints;
-	private double pathFollowingAccuracy = 0;
-	private double pathFollowingTime = 0;
+	//for debugging
+	private LinkedList<CheckPoint> clonedCheckpoints;
 	private DistanceMap distMap;
 	
 	private CheckPoint from;
@@ -31,16 +31,17 @@ public class SubLevel2 extends SubLevel {
 	private float timeElapsed = 0;
 	
 
+	private LinkedList<Vector2> points = new LinkedList<Vector2>();
 
-	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints, DistanceMap map, double pathFollowingTime) {
+	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints, DistanceMap map) {
 		super(gameScreen);
 
 		this.checkpoints = checkpoints;
+
 		
-		//TODO wtf is this?????
-		this.pathFollowingAccuracy = pathFollowingAccuracy;
-		
-		this.pathFollowingTime = pathFollowingTime;
+
+
+		this.clonedCheckpoints = (LinkedList<CheckPoint>)checkpoints.clone();
 		this.distMap = map;
 		
 
@@ -58,7 +59,7 @@ public class SubLevel2 extends SubLevel {
 		{
 			Vector2 newPos = getNewCarPosition(time);
 			this.Level.getCar().move(newPos.x, newPos.y);
-
+			points.add(new Vector2(newPos));
 		}
 		
 	}
@@ -81,6 +82,14 @@ public class SubLevel2 extends SubLevel {
 		{
 			shapeRenderer.circle((float)ce.x / Input.xStretchFactor, (float)ce.y / Input.yStretchFactor,2);
 		}
+		
+		shapeRenderer.setColor(Color.BLUE);
+		for(Vector2 vec: points)
+		{
+			shapeRenderer.circle(vec.x / Input.xStretchFactor,vec.y / Input.yStretchFactor,2);
+		}
+		
+		
 
 		shapeRenderer.end();
 		
@@ -96,6 +105,7 @@ public class SubLevel2 extends SubLevel {
 		{
 			this.from = this.to;
 			//assign new target position
+			
 			this.to = checkpoints.removeFirst();
 			computeVelocity();
 			newPos = computeNewPosition(time,Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY, Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR);
@@ -130,6 +140,13 @@ public class SubLevel2 extends SubLevel {
 		float dist = this.velocityMagnitude * time * penalizationFactor;
 		Vector2 traslationVec = new Vector2(this.velocity).nor().scl(dist);
 		newPos.add(traslationVec);
+		
+		if (newPos.x < 0 || newPos.y < 0)
+		{
+			System.out.println("FUCK");
+		
+		}
+		
 		return newPos;
 	}
 	

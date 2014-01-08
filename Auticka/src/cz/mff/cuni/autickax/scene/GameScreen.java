@@ -123,8 +123,8 @@ public class GameScreen extends BaseScreen {
 		return this.car;
 	}
 	
-	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, double pathFollowingTime) {
-		this.currentPhase = new SubLevel2(this, checkpoints, map, pathFollowingTime);
+	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map) {
+		this.currentPhase = new SubLevel2(this, checkpoints, map);
 	}
 	
 	public void reset() {
