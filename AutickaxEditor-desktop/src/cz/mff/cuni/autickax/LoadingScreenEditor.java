@@ -3,14 +3,13 @@ package cz.mff.cuni.autickax;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 
-import cz.mff.cuni.autickax.scene.BaseScreen;
-
 
 public class LoadingScreenEditor extends BaseScreenEditor {
 
 	public LoadingScreenEditor() {
 		super();		
-		new Autickax().getInstance().assets.load();
+		new Autickax();
+		Autickax.getInstance().assets.load();
 		game.assets.load();
 	}
 

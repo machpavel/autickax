@@ -197,6 +197,8 @@ public class SubLevel1 extends SubLevel {
 			gameObject.update(delta);
 		}
 		this.Level.getCar().update(delta);
+		this.Level.getStart().update(delta);
+		this.Level.getFinish().update(delta);
 
 	}
 
@@ -210,6 +212,8 @@ public class SubLevel1 extends SubLevel {
 			gameObject.draw(batch);
 		}
 		this.Level.getCar().draw(batch);
+		this.Level.getStart().draw(batch);
+		this.Level.getFinish().draw(batch);
 
 		// render the track
 		// TODO render quick

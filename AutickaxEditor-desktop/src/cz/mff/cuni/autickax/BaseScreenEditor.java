@@ -5,8 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cz.mff.cuni.autickax.Autickax;
-
 public class BaseScreenEditor implements Screen {
 
 	protected AutickaxEditor game;

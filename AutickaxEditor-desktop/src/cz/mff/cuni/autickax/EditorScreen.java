@@ -31,7 +31,6 @@ import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
-import cz.mff.cuni.autickax.scene.BaseScreen;
 
 public class EditorScreen extends BaseScreenEditor {
 

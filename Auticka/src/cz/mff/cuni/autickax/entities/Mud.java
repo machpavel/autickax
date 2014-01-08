@@ -11,10 +11,7 @@ public final class Mud extends GameObject{
 		super(x,y,gameScreen);
 		switch (type) {
 		case 0:
-			this.width = 30;
-			this.height = 30;	
-			this.textureName = "mud";
-			this.texture = this.game.assets.getGraphics(textureName);			
+			super.setTexture(30, 30, "mud");			
 			break;
 		default:
 			break;

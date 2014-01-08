@@ -103,5 +103,12 @@ abstract public class GameObject {
 		writer.pop();
 	}
 	
+	public void setTexture(int width, int height, String name){
+		this.width = width;
+		this.height = height;	
+		this.textureName = name;
+		this.texture = this.game.assets.getGraphics(textureName);
+	}
+	
 	abstract void aditionalsToXml(XmlWriter writer) throws IOException;	
 }

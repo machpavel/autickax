@@ -19,10 +19,7 @@ public final class Car extends GameObject {
 		super(x,y,gameScreen);
 		switch (type) {
 		case 0:
-			this.width = 100;
-			this.height = 63;	
-			this.textureName = "car";
-			this.texture = this.game.assets.getGraphics(textureName);			
+			super.setTexture(100, 63, "car");					
 			break;
 		default:
 			break;
