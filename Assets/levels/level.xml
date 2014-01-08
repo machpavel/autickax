@@ -1,0 +1,18 @@
+<AutickaX>
+	<pathway pathwayType="CLOSED" typeOfInterpolation="CUBIC_B_SPLINE">
+		<controlPoints>
+			<point X="224.0" Y="58.0"/>
+			<point X="62.0" Y="238.0"/>
+			<point X="384.0" Y="453.0"/>
+			<point X="766.0" Y="314.0"/>
+			<point X="546.0" Y="28.0"/>
+		</controlPoints>
+	</pathway>
+	<entities>
+		<mud X="600.0" Y="100.0" type="0"/>
+		<stone X="200.0" Y="200.0" type="0"/>
+		<tree X="300.0" Y="300.0" type="0"/>
+	</entities>
+	<car X="0.0" Y="0.0" type="0"/>
+	<backgroundTexture textureName="sky"/>
+</AutickaX>
