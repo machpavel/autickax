@@ -46,7 +46,7 @@ public class TitleScreen extends BaseScreen {
 			}
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {	
-					game.setScreen(game.assets.loadLevel("level"));
+					game.setScreen(new GameScreen("level"));
 			}
 		});
 

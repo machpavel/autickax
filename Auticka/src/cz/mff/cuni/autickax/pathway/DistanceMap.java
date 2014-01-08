@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
  
 /**
  * @author Shabby
- * Class for representind 2-dimensional field of the closest distances of a curve.
+ * Class for representing 2-dimensional field of the closest distances of a curve.
  */
 
 public class DistanceMap {

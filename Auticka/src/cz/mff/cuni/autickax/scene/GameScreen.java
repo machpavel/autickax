@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.Assets;
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -69,84 +70,29 @@ public class GameScreen extends BaseScreen {
 	}
 	
 	// Creates instance according to a given xml file
-	public GameScreen(FileHandle file) {
+	public GameScreen(String name) {
 		super();
+		
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, stageWidth, stageHeight);
+
+		//graphics
+		batch = new SpriteBatch();
+		shapeRenderer = new ShapeRenderer();
+					
+
+		font = game.assets.getFont();
+			
 		try {
-			camera = new OrthographicCamera();
-			camera.setToOrtho(false, stageWidth, stageHeight);
-
-			//graphics
-			batch = new SpriteBatch();
-			shapeRenderer = new ShapeRenderer();
-						
-			// Init entities
-			this.gameObjects = new ArrayList<GameObject>();
-
-			font = game.assets.getFont();
-			
-			// Pathway
-			this.pathway = new Pathway();
-			
-			// Start Music!
-			game.assets.music.setLooping(true);
-			game.assets.music.setVolume(0.3f);
-			game.assets.music.play();				
-			
-			System.out.println("Loading level...");
-			Element root = new XmlReader().parse(file);			
-			
-			// Loading pathway
-			Element pathwayElement = root.getChildByName("pathway");	
-			pathway.setType(pathwayElement.getAttribute("pathwayType"));
-			Element controlPoints = pathwayElement.getChildByName("controlPoints");						
-			for(int i = 0; i < controlPoints.getChildCount(); i++){
-				Element controlPoint = controlPoints.getChild(i);
-				pathway.getControlPoints().add(new Vector2(controlPoint.getFloat("X"), controlPoint.getFloat("Y")));
-			}			
-			for (Vector2 point : pathway.getControlPoints()) {
-				System.out.println("point " + point);
-			}
-			pathway.CreateDistances();
-			
-			//TODO correct positions
-			start = new Start(pathway.GetPosition(SubLevel.START).x, pathway.GetPosition(0).y, this, 0);
-			finish = new Finish(pathway.GetPosition(SubLevel.FINISH).x, pathway.GetPosition(1).y, this, 0);
-			
-			
-			// Loading game objects
-			Element entities = root.getChildByName("entities");
-			for(int i = 0; i < entities.getChildCount() ; i++){
-				Element gameObject = entities.getChild(i);
-				String name = gameObject.getName(); 
-				if(name.equals("mud")){
-					gameObjects.add(new Mud(gameObject.getFloat("X"), gameObject.getFloat("Y"), this, gameObject.getInt("type", 0)));
-				}
-				else if (name.equals("stone")){
-					gameObjects.add(new Stone(gameObject.getFloat("X"), gameObject.getFloat("Y"), this, gameObject.getInt("type", 0)));
-				}
-				else if (name.equals("tree")){
-					gameObjects.add(new Tree(gameObject.getFloat("X"), gameObject.getFloat("Y"), this, gameObject.getInt("type", 0)));
-				}
-				else throw new IOException("Loading object failed: Unknown type");
-			}
-			for (GameObject gameObject : gameObjects) {
-				System.out.println(gameObject.toString());
-			}
-			
-			// Loading car
-			Element car = root.getChildByName("car");
-			this.car = new Car(car.getFloat("X"), car.getFloat("Y"), this, car.getInt("type", 0));			
-			System.out.println(this.car.toString());
-			
-			// Background
-			Element backgroundTexture = root.getChildByName("backgroundTexture");
-			this.backGroundTextureString = backgroundTexture.get("textureName");
-			this.backgroundTexture = game.assets.getGraphics(backGroundTextureString);
-			System.out.println(backGroundTextureString);
-			
-			this.currentPhase = new SubLevel1(this);					
-			System.out.println("Loading done...");
-			
+			Level level = new Level(game.assets.loadLevel(name));		
+			level.parseLevel(this);
+			this.pathway = level.getPathway();
+			this.gameObjects = level.getGameObjects();
+			this.backGroundTextureString = level.getBackgroundTextureName();
+			this.backgroundTexture = game.assets.getGraphics(this.backGroundTextureString);
+			this.car = level.getCar();
+			this.start = level.getStart();
+			this.finish = level.getFinish();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -154,7 +100,13 @@ public class GameScreen extends BaseScreen {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+			
+		// Start Music!
+		game.assets.music.setLooping(true);
+		game.assets.music.setVolume(0.3f);
+		game.assets.music.play();
 		
+		this.currentPhase = new SubLevel1(this);	
 	}
 	
 	public Start getStart(){
