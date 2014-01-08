@@ -15,8 +15,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public class DistanceMap {
-	public static float MAXIMUM_DISTANCE = 30;
-	private static Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_SPLINE;
+	public static float MAXIMUM_DISTANCE = 30;	
 	private static int LINE_SEGMENTATION = 100; //amount of parts used between two points
 	
 	private float [][] map;	
@@ -60,7 +59,7 @@ public class DistanceMap {
 	
 
 	// Creates the main distances structure for given control points.  
-	public void CreateDistances(ArrayList<Vector2> controlPoints, Pathway.PathwayType pathwayType){
+	public void CreateDistances(ArrayList<Vector2> controlPoints, Pathway.PathwayType pathwayType, Splines.TypeOfInterpolation typeOfInterpolation){
 		if(controlPoints.size() < 4) return;
 		
 		ClearMap();
@@ -70,7 +69,7 @@ public class DistanceMap {
 		int totalLines = controlPoints.size() * LINE_SEGMENTATION;				
 		Vector2 point;				
 		for (float i = 0; i <= totalLines; i++) {
-			point = Splines.GetPoint(controlPoints, i / totalLines, getTypeOfInterpolation(), pathwayType);
+			point = Splines.GetPoint(controlPoints, i / totalLines, typeOfInterpolation, pathwayType);
 			if(point.x >=0 && point.y > 0 && point.x <= width && point.y <= height)
 				this.map[(int)point.x][(int)point.y] = 0f;					
 		}
@@ -120,13 +119,7 @@ public class DistanceMap {
 		}									
 	}
 		
-	 public static Splines.TypeOfInterpolation getTypeOfInterpolation() {
-		return typeOfInterpolation;
-	}
-
-	public static void setTypeOfInterpolation(Splines.TypeOfInterpolation typeOfInterpolation) {
-		DistanceMap.typeOfInterpolation = typeOfInterpolation;
-	}
+	 
 	
 	
 

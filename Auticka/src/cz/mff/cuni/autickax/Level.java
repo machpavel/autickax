@@ -65,6 +65,7 @@ public class Level {
 		// Loading pathway
 		Element pathwayElement = root.getChildByName("pathway");
 		pathway.setType(pathwayElement.getAttribute("pathwayType"));
+		pathway.setTypeOfInterpolation(pathwayElement.getAttribute("typeOfInterpolation"));
 		Element controlPoints = pathwayElement.getChildByName("controlPoints");
 		int controlPointsCount = controlPoints.getChildCount(); 
 		for(int i = 0; i < controlPointsCount; i++){			

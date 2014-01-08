@@ -14,6 +14,7 @@ public class Pathway {
 	private DistanceMap distanceMap;
 	private ArrayList<Vector2> controlPoints;
 	private PathwayType pathwayType;
+	private Splines.TypeOfInterpolation typeOfInterpolation;
 	
 	public enum PathwayType{
 		CLOSED, OPENED;
@@ -23,8 +24,9 @@ public class Pathway {
 		 setDistanceMap(new DistanceMap((int)Gdx.graphics.getHeight(), (int)Gdx.graphics.getWidth()));
 		 setControlPoints(new ArrayList<Vector2>());
 	}
-	public Pathway(PathwayType pathwayType) {
+	public Pathway(PathwayType pathwayType, Splines.TypeOfInterpolation typeOfInterpolation) {
 		this();
+		this.typeOfInterpolation = typeOfInterpolation;
 		this.pathwayType = pathwayType;		 
 	}
 
@@ -34,7 +36,7 @@ public class Pathway {
 	 *  Method must be called if controlPoints are changed.
 	 */
 	public void CreateDistances() {
-		getDistanceMap().CreateDistances(getControlPoints(), pathwayType);		
+		getDistanceMap().CreateDistances(getControlPoints(), pathwayType, typeOfInterpolation);		
 	}
 	
 	
@@ -43,7 +45,7 @@ public class Pathway {
 	 * @return Point in screen coordinates.
 	 */
 	public Vector2 GetPosition(float u){
-		return Splines.GetPoint(getControlPoints(), u, DistanceMap.getTypeOfInterpolation(), pathwayType);
+		return Splines.GetPoint(getControlPoints(), u, typeOfInterpolation, pathwayType);
 	}
 
 	public ArrayList<Vector2> getControlPoints() {
@@ -67,6 +69,9 @@ public class Pathway {
 		return pathwayType;
 	}
 
+	public Splines.TypeOfInterpolation getTypeOfInterpolation() {
+		return typeOfInterpolation;
+	}
 
 	public void setType(PathwayType type) {
 		this.pathwayType = type;
@@ -77,6 +82,14 @@ public class Pathway {
 		else if(type.equals("CLOSED"))
 			this.pathwayType = PathwayType.CLOSED;
 		else throw new Exception("Unknown type of pathway type");
+	}
+	public void setTypeOfInterpolation(String typeOfInterpolation) throws Exception {
+		if(typeOfInterpolation.equals("CUBIC_B_SPLINE"))
+			this.typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
+		else if(typeOfInterpolation.equals("CUBIC_SPLINE"))
+			this.typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_SPLINE;
+		else 
+			throw new Exception("Unknown type of interpolation");
 	}
 	
 	

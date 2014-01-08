@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -18,16 +20,21 @@ abstract public class GameObject {
 
 	/** Position of the center of GameObject. */
 	protected Vector2 position;
+	protected int width;
+	protected int height;
+	Rectangle boundingRectangle;
 	
 	private boolean toDispose;
 	protected TextureRegion texture;
 
-	protected int width;
-	protected int height;
+	
+	
 	protected String textureName;
 	protected Autickax game;
 	protected GameScreen gameScreen;
 	protected byte type;
+		
+	
 
 	
 	public GameObject(float startX, float startY, GameScreen gameScreen) {
@@ -41,7 +48,7 @@ abstract public class GameObject {
 		this.width = width;
 		this.height = height;	
 		this.textureName = textureName;
-		this.texture = this.game.assets.getGraphics(textureName);
+		this.texture = this.game.assets.getGraphics(textureName);		
 	}
 	
 
@@ -73,6 +80,8 @@ abstract public class GameObject {
 	 */
 	public void move(float newX, float newY) {
 		this.position = new Vector2(newX, newY);
+		this.boundingRectangle.x = newX - width/2;
+		this.boundingRectangle.y = newY - height/2;
 	}
 
 	abstract public void update(float delta);
@@ -108,6 +117,12 @@ abstract public class GameObject {
 		this.height = height;	
 		this.textureName = name;
 		this.texture = this.game.assets.getGraphics(textureName);
+		
+		this.boundingRectangle = new Rectangle(this.getX() - width/2, this.getY() - height/2, width, height);
+	}
+	
+	public boolean intersect(GameObject object2){
+		return boundingRectangle.overlaps(object2.boundingRectangle);		
 	}
 	
 	abstract void aditionalsToXml(XmlWriter writer) throws IOException;	

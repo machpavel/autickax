@@ -23,7 +23,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Assets;
-import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.Mud;
@@ -31,9 +30,12 @@ import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
+import cz.mff.cuni.autickax.pathway.Splines;
 
 public class EditorScreen extends BaseScreenEditor {
-
+	// Constants	
+	static Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
+	static Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
 	
 	
 	// Textures
@@ -54,7 +56,7 @@ public class EditorScreen extends BaseScreenEditor {
 
 	// Pathway
 	private Pathway pathway;
-	Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;	
+	
 
 	// Buttons
 	Button buttonGeneratePoints;
@@ -82,7 +84,7 @@ public class EditorScreen extends BaseScreenEditor {
 		this.font = game.assets.getFont();
 
 		// Pathway
-		pathway = new Pathway(pathwayType);		
+		pathway = new Pathway(pathwayType, typeOfInterpolation);		
 		
 		game.assets.music.stop();
 		
@@ -99,7 +101,7 @@ public class EditorScreen extends BaseScreenEditor {
 		createGenerateButton();
 		createRestartButton();
 		
-		gameObjects.add(new Mud(100,100,null, 0));
+		gameObjects.add(new Mud(600,100,null, 0));
 		gameObjects.add(new Stone(200,200,null, 0));
 		gameObjects.add(new Tree(300,300,null, 0));
 	}
@@ -171,6 +173,7 @@ public class EditorScreen extends BaseScreenEditor {
 
 			xml.element("pathway");
 			xml.attribute("pathwayType", pathway.getType().toString());
+			xml.attribute("typeOfInterpolation", pathway.getTypeOfInterpolation().toString());
 			xml.element("controlPoints");
 			for (Vector2 point : pathway.getControlPoints()) {
 				xml.element("point");
@@ -254,7 +257,7 @@ public class EditorScreen extends BaseScreenEditor {
 
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				pathway = new Pathway(pathwayType);
+				pathway = new Pathway(pathwayType, typeOfInterpolation);
 			}
 		});
 	}
