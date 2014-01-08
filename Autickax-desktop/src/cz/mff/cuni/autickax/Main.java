@@ -14,10 +14,7 @@ public class Main {
 		cfg.width = 800;
 		cfg.height = 480;
 		
-		/** Custom game configuration */
-		GameConfiguration gameCfg = new GameConfiguration();
-		gameCfg.gameType = GameConfiguration.GameType.NormalGame;
 		
-		new LwjglApplication(new Autickax(gameCfg), cfg);
+		new LwjglApplication(new Autickax(), cfg);
 	}
 }

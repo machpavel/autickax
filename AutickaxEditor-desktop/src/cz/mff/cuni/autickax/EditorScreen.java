@@ -1,4 +1,4 @@
-package cz.mff.cuni.autickax.scene;
+package cz.mff.cuni.autickax;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,8 +31,9 @@ import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
+import cz.mff.cuni.autickax.scene.BaseScreen;
 
-public class EditorScreen extends BaseScreen {
+public class EditorScreen extends BaseScreenEditor {
 
 	
 	
@@ -69,7 +70,7 @@ public class EditorScreen extends BaseScreen {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 
-		Assets assets = Autickax.getInstance().assets;
+		Assets assets = game.assets;
 		this.backgroundTexture = assets.getGraphics(backGroundTextureString);
 
 		
