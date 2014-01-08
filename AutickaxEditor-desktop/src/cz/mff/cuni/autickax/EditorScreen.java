@@ -28,13 +28,12 @@ import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.Mud;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
-import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
 
 public class EditorScreen extends BaseScreenEditor {
 	// Constants	
-	static Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
+	static Pathway.PathwayType pathwayType = Pathway.PathwayType.CLOSED;
 	static Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
 	
 	
@@ -66,7 +65,7 @@ public class EditorScreen extends BaseScreenEditor {
 		super();
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 800, 480);
+		camera.setToOrtho(false, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
@@ -111,7 +110,7 @@ public class EditorScreen extends BaseScreenEditor {
 		if (Gdx.input.justTouched()) {
 			Vector2 point = new Vector2(Gdx.input.getX(), stageHeight - Gdx.input.getY());
 			pathway.getControlPoints().add(point);
-			game.assets.getSound("hit").play();
+			game.assets.getSound(Constants.SOUND_HIT).play();
 			generateXml("level.xml");
 		}
 	}
@@ -134,7 +133,7 @@ public class EditorScreen extends BaseScreenEditor {
 		shapeRenderer.begin(ShapeType.Point);
 		for (int x = 0; x < (int) stageWidth; x++) {
 			for (int y = 0; y < (int) stageHeight; y++) {
-				float colorIntensity = 1 - (pathway.getDistanceMap().At(x, y) / DistanceMap.MAXIMUM_DISTANCE);
+				float colorIntensity = 1 - (pathway.getDistanceMap().At(x, y) / Constants.MAX_DISTANCE_FROM_PATHWAY);
 				shapeRenderer.setColor(colorIntensity, 0, 0, 1);
 				shapeRenderer.point(x, y, 0);
 
