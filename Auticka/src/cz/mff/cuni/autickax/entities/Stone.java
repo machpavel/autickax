@@ -3,7 +3,7 @@ package cz.mff.cuni.autickax.entities;
 import java.io.IOException;
 
 import com.badlogic.gdx.utils.XmlWriter;
-
+import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Stone extends GameObject {
@@ -12,7 +12,7 @@ public final class Stone extends GameObject {
 		super(x,y,gameScreen);
 		switch (type) {
 		case 0:
-			super.setTexture(30, 30, "stone");						
+			super.setTexture(Constants.STONE_TYPE_1_WIDTH, Constants.STONE_TYPE_1_HEIGHT, Constants.STONE_TYPE_1_TEXTURE_NAME);						
 			break;
 		default:
 			break;

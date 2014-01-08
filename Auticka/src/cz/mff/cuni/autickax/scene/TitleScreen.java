@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import cz.mff.cuni.autickax.Constants;
+
 /*
  * This is the "Main menu" screen in the game, only contains a play button
  */
@@ -27,11 +29,11 @@ public class TitleScreen extends BaseScreen {
 									// constructor
 
 		// Play Button-----------------------------------------------------
-		//buttonPlay = new ImageButton(new TextureRegionDrawable(game.assets.getGraphics("play")));
-		buttonPlay = new TextButton("Play", new TextButtonStyle(new TextureRegionDrawable(
-				game.assets.getGraphics("play")),new TextureRegionDrawable(
-						game.assets.getGraphics("play")),new TextureRegionDrawable(
-								game.assets.getGraphics("play")),game.assets.getFont()));
+		buttonPlay = new TextButton("Play", new TextButtonStyle(
+				new TextureRegionDrawable(game.assets.getGraphics(Constants.BUTTON_PLAY)),
+				new TextureRegionDrawable(game.assets.getGraphics(Constants.BUTTON_PLAY)),
+				new TextureRegionDrawable(game.assets.getGraphics(Constants.BUTTON_PLAY)),
+				game.assets.getFont()));
 
 		buttonPlay.setPosition(150, 250);
 		// buttonPlay.setOrigin(buttonPlay.getWidth()/2,
@@ -44,9 +46,10 @@ public class TitleScreen extends BaseScreen {
 					int pointer, int button) {
 				return true;
 			}
+
 			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {	
-					game.setScreen(new GameScreen("level"));
+					int pointer, int button) {
+				game.setScreen(new GameScreen("level"));
 			}
 		});
 
@@ -54,7 +57,7 @@ public class TitleScreen extends BaseScreen {
 		float targetYplay = (stageHeight - buttonPlay.getHeight()) / 2;
 		buttonPlay.addAction(Actions.moveTo(buttonPlay.getX(), targetYplay, 3,
 				Interpolation.elasticOut));
-		//End of Play Button-------------------------------------------------
+		// End of Play Button-------------------------------------------------
 	}
 
 	@Override

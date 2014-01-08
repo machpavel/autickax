@@ -92,8 +92,8 @@ public class Assets {
 
 	private void loadSounds() {
 		soundsMap = new HashMap<String, Sound>();
-		soundsMap.put("jump", Gdx.audio.newSound(Gdx.files.internal("sfx/jump.wav")));
-		soundsMap.put("hit", Gdx.audio.newSound(Gdx.files.internal("sfx/hit.wav")));
+		soundsMap.put(Constants.SOUND_JUMP, Gdx.audio.newSound(Gdx.files.internal("sfx/jump.wav")));
+		soundsMap.put(Constants.SOUND_HIT, Gdx.audio.newSound(Gdx.files.internal("sfx/hit.wav")));
 		music = Gdx.audio.newMusic(Gdx.files.internal("sfx/music.mp3"));
 	}
 

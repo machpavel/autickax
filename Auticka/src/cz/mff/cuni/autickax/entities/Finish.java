@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
+import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class Finish extends GameObject {
@@ -12,7 +13,7 @@ public class Finish extends GameObject {
 		super(x,y,gameScreen);
 		switch (type) {
 		case 0:
-			super.setTexture(30, 30, "finish");	
+			super.setTexture(Constants.FINISH_TYPE_1_WIDTH, Constants.FINISH_TYPE_1_HEIGHT, Constants.FINISH_TYPE_1_TEXTURE_NAME);	
 			break;
 		default:
 			break;

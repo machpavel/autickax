@@ -4,9 +4,9 @@ package cz.mff.cuni.autickax.gamelogic;
  * Represents one point that player did went through. Contains time of the event and coordinates.
  */
 public class CheckPoint {
-	float time = 0;
-	float x = 0;
-	float y = 0;
+	final float time;
+	final float x;
+	final float y;
 	
 	/**
 	 * @return Gets time in milliseconds from the start of path following.

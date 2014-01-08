@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
+import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.input.Input;
 
 import com.badlogic.gdx.utils.XmlWriter;
@@ -19,7 +20,7 @@ public final class Car extends GameObject {
 		super(x,y,gameScreen);
 		switch (type) {
 		case 0:
-			super.setTexture(100, 63, "car");					
+			super.setTexture(Constants.CAR_TYPE_0_WIDTH, Constants.CAR_TYPE_0_WIDTH, Constants.CAR_TYPE_0_TEXTURE_NAME);					
 			break;
 		default:
 			break;

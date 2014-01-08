@@ -1,6 +1,5 @@
 package cz.mff.cuni.autickax.pathway;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;

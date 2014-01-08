@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
+import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -28,15 +30,16 @@ public class SubLevel2 extends SubLevel {
 	
 	private float timeElapsed = 0;
 	
-	private float penalConst = 3f;
-	private float maxDistance = 20;
 
 
 	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints, DistanceMap map, double pathFollowingTime) {
 		super(gameScreen);
 
 		this.checkpoints = checkpoints;
+		
+		//TODO wtf is this?????
 		this.pathFollowingAccuracy = pathFollowingAccuracy;
+		
 		this.pathFollowingTime = pathFollowingTime;
 		this.distMap = map;
 		
@@ -44,9 +47,7 @@ public class SubLevel2 extends SubLevel {
 
 		this.from = checkpoints.removeFirst();
 		this.to = checkpoints.removeFirst();
-		float startX = this.from.x;
-		float startY = this.from.y;
-		this.Level.getCar().move(startX, startY);
+		this.Level.getCar().move(this.from.x, this.from.y);
 		computeVelocity();
 	}
 
@@ -63,9 +64,13 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	@Override
-	public void draw(SpriteBatch sprite) {
-		this.Level.getCar().draw(sprite);
-		
+	public void draw(SpriteBatch batch) {
+		for (GameObject gameObject : this.Level.getGameObjects()) {
+			gameObject.draw(batch);
+		}
+		this.Level.getCar().draw(batch);
+		this.Level.getStart().draw(batch);
+		this.Level.getFinish().draw(batch);
 	}
 
 	@Override
@@ -84,7 +89,7 @@ public class SubLevel2 extends SubLevel {
 	private Vector2 getNewCarPosition(float time)
 	{
 		//compute new position vector and check if it lies on the old vector
-		Vector2 newPos = computeNewPosition(time,this.maxDistance, this.penalConst);
+		Vector2 newPos = computeNewPosition(time, Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY, Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR);
 		
 		//invalid direction (new checkpoint needed)
 		if ( new Vector2(this.to.x,this.to.y).sub(newPos).dot(this.velocity) < 0)
@@ -93,7 +98,7 @@ public class SubLevel2 extends SubLevel {
 			//assign new target position
 			this.to = checkpoints.removeFirst();
 			computeVelocity();
-			newPos = computeNewPosition(time,this.maxDistance, this.penalConst);
+			newPos = computeNewPosition(time,Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY, Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR);
 		}
 		
 		return newPos;
@@ -122,7 +127,7 @@ public class SubLevel2 extends SubLevel {
 		}
 		
 		Vector2 newPos = new Vector2(oldX, oldY);
-		float dist = this.velocityMagnitude*time*penalizationFactor;
+		float dist = this.velocityMagnitude * time * penalizationFactor;
 		Vector2 traslationVec = new Vector2(this.velocity).nor().scl(dist);
 		newPos.add(traslationVec);
 		return newPos;

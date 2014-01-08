@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
@@ -121,7 +120,7 @@ abstract public class GameObject {
 		this.boundingRectangle = new Rectangle(this.getX() - width/2, this.getY() - height/2, width, height);
 	}
 	
-	public boolean intersect(GameObject object2){
+	public boolean collides(GameObject object2){
 		return boundingRectangle.overlaps(object2.boundingRectangle);		
 	}
 	

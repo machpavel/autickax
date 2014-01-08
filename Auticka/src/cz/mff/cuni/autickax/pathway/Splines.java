@@ -68,9 +68,9 @@ public class Splines {
 
 	public static Vector2 GetPoint(ArrayList<Vector2> points, float u,
 			TypeOfInterpolation type, Pathway.PathwayType pathwayType) {
-		float part = 1f / (points.size());
-		int index = (int) (u / part);
-		float localU = (u - (float) index * part) / part;
+		float part = 0;
+		int index = 0;
+		float localU = 0;
 		
 		switch (pathwayType) {
 		case CLOSED:
@@ -79,7 +79,6 @@ public class Splines {
 			localU = (u - (float) index * part) / part;
 			break;
 		case OPENED:
-			// Counts indexes
 			part = 1f / (points.size() - 3);
 			index = (int) (u / part);			
 			localU = (u - (float) index * part) / part;

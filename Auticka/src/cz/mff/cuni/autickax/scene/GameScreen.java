@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.Assets;
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
@@ -103,7 +104,7 @@ public class GameScreen extends BaseScreen {
 			
 		// Start Music!
 		game.assets.music.setLooping(true);
-		game.assets.music.setVolume(0.3f);
+		game.assets.music.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
 		game.assets.music.play();
 		
 		this.currentPhase = new SubLevel1(this);	

@@ -6,7 +6,10 @@ import java.util.LinkedList;
 
 
 import java.util.Queue;
+
 import com.badlogic.gdx.math.Vector2;
+
+import cz.mff.cuni.autickax.Constants;
 
  
 /**
@@ -14,10 +17,7 @@ import com.badlogic.gdx.math.Vector2;
  * Class for representing 2-dimensional field of the closest distances of a curve.
  */
 
-public class DistanceMap {
-	public static float MAXIMUM_DISTANCE = 30;	
-	private static int LINE_SEGMENTATION = 100; //amount of parts used between two points
-	
+public class DistanceMap {	
 	private float [][] map;	
 	private static float sqrtOfTwo = (float)Math.sqrt(2);	
 	private int height;
@@ -66,7 +66,7 @@ public class DistanceMap {
 
 		
 		//Set line position to zero
-		int totalLines = controlPoints.size() * LINE_SEGMENTATION;				
+		int totalLines = controlPoints.size() * Constants.LINE_SEGMENTATION;				
 		Vector2 point;				
 		for (float i = 0; i <= totalLines; i++) {
 			point = Splines.GetPoint(controlPoints, i / totalLines, typeOfInterpolation, pathwayType);
@@ -94,7 +94,7 @@ public class DistanceMap {
 					(currentPoint.x + x >= width)||
 					(currentPoint.y + y < 0)||
 					(currentPoint.y + y >= height)||
-					map[currentPoint.x][currentPoint.y] >= MAXIMUM_DISTANCE)
+					map[currentPoint.x][currentPoint.y] >= Constants.MAX_DISTANCE_FROM_PATHWAY)
 						continue;
 					
 					

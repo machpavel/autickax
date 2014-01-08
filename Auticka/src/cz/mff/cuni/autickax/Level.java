@@ -15,7 +15,6 @@ import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.Mud;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
-import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -79,8 +78,8 @@ public class Level {
 		this.pathway.CreateDistances();
 		
 		//TODO correct positions
-		this.start = new Start(pathway.GetPosition(SubLevel.START).x, pathway.GetPosition(0).y, gameScreen, 0);
-		this.finish = new Finish(pathway.GetPosition(SubLevel.FINISH).x, pathway.GetPosition(1).y, gameScreen, 0);
+		this.start = new Start(pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x, pathway.GetPosition(0).y, gameScreen, 0);
+		this.finish = new Finish(pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x, pathway.GetPosition(1).y, gameScreen, 0);
 		
 		
 		// Loading game objects

@@ -2,12 +2,12 @@ package cz.mff.cuni.autickax.gamelogic;
 
 import java.util.LinkedList;
 
+import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.linePackage.MyLine;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
@@ -26,10 +26,6 @@ public class SubLevel1 extends SubLevel {
 	private float timeElapsed = 0;
 
 	// TODO should be associated with given track
-	/**
-	 * If farther from the road, this phases ends
-	 */
-	private float maxDistance;
 
 	/**
 	 * Origin of the track
@@ -40,8 +36,6 @@ public class SubLevel1 extends SubLevel {
 	 * Finnish of the track
 	 */
 	private Vector2 finishPoint;
-	
-
 
 	/**
 	 * Path representation
@@ -53,32 +47,23 @@ public class SubLevel1 extends SubLevel {
 	 */
 	private SubLevel1States state;
 
+	/**
+	 * Player just starts this phase or made a mistake and was moved again
+	 */
 
 	/**
 	 * Player just starts this phase or made a mistake and was moved again
 	 */
 
-
-	/**
-	 * Player just starts this phase or made a mistake and was moved again 
-	 */
-	
-	public enum SubLevel1States{
-				BEGINNING_STATE, 	
-				DRIVING_STATE,		//Driving in progress
-				FINISH_STATE,		//Player successfully finished the race
-				MISTAKE_STATE;
+	public enum SubLevel1States {
+		BEGINNING_STATE, DRIVING_STATE, // Driving in progress
+		FINISH_STATE, // Player successfully finished the race
+		MISTAKE_STATE;
 	}
-	
-	/**
-	 * Number of waypoints that check if the player raced through all the track
-	 */
-	private int nofWayPoints;
 
 
-	/**
-	 * Coordinates to check whether whole track was raced through
-	 */
+
+	/** Coordinates to check whether whole track was raced through */
 	private LinkedList<Vector2> wayPoints;
 
 	/**
@@ -111,22 +96,21 @@ public class SubLevel1 extends SubLevel {
 	public SubLevel1(GameScreen gameScreen) {
 		super(gameScreen);
 		gameScr = gameScreen;
-		pathway = gameScreen.getPathWay();
-		maxDistance = 40;
-		
-		startPoint = new Vector2(gameScreen.getStart().getX(), gameScreen.getStart().getY());
-		finishPoint = new Vector2(gameScreen.getFinish().getX(), gameScreen.getFinish().getY());
-		nofWayPoints = 40;
+		pathway = gameScreen.getPathWay();		
 
-		initWayPoints(FINISH, START, nofWayPoints);
-		wayLines = createWayPointLines(FINISH, START, nofWayPoints);
+		startPoint = new Vector2(gameScreen.getStart().getX(), gameScreen
+				.getStart().getY());
+		finishPoint = new Vector2(gameScreen.getFinish().getX(), gameScreen
+				.getFinish().getY());		
+
+		initWayPoints(Constants.FINISH_POSITION_IN_CURVE, Constants.START_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
+		wayLines = createWayPointLines(Constants.FINISH_POSITION_IN_CURVE, Constants.START_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
 
 		checkPoints = new LinkedList<CheckPoint>();
 		this.Level.getCar().move(startPoint.x, startPoint.y);
 		lastPoint = new Vector2(startPoint);
 
 		state = SubLevel1States.BEGINNING_STATE;
-
 
 	}
 
@@ -140,8 +124,7 @@ public class SubLevel1 extends SubLevel {
 			if (Gdx.input.justTouched()) {
 				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
-				if (startPoint.dst(touchPos.x, touchPos.y) <= maxDistance) {
-
+				if (startPoint.dst(touchPos.x, touchPos.y) <= Constants.MAX_DISTANCE_FROM_PATHWAY) {
 					this.Level.getCar().setDragged(true);
 					state = SubLevel1States.DRIVING_STATE;
 					timeMeasured = true;
@@ -163,7 +146,7 @@ public class SubLevel1 extends SubLevel {
 			// coordinates ok
 			DistanceMap map = pathway.getDistanceMap();
 			if (x >= 0 && x < map.getWidth() && y >= 0 && y < map.getHeight()) {
-				if (map.At(x, y) > maxDistance) {
+				if (map.At(x, y) > Constants.MAX_DISTANCE_FROM_PATHWAY) {
 					reset();
 
 				} else {
@@ -182,17 +165,22 @@ public class SubLevel1 extends SubLevel {
 			}
 		}
 		// Finish state
-		else {
+		else if (state == SubLevel1States.FINISH_STATE) {
 			// switch whenever ready
 			if (Gdx.input.justTouched()) {
-				/*state = SubLevel1States.BEGINNING_STATE;
-				reset();
-				currentLine = 0;*/
-				gameScr.switchToPhase2(checkPoints, pathway.getDistanceMap(), timeElapsed);
+				/*
+				 * state = SubLevel1States.BEGINNING_STATE; reset(); currentLine
+				 * = 0;
+				 */
+				gameScr.switchToPhase2(checkPoints, pathway.getDistanceMap(),
+						timeElapsed);
 			}
+		} else if (state == SubLevel1States.MISTAKE_STATE) {
+			// TODO implementation
+		} else {
+			// TODO implementation
 		}
-		
-		
+
 		for (GameObject gameObject : this.Level.getGameObjects()) {
 			gameObject.update(delta);
 		}
@@ -216,17 +204,19 @@ public class SubLevel1 extends SubLevel {
 		this.Level.getFinish().draw(batch);
 
 		// render the track
-		// TODO render quick
+		// TODO render quicker
 		// TODO move this to gamescreen class
-		
-		 /* shapeRenderer.begin(ShapeType.Point); shapeRenderer.setColor(new
-		  Color(Color.WHITE)); for (int x = 0; x < (int) stageWidth; x++) { for
-		  (int y = 0; y < (int) stageHeight; y++) { 
-			  if (pathway.getDistanceMap().At(x, y) < Float.MAX_VALUE
-		  ) shapeRenderer.point(x, y, 0);
-		  
-		  } } shapeRenderer.end();*/
-		 
+		// TODO rewrite positioning into constants
+
+		/*
+		 * shapeRenderer.begin(ShapeType.Point); shapeRenderer.setColor(new
+		 * Color(Color.WHITE)); for (int x = 0; x < (int) stageWidth; x++) { for
+		 * (int y = 0; y < (int) stageHeight; y++) { if
+		 * (pathway.getDistanceMap().At(x, y) < Float.MAX_VALUE )
+		 * shapeRenderer.point(x, y, 0);
+		 * 
+		 * } } shapeRenderer.end();
+		 */
 
 		// Draw score
 		font.draw(batch, "score: " + score, 10, (int) stageHeight - 32);
@@ -256,7 +246,7 @@ public class SubLevel1 extends SubLevel {
 			checkPoints.clear();
 			currentLine = 0;
 			timeMeasured = false;
-			initWayPoints(FINISH, START, nofWayPoints);
+			initWayPoints(Constants.START_POSITION_IN_CURVE, Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
 
 		}
 	}
@@ -313,13 +303,13 @@ public class SubLevel1 extends SubLevel {
 	private boolean checkWayPoints(int x, int y) {
 		if (!wayPoints.isEmpty()) {
 			Vector2 first = wayPoints.peek();
-			if (first.dst(x, y) <= maxDistance)
+			if (first.dst(x, y) <= Constants.MAX_DISTANCE_FROM_PATHWAY)
 				wayPoints.removeFirst();
 		}
 
 		if (wayPoints.isEmpty()) {
 			// distance from finish line
-			if (finishPoint.dst(x, y) <= maxDistance)
+			if (finishPoint.dst(x, y) <= Constants.MAX_DISTANCE_FROM_PATHWAY)
 				return true;
 		}
 
@@ -343,20 +333,23 @@ public class SubLevel1 extends SubLevel {
 	public void render() {
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(Color.BLUE);
-		shapeRenderer.circle(startPoint.x / Input.xStretchFactor, startPoint.y / Input.yStretchFactor, maxDistance);
+		shapeRenderer.circle(startPoint.x / Input.xStretchFactor, startPoint.y
+				/ Input.yStretchFactor, Constants.MAX_DISTANCE_FROM_PATHWAY);
 		shapeRenderer.setColor(Color.YELLOW);
-		shapeRenderer.circle(finishPoint.x / Input.xStretchFactor, finishPoint.y / Input.yStretchFactor, maxDistance);
+		shapeRenderer.circle(finishPoint.x / Input.xStretchFactor,
+				finishPoint.y / Input.yStretchFactor, Constants.MAX_DISTANCE_FROM_PATHWAY);
 
 		shapeRenderer.setColor(new Color(Color.DARK_GRAY));
 		for (Vector2 vec : wayPoints) {
-			shapeRenderer.circle(vec.x / Input.xStretchFactor, vec.y / Input.yStretchFactor, 10);
+			shapeRenderer.circle(vec.x / Input.xStretchFactor, vec.y
+					/ Input.yStretchFactor, 10);
 
 		}
 
 		shapeRenderer.setColor(Color.RED);
-		for(CheckPoint ce: checkPoints)
-		{
-			shapeRenderer.circle((float)ce.x / Input.xStretchFactor, (float)ce.y / Input.yStretchFactor,2);
+		for (CheckPoint ce : checkPoints) {
+			shapeRenderer.circle((float) ce.x / Input.xStretchFactor,
+					(float) ce.y / Input.yStretchFactor, 2);
 		}
 
 		shapeRenderer.end();
@@ -364,8 +357,10 @@ public class SubLevel1 extends SubLevel {
 		shapeRenderer.begin(ShapeType.Line);
 		for (int i = currentLine; i < wayLines.size(); i++) {
 			MyLine line = wayLines.get(i);
-			Vector2 vec1 = new Vector2(line.getSeg1().x / Input.xStretchFactor, line.getSeg1().y / Input.yStretchFactor);
-			Vector2 vec2 = new Vector2(line.getSeg2().x / Input.xStretchFactor, line.getSeg2().y / Input.yStretchFactor);
+			Vector2 vec1 = new Vector2(line.getSeg1().x / Input.xStretchFactor,
+					line.getSeg1().y / Input.yStretchFactor);
+			Vector2 vec2 = new Vector2(line.getSeg2().x / Input.xStretchFactor,
+					line.getSeg2().y / Input.yStretchFactor);
 			shapeRenderer.line(vec1, vec2);
 		}
 		shapeRenderer.end();
@@ -394,7 +389,7 @@ public class SubLevel1 extends SubLevel {
 		for (float f = start + step; f < finish; f += step) {
 			Vector2 vec = pathway.GetPosition(f);
 			Vector2 perp = new Vector2(vec).sub(prev).rotate(-90);
-			perp.nor().scl(maxDistance);
+			perp.nor().scl(Constants.MAX_DISTANCE_FROM_PATHWAY);
 			Vector2 perp2 = new Vector2(perp).rotate(180);
 
 			lines.add(new MyLine(perp.add(vec), perp2.add(vec)));
