@@ -127,8 +127,23 @@ abstract public class GameObject {
 		this.boundingRectangle = new Rectangle(this.getX() - width/2, this.getY() - height/2, width, height);
 	}
 	
+	
+	/**
+	 * Determines when two object hit each other. 
+	 * @param object2
+	 * @return
+	 */
 	public boolean collides(GameObject object2){
 		return boundingRectangle.overlaps(object2.boundingRectangle);		
+	}
+	
+	/**
+	 * Determines when position of the middle of the object is in the other object 
+	 * @param object2
+	 * @return
+	 */
+	public boolean positionCollides(GameObject object2){
+		return object2.boundingRectangle.contains(this.position);		
 	}
 	
 	abstract void aditionalsToXml(XmlWriter writer) throws IOException;	
