@@ -62,9 +62,9 @@ public final class Constants {
 	// INPUT & COORDINATES
 	//
 	/** Determines ideal world width. If the resolution is different, coordinates are stretched. */ 
-	public final static float WORLD_WIDTH = 800;
+	public final static int WORLD_WIDTH = 800;
 	/** Determines ideal world height. If the resolution is different, coordinates are stretched. */
-	public final static float WORLD_HEIGHT = 480; 
+	public final static int WORLD_HEIGHT = 480; 
 
 	
 
