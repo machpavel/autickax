@@ -88,6 +88,7 @@ public class Assets {
 			graphicsFile = GRAPHICS_FILE_L;
 		}*/
 		assetManager.load(GRAPHICS_FILE , TextureAtlas.class);
+		assetManager.load(GRAPHICS_FILE , TextureAtlas.class);
 	}
 
 	private void loadSounds() {
