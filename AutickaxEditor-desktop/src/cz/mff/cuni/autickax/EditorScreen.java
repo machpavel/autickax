@@ -35,6 +35,7 @@ public class EditorScreen extends BaseScreenEditor {
 	// Constants	
 	static Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
 	static Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
+	static int PATHWAY_TEXTURE_TYPE = 0;
 	
 	
 	// Textures
@@ -173,6 +174,7 @@ public class EditorScreen extends BaseScreenEditor {
 			xml.element("pathway");
 			xml.attribute("pathwayType", pathway.getType().toString());
 			xml.attribute("typeOfInterpolation", pathway.getTypeOfInterpolation().toString());
+			xml.attribute("textureType", PATHWAY_TEXTURE_TYPE);
 			xml.element("controlPoints");
 			for (Vector2 point : pathway.getControlPoints()) {
 				xml.element("point");

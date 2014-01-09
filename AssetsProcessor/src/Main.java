@@ -23,6 +23,7 @@ public class Main {
 	
 	
 	private static final String ASSETS_LEVELS_PATH_IMAGES = ASSETS_IMAGES_PATH + "/levels-paths";
+	private static final String ASSETS_PATHWAY_TEXTURES = ASSETS_PATH + "/pathwayTextures";
 	
     public static void main(String[] args) throws IOException {
     	
@@ -55,7 +56,7 @@ public class Main {
     	File[] files = levelsDirectory.listFiles();
     	for( File file : files ) {
     		LevelPath levelPath = new LevelPath(file);
-    		levelPath.createBitmap(800, 480, ASSETS_LEVELS_PATH_IMAGES);
+    		levelPath.createBitmap(800, 480, ASSETS_PATHWAY_TEXTURES, ASSETS_LEVELS_PATH_IMAGES);
     	}
     }
 

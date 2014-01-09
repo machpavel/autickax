@@ -171,7 +171,7 @@ public class SubLevel1 extends SubLevel {
 		if (carPosition.x >= 0 && carPosition.x < map.getWidth()
 				&& carPosition.y >= 0 && carPosition.y < map.getHeight()) {
 
-			// TODO do not tick off wayCircles if not on track
+			
 			if (this.Level.getCar().positionCollides(this.Level.getFinish())) {
 				state = SubLevel1States.FINISH_STATE;
 				timeMeasured = false;
