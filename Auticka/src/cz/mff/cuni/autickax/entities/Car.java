@@ -20,7 +20,7 @@ public final class Car extends GameObject {
 		super(x,y,gameScreen);
 		switch (type) {
 		case 0:
-			super.setTexture(Constants.CAR_TYPE_0_WIDTH, Constants.CAR_TYPE_0_WIDTH, Constants.CAR_TYPE_0_TEXTURE_NAME);					
+			super.setTexture(Constants.CAR_TYPE_0_WIDTH, Constants.CAR_TYPE_0_HEIGHT, Constants.CAR_TYPE_0_TEXTURE_NAME);					
 			break;
 		default:
 			break;
