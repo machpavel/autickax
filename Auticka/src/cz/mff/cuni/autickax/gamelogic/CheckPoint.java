@@ -1,9 +1,11 @@
 package cz.mff.cuni.autickax.gamelogic;
 
+import java.io.Serializable;
+
 /**
  * Represents one point that player did went through. Contains time of the event and coordinates.
  */
-public class CheckPoint {
+public class CheckPoint implements Serializable{
 	final float time;
 	final float x;
 	final float y;

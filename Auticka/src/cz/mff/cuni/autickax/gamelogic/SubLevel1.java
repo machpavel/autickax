@@ -103,7 +103,6 @@ public class SubLevel1 extends SubLevel {
 		finishPoint = new Vector2(gameScreen.getFinish().getX(), gameScreen
 				.getFinish().getY());		
 
-		initWayPoints(Constants.START_POSITION_IN_CURVE,Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
 		finishLine = createFinishLine(Constants.FINISH_POSITION_IN_CURVE);
 		wayCircles = createWayPointCircles(Constants.START_POSITION_IN_CURVE, Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
 
@@ -250,7 +249,6 @@ public class SubLevel1 extends SubLevel {
 			checkPoints.clear();
 			currentCircle = 0;
 			timeMeasured = false;
-			initWayPoints(Constants.START_POSITION_IN_CURVE, Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
 			lastPoint = new Vector2(startPoint);
 		}
 	}
@@ -296,17 +294,6 @@ public class SubLevel1 extends SubLevel {
 
 
 
-	private void initWayPoints(float start, float finish, int nofWayPoints) {
-		wayPoints = new LinkedList<Vector2>();
-		float step = (finish - start) / nofWayPoints;
-		Vector2 lastAdded = null;
-		for (float f = start; f < finish; f += step) {
-			lastAdded = pathway.GetPosition(f);
-			wayPoints.add(lastAdded);
-		}
-
-	}
-
 	@Override
 	public void render() {
 		shapeRenderer.begin(ShapeType.Filled);
@@ -317,18 +304,8 @@ public class SubLevel1 extends SubLevel {
 		shapeRenderer.circle(finishPoint.x / Input.xStretchFactor,
 				finishPoint.y / Input.yStretchFactor, Constants.MAX_DISTANCE_FROM_PATHWAY);
 
-		shapeRenderer.setColor(new Color(Color.DARK_GRAY));
-		for (Vector2 vec : wayPoints) {
-			shapeRenderer.circle(vec.x / Input.xStretchFactor, vec.y
-					/ Input.yStretchFactor, 10);
 
-		}
-		
-		/*for (int i = 0; i < this.wayCircles.size(); i++) {
-			Circle c = this.wayCircles.get(i);
-			shapeRenderer.circle(c.x / Input.xStretchFactor, c.y / Input.yStretchFactor, c.radius);
 
-		}*/
 
 		shapeRenderer.setColor(Color.RED);
 		for (CheckPoint ce : checkPoints) {
@@ -352,37 +329,6 @@ public class SubLevel1 extends SubLevel {
 
 	}
 
-	/**
-	 * Computes lines perpendicular to points through the race. Intersection
-	 * will be computed in order to determine if a line was crossed
-	 * 
-	 * @param finish
-	 *            finishing point
-	 * @param start
-	 *            starting point
-	 * @param nofWayPoints
-	 *            number of thresholds to be crossed
-	 * @return lines across the race serving as waypoints
-	 */
-	private LinkedList<MyLine> createWayPointLines(float finish, float start,
-			int nofWayPoints) {
-		LinkedList<MyLine> lines = new LinkedList<MyLine>();
-
-		float step = (finish - start) / nofWayPoints;
-		Vector2 prev = pathway.GetPosition(start);
-
-		for (float f = start + step; f < finish; f += step) {
-			Vector2 vec = pathway.GetPosition(f);
-			Vector2 perp = new Vector2(vec).sub(prev).rotate(-90);
-			perp.nor().scl(Constants.MAX_DISTANCE_FROM_PATHWAY);
-			Vector2 perp2 = new Vector2(perp).rotate(180);
-
-			lines.add(new MyLine(perp.add(vec), perp2.add(vec)));
-			prev = vec;
-		}
-
-		return lines;
-	}
 	
 	private LinkedList<Circle> createWayPointCircles(float start, float finish, int nofWayPoints)	
 	{
