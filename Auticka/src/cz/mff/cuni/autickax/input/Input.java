@@ -9,8 +9,8 @@ public class Input {
 	public static float yStretchFactor;
 	
 	public static void InitDimensions() {
-		Input.xStretchFactor = Constants.WORLD_WIDTH / Gdx.graphics.getWidth();
-		Input.yStretchFactor = Constants.WORLD_HEIGHT / Gdx.graphics.getHeight();
+		Input.xStretchFactor = (float)Constants.WORLD_WIDTH / Gdx.graphics.getWidth();
+		Input.yStretchFactor = (float)Constants.WORLD_HEIGHT / Gdx.graphics.getHeight();
 	}
 	
 	public static int getX() {
