@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Auticka/libs/gdx.jar" sourcepath="/Auticka/libs/gdx-sources.jar"/>
 	<classpathentry kind="lib" path="/Auticka/libs/gdx-tools.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Auticka"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

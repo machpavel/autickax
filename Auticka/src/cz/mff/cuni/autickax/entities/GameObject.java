@@ -115,7 +115,11 @@ abstract public class GameObject {
 		this.width = width;
 		this.height = height;	
 		this.textureName = name;
-		this.texture = this.game.assets.getGraphics(textureName);
+		
+		// TODO: This condition is temporary hack due to loading levels in AssetsProcessor. REWRITE!
+		if (this.game != null) {
+			this.texture = this.game.assets.getGraphics(textureName);
+		}
 		
 		this.boundingRectangle = new Rectangle(this.getX() - width/2, this.getY() - height/2, width, height);
 	}
