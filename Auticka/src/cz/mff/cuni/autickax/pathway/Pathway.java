@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
+import cz.mff.cuni.autickax.Constants;
+
 /**
  * @author Shabby
  * Main class for representing a pathway.
@@ -19,8 +21,8 @@ public class Pathway {
 		CLOSED, OPENED;
 	}
 		
-	public Pathway() {		
-		 setDistanceMap(new DistanceMap((int)Gdx.graphics.getHeight(), (int)Gdx.graphics.getWidth()));
+	public Pathway() {
+		 setDistanceMap(new DistanceMap(Constants.WORLD_HEIGHT, Constants.WORLD_WIDTH));
 		 setControlPoints(new ArrayList<Vector2>());
 	}
 	public Pathway(PathwayType pathwayType, Splines.TypeOfInterpolation typeOfInterpolation) {
