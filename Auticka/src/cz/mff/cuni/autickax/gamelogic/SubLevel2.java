@@ -1,8 +1,10 @@
 package cz.mff.cuni.autickax.gamelogic;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,8 +47,12 @@ public class SubLevel2 extends SubLevel {
 
 		this.checkpoints = checkpoints;
 		//backup checkpoints
-		StoreCheckpointOnDisk();
+		storeCheckpointOnDisk();
+		LinkedList<CheckPoint> loadedCheckpoints; 
+		//loadedCheckpoints = loadCheckPoints(new File("..\\StoredCheckpoints\\moc okolo"));
 		
+		/*if (loadedCheckpoints != null)
+			this.checkpoints = loadedCheckpoints;*/
 
 
 		this.clonedCheckpoints = (LinkedList<CheckPoint>)checkpoints.clone();
@@ -69,7 +75,7 @@ public class SubLevel2 extends SubLevel {
 			this.Level.getCar().move(newPos.x, newPos.y);
 			points.add(new Vector2(newPos));
 			//successful -> erase checkpoints from disk
-			EraseCheckpointOndDisk();
+			eraseCheckpointOndDisk();
 		}
 		
 	}
@@ -160,7 +166,7 @@ public class SubLevel2 extends SubLevel {
 		return newPos;
 	}
 	
-	private void StoreCheckpointOnDisk()
+	private void storeCheckpointOnDisk()
 	{
 	      try
 	      {
@@ -180,11 +186,32 @@ public class SubLevel2 extends SubLevel {
 	      }
 	}
 	
-	private void EraseCheckpointOndDisk()
+	private void eraseCheckpointOndDisk()
 	{
 		if(checkpointFile.delete())
 			System.out.println("Checkpoints erased");
 	}
-	
+
+	private LinkedList<CheckPoint> loadCheckPoints(File f)
+	{
+		LinkedList<CheckPoint> chck = null;
+	      try
+	      {
+	         FileInputStream fileIn = new FileInputStream(f);
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         chck = (LinkedList<CheckPoint>) in.readObject();
+	         in.close();
+	         fileIn.close();
+	         System.out.println("Checkpoints loaded");
+	      }catch(IOException i)
+	      {
+	         i.printStackTrace();
+	      }catch(ClassNotFoundException c)
+	      {
+	         System.out.println("Checkpoint Class not found");
+	         c.printStackTrace();
+	      }
+	      return chck;
+	}
 
 }
