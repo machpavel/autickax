@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 public class Main {
 
 	private static final String ASSETS_PATH = "../Assets/";
-	private static final Path ASSETS_IMAGES_PATH = Paths.get(ASSETS_PATH + "images");
+	private static final String ASSETS_IMAGES_PATH = ASSETS_PATH + "images";
 	private static final Path ASSETS_FONTS_PATH = Paths.get(ASSETS_PATH + "fonts");
 	private static final Path ASSETS_SFX_PATH = Paths.get(ASSETS_PATH + "sfx");
 	private static final Path ASSETS_LEVELS_PATH = Paths.get(ASSETS_PATH + "levels");
@@ -22,7 +22,7 @@ public class Main {
 	private static final Path ANDROID_LEVELS_PATH = Paths.get(ANDROID_PATH + "levels");
 	
 	
-	private static final String ASSETS_LEVELS_PATH_IMAGES = ASSETS_PATH + "levels-paths";
+	private static final String ASSETS_LEVELS_PATH_IMAGES = ASSETS_IMAGES_PATH + "/levels-paths";
 	
     public static void main(String[] args) throws IOException {
     	
@@ -84,15 +84,9 @@ public class Main {
     	Settings settings = new Settings();
     	TexturePacker.process(
 			settings,
-			ASSETS_IMAGES_PATH.toString(),
+			ASSETS_IMAGES_PATH,
 			ANDROID_IMAGES_PATH.toString(),
 			"images"
-		);
-    	TexturePacker.process(
-			settings,
-			ASSETS_LEVELS_PATH_IMAGES,
-			ANDROID_IMAGES_PATH.toString(),
-			"pathways"
 		);
     }
 }
