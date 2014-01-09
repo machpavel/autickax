@@ -6,8 +6,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
+
 
 
 
@@ -17,8 +19,6 @@ import com.badlogic.gdx.files.FileHandle;
 
 
 public class LevelPath {
-	private final static int REFERENCE_LEVEL_WIDTH = 800;
-	private final static int REFERENCE_LEVEL_HEIGH = 480;
 	private final static int MAX_DRAWN_DISTANCE = 10;
 	private final static int TRANSPARENTLY_DRAWN_DISTANCE = 15;
 	
@@ -42,10 +42,12 @@ public class LevelPath {
 		
 		BufferedImage image = new BufferedImage(width, height,  BufferedImage.TYPE_4BYTE_ABGR);
 		
-		for (int row = 0; row < REFERENCE_LEVEL_HEIGH; ++row) {
-			for (int column = 0; column < REFERENCE_LEVEL_WIDTH; ++column) {
+		for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
+			for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
 				
-				float distance = distanceMap.At(column, row);
+				// distance map is flipped to the bitmap
+				float distance = distanceMap.At(column, Constants.WORLD_HEIGHT - row - 1);
+				
 				if (distance < LevelPath.MAX_DRAWN_DISTANCE) {	
 					Color pathwayColor = new Color(0, 0, 0, 255);
 					image.setRGB(column, row, pathwayColor.getRGB());
