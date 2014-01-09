@@ -26,6 +26,7 @@ public class Level {
 	private String backgroundTextureName;
 	private Start start;
 	private Finish finish;
+	private int pathwayTextureType;
 	
 	public Level (FileHandle file) {
 		this.file = file;
@@ -55,6 +56,10 @@ public class Level {
 		return this.finish;
 	}
 	
+	public int getPathwayTextureType() {
+		return this.pathwayTextureType;
+	}
+	
 	public void parseLevel(GameScreen gameScreen) throws Exception {
 	
 		System.out.println("Loading level...");
@@ -65,6 +70,7 @@ public class Level {
 		Element pathwayElement = root.getChildByName("pathway");
 		pathway.setType(pathwayElement.getAttribute("pathwayType"));
 		pathway.setTypeOfInterpolation(pathwayElement.getAttribute("typeOfInterpolation"));
+		pathwayTextureType = pathwayElement.getInt("textureType");
 		Element controlPoints = pathwayElement.getChildByName("controlPoints");
 		int controlPointsCount = controlPoints.getChildCount(); 
 		for(int i = 0; i < controlPointsCount; i++){			

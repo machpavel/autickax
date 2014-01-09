@@ -42,6 +42,9 @@ public final class Constants {
 	//TODO: dont use this
 	public static final String 	BUTTON_PLAY = "play";
 	
+	/** Background pathway texture */
+	public static final String 	PATHWAY_TEXTURE_TYPE_1 = "pathway";
+	
 	
 	
 	//
