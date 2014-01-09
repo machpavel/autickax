@@ -38,6 +38,7 @@ import cz.mff.cuni.autickax.pathway.Pathway;
 public class GameScreen extends BaseScreen {
 	// Textures
 	private TextureRegion backgroundTexture;
+	private TextureRegion pathwayTexture;
 	private String backGroundTextureString;
 
 	// Rendering
@@ -100,7 +101,9 @@ public class GameScreen extends BaseScreen {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
+		
+		this.pathwayTexture = game.assets.getGraphics(name);
 			
 		// Start Music!
 		game.assets.music.setLooping(true);
@@ -159,9 +162,10 @@ public class GameScreen extends BaseScreen {
 		batch.disableBlending(); //performance boost
 		
 		// background
-		batch.draw(backgroundTexture, 0, 0, stageWidth, stageHeight);
-		
+		batch.draw(this.backgroundTexture, 0, 0, stageWidth, stageHeight);
 		batch.enableBlending(); //don't forget to enabled this for alpha channel
+		batch.draw(this.pathwayTexture, 0, 0, stageWidth, stageHeight);
+		
 		
 
 		
