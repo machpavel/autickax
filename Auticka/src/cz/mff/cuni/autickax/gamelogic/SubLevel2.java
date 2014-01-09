@@ -1,5 +1,11 @@
 package cz.mff.cuni.autickax.gamelogic;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.graphics.Color;
@@ -29,7 +35,8 @@ public class SubLevel2 extends SubLevel {
 	
 	
 	private float timeElapsed = 0;
-	
+	/**Stored checkpoints */
+	private File checkpointFile;
 
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
 
@@ -37,7 +44,8 @@ public class SubLevel2 extends SubLevel {
 		super(gameScreen);
 
 		this.checkpoints = checkpoints;
-
+		//backup checkpoints
+		StoreCheckpointOnDisk();
 		
 
 
@@ -60,6 +68,8 @@ public class SubLevel2 extends SubLevel {
 			Vector2 newPos = getNewCarPosition(time);
 			this.Level.getCar().move(newPos.x, newPos.y);
 			points.add(new Vector2(newPos));
+			//successful -> erase checkpoints from disk
+			EraseCheckpointOndDisk();
 		}
 		
 	}
@@ -148,6 +158,32 @@ public class SubLevel2 extends SubLevel {
 		}
 		
 		return newPos;
+	}
+	
+	private void StoreCheckpointOnDisk()
+	{
+	      try
+	      {
+	    	 String dt = new SimpleDateFormat("yyyyMMddhhmm").format(new Date()).toString();
+	    	 String name = "check"  + dt +  ".chck";
+	    	 checkpointFile = new File("..\\StoredCheckpoints\\" + name);  
+	         FileOutputStream fileOut = new FileOutputStream(checkpointFile);
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(checkpoints);
+	         out.close();
+	         fileOut.close();
+	         System.out.println("Checkpoints stored");
+	         
+	      }catch(IOException i)
+	      {
+	          i.printStackTrace();
+	      }
+	}
+	
+	private void EraseCheckpointOndDisk()
+	{
+		if(checkpointFile.delete())
+			System.out.println("Checkpoints erased");
 	}
 	
 
