@@ -33,7 +33,7 @@ import cz.mff.cuni.autickax.pathway.Splines;
 
 public class EditorScreen extends BaseScreenEditor {
 	// Constants	
-	static Pathway.PathwayType pathwayType = Pathway.PathwayType.CLOSED;
+	static Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
 	static Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
 	
 	

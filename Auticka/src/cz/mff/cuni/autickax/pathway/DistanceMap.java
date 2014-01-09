@@ -24,10 +24,19 @@ public class DistanceMap {
 	private int width;
 	
 	
-	// Get a distance according to xy pixel. 0 means that the curve was hit. >0 means that we are "value" pixels far from the curve.
-	// TODO: change to relative coordinates
+ 	
+	/**
+	 * Get a distance according to xy pixel. 0 means that the curve was hit. >0 means that we are "value" pixels far from the curve.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public float At(int x, int y){
 		return map[x][y];
+	}
+	
+	public float At(Vector2 position){
+		return map[(int)position.x][(int)position.y];
 	}
 		
 	public DistanceMap(int height, int width) {

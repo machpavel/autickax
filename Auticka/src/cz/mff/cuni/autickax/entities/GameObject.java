@@ -52,7 +52,10 @@ abstract public class GameObject {
 	
 
 
-		
+	/** Returns position of the objects center. */
+	public Vector2 getPosition() {
+		return this.position;
+	}	
 
 	/** Returns x-coordinate of the objects center. */
 	public float getX() {
