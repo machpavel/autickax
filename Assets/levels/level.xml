@@ -1,20 +1,11 @@
 <AutickaX>
-	<pathway pathwayType="OPENED" typeOfInterpolation="CUBIC_B_SPLINE">
+	<pathway pathwayType="CLOSED" typeOfInterpolation="CUBIC_B_SPLINE">
 		<controlPoints>
-			<point X="62.0" Y="136.0"/>
-			<point X="62.0" Y="136.0"/>
-			<point X="62.0" Y="136.0"/>
-			<point X="62.0" Y="136.0"/>
-			<point X="90.0" Y="370.0"/>
-			<point X="352.0" Y="432.0"/>
-			<point X="512.0" Y="340.0"/>
-			<point X="393.0" Y="142.0"/>
-			<point X="427.0" Y="40.0"/>
-			<point X="713.0" Y="41.0"/>
-			<point X="726.0" Y="217.0"/>
-			<point X="700.0" Y="390.0"/>
-			<point X="700.0" Y="390.0"/>
-			<point X="700.0" Y="390.0"/>
+			<point X="224.0" Y="58.0"/>
+			<point X="62.0" Y="238.0"/>
+			<point X="384.0" Y="453.0"/>
+			<point X="766.0" Y="314.0"/>
+			<point X="546.0" Y="28.0"/>
 		</controlPoints>
 	</pathway>
 	<entities>
