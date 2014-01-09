@@ -21,6 +21,7 @@ import com.badlogic.gdx.files.FileHandle;
 public class LevelPath {
 	private final static int MAX_DRAWN_DISTANCE = 10;
 	private final static int TRANSPARENTLY_DRAWN_DISTANCE = 15;
+	private final static int TRANSPARENT_PATHWAY = Constants.MAX_DISTANCE_FROM_PATHWAY - Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY;
 	
 	private final File file;
 	
@@ -48,14 +49,14 @@ public class LevelPath {
 				// distance map is flipped to the bitmap
 				float distance = distanceMap.At(column, Constants.WORLD_HEIGHT - row - 1);
 				
-				if (distance < LevelPath.MAX_DRAWN_DISTANCE) {	
+				if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY) {	
 					Color pathwayColor = new Color(0, 0, 0, 255);
 					image.setRGB(column, row, pathwayColor.getRGB());
 				}
-				else if (distance < LevelPath.TRANSPARENTLY_DRAWN_DISTANCE) {
-					distance -= LevelPath.MAX_DRAWN_DISTANCE; // cause this is where the transparency begin
+				else if (distance < Constants.MAX_DISTANCE_FROM_PATHWAY) {
+					distance -= Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY; // cause this is where the transparency begin
 					
-					int alpha = (int)(((5 - distance) / 5) * 255);
+					int alpha = (int)(((TRANSPARENT_PATHWAY - distance) / TRANSPARENT_PATHWAY) * 255);
 					Color pathwayColor = new Color(0, 0, 0, alpha);
 					image.setRGB(column, row, pathwayColor.getRGB());
 				}
