@@ -31,7 +31,7 @@ public final class Constants {
 	//
 	
 	/** The speed is effected by this constant when the car is out of proper surface of the pathway */
-	public static final float OUT_OF_SURFACE_PENALIZATION_FACTOR = 3;
+	public static final float OUT_OF_SURFACE_PENALIZATION_FACTOR = 1.8f;
 	
 	
 	

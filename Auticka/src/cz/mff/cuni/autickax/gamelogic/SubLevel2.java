@@ -10,12 +10,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-
 import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.drawing.Font;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
@@ -24,8 +25,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public class SubLevel2 extends SubLevel {
 
 	private LinkedList<CheckPoint> checkpoints;
-	//for debugging
-	private LinkedList<CheckPoint> clonedCheckpoints;
+
 	private DistanceMap distMap;
 	
 	private CheckPoint from;
@@ -33,7 +33,7 @@ public class SubLevel2 extends SubLevel {
 	
 	private Vector2 velocity;
 	private float velocityMagnitude;
-
+	private float penalizationFactor = 1f;
 	
 	
 	private float timeElapsed = 0;
@@ -48,20 +48,16 @@ public class SubLevel2 extends SubLevel {
 		this.checkpoints = checkpoints;
 		//backup checkpoints
 		storeCheckpointOnDisk();
-		LinkedList<CheckPoint> loadedCheckpoints; 
-		//loadedCheckpoints = loadCheckPoints(new File("..\\StoredCheckpoints\\moc okolo"));
+		/*LinkedList<CheckPoint> loadedCheckpoints; 
+		loadedCheckpoints = loadCheckPoints(new File("..\\StoredCheckpoints\\check201401091034Svine.chck"));
 		
-		/*if (loadedCheckpoints != null)
+		if (loadedCheckpoints != null)
 			this.checkpoints = loadedCheckpoints;*/
 
-
-		this.clonedCheckpoints = (LinkedList<CheckPoint>)checkpoints.clone();
 		this.distMap = map;
-		
 
-
-		this.from = checkpoints.removeFirst();
-		this.to = checkpoints.removeFirst();
+		this.from = this.checkpoints.removeFirst();
+		this.to = this.checkpoints.removeFirst();
 		this.Level.getCar().move(this.from.x, this.from.y);
 		computeVelocity();
 	}
@@ -74,9 +70,14 @@ public class SubLevel2 extends SubLevel {
 			Vector2 newPos = getNewCarPosition(time);
 			this.Level.getCar().move(newPos.x, newPos.y);
 			points.add(new Vector2(newPos));
-			//successful -> erase checkpoints from disk
-			eraseCheckpointOndDisk();
+			
+			
 		}
+		else//successful -> erase checkpoints from disk
+			{
+				
+				eraseCheckpointOndDisk();
+			}
 		
 	}
 
@@ -88,6 +89,9 @@ public class SubLevel2 extends SubLevel {
 		this.Level.getCar().draw(batch);
 		this.Level.getStart().draw(batch);
 		this.Level.getFinish().draw(batch);
+		Font font = new Font(this.Level.getFont());
+		font.draw(batch, "time: " + String.format("%1$,.1f", timeElapsed),
+				10, (int) Gdx.graphics.getHeight() - 32);
 	}
 
 	@Override
@@ -113,22 +117,42 @@ public class SubLevel2 extends SubLevel {
 	
 	private Vector2 getNewCarPosition(float time)
 	{
-		//compute new position vector and check if it lies on the old vector
-		Vector2 newPos = computeNewPosition(time, Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY, Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR);
+		float timeAvailable = time;
+		Vector2 newPos = null;
 		
-		//invalid direction (new checkpoint needed)
-		if ( new Vector2(this.to.x,this.to.y).sub(newPos).dot(this.velocity) < 0)
+		while (timeAvailable > 0 && !this.checkpoints.isEmpty())
 		{
-			this.from = this.to;
-			//assign new target position
+			//TODO assert car is always between TO AND FROM && timeAvailable >=0
+			float oldX = this.Level.getCar().getX();
+			float oldY = this.Level.getCar().getY();
+			//compute time necessary to reach checkpoint To
+			float distToTo = new Vector2(oldX, oldY).sub(to.getX(), to.getY()).len();
+			float timeNecessaire = distToTo / (this.velocityMagnitude *  this.penalizationFactor);
 			
-			this.to = checkpoints.removeFirst();
-			computeVelocity();
-			newPos = computeNewPosition(time,Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY, Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR);
+			//move only as much as you can
+			if (timeNecessaire > timeAvailable)
+			{
+				float dist = this.velocityMagnitude * timeAvailable * penalizationFactor;
+				Vector2 traslationVec = new Vector2(this.velocity).nor().scl(dist);
+				newPos = new  Vector2(oldX,oldY);
+				newPos.add(traslationVec);
+				timeAvailable = 0;
+			}
+			//move to checkpoint to and subtract the time, recalculate velocity, and checkpoints
+			else
+			{
+				this.Level.getCar().move(to.x, to.y);
+				newPos = new Vector2(to.x,to.y);
+				this.from = this.to;
+				this.to = this.checkpoints.removeFirst();
+				computeVelocity();
+				timeAvailable -= timeNecessaire;
+			}
 		}
-		
 		return newPos;
+
 	}
+
 	
 	/**
 	 * Computes exact velocity from sublevel1
@@ -138,33 +162,20 @@ public class SubLevel2 extends SubLevel {
 		float time = this.to.time - this.from.time;
 		velocity = new Vector2(this.to.x, this.to.y).sub(this.from.x, this.from.y).div(time);
 		velocityMagnitude = velocity.len();
+		
+		float carX = this.Level.getCar().getX();
+		float carY = this.Level.getCar().getY();
+		float distanceFromCurveCenter = distMap.At((int)carX, (int)carY);
+		if(distanceFromCurveCenter > Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY)
+		{
+			penalizationFactor = Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR / (float)Math.log(distanceFromCurveCenter+2);
+		}
+		else
+			penalizationFactor = 1;
+		
 	}
 	
-	private Vector2 computeNewPosition(float time, float maxDistance, float penalConst)
-	{
-		float oldX = this.Level.getCar().getX();
-		float oldY = this.Level.getCar().getY();
-		float penalizationFactor = 1f;
-		
-		float distanceFromCurveCenter = distMap.At((int)oldX, (int)oldY);
-		if(distanceFromCurveCenter > maxDistance)
-		{
-			penalizationFactor*= penalConst / Math.log(distanceFromCurveCenter+2);
-		}
-		
-		Vector2 newPos = new Vector2(oldX, oldY);
-		float dist = this.velocityMagnitude * time * penalizationFactor;
-		Vector2 traslationVec = new Vector2(this.velocity).nor().scl(dist);
-		newPos.add(traslationVec);
-		
-		if (newPos.x < 0 || newPos.y < 0)
-		{
-			System.out.println("FUCK");
-		
-		}
-		
-		return newPos;
-	}
+
 	
 	private void storeCheckpointOnDisk()
 	{
@@ -213,5 +224,6 @@ public class SubLevel2 extends SubLevel {
 	      }
 	      return chck;
 	}
+
 
 }
