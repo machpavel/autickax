@@ -12,7 +12,8 @@ public final class Stone extends GameObject {
 		super(x,y,gameScreen);
 		switch (type) {
 		case 0:
-			super.setTexture(Constants.STONE_TYPE_1_WIDTH, Constants.STONE_TYPE_1_HEIGHT, Constants.STONE_TYPE_1_TEXTURE_NAME);						
+			super.setMeasurements(Constants.STONE_TYPE_1_WIDTH, Constants.STONE_TYPE_1_HEIGHT);
+			super.setTexture(Constants.STONE_TYPE_1_TEXTURE_NAME);						
 			break;
 		default:
 			break;

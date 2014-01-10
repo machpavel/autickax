@@ -2,13 +2,14 @@ package cz.mff.cuni.autickax.gamelogic;
 
 import java.io.Serializable;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * Represents one point that player did went through. Contains time of the event and coordinates.
  */
 public class CheckPoint implements Serializable{
 	final float time;
-	final float x;
-	final float y;
+	final Vector2 position;
 	
 	/**
 	 * @return Gets time in milliseconds from the start of path following.
@@ -18,18 +19,12 @@ public class CheckPoint implements Serializable{
 	}
 	
 	/**
-	 * @return Gets X-coordinate.
+	 * @return Gets position.
 	 */
-	float getX() {
-		return this.x;
+	Vector2 getPosition() {
+		return this.position;
 	}
 	
-	/**
-	 * @return Gets y-coordinate.
-	 */
-	float getY() {
-		return this.y;
-	}
 	
 	/**
 	 * @param time Time in milliseconds from the start of path following. 
@@ -38,7 +33,6 @@ public class CheckPoint implements Serializable{
 	 */
 	CheckPoint(float time, float x, float y) {
 		this.time = time;
-		this.x = x;
-		this.y = y;
+		this.position = new Vector2(x, y);		
 	}
 }

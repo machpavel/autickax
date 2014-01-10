@@ -13,7 +13,8 @@ public final class Mud extends GameObject{
 		super(x,y,gameScreen);
 		switch (type) {
 		case 0:
-			super.setTexture(Constants.MUD_TYPE_1_WIDTH, Constants.MUD_TYPE_1_HEIGHT, Constants.MUD_TYPE_1_TEXTURE_NAME);			
+			super.setMeasurements(Constants.MUD_TYPE_1_WIDTH, Constants.MUD_TYPE_1_HEIGHT);
+			super.setTexture(Constants.MUD_TYPE_1_TEXTURE_NAME);			
 			break;
 		default:
 			break;

@@ -13,7 +13,8 @@ public final class Tree extends GameObject {
 		super(x,y,gameScreen);
 		switch (type) {
 		case 0:
-			super.setTexture(Constants.TREE_TYPE_1_WIDTH, Constants.TREE_TYPE_1_HEIGHT, Constants.TREE_TYPE_1_TEXTURE_NAME);		
+			super.setMeasurements(Constants.TREE_TYPE_1_WIDTH, Constants.TREE_TYPE_1_HEIGHT);
+			super.setTexture(Constants.TREE_TYPE_1_TEXTURE_NAME);		
 			break;
 		default:
 			break;

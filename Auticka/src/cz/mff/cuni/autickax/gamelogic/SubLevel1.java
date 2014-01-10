@@ -318,8 +318,8 @@ public class SubLevel1 extends SubLevel {
 
 		shapeRenderer.setColor(Color.RED);
 		for (CheckPoint ce : checkPoints) {
-			shapeRenderer.circle((float) ce.x * Input.xStretchFactorInv,
-					(float) ce.y * Input.yStretchFactorInv, 2);
+			shapeRenderer.circle((float) ce.position.x * Input.xStretchFactorInv,
+					(float) ce.position.y * Input.yStretchFactorInv, 2);
 		}
 
 		shapeRenderer.end();
