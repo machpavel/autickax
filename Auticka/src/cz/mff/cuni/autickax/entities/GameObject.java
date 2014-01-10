@@ -85,6 +85,11 @@ abstract public class GameObject {
 		this.boundingRectangle.x = newX - width/2;
 		this.boundingRectangle.y = newY - height/2;
 	}
+	
+	public void move(Vector2 newPos)
+	{
+		move(newPos.x,newPos.y);
+	}
 
 	abstract public void update(float delta);
 	abstract public String getName();

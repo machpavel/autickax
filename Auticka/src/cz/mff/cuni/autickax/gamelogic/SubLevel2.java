@@ -67,8 +67,7 @@ public class SubLevel2 extends SubLevel {
 		timeElapsed += time;
 		if (!checkpoints.isEmpty())
 		{
-			Vector2 newPos = getNewCarPosition(time);
-			this.Level.getCar().move(newPos.x, newPos.y);
+			Vector2 newPos = moveCarToNewPosition(time);
 			points.add(new Vector2(newPos));
 			
 			
@@ -115,7 +114,7 @@ public class SubLevel2 extends SubLevel {
 		
 	}
 	
-	private Vector2 getNewCarPosition(float time)
+	private Vector2 moveCarToNewPosition(float time)
 	{
 		float timeAvailable = time;
 		Vector2 newPos = null;
@@ -123,10 +122,9 @@ public class SubLevel2 extends SubLevel {
 		while (timeAvailable > 0 && !this.checkpoints.isEmpty())
 		{
 			//TODO assert car is always between TO AND FROM && timeAvailable >=0
-			float oldX = this.Level.getCar().getX();
-			float oldY = this.Level.getCar().getY();
+			Vector2 carPos = this.Level.getCar().getPosition();
 			//compute time necessary to reach checkpoint To
-			float distToTo = new Vector2(oldX, oldY).sub(to.getX(), to.getY()).len();
+			float distToTo = new Vector2(carPos).sub(to.getX(), to.getY()).len();
 			float timeNecessaire = distToTo / (this.velocityMagnitude *  this.penalizationFactor);
 			
 			//move only as much as you can
@@ -134,7 +132,7 @@ public class SubLevel2 extends SubLevel {
 			{
 				float dist = this.velocityMagnitude * timeAvailable * penalizationFactor;
 				Vector2 traslationVec = new Vector2(this.velocity).nor().scl(dist);
-				newPos = new  Vector2(oldX,oldY);
+				newPos = new  Vector2(carPos); 
 				newPos.add(traslationVec);
 				timeAvailable = 0;
 			}
@@ -149,8 +147,8 @@ public class SubLevel2 extends SubLevel {
 				timeAvailable -= timeNecessaire;
 			}
 		}
+		this.Level.getCar().move(newPos);
 		return newPos;
-
 	}
 
 	
@@ -163,9 +161,7 @@ public class SubLevel2 extends SubLevel {
 		velocity = new Vector2(this.to.x, this.to.y).sub(this.from.x, this.from.y).div(time);
 		velocityMagnitude = velocity.len();
 		
-		float carX = this.Level.getCar().getX();
-		float carY = this.Level.getCar().getY();
-		float distanceFromCurveCenter = distMap.At((int)carX, (int)carY);
+		float distanceFromCurveCenter = distMap.At(this.Level.getCar().getPosition());
 		if(distanceFromCurveCenter > Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY)
 		{
 			penalizationFactor = Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR / (float)Math.log(distanceFromCurveCenter+2);

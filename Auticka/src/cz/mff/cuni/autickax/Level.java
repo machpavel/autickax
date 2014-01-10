@@ -27,6 +27,7 @@ public class Level {
 	private Start start;
 	private Finish finish;
 	private int pathwayTextureType;
+	private float timeLimit = 5; //TODO will be initialized from xml
 	
 	public Level (FileHandle file) {
 		this.file = file;
@@ -56,10 +57,16 @@ public class Level {
 		return this.finish;
 	}
 	
+	public float getTimeLimit()
+	{
+		return timeLimit;
+	}
+	
 	public int getPathwayTextureType() {
 		return this.pathwayTextureType;
 	}
 	
+	//TODO add TIMELIMIT to XML
 	public void parseLevel(GameScreen gameScreen) throws Exception {
 	
 		System.out.println("Loading level...");
