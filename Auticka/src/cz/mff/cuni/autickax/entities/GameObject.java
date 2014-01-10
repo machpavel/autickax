@@ -27,7 +27,7 @@ abstract public class GameObject {
 	private boolean toDispose;
 	protected TextureRegion texture;
 
-	protected String textureName;
+
 	protected Autickax game;
 	protected GameScreen gameScreen;
 	protected byte type;
@@ -44,7 +44,6 @@ abstract public class GameObject {
 		this(startX, startY, gameScreen);
 		this.width = width;
 		this.height = height;
-		this.textureName = textureName;
 		this.texture = this.game.assets.getGraphics(textureName);
 	}
 
@@ -118,14 +117,11 @@ abstract public class GameObject {
 				this.getY() - height / 2, width, height);
 	}
 
-	public void setTexture(String name) {
-
-		this.textureName = name;
-
+	public void setTexture(String name) {		
 		// TODO: This condition is temporary hack due to loading levels in
 		// AssetsProcessor. REWRITE!
 		if (this.game != null) {
-			this.texture = this.game.assets.getGraphics(textureName);
+			this.texture = this.game.assets.getGraphics(name);
 		}
 
 		

@@ -21,30 +21,34 @@ public final class Car extends GameObject {
 
 	public Car(float x, float y, GameScreen gameScreen, int type) {
 		super(x, y, gameScreen);
-		switch (type) {
-		case 0:
-			super.setMeasurements(Constants.CAR_TYPE_0_WIDTH,
-					Constants.CAR_TYPE_0_HEIGHT);
-			this.positionTextures[0] = this.game.assets
-					.getGraphics(Constants.CAR_TYPE_0_POSITION_0_TEXTURE_NAME);
-			this.positionTextures[1] = this.game.assets
-					.getGraphics(Constants.CAR_TYPE_0_POSITION_1_TEXTURE_NAME);
-			this.positionTextures[2] = this.game.assets
-					.getGraphics(Constants.CAR_TYPE_0_POSITION_2_TEXTURE_NAME);
-			this.positionTextures[3] = this.game.assets
-					.getGraphics(Constants.CAR_TYPE_0_POSITION_3_TEXTURE_NAME);
-			this.positionTextures[4] = this.game.assets
-					.getGraphics(Constants.CAR_TYPE_0_POSITION_4_TEXTURE_NAME);
-			this.positionTextures[5] = this.game.assets
-					.getGraphics(Constants.CAR_TYPE_0_POSITION_5_TEXTURE_NAME);
-			this.positionTextures[6] = this.game.assets
-					.getGraphics(Constants.CAR_TYPE_0_POSITION_6_TEXTURE_NAME);
-			this.positionTextures[7] = this.game.assets
-					.getGraphics(Constants.CAR_TYPE_0_POSITION_7_TEXTURE_NAME);
-			super.texture = this.positionTextures[0];
-			break;
-		default:
-			break;
+		// TODO: This condition is temporary hack due to loading levels in
+		// AssetsProcessor. REWRITE!
+		if (this.game != null) {
+			switch (type) {
+			case 0:
+				super.setMeasurements(Constants.CAR_TYPE_0_WIDTH,
+						Constants.CAR_TYPE_0_HEIGHT);
+				this.positionTextures[0] = this.game.assets
+						.getGraphics(Constants.CAR_TYPE_0_POSITION_0_TEXTURE_NAME);
+				this.positionTextures[1] = this.game.assets
+						.getGraphics(Constants.CAR_TYPE_0_POSITION_1_TEXTURE_NAME);
+				this.positionTextures[2] = this.game.assets
+						.getGraphics(Constants.CAR_TYPE_0_POSITION_2_TEXTURE_NAME);
+				this.positionTextures[3] = this.game.assets
+						.getGraphics(Constants.CAR_TYPE_0_POSITION_3_TEXTURE_NAME);
+				this.positionTextures[4] = this.game.assets
+						.getGraphics(Constants.CAR_TYPE_0_POSITION_4_TEXTURE_NAME);
+				this.positionTextures[5] = this.game.assets
+						.getGraphics(Constants.CAR_TYPE_0_POSITION_5_TEXTURE_NAME);
+				this.positionTextures[6] = this.game.assets
+						.getGraphics(Constants.CAR_TYPE_0_POSITION_6_TEXTURE_NAME);
+				this.positionTextures[7] = this.game.assets
+						.getGraphics(Constants.CAR_TYPE_0_POSITION_7_TEXTURE_NAME);
+				super.texture = this.positionTextures[0];
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
@@ -63,7 +67,7 @@ public final class Car extends GameObject {
 
 	@Override
 	public void update(float delta) {
-		this.rotation  = (this.rotation + delta * 70) % 360;
+		this.rotation = (this.rotation + delta * 70) % 360;
 		if (this.isDragged()) {
 			if (Gdx.input.isTouched()) {
 				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
@@ -100,10 +104,9 @@ public final class Car extends GameObject {
 		else if ((this.rotation >= 337.5 && this.rotation < 360)
 				|| (this.rotation >= 0 && this.rotation < 22.5))
 			this.texture = positionTextures[0];
-		else
-		{
-			//TODO: throw Exception
-		}		
+		else {
+			// TODO: throw Exception
+		}
 		super.draw(batch);
 	}
 }
