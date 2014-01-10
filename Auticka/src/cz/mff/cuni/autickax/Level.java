@@ -27,7 +27,7 @@ public class Level {
 	private Start start;
 	private Finish finish;
 	private int pathwayTextureType;
-	private float timeLimit = 5; //TODO will be initialized from xml
+	private float timeLimit;
 	
 	public Level (FileHandle file) {
 		this.file = file;
@@ -124,6 +124,8 @@ public class Level {
 		Element backgroundTexture = root.getChildByName("backgroundTexture");
 		this.backgroundTextureName = backgroundTexture.get("textureName");
 		System.out.println(this.backgroundTextureName);
+		
+		this.timeLimit = root.getFloat("timeLimit");
 		
 		System.out.println("Loading done...");
 	}

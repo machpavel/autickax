@@ -87,7 +87,15 @@ public class GameScreen extends BaseScreen {
 					
 
 		font = game.assets.getFont();
-		float timeLimit = 5;	
+				
+		this.pathwayTexture = game.assets.getGraphics(name);
+		
+		// Start Music!
+		game.assets.music.setLooping(true);
+		game.assets.music.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
+		game.assets.music.play();
+		
+	
 		try {
 			Level level = new Level(game.assets.loadLevel(name));		
 			level.parseLevel(this);
@@ -97,8 +105,8 @@ public class GameScreen extends BaseScreen {
 			this.backgroundTexture = game.assets.getGraphics(this.backGroundTextureString);
 			this.car = level.getCar();
 			this.start = level.getStart();
-			this.finish = level.getFinish();
-			timeLimit = level.getTimeLimit();
+			this.finish = level.getFinish();			
+			this.currentPhase = new SubLevel1(this, level.getTimeLimit());	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,14 +115,7 @@ public class GameScreen extends BaseScreen {
 			e.printStackTrace();
 		}
 		
-		this.pathwayTexture = game.assets.getGraphics(name);
 			
-		// Start Music!
-		game.assets.music.setLooping(true);
-		game.assets.music.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-		game.assets.music.play();
-		
-		this.currentPhase = new SubLevel1(this, timeLimit);	
 	}
 	
 	public Start getStart(){
