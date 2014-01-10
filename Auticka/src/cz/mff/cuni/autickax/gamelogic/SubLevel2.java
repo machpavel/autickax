@@ -99,13 +99,13 @@ public class SubLevel2 extends SubLevel {
 		shapeRenderer.setColor(Color.RED);
 		for(CheckPoint ce: checkpoints)
 		{
-			shapeRenderer.circle((float)ce.x / Input.xStretchFactor, (float)ce.y / Input.yStretchFactor,2);
+			shapeRenderer.circle((float)ce.x * Input.xStretchFactorInv, (float)ce.y * Input.yStretchFactorInv,2);
 		}
 		
 		shapeRenderer.setColor(Color.BLUE);
 		for(Vector2 vec: points)
 		{
-			shapeRenderer.circle(vec.x / Input.xStretchFactor,vec.y / Input.yStretchFactor,2);
+			shapeRenderer.circle(vec.x * Input.xStretchFactorInv,vec.y * Input.yStretchFactorInv,2);
 		}
 		
 		
