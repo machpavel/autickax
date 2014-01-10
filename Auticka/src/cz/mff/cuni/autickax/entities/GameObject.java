@@ -22,7 +22,7 @@ abstract public class GameObject {
 	protected int width;
 	protected int height;
 	protected float rotation;
-	Rectangle boundingRectangle;
+	protected int boundingCircleRadius;
 
 	private boolean toDispose;
 	protected TextureRegion texture;
@@ -80,7 +80,6 @@ abstract public class GameObject {
 	 */	
 	public void move(Vector2 newPos) {
 		this.position = newPos;
-		this.boundingRectangle.setPosition(newPos);
 	}
 
 	abstract public void update(float delta);
@@ -112,9 +111,8 @@ abstract public class GameObject {
 
 	public void setMeasurements(int width, int height) {
 		this.width = width;
-		this.height = height;
-		this.boundingRectangle = new Rectangle(this.getX() - width / 2,
-				this.getY() - height / 2, width, height);
+		this.height = height;		
+		this.boundingCircleRadius = width > height ? width : height;
 	}
 
 	public void setTexture(String name) {		
@@ -134,7 +132,9 @@ abstract public class GameObject {
 	 * @return
 	 */
 	public boolean collides(GameObject object2) {
-		return boundingRectangle.overlaps(object2.boundingRectangle);
+		
+		float middlesDistance = new Vector2(this.position).sub(object2.position).len(); 
+		return  middlesDistance < (this.boundingCircleRadius + object2.boundingCircleRadius);
 	}
 
 	/**
@@ -145,7 +145,8 @@ abstract public class GameObject {
 	 * @return
 	 */
 	public boolean positionCollides(GameObject object2) {
-		return object2.boundingRectangle.contains(this.position);
+		float middlesDistance = new Vector2(this.position).sub(object2.position).len(); 
+		return  middlesDistance < object2.boundingCircleRadius;		
 	}
 	
 	/**
@@ -154,7 +155,8 @@ abstract public class GameObject {
 	 * @return
 	 */
 	public boolean includePosition(Vector2 position) {
-		return this.boundingRectangle.contains(position);
+		float middlesDistance = new Vector2(this.position).sub(position).len(); 
+		return  middlesDistance < this.boundingCircleRadius;		
 	}
 
 	abstract void aditionalsToXml(XmlWriter writer) throws IOException;
