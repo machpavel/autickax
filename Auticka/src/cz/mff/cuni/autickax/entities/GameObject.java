@@ -147,6 +147,15 @@ abstract public class GameObject {
 	public boolean positionCollides(GameObject object2) {
 		return object2.boundingRectangle.contains(this.position);
 	}
+	
+	/**
+	 * Determinate when object is intersected with a position
+	 * @param position
+	 * @return
+	 */
+	public boolean includePosition(Vector2 position) {
+		return this.boundingRectangle.contains(position);
+	}
 
 	abstract void aditionalsToXml(XmlWriter writer) throws IOException;
 
