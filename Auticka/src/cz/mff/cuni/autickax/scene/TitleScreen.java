@@ -1,5 +1,6 @@
 package cz.mff.cuni.autickax.scene;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 
 /*
@@ -49,7 +51,8 @@ public class TitleScreen extends BaseScreen {
 
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				game.setScreen(new GameScreen("level"));
+				Autickax.gameScreen = new GameScreen("level");
+				game.setScreen(Autickax.gameScreen);
 			}
 		});
 
@@ -63,6 +66,11 @@ public class TitleScreen extends BaseScreen {
 	@Override
 	public void render(float delta) {
 		super.render(delta);
+	}
+
+	@Override
+	protected void onBackKeyPressed() {
+		Gdx.app.exit();		
 	}
 
 }

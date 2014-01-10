@@ -7,20 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cz.mff.cuni.autickax.Autickax;
 
-public class BaseScreen implements Screen {
+public abstract class BaseScreen implements Screen {
 
 	protected Autickax game;
 	protected float stageWidth;
 	protected float stageHeight;
 	protected final Stage stage;
-	
-	/*public float getStageWidth() {
-		return this.stageWidth;
-	}
-	
-	public float getStageHeight() {
-		return this.stageHeight;
-	}*/
 
 	public BaseScreen() {
 		game = Autickax.getInstance();
@@ -28,7 +20,10 @@ public class BaseScreen implements Screen {
 		stageHeight = Gdx.graphics.getHeight();
 
 		stage = new Stage(stageWidth, stageHeight, false); // https://github.com/libgdx/libgdx/wiki/Scene2d
+		
+		this.stage.addListener(new ScreenInputListener(this));
 		Gdx.input.setInputProcessor(stage);
+		Gdx.input.setCatchBackKey(true);
 	}
 
 	@Override
@@ -68,5 +63,7 @@ public class BaseScreen implements Screen {
 	public void dispose() {
 		stage.dispose();
 	}
+	
+	protected abstract void onBackKeyPressed();
 
 }

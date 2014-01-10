@@ -138,7 +138,8 @@ public class GameScreen extends BaseScreen {
 		this.camera.unproject(vector);
 	}
 
-	private void update(float delta) {		
+	protected void update(float delta) {
+		
 		// TODO: Consider moving this into sublevels
 		for (GameObject gameObject : this.getGameObjects()) {
 			gameObject.update(delta);
@@ -177,6 +178,16 @@ public class GameScreen extends BaseScreen {
 
 	public ArrayList<GameObject> getGameObjects() {
 		return gameObjects;
+	}
+
+	@Override
+	protected void onBackKeyPressed() {
+		this.game.assets.music.stop();
+		Autickax.titleScreen.dispose();
+		Autickax.titleScreen = new TitleScreen();
+		this.game.setScreen(Autickax.titleScreen);
+		Autickax.gameScreen = null;
+		// TODO: this.dispose();
 	}
 
 
