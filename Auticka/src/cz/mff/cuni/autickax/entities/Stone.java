@@ -22,6 +22,7 @@ public final class Stone extends GameObject {
 
 	@Override
 	public void update(float delta) {
+		this.rotation  = (this.rotation + delta * 50) % 360;
 		// TODO Auto-generated method stub
 		
 	}

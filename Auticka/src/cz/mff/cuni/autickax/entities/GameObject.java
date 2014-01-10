@@ -21,6 +21,7 @@ abstract public class GameObject {
 	protected Vector2 position;
 	protected int width;
 	protected int height;
+	protected float rotation;
 	Rectangle boundingRectangle;
 	
 	private boolean toDispose;
@@ -40,6 +41,7 @@ abstract public class GameObject {
 		this.position = new Vector2(startX, startY);
 		this.game = Autickax.getInstance();
 		this.gameScreen = gameScreen;		
+		this.rotation = 0;
 	}
 	
 	public GameObject(float startX, float startY, int width, int height, GameScreen gameScreen, String textureName) {
@@ -98,10 +100,15 @@ abstract public class GameObject {
 	public void draw(SpriteBatch batch) {
 		batch.draw (
 		    this.texture,
-		    (this.position.x - this.width / 2) / Input.xStretchFactor,
-		    (this.position.y - this.height / 2) / Input.yStretchFactor,
-		    this.width / Input.xStretchFactor,
-		    this.height / Input.yStretchFactor
+		    (this.position.x - this.width / 2) * Input.xStretchFactorInv,
+		    (this.position.y - this.height / 2) * Input.yStretchFactorInv,
+		    (this.width / 2) * Input.xStretchFactorInv,
+		    (this.height / 2) * Input.yStretchFactorInv,		    
+		    this.width * Input.xStretchFactorInv,		    
+		    this.height * Input.yStretchFactorInv,
+		    1,
+		    1,
+		    this.rotation
 		);
 	}
 	
@@ -151,5 +158,13 @@ abstract public class GameObject {
 		return object2.boundingRectangle.contains(this.position);		
 	}
 	
-	abstract void aditionalsToXml(XmlWriter writer) throws IOException;	
+	abstract void aditionalsToXml(XmlWriter writer) throws IOException;
+	
+	/**
+	 * Sets the rotation of object in degrees (counterclockwise).
+	 * @param rotation
+	 */
+	public void setRotation(float rotation){
+		this.rotation = rotation;
+	}
 }
