@@ -74,9 +74,16 @@ public final class Constants {
 	//
 	// GAME OBJECTS
 	//
-	public static final String 	CAR_TYPE_0_TEXTURE_NAME = "car";
-	public static final int  	CAR_TYPE_0_WIDTH = 100;
-	public static final int 	CAR_TYPE_0_HEIGHT = 63;
+	public static final String 	CAR_TYPE_0_POSITION_0_TEXTURE_NAME = "car0";
+	public static final String 	CAR_TYPE_0_POSITION_1_TEXTURE_NAME = "car0";
+	public static final String 	CAR_TYPE_0_POSITION_2_TEXTURE_NAME = "car1";
+	public static final String 	CAR_TYPE_0_POSITION_3_TEXTURE_NAME = "car2";
+	public static final String 	CAR_TYPE_0_POSITION_4_TEXTURE_NAME = "car2";
+	public static final String 	CAR_TYPE_0_POSITION_5_TEXTURE_NAME = "car2";
+	public static final String 	CAR_TYPE_0_POSITION_6_TEXTURE_NAME = "car1";
+	public static final String 	CAR_TYPE_0_POSITION_7_TEXTURE_NAME = "car0";
+	public static final int  	CAR_TYPE_0_WIDTH = 62;
+	public static final int 	CAR_TYPE_0_HEIGHT = 39;
 	
 	public static final String 	FINISH_TYPE_1_TEXTURE_NAME = "finish";
 	public static final int  	FINISH_TYPE_1_WIDTH = 30;

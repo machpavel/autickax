@@ -13,7 +13,7 @@ public class Font {
 	}
 	
 	public void draw(SpriteBatch batch, String text, int x, int y) {
-		this.font.setScale(1 / Input.xStretchFactor, 1 / Input.yStretchFactor);
+		this.font.setScale(Input.xStretchFactorInv, Input.yStretchFactorInv);
 		
 		this.font.draw(batch, text, x, y);
 	}

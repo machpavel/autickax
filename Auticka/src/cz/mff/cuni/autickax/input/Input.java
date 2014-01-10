@@ -7,10 +7,14 @@ import cz.mff.cuni.autickax.Constants;
 public class Input {	
 	public static float xStretchFactor;
 	public static float yStretchFactor;
+	public static float xStretchFactorInv;
+	public static float yStretchFactorInv;
 	
 	public static void InitDimensions() {
 		Input.xStretchFactor = (float)Constants.WORLD_WIDTH / Gdx.graphics.getWidth();
 		Input.yStretchFactor = (float)Constants.WORLD_HEIGHT / Gdx.graphics.getHeight();
+		xStretchFactorInv = 1.0f / xStretchFactor;
+		yStretchFactorInv = 1.0f / yStretchFactor;
 	}
 	
 	public static int getX() {

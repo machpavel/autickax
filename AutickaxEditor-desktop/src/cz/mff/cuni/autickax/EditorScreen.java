@@ -36,6 +36,7 @@ public class EditorScreen extends BaseScreenEditor {
 	static Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
 	static Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
 	static int PATHWAY_TEXTURE_TYPE = 0;
+	static float TIME_LIMIT = 5;
 	
 	
 	// Textures
@@ -194,6 +195,7 @@ public class EditorScreen extends BaseScreenEditor {
 			car.toXml(xml);
 
 			xml.element("backgroundTexture").attribute("textureName", backGroundTextureString).pop();
+			xml.element("timeLimit", TIME_LIMIT);;
 
 			xml.pop();
 			xml.close();
