@@ -46,13 +46,6 @@ public class SubLevel2 extends SubLevel {
 		super(gameScreen);
 
 		this.checkpoints = checkpoints;
-		//backup checkpoints
-		storeCheckpointOnDisk();
-		/*LinkedList<CheckPoint> loadedCheckpoints; 
-		loadedCheckpoints = loadCheckPoints(new File("..\\StoredCheckpoints\\check201401091034Svine.chck"));
-		
-		if (loadedCheckpoints != null)
-			this.checkpoints = loadedCheckpoints;*/
 
 		this.distMap = map;
 
@@ -72,11 +65,7 @@ public class SubLevel2 extends SubLevel {
 			
 			
 		}
-		else//successful -> erase checkpoints from disk
-			{
-				
-				eraseCheckpointOndDisk();
-			}
+
 		
 	}
 
