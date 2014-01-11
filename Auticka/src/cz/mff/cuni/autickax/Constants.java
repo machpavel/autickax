@@ -33,6 +33,9 @@ public final class Constants {
 	/** The speed is effected by this constant when the car is out of proper surface of the pathway */
 	public static final float OUT_OF_SURFACE_PENALIZATION_FACTOR = 1.8f;
 	
+	/** Global speed. It can be used for slowing or accelerating the phase two game.*/ 
+	public static final float GLOBAL_SPEED_REGULATOR = 0.5f;
+	
 	
 	
 	//
@@ -86,16 +89,16 @@ public final class Constants {
 	public static final int 	CAR_TYPE_0_HEIGHT = 39;
 	
 	public static final String 	FINISH_TYPE_1_TEXTURE_NAME = "finish";
-	public static final int  	FINISH_TYPE_1_WIDTH = 30;
-	public static final int 	FINISH_TYPE_1_HEIGHT = 30;
+	public static final int  	FINISH_TYPE_1_WIDTH = 91;
+	public static final int 	FINISH_TYPE_1_HEIGHT = 91;
 	
 	public static final String 	MUD_TYPE_1_TEXTURE_NAME = "mud";
 	public static final int  	MUD_TYPE_1_WIDTH = 30;
 	public static final int 	MUD_TYPE_1_HEIGHT = 30;
 	
 	public static final String 	START_TYPE_1_TEXTURE_NAME = "start";
-	public static final int  	START_TYPE_1_WIDTH = 30;
-	public static final int 	START_TYPE_1_HEIGHT = 30;
+	public static final int  	START_TYPE_1_WIDTH = 91;
+	public static final int 	START_TYPE_1_HEIGHT = 91;
 	
 	public static final String 	STONE_TYPE_1_TEXTURE_NAME = "stone";
 	public static final int  	STONE_TYPE_1_WIDTH = 30;

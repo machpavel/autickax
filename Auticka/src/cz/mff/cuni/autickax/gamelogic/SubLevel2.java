@@ -89,14 +89,14 @@ public class SubLevel2 extends SubLevel {
 
 	private Vector2 moveCarToNewPosition(float time) {
 		float timeAvailable = time;
-		Vector2 newPos = null;
+		Vector2 newPosition = null;
 
 		while (timeAvailable > 0 && !this.checkpoints.isEmpty()) {
 			// TODO assert car is always between TO AND FROM && timeAvailable
 			// >=0
-			Vector2 carPos = this.Level.getCar().getPosition();
+			Vector2 carPosition = this.Level.getCar().getPosition();
 			// compute time necessary to reach checkpoint To
-			float distToTo = new Vector2(carPos).sub(this.to.position)
+			float distToTo = new Vector2(carPosition).sub(this.to.position)
 					.len();
 			float timeNecessaire = distToTo
 					/ (this.velocityMagnitude * this.penalizationFactor);
@@ -107,25 +107,25 @@ public class SubLevel2 extends SubLevel {
 						* penalizationFactor;
 				Vector2 traslationVec = new Vector2(this.velocity).nor().scl(
 						dist);
-				newPos = new Vector2(carPos);
-				newPos.add(traslationVec);
+				newPosition = new Vector2(carPosition);
+				newPosition.add(traslationVec);
 				timeAvailable = 0;
 			}
 			// move to checkpoint to and subtract the time, recalculate
 			// velocity, and checkpoints
 			else {
 				this.Level.getCar().move(this.to.position);
-				newPos = to.position;
+				newPosition = to.position;
 				this.from = this.to;
 				this.to = this.checkpoints.removeFirst();
 				computeVelocity();
 				timeAvailable -= timeNecessaire;
 			}
 		}		
-		this.Level.getCar().move(newPos);
+		this.Level.getCar().move(newPosition);
 		this.Level.getCar().setRotation(new Vector2(this.to.position).sub(this.from.position).angle());
 		
-		return newPos;
+		return newPosition;
 	}
 
 	/**
@@ -143,6 +143,6 @@ public class SubLevel2 extends SubLevel {
 					/ (float) Math.log(distanceFromCurveCenter + 2);
 		} else
 			penalizationFactor = 1;
-
+		penalizationFactor *= Constants.GLOBAL_SPEED_REGULATOR;
 	}
 }
