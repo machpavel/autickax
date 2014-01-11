@@ -19,7 +19,7 @@ public class AutickaxEditor extends Game {
 	@Override
 	public void create() {
 		setScreen(new LoadingScreenEditor());
-		Input.InitDimensions();
+		Input.InitDimensionsInEditor();
 	}
 
 	public static AutickaxEditor getInstance() {

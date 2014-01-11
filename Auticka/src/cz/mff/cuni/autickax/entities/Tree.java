@@ -13,22 +13,27 @@ public final class Tree extends GameObject {
 		super(x,y,gameScreen);
 		switch (type) {
 		case 1:
+			super.type = 1;
 			super.setMeasurements(Constants.TREE_TYPE_1_WIDTH, Constants.TREE_TYPE_1_HEIGHT);
 			super.setTexture(Constants.TREE_TYPE_1_TEXTURE_NAME);		
 			break;
 		case 2:
+			super.type = 2;
 			super.setMeasurements(Constants.TREE_TYPE_2_WIDTH, Constants.TREE_TYPE_2_HEIGHT);
 			super.setTexture(Constants.TREE_TYPE_2_TEXTURE_NAME);		
 			break;
 		case 3:
+			super.type = 3;
 			super.setMeasurements(Constants.TREE_TYPE_3_WIDTH, Constants.TREE_TYPE_3_HEIGHT);
 			super.setTexture(Constants.TREE_TYPE_3_TEXTURE_NAME);		
 			break;
 		case 4:
+			super.type = 4;
 			super.setMeasurements(Constants.TREE_TYPE_4_WIDTH, Constants.TREE_TYPE_4_HEIGHT);
 			super.setTexture(Constants.TREE_TYPE_4_TEXTURE_NAME);		
 			break;
 		case 5:
+			super.type = 5;
 			super.setMeasurements(Constants.TREE_TYPE_5_WIDTH, Constants.TREE_TYPE_5_HEIGHT);
 			super.setTexture(Constants.TREE_TYPE_5_TEXTURE_NAME);		
 			break;

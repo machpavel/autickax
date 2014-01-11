@@ -24,7 +24,7 @@ public class Level {
 	private Pathway pathway = new Pathway();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	private Car car;
-	private String backgroundTextureName;
+	private int backgroundType;
 	private Start start;
 	private Finish finish;
 	private int pathwayTextureType;
@@ -46,8 +46,8 @@ public class Level {
 		return this.gameObjects;
 	}
 	
-	public String getBackgroundTextureName() {
-		return this.backgroundTextureName;
+	public int getBackgroundType() {
+		return this.backgroundType;
 	}
 	
 	public Start getStart() {
@@ -132,10 +132,9 @@ public class Level {
 				
 		
 		// Background
-		Element backgroundTexture = root.getChildByName("backgroundTexture");
-		this.backgroundTextureName = backgroundTexture.get("textureName");
-		System.out.println(this.backgroundTextureName);
+		this.backgroundType = root.getInt("levelBackgroundType");		
 		
+		// Time limit
 		this.timeLimit = root.getFloat("timeLimit");
 		
 		System.out.println("Loading done...");

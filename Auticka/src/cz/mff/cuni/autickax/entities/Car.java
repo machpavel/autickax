@@ -26,6 +26,7 @@ public final class Car extends GameObject {
 		if (this.game != null) {
 			switch (type) {
 			case 0:
+				this.type = 0;
 				super.setMeasurements(Constants.CAR_TYPE_0_WIDTH,
 						Constants.CAR_TYPE_0_HEIGHT);
 				this.positionTextures[0] = this.game.assets

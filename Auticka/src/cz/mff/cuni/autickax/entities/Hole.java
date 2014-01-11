@@ -7,15 +7,20 @@ import com.badlogic.gdx.utils.XmlWriter;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public class Finish extends GameObject {
-	
-	public Finish(float x, float y, GameScreen gameScreen, int type) {	
+public final class Hole extends GameObject {
+
+	public Hole(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		switch (type) {
 		case 1:
 			super.type = 1;
-			super.setMeasurements(Constants.FINISH_TYPE_1_WIDTH, Constants.FINISH_TYPE_1_HEIGHT);
-			super.setTexture(Constants.FINISH_TYPE_1_TEXTURE_NAME);	
+			super.setMeasurements(Constants.HOLE_TYPE_1_WIDTH, Constants.HOLE_TYPE_1_HEIGHT);
+			super.setTexture(Constants.HOLE_TYPE_1_TEXTURE_NAME);		
+			break;
+		case 2:
+			super.type = 2;
+			super.setMeasurements(Constants.HOLE_TYPE_2_WIDTH, Constants.HOLE_TYPE_2_HEIGHT);
+			super.setTexture(Constants.HOLE_TYPE_2_TEXTURE_NAME);		
 			break;
 		default:
 			break;
@@ -25,18 +30,18 @@ public class Finish extends GameObject {
 	@Override
 	public void update(float delta) {
 		// TODO Auto-generated method stub
-	
+
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return "finish";
+		return "hole";
 	}
 
 	@Override
 	void aditionalsToXml(XmlWriter writer) throws IOException {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
+
 	}
 
 }

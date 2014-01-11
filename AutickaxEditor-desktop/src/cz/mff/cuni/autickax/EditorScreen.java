@@ -17,12 +17,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Assets;
+import cz.mff.cuni.autickax.drawing.Background;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -33,22 +35,18 @@ import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
 
-public class EditorScreen extends BaseScreenEditor {
-	// Constants	
-	static Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
-	static Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
-	static int PATHWAY_TEXTURE_TYPE = 0;
-	static float TIME_LIMIT = 5;
+public final class EditorScreen extends BaseScreenEditor {
+	// Constants
+	private static final int CAR_TYPE = 0;		
+	private static final Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
+	private static final Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
+	private static final int PATHWAY_TEXTURE_TYPE = 0;
+	private static final float TIME_LIMIT = 5;	
 	
-	
-	// Textures
-	private TextureRegion backgroundTexture;
-	private String backGroundTextureString = "sky";
-
 	// Rendering
 	private OrthographicCamera camera;
-	protected SpriteBatch batch;
-	protected ShapeRenderer shapeRenderer;
+	private SpriteBatch batch;
+	private ShapeRenderer shapeRenderer;
 
 	// Entities
 	private ArrayList<GameObject> gameObjects;
@@ -62,10 +60,18 @@ public class EditorScreen extends BaseScreenEditor {
 	// Pathway
 	private Pathway pathway;
 	
+	// Background
+	private Background background = new Background();
+	
 
 	// Buttons
 	Button buttonGeneratePoints;
-	Button buttonRestart;
+	Button buttonRestart;	
+	ArrayList<Button> backgroundButtons = new ArrayList<Button>();
+	private boolean anyButtonTouched = false;
+	
+	// Texture region for buttons
+	TextureRegionDrawable trbGreenPixel;
 
 	public EditorScreen() {
 		super();
@@ -74,41 +80,35 @@ public class EditorScreen extends BaseScreenEditor {
 		camera.setToOrtho(false, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 
 		batch = new SpriteBatch();
-		shapeRenderer = new ShapeRenderer();
-
-		Assets assets = game.assets;
-		this.backgroundTexture = assets.getGraphics(backGroundTextureString);
-
-		
-		// dummy code ------------------------>
-
-		this.gameObjects = new ArrayList<GameObject>();
-
-		// <------------------------ dummy code
+		shapeRenderer = new ShapeRenderer();						
 
 		this.font = game.assets.getFont();
-
-		// Pathway
-		pathway = new Pathway(pathwayType, typeOfInterpolation);		
+		trbGreenPixel = new TextureRegionDrawable(game.assets.getGraphics("greenpixel"));		
 		
-		game.assets.music.stop();
-		
-
-		// Car
-		car = new Car(0, 0, null, 0);		
-
-		// Start Music!
-		game.assets.music.setLooping(true);
-		game.assets.music.setVolume(0.3f);
-		game.assets.music.play();
-		game.assets.music.stop();
-
 		createGenerateButton();
 		createRestartButton();
+		createBackgroundButtons();	
+					
+		// Car
+		car = new Car(0, 0, null, CAR_TYPE);	
 		
-		gameObjects.add(new Mud(600,100,null, 1));
-		gameObjects.add(new Stone(200,200,null, 1));
-		gameObjects.add(new Tree(300,300,null, 4));
+		restart();
+	}
+	
+	public void restart()
+	{
+		background.SetType(1);
+		
+		// dummy code ------------------------>
+		this.gameObjects = new ArrayList<GameObject>();
+//		gameObjects.add(new Mud(600,100,null, 1));
+//		gameObjects.add(new Stone(200,200,null, 1));
+//		gameObjects.add(new Tree(300,300,null, 4));
+		// <------------------------ dummy code
+
+		// Pathway
+		pathway = new Pathway(pathwayType, typeOfInterpolation);	
+		
 	}
 
 	private void update(float delta) {
@@ -123,28 +123,50 @@ public class EditorScreen extends BaseScreenEditor {
 	@Override
 	public void render(float delta) {
 		stage.act(delta); // don't forget to advance the stage ( input + actions
-		if (buttonGeneratePoints.isPressed() | buttonRestart.isPressed())
+		if (anyButtonTouched){
+			anyButtonTouched = false;
 			return;
+		}
+			
 
 		update(delta);
 
 		// Clears stage - unnecessary step because everything will be rewritten
 		// by the distance map
-		Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+		
+		batch.begin();
+		this.background.draw(batch, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+		batch.end();
+
 		// Renders the distance map
+		// See LevelPath.createBitmap()
+		Gdx.gl.glEnable(GL10.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10. GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl10.glPointSize(1);
 		shapeRenderer.begin(ShapeType.Point);
-		for (int x = 0; x < (int) stageWidth; x++) {
-			for (int y = 0; y < (int) stageHeight; y++) {
-				float colorIntensity = 1 - (pathway.getDistanceMap().At(x, y) / Constants.MAX_DISTANCE_FROM_PATHWAY);
-				shapeRenderer.setColor(colorIntensity, 0, 0, 1);
-				shapeRenderer.point(x, y, 0);
+		for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
+			for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
+				// distance map is flipped to the bitmap
+				float distance = pathway.getDistanceMap().At(column, row);
 
+				if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY) {
+					shapeRenderer.setColor(196.f/255, 154.f/255, 108.f/255, 1);
+					shapeRenderer.point(column, row, 0);
+				} else if (distance < Constants.MAX_DISTANCE_FROM_PATHWAY) {
+					// cause this is where the transparency begin
+					distance -= Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY;
+					float alpha = (Constants.MAX_DISTANCE_FROM_PATHWAY - distance) / Constants.MAX_DISTANCE_FROM_PATHWAY;
+					shapeRenderer.setColor(196.f/255, 154.f/255, 108.f/255, alpha);
+					shapeRenderer.point(column, row, 0);
+				}
 			}
 		}
 		shapeRenderer.end();
+		Gdx.gl.glDisable(GL10.GL_BLEND);
+		
 
 		// Renders control points
 		Gdx.gl10.glPointSize(4);
@@ -162,7 +184,7 @@ public class EditorScreen extends BaseScreenEditor {
 			gameObject.draw(batch);
 			
 		}
-		car.draw(batch);
+		//car.draw(batch);
 		batch.end();
 	}
 
@@ -199,8 +221,8 @@ public class EditorScreen extends BaseScreenEditor {
 			start.toXml(xml);
 			finish.toXml(xml);
 
-			xml.element("backgroundTexture").attribute("textureName", backGroundTextureString).pop();
-			xml.element("timeLimit", TIME_LIMIT);;
+			xml.element("levelBackgroundType", this.background.GetType());
+			xml.element("timeLimit", TIME_LIMIT);
 
 			xml.pop();
 			xml.close();
@@ -215,35 +237,33 @@ public class EditorScreen extends BaseScreenEditor {
 		}
 	}
 
+
 	public void createGenerateButton() {
 		buttonGeneratePoints = new TextButton("Generate",
-				new TextButtonStyle(new TextureRegionDrawable(
-						game.assets.getGraphics("greenpixel")),
-						new TextureRegionDrawable(game.assets
-								.getGraphics("greenpixel")),
-						new TextureRegionDrawable(game.assets
-								.getGraphics("greenpixel")),
-						game.assets.getFont()));
+				new TextButtonStyle(trbGreenPixel,trbGreenPixel,trbGreenPixel, font));
 
-		buttonGeneratePoints.setPosition(0, 0);
+		buttonGeneratePoints.setPosition(Constants.WORLD_WIDTH, 0);
 		stage.addActor(buttonGeneratePoints);
 
 		// User Input for Play Button
 		buttonGeneratePoints.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
+				anyButtonTouched = true;
 				return true;
 			}
 
 			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {				
+					int pointer, int button) {	
+				if(pathway.getControlPoints().size() < 4) return;
 				pathway.CreateDistances();
-				start = new Start(pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x, pathway.GetPosition(0).y, null, 1);
-				finish = new Finish(pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x, pathway.GetPosition(1).y, null, 1);
+				start = new Start(pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x, pathway.GetPosition(Constants.START_POSITION_IN_CURVE).y, null, 1);
+				finish = new Finish(pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x, pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).y, null, 1);
 				generateXml("level.xml");
 			}
 		});
 	}
+
 
 	public void createRestartButton() {
 		buttonRestart = new TextButton("Restart",
@@ -255,7 +275,7 @@ public class EditorScreen extends BaseScreenEditor {
 								.getGraphics("greenpixel")),
 						game.assets.getFont()));
 
-		buttonRestart.setPosition(0, buttonGeneratePoints.getY()
+		buttonRestart.setPosition(Constants.WORLD_WIDTH, buttonGeneratePoints.getY()
 				+ buttonGeneratePoints.getHeight());
 		stage.addActor(buttonRestart);
 
@@ -263,13 +283,44 @@ public class EditorScreen extends BaseScreenEditor {
 		buttonRestart.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
+				anyButtonTouched = true;
 				return true;
 			}
 
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				pathway = new Pathway(pathwayType, typeOfInterpolation);
+				restart();
 			}
 		});
 	}
+	
+	
+	private void createBackgroundButtons() {		
+		for (int i = 1; i <= 4; i++) {			
+			TextureRegionDrawable trd = new TextureRegionDrawable(game.assets.getGraphics("levelBackground"+(i)+"small"));
+			Button button =  new ImageButton(trd);
+			button.setPosition(Constants.WORLD_WIDTH + (i - 1) * 30, Constants.WORLD_HEIGHT - 18);
+			stage.addActor(button);
+			
+			// User Input for Play Button
+			button.addListener(new MyInputListener(i) {				
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
+					anyButtonTouched = true;
+					return true;
+				}
+
+				public void touchUp(InputEvent event, float x, float y,
+						int pointer, int button) {
+					background.SetType(i);
+				}
+			});
+		}
+		
+		
+
+		
+		
+	}
+
 }

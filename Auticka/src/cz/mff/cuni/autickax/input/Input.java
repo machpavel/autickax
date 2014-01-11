@@ -17,6 +17,13 @@ public class Input {
 		yStretchFactorInv = 1.0f / yStretchFactor;
 	}
 	
+	public static void InitDimensionsInEditor() {
+		Input.xStretchFactor = 1;
+		Input.yStretchFactor = 1;
+		xStretchFactorInv = 1.0f / xStretchFactor;
+		yStretchFactorInv = 1.0f / yStretchFactor;
+	}
+	
 	public static int getX() {
 		return (int)(Gdx.input.getX() * Input.xStretchFactor);
 	}

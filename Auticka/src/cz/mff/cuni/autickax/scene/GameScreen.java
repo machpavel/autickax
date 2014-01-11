@@ -9,9 +9,11 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Level;
+import cz.mff.cuni.autickax.drawing.Background;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -25,9 +27,9 @@ import cz.mff.cuni.autickax.pathway.Pathway;
 
 public class GameScreen extends BaseScreen {
 	// Textures
-	private TextureRegion backgroundTexture;
+	private Background levelBackground;
 	private TextureRegion pathwayTexture;
-	private String backGroundTextureString;
+
 
 	// Rendering
 	protected OrthographicCamera camera;	
@@ -72,8 +74,8 @@ public class GameScreen extends BaseScreen {
 			level.parseLevel(this);
 			this.pathway = level.getPathway();
 			this.gameObjects = level.getGameObjects();
-			this.backGroundTextureString = level.getBackgroundTextureName();
-			this.backgroundTexture = game.assets.getGraphics(this.backGroundTextureString);
+			this.levelBackground = new Background();
+			this.levelBackground.SetType(level.getBackgroundType());
 			this.car = level.getCar();
 			this.start = level.getStart();
 			this.finish = level.getFinish();			
@@ -138,7 +140,7 @@ public class GameScreen extends BaseScreen {
 		batch.disableBlending(); //performance boost
 		
 		// background
-		batch.draw(this.backgroundTexture, 0, 0, stageWidth, stageHeight);
+		this.levelBackground.draw(batch, stageWidth, stageHeight);
 		batch.enableBlending(); //don't forget to enabled this for alpha channel
 		batch.draw(this.pathwayTexture, 0, 0, stageWidth, stageHeight);
 		batch.end();
