@@ -75,5 +75,11 @@ public class Start extends GameObject {
 			return null;
 		}
 	}
+	
+	@Override
+	public GameObject copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

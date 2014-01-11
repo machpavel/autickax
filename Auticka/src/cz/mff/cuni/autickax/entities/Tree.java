@@ -15,6 +15,10 @@ public final class Tree extends GameObject {
 		super.setMeasurements(Tree.GetWidth(type), Tree.GetHeight(type));
 		super.setTexture(Tree.GetTextureName(type));
 	}
+	
+	public Tree(GameObject object){
+		super(object);		
+	}
 
 	@Override
 	public void update(float delta) {
@@ -88,4 +92,8 @@ public final class Tree extends GameObject {
 		}
 	}
 
+	@Override
+	public GameObject copy() {
+		return new Tree(this);
+	}
 }

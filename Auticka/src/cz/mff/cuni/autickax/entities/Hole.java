@@ -16,6 +16,11 @@ public final class Hole extends GameObject {
 		super.setTexture(Hole.GetTextureName(type));		
 	}
 
+	public Hole(GameObject object){
+		super(object);		
+	}
+	
+	
 	@Override
 	public void update(float delta) {
 		// TODO Auto-generated method stub
@@ -70,4 +75,8 @@ public final class Hole extends GameObject {
 		}
 	}
 
+	@Override
+	public GameObject copy() {
+		return new Hole(this);
+	}
 }

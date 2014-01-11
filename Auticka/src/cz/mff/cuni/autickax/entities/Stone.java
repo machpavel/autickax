@@ -16,6 +16,10 @@ public final class Stone extends GameObject {
 		super.setTexture(Stone.GetTextureName(type));
 	}
 	
+	public Stone(GameObject object){
+		super(object);		
+	}
+	
 
 	@Override
 	public void update(float delta) {
@@ -59,11 +63,11 @@ public final class Stone extends GameObject {
 		case 1:
 			return Constants.STONE_TYPE_1_HEIGHT;			
 		case 2:
-			return Constants.STONE_TYPE_5_HEIGHT;	
+			return Constants.STONE_TYPE_2_HEIGHT;	
 		case 3:
-			return Constants.STONE_TYPE_5_HEIGHT;	
+			return Constants.STONE_TYPE_3_HEIGHT;	
 		case 4:
-			return Constants.STONE_TYPE_5_HEIGHT;	
+			return Constants.STONE_TYPE_4_HEIGHT;	
 		case 5:
 			return Constants.STONE_TYPE_5_HEIGHT;	
 		default:
@@ -88,6 +92,11 @@ public final class Stone extends GameObject {
 			//TODO exception
 			return null;
 		}
+	}
+	
+	@Override
+	public GameObject copy() {
+		return new Stone(this);
 	}
 
 }

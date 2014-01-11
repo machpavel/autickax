@@ -63,5 +63,11 @@ public class Finish extends GameObject {
 			return null;
 		}
 	}
+	
+	@Override
+	public GameObject copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

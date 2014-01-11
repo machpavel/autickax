@@ -129,4 +129,10 @@ public final class Car extends GameObject {
 			return 0;
 		}
 	}	
+	
+	@Override
+	public GameObject copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

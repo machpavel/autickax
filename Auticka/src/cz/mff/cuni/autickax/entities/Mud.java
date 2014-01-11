@@ -16,6 +16,10 @@ public final class Mud extends GameObject{
 		super.setTexture(Mud.GetTextureName(type));
 	}
 	
+	public Mud(GameObject object){
+		super(object);		
+	}
+	
 
 	@Override
 	public void update(float delta) {
@@ -75,6 +79,11 @@ public final class Mud extends GameObject{
 			//TODO exception
 			return null;
 		}
+	}
+	
+	@Override
+	public GameObject copy() {
+		return new Mud(this);
 	}
 
 }
