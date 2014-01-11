@@ -315,12 +315,7 @@ public final class EditorScreen extends BaseScreenEditor {
 					background.SetType(i);
 				}
 			});
-		}
-		
-		
-
-		
-		
+		}								
 	}
 
 }
