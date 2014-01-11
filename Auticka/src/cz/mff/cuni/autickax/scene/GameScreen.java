@@ -5,29 +5,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.XmlReader;
-import com.badlogic.gdx.utils.XmlReader.Element;
-
-import cz.mff.cuni.autickax.Assets;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
-import cz.mff.cuni.autickax.entities.Mud;
 import cz.mff.cuni.autickax.entities.Start;
-import cz.mff.cuni.autickax.entities.Stone;
-import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.gamelogic.CheckPoint;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.gamelogic.SubLevel1;
@@ -42,9 +30,7 @@ public class GameScreen extends BaseScreen {
 	private String backGroundTextureString;
 
 	// Rendering
-	protected OrthographicCamera camera;
-	protected SpriteBatch batch;
-	protected ShapeRenderer shapeRenderer;
+	protected OrthographicCamera camera;	
 	
 	// Levels
 	private SubLevel currentPhase;
@@ -54,15 +40,7 @@ public class GameScreen extends BaseScreen {
 	protected Car car;
 	protected Start start;
 	protected Finish finish;
-
-	
 		
-	// Cached font
-	private BitmapFont font;
-	public BitmapFont getFont() {
-		// TODO: consider loading font elsewhere, once for the whole game
-		return font;
-	}
 	
 	// Pathway
 	protected Pathway pathway;
@@ -80,14 +58,7 @@ public class GameScreen extends BaseScreen {
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, stageWidth, stageHeight);
-
-		//graphics
-		batch = new SpriteBatch();
-		shapeRenderer = new ShapeRenderer();
-					
-
-		font = game.assets.getFont();
-				
+								
 		this.pathwayTexture = game.assets.getGraphics(name);
 		
 		// Start Music!

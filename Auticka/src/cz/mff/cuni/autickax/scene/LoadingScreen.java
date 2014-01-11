@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.drawing.Font;
 
 
 /**
@@ -26,6 +27,7 @@ public class LoadingScreen extends BaseScreen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		if (game.assets.update()) { // Keep calling this, until returns true
+			Autickax.font = new Font(game.assets.getFont());
 			Autickax.titleScreen = new TitleScreen(); // we know that it is null, no need for check
 			game.setScreen(Autickax.titleScreen);						
 			return;

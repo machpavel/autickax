@@ -8,12 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
+import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.drawing.Font;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
+import cz.mff.cuni.autickax.scene.BaseScreen;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class SubLevel1 extends SubLevel {
@@ -216,8 +218,6 @@ public class SubLevel1 extends SubLevel {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		Font font = new Font(this.Level.getFont());		
-
 		for (GameObject gameObject : this.Level.getGameObjects()) {
 			gameObject.draw(batch);
 		}	
@@ -230,11 +230,11 @@ public class SubLevel1 extends SubLevel {
 		float stageHeight = Gdx.graphics.getHeight();
 		float stageWidth = Gdx.graphics.getWidth();
 		// Draw time
-		font.draw(batch, "time: " + String.format("%1$,.1f", timeElapsed) + " limit: " + String.format("%1$,.1f", timeLimit), 10,
+		Autickax.font.draw(batch, "time: " + String.format("%1$,.1f", timeElapsed) + " limit: " + String.format("%1$,.1f", timeLimit), 10,
 				(int) stageHeight - 32);
 
 		status = updateStatus();
-		font.draw(batch, status, 10, 64);
+		Autickax.font.draw(batch, status, 10, 64);
 	}
 
 	/**

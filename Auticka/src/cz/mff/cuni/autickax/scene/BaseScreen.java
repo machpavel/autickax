@@ -3,21 +3,23 @@ package cz.mff.cuni.autickax.scene;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cz.mff.cuni.autickax.Autickax;
 
-public abstract class BaseScreen implements Screen {
-
+public abstract class BaseScreen implements Screen {	
 	protected Autickax game;
 	protected float stageWidth;
 	protected float stageHeight;
 	protected final Stage stage;
+	protected SpriteBatch batch;
 
 	public BaseScreen() {
 		game = Autickax.getInstance();
 		stageWidth = Gdx.graphics.getWidth();
 		stageHeight = Gdx.graphics.getHeight();
+		batch = new SpriteBatch();
 
 		stage = new Stage(stageWidth, stageHeight, false); // https://github.com/libgdx/libgdx/wiki/Scene2d
 		

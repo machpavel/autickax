@@ -1,13 +1,5 @@
 package cz.mff.cuni.autickax.gamelogic;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
@@ -15,8 +7,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+
+import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
-import cz.mff.cuni.autickax.drawing.Font;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
@@ -36,9 +29,6 @@ public class SubLevel2 extends SubLevel {
 	private float penalizationFactor = 1f;
 
 	private float timeElapsed = 0;
-	/** Stored checkpoints */
-	private File checkpointFile;
-
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
 
 	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints,
@@ -74,8 +64,7 @@ public class SubLevel2 extends SubLevel {
 		this.Level.getCar().draw(batch);
 		this.Level.getStart().draw(batch);
 		this.Level.getFinish().draw(batch);
-		Font font = new Font(this.Level.getFont());
-		font.draw(batch, "time: " + String.format("%1$,.1f", timeElapsed), 10,
+		Autickax.font.draw(batch, "time: " + String.format("%1$,.1f", timeElapsed), 10,
 				(int) Gdx.graphics.getHeight() - 32);
 	}
 
@@ -156,46 +145,4 @@ public class SubLevel2 extends SubLevel {
 			penalizationFactor = 1;
 
 	}
-
-	private void storeCheckpointOnDisk() {
-		try {
-			String dt = new SimpleDateFormat("yyyyMMddhhmm").format(new Date())
-					.toString();
-			String name = "check" + dt + ".chck";
-			checkpointFile = new File("..\\StoredCheckpoints\\" + name);
-			FileOutputStream fileOut = new FileOutputStream(checkpointFile);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(checkpoints);
-			out.close();
-			fileOut.close();
-			System.out.println("Checkpoints stored");
-
-		} catch (IOException i) {
-			i.printStackTrace();
-		}
-	}
-
-	private void eraseCheckpointOndDisk() {
-		if (checkpointFile.delete())
-			System.out.println("Checkpoints erased");
-	}
-
-	private LinkedList<CheckPoint> loadCheckPoints(File f) {
-		LinkedList<CheckPoint> chck = null;
-		try {
-			FileInputStream fileIn = new FileInputStream(f);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			chck = (LinkedList<CheckPoint>) in.readObject();
-			in.close();
-			fileIn.close();
-			System.out.println("Checkpoints loaded");
-		} catch (IOException i) {
-			i.printStackTrace();
-		} catch (ClassNotFoundException c) {
-			System.out.println("Checkpoint Class not found");
-			c.printStackTrace();
-		}
-		return chck;
-	}
-
 }
