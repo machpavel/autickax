@@ -30,13 +30,27 @@ abstract public class GameObject {
 
 	protected Autickax game;
 	protected GameScreen gameScreen;
-	protected byte type;
+	protected int type;
 
 	public GameObject(float startX, float startY, GameScreen gameScreen) {
 		this.position = new Vector2(startX, startY);
 		this.game = Autickax.getInstance();
 		this.gameScreen = gameScreen;
 		this.rotation = 0;
+	}	
+	
+	public GameObject(GameObject object){
+		this.position = object.position;
+		this.width = object.width;
+		this.height = object.height;
+		this.rotation = object.rotation;
+		this.scale = object.scale;
+		this.boundingCircleRadius = object.boundingCircleRadius;
+		this.toDispose = object.toDispose;
+		this.texture = object.texture;
+		this.game = object.game;
+		this.gameScreen = object.gameScreen;
+		this.type = object.type;
 	}
 
 	/** Returns position of the objects center. */
@@ -169,4 +183,13 @@ abstract public class GameObject {
 	public float getRotation() {
 		return this.rotation;
 	}
+
+	public void setPosition(Vector2 position) {
+		this.position = position;
+		
+	}	
+	
+	public abstract GameObject copy();
+	
+	
 }

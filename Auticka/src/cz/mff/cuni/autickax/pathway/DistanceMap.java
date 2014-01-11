@@ -127,17 +127,4 @@ public class DistanceMap {
 			currentPoint = nodesToSearch.poll();			
 		}									
 	}
-		
-	 
-	
-	
-
-	class Vector2i{
-		public int x,y;
-		public Vector2i(int x, int y){
-			this.x = x;
-			this.y = y;
-		}
-	}
-
 }
