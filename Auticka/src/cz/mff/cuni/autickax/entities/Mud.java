@@ -11,25 +11,9 @@ public final class Mud extends GameObject{
 
 	public Mud(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
-		switch (type) {
-		case 1:
-			super.type = 1;
-			super.setMeasurements(Constants.MUD_TYPE_1_WIDTH, Constants.MUD_TYPE_1_HEIGHT);
-			super.setTexture(Constants.MUD_TYPE_1_TEXTURE_NAME);			
-			break;
-		case 2:
-			super.type = 2;
-			super.setMeasurements(Constants.MUD_TYPE_2_WIDTH, Constants.MUD_TYPE_2_HEIGHT);
-			super.setTexture(Constants.MUD_TYPE_1_TEXTURE_NAME);			
-			break;
-		case 3:
-			super.type = 3;
-			super.setMeasurements(Constants.MUD_TYPE_3_WIDTH, Constants.MUD_TYPE_3_HEIGHT);
-			super.setTexture(Constants.MUD_TYPE_3_TEXTURE_NAME);			
-			break;
-		default:
-			break;
-		}
+		super.type = type;
+		super.setMeasurements(Mud.GetWidth(type), Mud.GetHeight(type));
+		super.setTexture(Mud.GetTextureName(type));
 	}
 	
 
@@ -48,6 +32,46 @@ public final class Mud extends GameObject{
 	void aditionalsToXml(XmlWriter writer) throws IOException {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/** Gets the width according to a type*/
+	public static int GetWidth(int type){
+		switch (type) {
+		case 1:
+			return Constants.MUD_TYPE_1_WIDTH;			
+		case 2:
+			return Constants.MUD_TYPE_2_WIDTH;	
+		case 3:
+			return Constants.MUD_TYPE_3_WIDTH;
+		default:
+			return 0;
+		}
+	}
+	/** Gets the height according to a type*/
+	public static int GetHeight(int type){
+		switch (type) {
+		case 1:
+			return Constants.MUD_TYPE_1_HEIGHT;			
+		case 2:
+			return Constants.MUD_TYPE_2_HEIGHT;	
+		case 3:
+			return Constants.MUD_TYPE_3_HEIGHT;	
+		default:
+			return 0;
+		}
+	}	
+	/** Gets the texture name according to a type*/
+	public static  String GetTextureName(int type){
+		switch (type) {
+		case 1:
+			return Constants.MUD_TYPE_1_TEXTURE_NAME;			
+		case 2:
+			return Constants.MUD_TYPE_2_TEXTURE_NAME;
+		case 3:
+			return Constants.MUD_TYPE_3_TEXTURE_NAME;
+		default:
+			return null;
+		}
 	}
 
 }

@@ -30,7 +30,7 @@ abstract public class GameObject {
 
 	protected Autickax game;
 	protected GameScreen gameScreen;
-	protected byte type;
+	protected int type;
 
 	public GameObject(float startX, float startY, GameScreen gameScreen) {
 		this.position = new Vector2(startX, startY);
@@ -168,5 +168,5 @@ abstract public class GameObject {
 	 */
 	public float getRotation() {
 		return this.rotation;
-	}
+	}	
 }

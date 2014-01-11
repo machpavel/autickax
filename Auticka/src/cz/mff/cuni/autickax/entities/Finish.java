@@ -11,15 +11,9 @@ public class Finish extends GameObject {
 	
 	public Finish(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
-		switch (type) {
-		case 1:
-			super.type = 1;
-			super.setMeasurements(Constants.FINISH_TYPE_1_WIDTH, Constants.FINISH_TYPE_1_HEIGHT);
-			super.setTexture(Constants.FINISH_TYPE_1_TEXTURE_NAME);	
-			break;
-		default:
-			break;
-		}
+		super.type = type;
+		super.setMeasurements(Finish.GetWidth(type), Finish.GetHeight(type));
+		super.setTexture(Finish.GetTextureName(type));
 	}
 
 	@Override
@@ -37,6 +31,34 @@ public class Finish extends GameObject {
 	@Override
 	void aditionalsToXml(XmlWriter writer) throws IOException {
 		// TODO Auto-generated method stub		
+	}
+	
+	/** Gets the width according to a type*/
+	public static int GetWidth(int type){
+		switch (type) {
+		case 1:
+			return Constants.FINISH_TYPE_1_WIDTH;					
+		default:
+			return 0;
+		}
+	}
+	/** Gets the height according to a type*/
+	public static int GetHeight(int type){
+		switch (type) {
+		case 1:
+			return Constants.FINISH_TYPE_1_HEIGHT;			
+		default:
+			return 0;
+		}
+	}	
+	/** Gets the texture name according to a type*/
+	public static  String GetTextureName(int type){
+		switch (type) {
+		case 1:
+			return Constants.FINISH_TYPE_1_TEXTURE_NAME;			
+		default:
+			return null;
+		}
 	}
 
 }

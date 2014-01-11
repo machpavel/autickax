@@ -21,14 +21,13 @@ public final class Car extends GameObject {
 
 	public Car(float x, float y, GameScreen gameScreen, int type) {
 		super(x, y, gameScreen);
+		this.type = type;
+		super.setMeasurements(Car.GetWidth(type), Car.GetHeight(type));
 		// TODO: This condition is temporary hack due to loading levels in
 		// AssetsProcessor. REWRITE!
 		if (this.game != null) {
 			switch (type) {
 			case 0:
-				this.type = 0;
-				super.setMeasurements(Constants.CAR_TYPE_0_WIDTH,
-						Constants.CAR_TYPE_0_HEIGHT);
 				this.positionTextures[0] = this.game.assets
 						.getGraphics(Constants.CAR_TYPE_0_POSITION_0_TEXTURE_NAME);
 				this.positionTextures[1] = this.game.assets
@@ -87,40 +86,46 @@ public final class Car extends GameObject {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-//		if (this.rotation >= 22.5 && this.rotation < 67.5)
-//			this.texture = positionTextures[1];
-//		else if (this.rotation >= 67.5 && this.rotation < 112.5)
-//			this.texture = positionTextures[2];
-//		else if (this.rotation >= 112.5 && this.rotation < 157.5)
-//			this.texture = positionTextures[3];
-//		else if (this.rotation >= 157.5 && this.rotation < 202.5)
-//			this.texture = positionTextures[4];
-//		else if (this.rotation >= 202.5 && this.rotation < 247.5)
-//			this.texture = positionTextures[5];
-//		else if (this.rotation >= 247.5 && this.rotation < 292.5)
-//			this.texture = positionTextures[6];
-//		else if (this.rotation >= 292.5 && this.rotation < 337.5)
-//			this.texture = positionTextures[7];
-//		else if ((this.rotation >= 337.5 && this.rotation < 360)
-//				|| (this.rotation >= 0 && this.rotation < 22.5))
-//			this.texture = positionTextures[0];
-//		else {
-//			// TODO: throw Exception
-		
-		
-		if (this.rotation >= 45 && this.rotation < 135)			
+		if (this.rotation >= 22.5 && this.rotation < 67.5)
+			this.texture = positionTextures[1];
+		else if (this.rotation >= 67.5 && this.rotation < 112.5)
 			this.texture = positionTextures[2];
-		else if (this.rotation >= 135 && this.rotation < 225)
+		else if (this.rotation >= 112.5 && this.rotation < 157.5)
+			this.texture = positionTextures[3];
+		else if (this.rotation >= 157.5 && this.rotation < 202.5)
 			this.texture = positionTextures[4];
-		else if (this.rotation >= 225 && this.rotation < 315)			
+		else if (this.rotation >= 202.5 && this.rotation < 247.5)
+			this.texture = positionTextures[5];
+		else if (this.rotation >= 247.5 && this.rotation < 292.5)
 			this.texture = positionTextures[6];
-		else if ((this.rotation >= 315 && this.rotation < 360)
-				|| (this.rotation >= 0 && this.rotation < 45))
+		else if (this.rotation >= 292.5 && this.rotation < 337.5)
+			this.texture = positionTextures[7];
+		else if ((this.rotation >= 337.5 && this.rotation < 360)
+				|| (this.rotation >= 0 && this.rotation < 22.5))
 			this.texture = positionTextures[0];
 		else {
 			// TODO: throw Exception
 		}
-		
 		super.draw(batch);
 	}
+	
+	/** Gets the width according to a type*/
+	public static int GetWidth(int type){
+		switch (type) {
+		case 0:
+			return Constants.CAR_TYPE_0_WIDTH;							
+		default:
+			return 0;
+		}
+	}
+	/** Gets the height according to a type*/
+	public static int GetHeight(int type){
+		switch (type) {
+		case 0:
+			return Constants.CAR_TYPE_0_HEIGHT;			
+	
+		default:
+			return 0;
+		}
+	}	
 }

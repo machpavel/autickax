@@ -49,6 +49,7 @@ public final class Constants {
 	public static final String 	PATHWAY_TEXTURE_TYPE_1 = "pathway";
 	
 	/** Background texture in levels*/
+	public static final int LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT = 4;
 	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_1 = "levelBackground1";
 	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_2 = "levelBackground2";
 	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_3 = "levelBackground3";
@@ -84,16 +85,25 @@ public final class Constants {
 	//
 	// GAME OBJECTS
 	//
+	public static final int CAR_TYPES_COUNT = 1;
+	public static final int FINISH_TYPES_COUNT = 1;
+	public static final int MUD_TYPES_COUNT = 3;
+	public static final int START_TYPES_COUNT = 3;
+	public static final int STONE_TYPES_COUNT = 5;
+	public static final int TREE_TYPES_COUNT = 5;
+	public static final int HOLE_TYPES_COUNT = 2;
+	
+	
 	public static final String 	CAR_TYPE_0_POSITION_0_TEXTURE_NAME = "car0";
-	public static final String 	CAR_TYPE_0_POSITION_1_TEXTURE_NAME = "car0";
-	public static final String 	CAR_TYPE_0_POSITION_2_TEXTURE_NAME = "car1";
-	public static final String 	CAR_TYPE_0_POSITION_3_TEXTURE_NAME = "car2";
-	public static final String 	CAR_TYPE_0_POSITION_4_TEXTURE_NAME = "car2";
-	public static final String 	CAR_TYPE_0_POSITION_5_TEXTURE_NAME = "car2";
-	public static final String 	CAR_TYPE_0_POSITION_6_TEXTURE_NAME = "car1";
-	public static final String 	CAR_TYPE_0_POSITION_7_TEXTURE_NAME = "car0";
-	public static final int  	CAR_TYPE_0_WIDTH = 62;
-	public static final int 	CAR_TYPE_0_HEIGHT = 39;
+	public static final String 	CAR_TYPE_0_POSITION_1_TEXTURE_NAME = "car1";
+	public static final String 	CAR_TYPE_0_POSITION_2_TEXTURE_NAME = "car2";
+	public static final String 	CAR_TYPE_0_POSITION_3_TEXTURE_NAME = "car3";
+	public static final String 	CAR_TYPE_0_POSITION_4_TEXTURE_NAME = "car4";
+	public static final String 	CAR_TYPE_0_POSITION_5_TEXTURE_NAME = "car5";
+	public static final String 	CAR_TYPE_0_POSITION_6_TEXTURE_NAME = "car6";
+	public static final String 	CAR_TYPE_0_POSITION_7_TEXTURE_NAME = "car7";
+	public static final int  	CAR_TYPE_0_WIDTH = 65;
+	public static final int 	CAR_TYPE_0_HEIGHT = 35;
 	
 	public static final String 	FINISH_TYPE_1_TEXTURE_NAME = "finish1";
 	public static final int  	FINISH_TYPE_1_WIDTH = 33;
