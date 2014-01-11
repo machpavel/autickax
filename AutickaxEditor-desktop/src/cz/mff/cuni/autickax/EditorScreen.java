@@ -287,7 +287,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	private void createBackgroundButtons() {
 		for (int i = 1; i <= Constants.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {
 			TextureRegionDrawable trd = new TextureRegionDrawable(
-					game.assets.getGraphics("levelBackground" + (i) + "small"));
+					game.assets.getGraphics(Background.GetSmallTextureName(i)));
 			Button button = new ImageButton(trd);
 			button.setPosition(Constants.WORLD_WIDTH + (i - 1) * 30,
 					Constants.WORLD_HEIGHT - 18);

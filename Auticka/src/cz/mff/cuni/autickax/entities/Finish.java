@@ -39,6 +39,7 @@ public class Finish extends GameObject {
 		case 1:
 			return Constants.FINISH_TYPE_1_WIDTH;					
 		default:
+			//TODO exception
 			return 0;
 		}
 	}
@@ -48,6 +49,7 @@ public class Finish extends GameObject {
 		case 1:
 			return Constants.FINISH_TYPE_1_HEIGHT;			
 		default:
+			//TODO exception
 			return 0;
 		}
 	}	
@@ -57,6 +59,7 @@ public class Finish extends GameObject {
 		case 1:
 			return Constants.FINISH_TYPE_1_TEXTURE_NAME;			
 		default:
+			//TODO exception
 			return null;
 		}
 	}

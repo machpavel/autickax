@@ -49,6 +49,7 @@ public final class Stone extends GameObject {
 		case 5:
 			return Constants.STONE_TYPE_5_WIDTH;
 		default:
+			//TODO exception
 			return 0;
 		}
 	}
@@ -66,6 +67,7 @@ public final class Stone extends GameObject {
 		case 5:
 			return Constants.STONE_TYPE_5_HEIGHT;	
 		default:
+			//TODO exception
 			return 0;
 		}
 	}	
@@ -83,6 +85,7 @@ public final class Stone extends GameObject {
 		case 5:
 			return Constants.STONE_TYPE_5_TEXTURE_NAME;
 		default:
+			//TODO exception
 			return null;
 		}
 	}

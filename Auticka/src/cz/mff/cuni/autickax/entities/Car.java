@@ -115,6 +115,7 @@ public final class Car extends GameObject {
 		case 0:
 			return Constants.CAR_TYPE_0_WIDTH;							
 		default:
+			//TODO exception
 			return 0;
 		}
 	}
@@ -122,9 +123,9 @@ public final class Car extends GameObject {
 	public static int GetHeight(int type){
 		switch (type) {
 		case 0:
-			return Constants.CAR_TYPE_0_HEIGHT;			
-	
+			return Constants.CAR_TYPE_0_HEIGHT;				
 		default:
+			//TODO exception
 			return 0;
 		}
 	}	

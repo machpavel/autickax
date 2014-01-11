@@ -44,6 +44,7 @@ public final class Mud extends GameObject{
 		case 3:
 			return Constants.MUD_TYPE_3_WIDTH;
 		default:
+			//TODO exception
 			return 0;
 		}
 	}
@@ -57,6 +58,7 @@ public final class Mud extends GameObject{
 		case 3:
 			return Constants.MUD_TYPE_3_HEIGHT;	
 		default:
+			//TODO exception
 			return 0;
 		}
 	}	
@@ -70,6 +72,7 @@ public final class Mud extends GameObject{
 		case 3:
 			return Constants.MUD_TYPE_3_TEXTURE_NAME;
 		default:
+			//TODO exception
 			return null;
 		}
 	}

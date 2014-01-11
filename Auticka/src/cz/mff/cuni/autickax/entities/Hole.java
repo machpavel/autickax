@@ -41,6 +41,7 @@ public final class Hole extends GameObject {
 		case 2:
 			return Constants.HOLE_TYPE_2_WIDTH;		
 		default:
+			//TODO exception
 			return 0;
 		}
 	}
@@ -52,6 +53,7 @@ public final class Hole extends GameObject {
 		case 2:
 			return Constants.HOLE_TYPE_2_HEIGHT;		
 		default:
+			//TODO exception
 			return 0;
 		}
 	}	
@@ -63,6 +65,7 @@ public final class Hole extends GameObject {
 		case 2:
 			return Constants.HOLE_TYPE_2_TEXTURE_NAME;
 		default:
+			//TODO exception
 			return null;
 		}
 	}

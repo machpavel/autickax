@@ -54,6 +54,10 @@ public final class Constants {
 	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_2 = "levelBackground2";
 	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_3 = "levelBackground3";
 	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_4 = "levelBackground4";
+	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_1_SMALL = "levelBackground1small";
+	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_2_SMALL = "levelBackground2small";
+	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_3_SMALL = "levelBackground3small";
+	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_4_SMALL = "levelBackground4small";
 	
 	
 	
