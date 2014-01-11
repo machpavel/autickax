@@ -3,7 +3,7 @@ package cz.mff.cuni.autickax;
 import com.badlogic.gdx.Game;
 
 import cz.mff.cuni.autickax.scene.GameScreen;
-import cz.mff.cuni.autickax.scene.TitleScreen;
+import cz.mff.cuni.autickax.scene.MainMenuScreen;
 import cz.mff.cuni.autickax.drawing.Font;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.LoadingScreen;
@@ -13,7 +13,7 @@ public class Autickax extends Game {
 	private static Autickax _instance;
 	
 	public static LoadingScreen loadingScreen;
-	public static TitleScreen titleScreen;
+	public static MainMenuScreen titleScreen;
 	public static GameScreen gameScreen;	
 	
 	static public Font font;

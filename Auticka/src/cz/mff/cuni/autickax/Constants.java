@@ -39,11 +39,15 @@ public final class Constants {
 	
 	
 	//
-	// DRAWING PLACEMENTS
+	// Menu textures
 	//
 	
-	//TODO: dont use this
-	public static final String 	BUTTON_PLAY = "play";
+	public static final String 	BUTTON_MENU_BACKGROUND = "menuBackground";
+	public static final String 	BUTTON_MENU_PLAY = "menuPlay";
+	public static final String 	BUTTON_MENU_PLAY_HOVER = "menuPlayHover";
+	public static final String 	BUTTON_MENU_EXIT = "menuExit";
+	public static final String 	BUTTON_MENU_EXIT_HOVER = "menuExitHover";
+	
 	
 	/** Pathway texture */
 	public static final String 	PATHWAY_TEXTURE_TYPE_1 = "pathway";

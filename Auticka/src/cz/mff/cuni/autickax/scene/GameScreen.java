@@ -162,7 +162,7 @@ public class GameScreen extends BaseScreen {
 	protected void onBackKeyPressed() {
 		this.game.assets.music.stop();
 		Autickax.titleScreen.dispose();
-		Autickax.titleScreen = new TitleScreen();
+		Autickax.titleScreen = new MainMenuScreen();
 		this.game.setScreen(Autickax.titleScreen);
 		Autickax.gameScreen = null;
 		// TODO: this.dispose();

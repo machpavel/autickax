@@ -28,7 +28,7 @@ public class LoadingScreen extends BaseScreen {
 		
 		if (game.assets.update()) { // Keep calling this, until returns true
 			Autickax.font = new Font(game.assets.getFont());
-			Autickax.titleScreen = new TitleScreen(); // we know that it is null, no need for check
+			Autickax.titleScreen = new MainMenuScreen(); // we know that it is null, no need for check
 			game.setScreen(Autickax.titleScreen);						
 			return;
 		}
