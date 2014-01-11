@@ -39,7 +39,7 @@ import cz.mff.cuni.autickax.pathway.Splines;
 
 public final class EditorScreen extends BaseScreenEditor {
 	// Constants
-	private static final int CAR_TYPE = 0;
+	private static final int CAR_TYPE = 1;
 	private static final Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
 	private static final Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
 	private static final int PATHWAY_TEXTURE_TYPE = 0;
@@ -52,7 +52,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	// Entities
 	private ArrayList<GameObject> gameObjects;
-	private Car car;
+	private Car car = new Car(0, 0, null, CAR_TYPE);
 	private Start start = new Start(0, 0, null, 1);
 	private Finish finish = new Finish(0, 0, null, 1);
 
@@ -100,9 +100,6 @@ public final class EditorScreen extends BaseScreenEditor {
 		createRestartButton();
 		createBackgroundButtons();
 		createGameObjectsButtons();
-
-		// Car
-		car = new Car(0, 0, null, CAR_TYPE);
 
 		restart();
 	}
@@ -299,6 +296,9 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 	
 	private void createGameObjectsButtons(){
+		for (int i = 0; i < array.length; i++) {
+			
+		}
 		
 	}
 }

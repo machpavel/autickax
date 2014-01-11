@@ -27,23 +27,23 @@ public final class Car extends GameObject {
 		// AssetsProcessor. REWRITE!
 		if (this.game != null) {
 			switch (type) {
-			case 0:
+			case 1:
 				this.positionTextures[0] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_0_POSITION_0_TEXTURE_NAME);
+						.getGraphics(Constants.CAR_TYPE_1_POSITION_0_TEXTURE_NAME);
 				this.positionTextures[1] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_0_POSITION_1_TEXTURE_NAME);
+						.getGraphics(Constants.CAR_TYPE_1_POSITION_1_TEXTURE_NAME);
 				this.positionTextures[2] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_0_POSITION_2_TEXTURE_NAME);
+						.getGraphics(Constants.CAR_TYPE_1_POSITION_2_TEXTURE_NAME);
 				this.positionTextures[3] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_0_POSITION_3_TEXTURE_NAME);
+						.getGraphics(Constants.CAR_TYPE_1_POSITION_3_TEXTURE_NAME);
 				this.positionTextures[4] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_0_POSITION_4_TEXTURE_NAME);
+						.getGraphics(Constants.CAR_TYPE_1_POSITION_4_TEXTURE_NAME);
 				this.positionTextures[5] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_0_POSITION_5_TEXTURE_NAME);
+						.getGraphics(Constants.CAR_TYPE_1_POSITION_5_TEXTURE_NAME);
 				this.positionTextures[6] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_0_POSITION_6_TEXTURE_NAME);
+						.getGraphics(Constants.CAR_TYPE_1_POSITION_6_TEXTURE_NAME);
 				this.positionTextures[7] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_0_POSITION_7_TEXTURE_NAME);
+						.getGraphics(Constants.CAR_TYPE_1_POSITION_7_TEXTURE_NAME);
 				super.texture = this.positionTextures[0];
 				break;
 			default:
@@ -112,8 +112,8 @@ public final class Car extends GameObject {
 	/** Gets the width according to a type*/
 	public static int GetWidth(int type){
 		switch (type) {
-		case 0:
-			return Constants.CAR_TYPE_0_WIDTH;							
+		case 1:
+			return Constants.CAR_TYPE_1_WIDTH;							
 		default:
 			//TODO exception
 			return 0;
@@ -122,8 +122,8 @@ public final class Car extends GameObject {
 	/** Gets the height according to a type*/
 	public static int GetHeight(int type){
 		switch (type) {
-		case 0:
-			return Constants.CAR_TYPE_0_HEIGHT;				
+		case 1:
+			return Constants.CAR_TYPE_1_HEIGHT;				
 		default:
 			//TODO exception
 			return 0;

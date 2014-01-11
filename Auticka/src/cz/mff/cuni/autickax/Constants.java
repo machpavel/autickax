@@ -98,16 +98,16 @@ public final class Constants {
 	public static final int HOLE_TYPES_COUNT = 2;
 	
 	
-	public static final String 	CAR_TYPE_0_POSITION_0_TEXTURE_NAME = "car0";
-	public static final String 	CAR_TYPE_0_POSITION_1_TEXTURE_NAME = "car1";
-	public static final String 	CAR_TYPE_0_POSITION_2_TEXTURE_NAME = "car2";
-	public static final String 	CAR_TYPE_0_POSITION_3_TEXTURE_NAME = "car3";
-	public static final String 	CAR_TYPE_0_POSITION_4_TEXTURE_NAME = "car4";
-	public static final String 	CAR_TYPE_0_POSITION_5_TEXTURE_NAME = "car5";
-	public static final String 	CAR_TYPE_0_POSITION_6_TEXTURE_NAME = "car6";
-	public static final String 	CAR_TYPE_0_POSITION_7_TEXTURE_NAME = "car7";
-	public static final int  	CAR_TYPE_0_WIDTH = 65;
-	public static final int 	CAR_TYPE_0_HEIGHT = 35;
+	public static final String 	CAR_TYPE_1_POSITION_0_TEXTURE_NAME = "car0";
+	public static final String 	CAR_TYPE_1_POSITION_1_TEXTURE_NAME = "car1";
+	public static final String 	CAR_TYPE_1_POSITION_2_TEXTURE_NAME = "car2";
+	public static final String 	CAR_TYPE_1_POSITION_3_TEXTURE_NAME = "car3";
+	public static final String 	CAR_TYPE_1_POSITION_4_TEXTURE_NAME = "car4";
+	public static final String 	CAR_TYPE_1_POSITION_5_TEXTURE_NAME = "car5";
+	public static final String 	CAR_TYPE_1_POSITION_6_TEXTURE_NAME = "car6";
+	public static final String 	CAR_TYPE_1_POSITION_7_TEXTURE_NAME = "car7";
+	public static final int  	CAR_TYPE_1_WIDTH = 65;
+	public static final int 	CAR_TYPE_1_HEIGHT = 35;
 	
 	public static final String 	FINISH_TYPE_1_TEXTURE_NAME = "finish1";
 	public static final int  	FINISH_TYPE_1_WIDTH = 33;
