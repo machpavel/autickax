@@ -1,4 +1,4 @@
-package cz.mff.cuni.autickox.myInputListener;
+package cz.mff.cuni.autickax.myInputListener;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;

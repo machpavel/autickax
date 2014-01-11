@@ -32,10 +32,10 @@ import cz.mff.cuni.autickax.entities.Mud;
 import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
+import cz.mff.cuni.autickax.myInputListener.MyInputListener;
+import cz.mff.cuni.autickax.myInputListener.MyInputListenerForBackground;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
-import cz.mff.cuni.autickox.myInputListener.MyInputListener;
-import cz.mff.cuni.autickox.myInputListener.MyInputListenerForBackground;
 
 public final class EditorScreen extends BaseScreenEditor {
 	// Constants
