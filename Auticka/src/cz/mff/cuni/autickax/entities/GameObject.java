@@ -21,8 +21,7 @@ abstract public class GameObject {
 	protected int width;
 	protected int height;
 	protected float rotation;
-	protected float scaleX = 1;
-	protected float scaleY = 1;
+	protected Vector2 scale = new Vector2(1, 1);
 	protected int boundingCircleRadius;
 
 	private boolean toDispose;
@@ -94,7 +93,7 @@ abstract public class GameObject {
 				* Input.xStretchFactorInv, (this.height / 2)
 				* Input.yStretchFactorInv,
 				this.width * Input.xStretchFactorInv, this.height
-						* Input.yStretchFactorInv, scaleX, scaleY, this.rotation);
+						* Input.yStretchFactorInv, scale.x, scale.y, this.rotation);
 	}
 
 	public String toString() {
