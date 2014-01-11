@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -22,6 +21,8 @@ abstract public class GameObject {
 	protected int width;
 	protected int height;
 	protected float rotation;
+	protected float scaleX = 1;
+	protected float scaleY = 1;
 	protected int boundingCircleRadius;
 
 	private boolean toDispose;
@@ -93,7 +94,7 @@ abstract public class GameObject {
 				* Input.xStretchFactorInv, (this.height / 2)
 				* Input.yStretchFactorInv,
 				this.width * Input.xStretchFactorInv, this.height
-						* Input.yStretchFactorInv, 1, 1, this.rotation);
+						* Input.yStretchFactorInv, scaleX, scaleY, this.rotation);
 	}
 
 	public String toString() {
@@ -168,5 +169,13 @@ abstract public class GameObject {
 	 */
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
+	}
+	
+	/**
+	 * Gets the rotation of object in degrees (counterclockwise).
+	 * @return 
+	 */
+	public float getRotation() {
+		return this.rotation;
 	}
 }

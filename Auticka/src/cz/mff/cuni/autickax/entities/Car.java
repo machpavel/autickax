@@ -66,8 +66,7 @@ public final class Car extends GameObject {
 	}
 
 	@Override
-	public void update(float delta) {
-		this.rotation = (this.rotation + delta * 70) % 360;
+	public void update(float delta) {		
 		if (this.isDragged()) {
 			if (Gdx.input.isTouched()) {
 				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());

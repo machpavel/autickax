@@ -35,4 +35,9 @@ public class CheckPoint implements Serializable{
 		this.time = time;
 		this.position = new Vector2(x, y);		
 	}
+	
+	CheckPoint(float time, Vector2 position) {
+		this.time = time;
+		this.position = new Vector2(position);		
+	}
 }
