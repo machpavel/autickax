@@ -12,7 +12,7 @@ public class Finish extends GameObject {
 	public Finish(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		switch (type) {
-		case 0:
+		case 1:
 			super.setMeasurements(Constants.FINISH_TYPE_1_WIDTH, Constants.FINISH_TYPE_1_HEIGHT);
 			super.setTexture(Constants.FINISH_TYPE_1_TEXTURE_NAME);	
 			break;

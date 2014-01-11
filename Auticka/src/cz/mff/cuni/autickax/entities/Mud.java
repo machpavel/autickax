@@ -12,9 +12,17 @@ public final class Mud extends GameObject{
 	public Mud(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		switch (type) {
-		case 0:
+		case 1:
 			super.setMeasurements(Constants.MUD_TYPE_1_WIDTH, Constants.MUD_TYPE_1_HEIGHT);
 			super.setTexture(Constants.MUD_TYPE_1_TEXTURE_NAME);			
+			break;
+		case 2:
+			super.setMeasurements(Constants.MUD_TYPE_2_WIDTH, Constants.MUD_TYPE_2_HEIGHT);
+			super.setTexture(Constants.MUD_TYPE_1_TEXTURE_NAME);			
+			break;
+		case 3:
+			super.setMeasurements(Constants.MUD_TYPE_3_WIDTH, Constants.MUD_TYPE_3_HEIGHT);
+			super.setTexture(Constants.MUD_TYPE_3_TEXTURE_NAME);			
 			break;
 		default:
 			break;

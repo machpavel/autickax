@@ -12,9 +12,17 @@ public class Start extends GameObject {
 	public Start(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		switch (type) {
-		case 0:
+		case 1:
 			super.setMeasurements(Constants.START_TYPE_1_WIDTH, Constants.START_TYPE_1_HEIGHT);
 			super.setTexture(Constants.START_TYPE_1_TEXTURE_NAME);			
+			break;
+		case 2:
+			super.setMeasurements(Constants.START_TYPE_2_WIDTH, Constants.START_TYPE_2_HEIGHT);
+			super.setTexture(Constants.START_TYPE_2_TEXTURE_NAME);			
+			break;
+		case 3:
+			super.setMeasurements(Constants.START_TYPE_3_WIDTH, Constants.START_TYPE_3_HEIGHT);
+			super.setTexture(Constants.START_TYPE_3_TEXTURE_NAME);			
 			break;
 		default:
 			break;

@@ -39,14 +39,6 @@ abstract public class GameObject {
 		this.rotation = 0;
 	}
 
-	public GameObject(float startX, float startY, int width, int height,
-			GameScreen gameScreen, String textureName) {
-		this(startX, startY, gameScreen);
-		this.width = width;
-		this.height = height;
-		this.texture = this.game.assets.getGraphics(textureName);
-	}
-
 	/** Returns position of the objects center. */
 	public Vector2 getPosition() {
 		return this.position;

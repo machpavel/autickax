@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
+import cz.mff.cuni.autickax.entities.Hole;
 import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.Mud;
@@ -90,11 +91,7 @@ public class Level {
 		}
 		this.pathway.CreateDistances();
 		
-		//TODO correct positions
-		this.start = new Start(pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x, pathway.GetPosition(0).y, gameScreen, 0);
-		this.finish = new Finish(pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x, pathway.GetPosition(1).y, gameScreen, 0);
-		
-		
+				
 		// Loading game objects
 		Element entities = root.getChildByName("entities");
 		for(int i = 0; i < entities.getChildCount() ; i++){
@@ -109,6 +106,9 @@ public class Level {
 			else if (objectName.equals("tree")){
 				gameObjects.add(new Tree(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameScreen, gameObject.getInt("type", 0)));
 			}
+			else if (objectName.equals("hole")){
+				gameObjects.add(new Hole(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameScreen, gameObject.getInt("type", 0)));
+			}
 			else throw new IOException("Loading object failed: Unknown type");
 		}
 		for (GameObject gameObject : gameObjects) {
@@ -117,8 +117,19 @@ public class Level {
 		
 		// Loading car
 		Element car = root.getChildByName("car");
-		this.car = new Car(car.getFloat("X"), car.getFloat("Y"), gameScreen, car.getInt("type", 0));
+		this.car = new Car(car.getFloat("X"), car.getFloat("Y"), gameScreen, car.getInt("type", 1));
 		System.out.println(car.toString());
+		
+		//Loading start
+		Element start = root.getChildByName("start");
+		this.start = new Start(start.getFloat("X"), start.getFloat("Y"), gameScreen, start.getInt("type", 1));
+		System.out.println(start.toString());
+		
+		//Loading finish
+		Element finish = root.getChildByName("finish");
+		this.finish = new Finish(finish.getFloat("X"), finish.getFloat("Y"), gameScreen, finish.getInt("type", 1));
+		System.out.println(finish.toString());
+				
 		
 		// Background
 		Element backgroundTexture = root.getChildByName("backgroundTexture");

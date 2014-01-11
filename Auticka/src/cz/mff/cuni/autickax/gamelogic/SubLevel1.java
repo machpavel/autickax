@@ -215,7 +215,7 @@ public class SubLevel1 extends SubLevel {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		for (GameObject gameObject : this.Level.getGameObjects()) {
+		for (GameObject gameObject : this.Level.getGameObjects()) {			
 			gameObject.draw(batch);
 		}
 		this.Level.getStart().draw(batch);

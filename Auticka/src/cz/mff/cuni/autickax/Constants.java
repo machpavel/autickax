@@ -88,23 +88,79 @@ public final class Constants {
 	public static final int  	CAR_TYPE_0_WIDTH = 62;
 	public static final int 	CAR_TYPE_0_HEIGHT = 39;
 	
-	public static final String 	FINISH_TYPE_1_TEXTURE_NAME = "finish";
-	public static final int  	FINISH_TYPE_1_WIDTH = 91;
-	public static final int 	FINISH_TYPE_1_HEIGHT = 91;
+	public static final String 	FINISH_TYPE_1_TEXTURE_NAME = "finish1";
+	public static final int  	FINISH_TYPE_1_WIDTH = 33;
+	public static final int 	FINISH_TYPE_1_HEIGHT = 52;
 	
-	public static final String 	MUD_TYPE_1_TEXTURE_NAME = "mud";
-	public static final int  	MUD_TYPE_1_WIDTH = 30;
-	public static final int 	MUD_TYPE_1_HEIGHT = 30;
+	public static final String 	MUD_TYPE_1_TEXTURE_NAME = "mud1";
+	public static final int  	MUD_TYPE_1_WIDTH = 48;
+	public static final int 	MUD_TYPE_1_HEIGHT = 34;
 	
-	public static final String 	START_TYPE_1_TEXTURE_NAME = "start";
-	public static final int  	START_TYPE_1_WIDTH = 91;
-	public static final int 	START_TYPE_1_HEIGHT = 91;
+	public static final String 	MUD_TYPE_2_TEXTURE_NAME = "mud2";
+	public static final int  	MUD_TYPE_2_WIDTH = 29;
+	public static final int 	MUD_TYPE_2_HEIGHT = 27;
 	
-	public static final String 	STONE_TYPE_1_TEXTURE_NAME = "stone";
-	public static final int  	STONE_TYPE_1_WIDTH = 30;
-	public static final int 	STONE_TYPE_1_HEIGHT = 30;
+	public static final String 	MUD_TYPE_3_TEXTURE_NAME = "mud3";
+	public static final int  	MUD_TYPE_3_WIDTH = 18;
+	public static final int 	MUD_TYPE_3_HEIGHT = 18;
 	
-	public static final String 	TREE_TYPE_1_TEXTURE_NAME = "tree";
-	public static final int  	TREE_TYPE_1_WIDTH = 30;
-	public static final int 	TREE_TYPE_1_HEIGHT = 30;
+	public static final String 	START_TYPE_1_TEXTURE_NAME = "start1";
+	public static final int  	START_TYPE_1_WIDTH = 72;
+	public static final int 	START_TYPE_1_HEIGHT = 52;
+	
+	public static final String 	START_TYPE_2_TEXTURE_NAME = "start2";
+	public static final int  	START_TYPE_2_WIDTH = 33;
+	public static final int 	START_TYPE_2_HEIGHT = 52;
+	
+	public static final String 	START_TYPE_3_TEXTURE_NAME = "start3";
+	public static final int  	START_TYPE_3_WIDTH = 33;
+	public static final int 	START_TYPE_3_HEIGHT = 52;
+	
+	public static final String 	STONE_TYPE_1_TEXTURE_NAME = "stone1";
+	public static final int  	STONE_TYPE_1_WIDTH = 15;
+	public static final int 	STONE_TYPE_1_HEIGHT = 14;
+	
+	public static final String 	STONE_TYPE_2_TEXTURE_NAME = "stone2";
+	public static final int  	STONE_TYPE_2_WIDTH = 22;
+	public static final int 	STONE_TYPE_2_HEIGHT = 21;
+	
+	public static final String 	STONE_TYPE_3_TEXTURE_NAME = "stone3";
+	public static final int  	STONE_TYPE_3_WIDTH = 50;
+	public static final int 	STONE_TYPE_3_HEIGHT = 43;
+	
+	public static final String 	STONE_TYPE_4_TEXTURE_NAME = "stone4";
+	public static final int  	STONE_TYPE_4_WIDTH = 50;
+	public static final int 	STONE_TYPE_4_HEIGHT = 43;
+	
+	public static final String 	STONE_TYPE_5_TEXTURE_NAME = "stone5";
+	public static final int  	STONE_TYPE_5_WIDTH = 50;
+	public static final int 	STONE_TYPE_5_HEIGHT = 32;
+	
+	public static final String 	TREE_TYPE_1_TEXTURE_NAME = "tree1";
+	public static final int  	TREE_TYPE_1_WIDTH = 29;
+	public static final int 	TREE_TYPE_1_HEIGHT = 42;
+	
+	public static final String 	TREE_TYPE_2_TEXTURE_NAME = "tree2";
+	public static final int  	TREE_TYPE_2_WIDTH = 28;
+	public static final int 	TREE_TYPE_2_HEIGHT = 42;
+	
+	public static final String 	TREE_TYPE_3_TEXTURE_NAME = "tree3";
+	public static final int  	TREE_TYPE_3_WIDTH = 28;
+	public static final int 	TREE_TYPE_3_HEIGHT = 42;
+	
+	public static final String 	TREE_TYPE_4_TEXTURE_NAME = "tree4";
+	public static final int  	TREE_TYPE_4_WIDTH = 28;
+	public static final int 	TREE_TYPE_4_HEIGHT = 42;
+	
+	public static final String 	TREE_TYPE_5_TEXTURE_NAME = "tree5";
+	public static final int  	TREE_TYPE_5_WIDTH = 29;
+	public static final int 	TREE_TYPE_5_HEIGHT = 42;
+	
+	public static final String 	HOLE_TYPE_1_TEXTURE_NAME = "hole1";
+	public static final int  	HOLE_TYPE_1_WIDTH = 24;
+	public static final int 	HOLE_TYPE_1_HEIGHT = 11;
+	
+	public static final String 	HOLE_TYPE_2_TEXTURE_NAME = "hole2";
+	public static final int  	HOLE_TYPE_2_WIDTH = 13;
+	public static final int 	HOLE_TYPE_2_HEIGHT = 9;
 }

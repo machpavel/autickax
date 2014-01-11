@@ -24,8 +24,10 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Assets;
 import cz.mff.cuni.autickax.entities.Car;
+import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.Mud;
+import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.Pathway;
@@ -51,6 +53,8 @@ public class EditorScreen extends BaseScreenEditor {
 	// Entities
 	private ArrayList<GameObject> gameObjects;
 	private Car car;
+	private Start start = new Start(0,0,null,1);
+	private Finish finish = new Finish(0,0,null,1);
 
 	// Cached font
 	private BitmapFont font;
@@ -102,9 +106,9 @@ public class EditorScreen extends BaseScreenEditor {
 		createGenerateButton();
 		createRestartButton();
 		
-		gameObjects.add(new Mud(600,100,null, 0));
-		gameObjects.add(new Stone(200,200,null, 0));
-		gameObjects.add(new Tree(300,300,null, 0));
+		gameObjects.add(new Mud(600,100,null, 1));
+		gameObjects.add(new Stone(200,200,null, 1));
+		gameObjects.add(new Tree(300,300,null, 4));
 	}
 
 	private void update(float delta) {
@@ -112,8 +116,7 @@ public class EditorScreen extends BaseScreenEditor {
 		if (Gdx.input.justTouched()) {
 			Vector2 point = new Vector2(Gdx.input.getX(), stageHeight - Gdx.input.getY());
 			pathway.getControlPoints().add(point);
-			game.assets.getSound(Constants.SOUND_HIT).play();
-			generateXml("level.xml");
+			game.assets.getSound(Constants.SOUND_HIT).play();			
 		}
 	}
 
@@ -193,6 +196,8 @@ public class EditorScreen extends BaseScreenEditor {
 			xml.pop();
 
 			car.toXml(xml);
+			start.toXml(xml);
+			finish.toXml(xml);
 
 			xml.element("backgroundTexture").attribute("textureName", backGroundTextureString).pop();
 			xml.element("timeLimit", TIME_LIMIT);;
@@ -233,6 +238,9 @@ public class EditorScreen extends BaseScreenEditor {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {				
 				pathway.CreateDistances();
+				start = new Start(pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x, pathway.GetPosition(0).y, null, 1);
+				finish = new Finish(pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x, pathway.GetPosition(1).y, null, 1);
+				generateXml("level.xml");
 			}
 		});
 	}
