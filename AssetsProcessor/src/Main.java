@@ -1,4 +1,3 @@
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.tools.imagepacker.TexturePacker.Settings;
 import com.badlogic.gdx.tools.imagepacker.TexturePacker;
 
@@ -53,10 +52,14 @@ public class Main {
     	}
     	  
     	File levelsDirectory = ASSETS_LEVELS_PATH.toFile();
-    	File[] files = levelsDirectory.listFiles();
-    	for( File file : files ) {
-    		LevelPath levelPath = new LevelPath(file);
-    		levelPath.createBitmap(800, 480, ASSETS_PATHWAY_TEXTURES, ASSETS_LEVELS_PATH_IMAGES);
+    	File[] directories = levelsDirectory.listFiles();
+    	for( File directory : directories ) {
+        	File[] files = directory.listFiles();
+        	
+        	for( File file : files ) {
+	    		LevelPath levelPath = new LevelPath(file, directory.getName());
+	    		levelPath.createBitmap(800, 480, ASSETS_PATHWAY_TEXTURES, ASSETS_LEVELS_PATH_IMAGES);
+        	}
     	}
     }
 

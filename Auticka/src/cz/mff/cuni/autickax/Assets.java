@@ -113,7 +113,7 @@ public class Assets {
 		return assetManager.get(FONT_FILE, BitmapFont.class);
 	}
 
-	public FileHandle loadLevel(String name){
-		return Gdx.files.internal("levels/"+ name + ".xml");
+	public FileHandle loadLevel(String name, String difficulty) {
+		return Gdx.files.internal("levels\\"+ difficulty + "\\" + name + ".xml");
 	}
 }

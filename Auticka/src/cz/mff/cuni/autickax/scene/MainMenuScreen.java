@@ -41,7 +41,7 @@ public class MainMenuScreen extends BaseScreen {
 		{
 			@Override
 			public void action() {
-				Autickax.gameScreen = new GameScreen("level");
+				Autickax.gameScreen = new GameScreen("level0");
 				game.setScreen(Autickax.gameScreen);
 			}
 		};

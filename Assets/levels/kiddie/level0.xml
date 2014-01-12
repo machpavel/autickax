@@ -1,0 +1,25 @@
+<AutickaX>
+	<pathway pathwayType="OPENED" typeOfInterpolation="CUBIC_B_SPLINE" textureType="0">
+		<controlPoints>
+			<point X="52.0" Y="52.0"/>
+			<point X="55.0" Y="53.0"/>
+			<point X="55.0" Y="53.0"/>
+			<point X="38.0" Y="217.0"/>
+			<point X="142.0" Y="402.0"/>
+			<point X="334.0" Y="439.0"/>
+			<point X="412.0" Y="297.0"/>
+			<point X="437.0" Y="123.0"/>
+			<point X="581.0" Y="38.0"/>
+			<point X="732.0" Y="166.0"/>
+			<point X="760.0" Y="457.0"/>
+			<point X="760.0" Y="457.0"/>
+			<point X="760.0" Y="457.0"/>
+		</controlPoints>
+	</pathway>
+	<entities/>
+	<car X="0.0" Y="0.0" type="0"/>
+	<start X="54.500004" Y="52.833336" type="1"/>
+	<finish X="760.00006" Y="457.00006" type="1"/>
+	<levelBackgroundType>1</levelBackgroundType>
+	<timeLimit>5.0</timeLimit>
+</AutickaX>

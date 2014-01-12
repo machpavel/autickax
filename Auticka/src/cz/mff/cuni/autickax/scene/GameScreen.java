@@ -70,7 +70,7 @@ public class GameScreen extends BaseScreen {
 		
 	
 		try {
-			Level level = new Level(game.assets.loadLevel(name));		
+			Level level = new Level(game.assets.loadLevel(name, "hard"));		
 			level.parseLevel(this);
 			this.pathway = level.getPathway();
 			this.gameObjects = level.getGameObjects();

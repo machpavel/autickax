@@ -15,9 +15,11 @@ public class LevelPath {
 			- Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY;
 
 	private final File file;
+	private final String directory;
 
-	public LevelPath(File file) {
+	public LevelPath(File file, String directory) {
 		this.file = file;
+		this.directory = directory; 
 	}
 
 	public void createBitmap(int width, int height, String inputPath,
@@ -72,8 +74,14 @@ public class LevelPath {
 				}
 			}
 		}
+		
+		File levelsImagesDirectory = new File(outputPath + "\\" + this.directory);
+    	if (!levelsImagesDirectory.exists()) {
+    		System.out.println("creating directory: " + outputPath + "\\" + this.directory);
+    		levelsImagesDirectory.mkdir();
+    	}
 
-		File output = new File(outputPath + "\\"
+		File output = new File(outputPath + "\\" + this.directory + "\\"
 				+ this.file.getName().replace("xml", "png"));
 		try {
 			ImageIO.write(image, "png", output);
