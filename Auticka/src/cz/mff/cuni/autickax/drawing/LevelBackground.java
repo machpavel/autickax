@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 
-public class Background {
+public class LevelBackground {
 	
 	private int type;
 	private TextureRegion backgroundTexture;	
@@ -18,7 +18,7 @@ public class Background {
 	
 	public void SetType(int type){
 		this.type = type;
-		this.backgroundTexture = Autickax.getInstance().assets.getGraphics(Background.GetTextureName(type));			
+		this.backgroundTexture = Autickax.getInstance().assets.getGraphics(LevelBackground.GetTextureName(type));			
 	}
 	
 	public void draw(SpriteBatch batch, float stageWidth, float stageHeight){

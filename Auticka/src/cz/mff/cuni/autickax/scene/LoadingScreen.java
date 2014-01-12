@@ -7,11 +7,6 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.drawing.Font;
 
 
-/**
- * In this screen we load all our assets and then switch to TitleScreen
- * 
- * @author Ondrej Paska
- */
 public class LoadingScreen extends BaseScreen {
 
 	public LoadingScreen() {
@@ -26,14 +21,14 @@ public class LoadingScreen extends BaseScreen {
 		Gdx.gl.glClearColor(0f, 1f, 0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		if (game.assets.update()) { // Keep calling this, until returns true
+		if (game.assets.update()) {
 			Autickax.font = new Font(game.assets.getFont());
 			Autickax.mainMenuScreen = new MainMenuScreen(); // we know that it is null, no need for check
 			game.setScreen(Autickax.mainMenuScreen);						
 			return;
 		}
-		// trace("loading progress:"+Assets.getProgress()); //TODO visualize
-		// progress
+		//trace("loading progress:" + game.assets.getProgress()); //TODO visualize
+
 	}
 
 	@Override
