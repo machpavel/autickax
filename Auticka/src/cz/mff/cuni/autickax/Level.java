@@ -19,7 +19,7 @@ import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public class Level {
+public class LevelLoading {
 	private final FileHandle file;
 	private Pathway pathway = new Pathway();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
@@ -30,7 +30,7 @@ public class Level {
 	private int pathwayTextureType;
 	private float timeLimit;
 	
-	public Level (FileHandle file) {
+	public LevelLoading (FileHandle file) {
 		this.file = file;
 	}
 	
