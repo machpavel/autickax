@@ -1,8 +1,14 @@
 import com.badlogic.gdx.tools.imagepacker.TexturePacker.Settings;
 import com.badlogic.gdx.tools.imagepacker.TexturePacker;
 
+import cz.mff.cuni.autickax.AvailableLevels;
+import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.Level;
+
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -45,6 +51,8 @@ public class Main {
     }
     
     private static void createLevelsPaths() {
+    	AvailableLevels availableLevels = new AvailableLevels();
+    	
     	File levelsImagesDirectory = new File(ASSETS_LEVELS_PATH_IMAGES);
     	if (!levelsImagesDirectory.exists()) {
     		System.out.println("creating directory: " + ASSETS_LEVELS_PATH_IMAGES);
@@ -56,11 +64,47 @@ public class Main {
     	for( File directory : directories ) {
         	File[] files = directory.listFiles();
         	
+        	Difficulty levelDifficulty = Difficulty.valueOf(directory.getName());
+        	
         	for( File file : files ) {
 	    		LevelPath levelPath = new LevelPath(file, directory.getName());
 	    		levelPath.createBitmap(800, 480, ASSETS_PATHWAY_TEXTURES, ASSETS_LEVELS_PATH_IMAGES);
         	}
+        	
+        	switch (levelDifficulty) {
+			case Beginner:
+				availableLevels.beginnerLevels.add(new Level());
+				break;
+			case Extreme:
+				availableLevels.extremeLevels.add(new Level());
+				break;
+			case Hard:
+				availableLevels.hardLevels.add(new Level());
+				break;
+			case Kiddie:
+				availableLevels.hardLevels.add(new Level());
+				break;
+			case Normal:
+				availableLevels.normalLevels.add(new Level());
+				break;
+			default:
+				break;
+        	}
     	}
+    	
+    	 try
+         {
+            FileOutputStream fileOut = new FileOutputStream(ANDROID_LEVELS_PATH.toString() + "\\availableLevels.bin");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(availableLevels);
+            out.close();
+            fileOut.close();
+            System.out.println("Available levels serialized.");
+         } catch (IOException i)
+         {
+        	 System.out.print("Problem during serialization: ");
+             i.printStackTrace();
+         }
     }
 
 	private static void copyLevels() throws IOException {

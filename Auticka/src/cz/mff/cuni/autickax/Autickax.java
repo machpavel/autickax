@@ -23,21 +23,10 @@ public class Autickax extends Game {
 	static public Font font;
 
 	public Assets assets;
-	public final AvailableLevels levels;
 
 	public Autickax() {
 		_instance = this;
 		assets = new Assets();
-		this.levels = new AvailableLevels();
-		
-		// TODO: this will be overwritten by deserializing
-		for (int i = 0; i < 10; ++i) {
-			this.levels.kiddieLevels.add(new Level());
-			this.levels.beginnerLevels.add(new Level());
-			this.levels.normalLevels.add(new Level());
-			this.levels.hardLevels.add(new Level());
-			this.levels.extremeLevels.add(new Level());
-		}
 	}
 	
 

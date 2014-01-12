@@ -48,11 +48,11 @@ public class LevelSelectScreen extends BaseScreen {
 		Vector<Level> levels;
 		
 		switch (this.difficulty) {
-			case Kiddie: levels = this.game.levels.kiddieLevels; break;
-			case Beginner: levels = this.game.levels.beginnerLevels; break;
-			case Normal: levels = this.game.levels.normalLevels; break;
-			case Hard: levels = this.game.levels.hardLevels; break;
-			case Extreme: levels = this.game.levels.extremeLevels; break;
+			case Kiddie: levels = this.game.assets.getAvailableLevels().kiddieLevels; break;
+			case Beginner: levels = this.game.assets.getAvailableLevels().beginnerLevels; break;
+			case Normal: levels = this.game.assets.getAvailableLevels().normalLevels; break;
+			case Hard: levels = this.game.assets.getAvailableLevels().hardLevels; break;
+			case Extreme: levels = this.game.assets.getAvailableLevels().extremeLevels; break;
 			default: levels = null;
 		}
 		

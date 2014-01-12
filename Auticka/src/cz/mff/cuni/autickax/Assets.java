@@ -5,12 +5,15 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import cz.mff.cuni.cz.serialization.AvailableLevelsLoader;
 
 /**
  * This class takes care of all asset loading and parsing Call load to load
@@ -24,6 +27,7 @@ public class Assets {
 	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images";
 	private static final String FONT_FILE = "fonts/font.fnt";
 	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
+	private static final String AVAILABLE_LEVELS_FILE = "levels/availableLevels.bin";
 	public AssetManager assetManager;
 
 	private Map<String, TextureRegion> graphicsCacheMap;
@@ -49,9 +53,10 @@ public class Assets {
 	}
 
 	public void load() {
-		loadGraphics();
-		loadFont();
-		loadSounds();
+		this.loadGraphics();
+		this.loadFont();
+		this.loadSounds();
+		this.loadAvailableLevels();
 		//loadLevels(); it has to be loaded manually after loading whole assets because levels uses these assets 
 	}
 
@@ -110,6 +115,11 @@ public class Assets {
 		assetManager.load(FONT_FILE, BitmapFont.class);
 		assetManager.load(MENU_FONT_FILE, BitmapFont.class);
 	}
+	
+	private void loadAvailableLevels() {
+		assetManager.setLoader(AvailableLevels.class, new AvailableLevelsLoader(new InternalFileHandleResolver()));
+		assetManager.load(AVAILABLE_LEVELS_FILE, AvailableLevels.class);
+	}
 
 	public BitmapFont getFont() {
 		return assetManager.get(FONT_FILE, BitmapFont.class);
@@ -117,6 +127,10 @@ public class Assets {
 
 	public BitmapFont getMenuFont() {
 		return assetManager.get(MENU_FONT_FILE, BitmapFont.class);
+	}
+	
+	public AvailableLevels getAvailableLevels() {
+		return assetManager.get(AVAILABLE_LEVELS_FILE, AvailableLevels.class);
 	}
 
 	public FileHandle loadLevel(String name, Difficulty difficulty) {

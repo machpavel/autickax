@@ -2,7 +2,10 @@ package cz.mff.cuni.autickax;
 
 import java.util.Vector;
 
-public class AvailableLevels {
+public class AvailableLevels implements java.io.Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	public Vector<Level> kiddieLevels;
 	public Vector<Level> beginnerLevels;
 	public Vector<Level> normalLevels;
