@@ -23,8 +23,8 @@ public class LoadingScreen extends BaseScreen {
 		
 		if (game.assets.update()) {
 			Autickax.font = new Font(game.assets.getFont());
-			Autickax.titleScreen = new MainMenuScreen(); // we know that it is null, no need for check
-			game.setScreen(Autickax.titleScreen);						
+			Autickax.mainMenuScreen = new MainMenuScreen(); // we know that it is null, no need for check
+			game.setScreen(Autickax.mainMenuScreen);						
 			return;
 		}
 		//trace("loading progress:" + game.assets.getProgress()); //TODO visualize
