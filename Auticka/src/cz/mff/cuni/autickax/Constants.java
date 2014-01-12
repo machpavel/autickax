@@ -47,6 +47,10 @@ public final class Constants {
 	public static final String 	BUTTON_MENU_PLAY_HOVER = "menuPlayHover";
 	public static final String 	BUTTON_MENU_EXIT = "menuExit";
 	public static final String 	BUTTON_MENU_EXIT_HOVER = "menuExitHover";
+	public static final String 	BUTTON_MENU_LEVEL = "menuLevel";
+	public static final String 	BUTTON_MENU_LEVEL_HOVER = "menuLevelHover";
+	public static final String 	BUTTON_MENU_DIFFICULTY = "menuDifficulty";
+	public static final String 	BUTTON_MENU_DIFFICULTY_HOVER = "menuDifficultyHover";
 	
 	
 	/** Pathway texture */

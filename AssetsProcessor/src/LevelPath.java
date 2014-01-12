@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import cz.mff.cuni.autickax.Constants;
-import cz.mff.cuni.autickax.Level;
+import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 
 import com.badlogic.gdx.files.FileHandle;
@@ -25,7 +25,7 @@ public class LevelPath {
 	public void createBitmap(int width, int height, String inputPath,
 			String outputPath) {
 
-		Level level = new Level(new FileHandle(this.file));
+		LevelLoading level = new LevelLoading(new FileHandle(this.file));
 		try {
 			level.parseLevel(null);
 		} catch (Exception e) {

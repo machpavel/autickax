@@ -12,7 +12,8 @@ import com.badlogic.gdx.math.Vector3;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
-import cz.mff.cuni.autickax.Level;
+import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.drawing.Background;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
@@ -52,11 +53,15 @@ public class GameScreen extends BaseScreen {
 		return pathway;
 	}
 	
+	private final Difficulty difficulty;
+	
 	
 	
 	// Creates instance according to a given xml file
-	public GameScreen(String name) {
+	public GameScreen(String name, Difficulty difficulty) {
 		super();
+		
+		this.difficulty = difficulty;
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, stageWidth, stageHeight);
@@ -70,7 +75,7 @@ public class GameScreen extends BaseScreen {
 		
 	
 		try {
-			Level level = new Level(game.assets.loadLevel(name, "hard"));		
+			LevelLoading level = new LevelLoading(game.assets.loadLevel(name, difficulty));		
 			level.parseLevel(this);
 			this.pathway = level.getPathway();
 			this.gameObjects = level.getGameObjects();
@@ -161,11 +166,9 @@ public class GameScreen extends BaseScreen {
 	@Override
 	protected void onBackKeyPressed() {
 		this.game.assets.music.stop();
-		Autickax.titleScreen.dispose();
-		Autickax.titleScreen = new MainMenuScreen();
-		this.game.setScreen(Autickax.titleScreen);
-		Autickax.gameScreen = null;
-		// TODO: this.dispose();
+		Autickax.levelSelectScreen.dispose();
+		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
+		this.game.setScreen(Autickax.levelSelectScreen);
 	}
 
 

@@ -23,6 +23,7 @@ public class Assets {
 	private static final String GRAPHICS_DIR = "images";
 	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images";
 	private static final String FONT_FILE = "fonts/font.fnt";
+	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
 	public AssetManager assetManager;
 
 	private Map<String, TextureRegion> graphicsCacheMap;
@@ -107,13 +108,18 @@ public class Assets {
 
 	private void loadFont() {
 		assetManager.load(FONT_FILE, BitmapFont.class);
+		assetManager.load(MENU_FONT_FILE, BitmapFont.class);
 	}
 
 	public BitmapFont getFont() {
 		return assetManager.get(FONT_FILE, BitmapFont.class);
 	}
 
-	public FileHandle loadLevel(String name, String difficulty) {
-		return Gdx.files.internal("levels\\"+ difficulty + "\\" + name + ".xml");
+	public BitmapFont getMenuFont() {
+		return assetManager.get(MENU_FONT_FILE, BitmapFont.class);
+	}
+
+	public FileHandle loadLevel(String name, Difficulty difficulty) {
+		return Gdx.files.internal("levels\\"+ difficulty.toString() + "\\" + name + ".xml");
 	}
 }

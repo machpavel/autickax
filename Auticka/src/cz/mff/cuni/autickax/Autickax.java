@@ -2,7 +2,9 @@ package cz.mff.cuni.autickax;
 
 import com.badlogic.gdx.Game;
 
+import cz.mff.cuni.autickax.scene.DifficultySelectScreen;
 import cz.mff.cuni.autickax.scene.GameScreen;
+import cz.mff.cuni.autickax.scene.LevelSelectScreen;
 import cz.mff.cuni.autickax.scene.MainMenuScreen;
 import cz.mff.cuni.autickax.drawing.Font;
 import cz.mff.cuni.autickax.input.Input;
@@ -13,16 +15,29 @@ public class Autickax extends Game {
 	private static Autickax _instance;
 	
 	public static LoadingScreen loadingScreen;
-	public static MainMenuScreen titleScreen;
+	public static MainMenuScreen mainMenuScreen;
+	public static DifficultySelectScreen difficultySelectScreen;
+	public static LevelSelectScreen levelSelectScreen;
 	public static GameScreen gameScreen;	
 	
 	static public Font font;
 
 	public Assets assets;
+	public final AvailableLevels levels;
 
 	public Autickax() {
 		_instance = this;
 		assets = new Assets();
+		this.levels = new AvailableLevels();
+		
+		// TODO: this will be overwritten by deserializing
+		for (int i = 0; i < 10; ++i) {
+			this.levels.kiddieLevels.add(new Level());
+			this.levels.beginnerLevels.add(new Level());
+			this.levels.normalLevels.add(new Level());
+			this.levels.hardLevels.add(new Level());
+			this.levels.extremeLevels.add(new Level());
+		}
 	}
 	
 

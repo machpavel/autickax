@@ -1,16 +1,16 @@
 package cz.mff.cuni.autickax.scene;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation;
+/*import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;*/
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
-import cz.mff.cuni.autickax.menu.MenuAnimator;
+//import cz.mff.cuni.autickax.menu.MenuAnimator;
 import cz.mff.cuni.autickax.menu.MenuButton;
 
 /*
@@ -22,7 +22,7 @@ public class MainMenuScreen extends BaseScreen {
 	private Button buttonExit;
 	
 	private final float buttonsXPositionStart = 10;
-	private final float buttonsXPositionEnd = 100;
+	//private final float buttonsXPositionEnd = 100;
 
 	public MainMenuScreen() {
 		super();
@@ -34,22 +34,26 @@ public class MainMenuScreen extends BaseScreen {
 									// constructor
 
 		// Play Button-----------------------------------------------------
-		buttonPlay = new MenuButton (
+		this.buttonPlay = new MenuButton (
 			game.assets.getGraphics(Constants.BUTTON_MENU_PLAY),
 			game.assets.getGraphics(Constants.BUTTON_MENU_PLAY_HOVER)
 		)
 		{
 			@Override
 			public void action() {
-				Autickax.gameScreen = new GameScreen("level0");
-				game.setScreen(Autickax.gameScreen);
+				if (Autickax.difficultySelectScreen != null) {
+					Autickax.difficultySelectScreen.dispose();
+					Autickax.difficultySelectScreen = null;
+				}
+				Autickax.difficultySelectScreen = new DifficultySelectScreen();
+				game.setScreen(Autickax.difficultySelectScreen);
 			}
 		};
-		buttonPlay.setPosition(this.buttonsXPositionStart, 250);
-		stage.addActor(buttonPlay);
+		this.buttonPlay.setPosition(this.buttonsXPositionStart, 250);
+		stage.addActor(this.buttonPlay);
 		
 		// Exit Button-----------------------------------------------------
-		buttonExit = new MenuButton (
+		this.buttonExit = new MenuButton (
 			game.assets.getGraphics(Constants.BUTTON_MENU_EXIT),
 			game.assets.getGraphics(Constants.BUTTON_MENU_EXIT_HOVER)
 		)
@@ -59,8 +63,8 @@ public class MainMenuScreen extends BaseScreen {
 				onBackKeyPressed();
 			}
 		};
-		buttonExit.setPosition(this.buttonsXPositionStart, 30);
-		stage.addActor(buttonExit);
+		this.buttonExit.setPosition(this.buttonsXPositionStart, 30);
+		stage.addActor(this.buttonExit);
 
 		// Actions
 		/*buttonPlay.addAction(MenuAnimator.moveTo(this.buttonsXPositionEnd, 250, 3,
