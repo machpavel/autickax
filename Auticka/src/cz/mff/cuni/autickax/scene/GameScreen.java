@@ -117,19 +117,13 @@ public class GameScreen extends BaseScreen {
 	}
 
 	protected void update(float delta) {
-		
-		// TODO: Consider moving this into sublevels
-		for (GameObject gameObject : this.getGameObjects()) {
-			gameObject.update(delta);
-		}
-		
 		this.currentPhase.update(delta);
 	}
 
 	@Override
 	public void render(float delta) {
 		
-		update(delta); //Update our world
+		
 		
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen
 
@@ -145,8 +139,9 @@ public class GameScreen extends BaseScreen {
 		batch.draw(this.pathwayTexture, 0, 0, stageWidth, stageHeight);
 		batch.end();
 				
-		this.currentPhase.render();
 		
+		this.currentPhase.update(delta);
+		this.currentPhase.render();
 		batch.begin();
 		this.currentPhase.draw(batch);		
 		batch.end();

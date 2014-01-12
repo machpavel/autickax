@@ -46,10 +46,17 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	@Override
-	public void update(float time) {
-		timeElapsed += time;
+	public void update(float delta) {
+		for (GameObject gameObject : this.Level.getGameObjects()) {
+			gameObject.update(delta);
+		}
+		this.Level.getCar().update(delta);
+		this.Level.getStart().update(delta);
+		this.Level.getFinish().update(delta);
+		timeElapsed += delta;
+		
 		if (!checkpoints.isEmpty()) {
-			Vector2 newPos = moveCarToNewPosition(time);
+			Vector2 newPos = moveCarToNewPosition(delta);
 			points.add(new Vector2(newPos));
 
 		}
