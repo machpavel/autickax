@@ -68,18 +68,12 @@ public class SubLevel1 extends SubLevel {
 	private boolean timeMeasured = false;
 
 	/**
-	 * Instance of gameScreen to be able to switch to another phase
-	 */
-	private GameScreen gameScr;
-
-	/**
 	 * For printing messages
 	 */
 	private String status = "";
 
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
-		gameScr = gameScreen;
 		pathway = gameScreen.getPathWay();
 
 		initWayPoints(Constants.START_POSITION_IN_CURVE,
@@ -90,11 +84,20 @@ public class SubLevel1 extends SubLevel {
 
 		state = SubLevel1States.BEGINNING_STATE;
 		timeLimit = tLimit;
-
+		
+		reset();
 	}
 
 	@Override
 	public void update(float delta) {
+		if(messageDialog != null){
+			messageDialog.update(delta);
+			if(messageDialog.isInProgress())
+				return;
+			else
+				messageDialog = null;
+		}
+		
 		if (timeMeasured)
 			timeElapsed += delta;
 
@@ -133,7 +136,7 @@ public class SubLevel1 extends SubLevel {
 	private void updateInFinishState(float delta) {
 		// switch whenever ready
 		if (Gdx.input.justTouched()) {
-			gameScr.switchToPhase2(checkPoints, pathway.getDistanceMap());
+			this.Level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this);
 		}
 
 	}
@@ -176,7 +179,7 @@ public class SubLevel1 extends SubLevel {
 				if (!checkPoints.isEmpty()) {
 					Vector2 lastCarPosition = checkPoints.peekLast().position;
 					this.Level.getCar().setRotation(
-							new Vector2(lastCarPosition).sub(carPosition)
+							new Vector2(carPosition).sub(lastCarPosition)
 									.angle());
 				}
 				checkPoints.add(new CheckPoint(timeElapsed, carPosition));
@@ -198,7 +201,7 @@ public class SubLevel1 extends SubLevel {
 
 	}
 
-	private void updateInBeginnigState(float delta) {
+	private void updateInBeginnigState(float delta) {		
 		this.Level.getCar().setRotation(
 				(this.Level.getCar().getRotation() + delta * 70) % 360);
 		if (Gdx.input.justTouched()) {
@@ -215,6 +218,12 @@ public class SubLevel1 extends SubLevel {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		//TODO maybe all will be needed to draw?
+		if(messageDialog != null){
+			messageDialog.draw(batch);
+			return;
+		}
+		
 		for (GameObject gameObject : this.Level.getGameObjects()) {			
 			gameObject.draw(batch);
 		}
@@ -240,7 +249,10 @@ public class SubLevel1 extends SubLevel {
 	 * or makes a discontinuous move
 	 */
 	public void reset() {
-
+		this.miniGame = null;
+		this.messageDialog = new MessageDialog(this.Level, "BLABLABLA");
+		
+		
 		state = SubLevel1States.BEGINNING_STATE;
 		this.timeElapsed = 0;
 		checkPoints.clear();

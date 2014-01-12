@@ -87,6 +87,10 @@ public final class Constants {
 	public final static int WORLD_WIDTH = 800;
 	/** Determines ideal world height. If the resolution is different, coordinates are stretched. */
 	public final static int WORLD_HEIGHT = 480; 
+	/** Determines ideal dialog world width. */ 
+	public final static int DIALOG_WORLD_WIDTH = 600;
+	/** Determines ideal dialog world height. */
+	public final static int DIALOG_WORLD_HEIGHT = 360; 
 
 	
 

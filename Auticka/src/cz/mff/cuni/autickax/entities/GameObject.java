@@ -27,7 +27,6 @@ abstract public class GameObject {
 	private boolean toDispose;
 	protected TextureRegion texture;
 
-
 	protected Autickax game;
 	protected GameScreen gameScreen;
 	protected int type;
@@ -37,9 +36,9 @@ abstract public class GameObject {
 		this.game = Autickax.getInstance();
 		this.gameScreen = gameScreen;
 		this.rotation = 0;
-	}	
-	
-	public GameObject(GameObject object){
+	}
+
+	public GameObject(GameObject object) {
 		this.position = object.position;
 		this.width = object.width;
 		this.height = object.height;
@@ -83,7 +82,7 @@ abstract public class GameObject {
 	 *            New position of the center x-coordinate.
 	 * @param newY
 	 *            New position of the center y-coordinate.
-	 */	
+	 */
 	public void move(Vector2 newPos) {
 		this.position = newPos;
 	}
@@ -99,11 +98,14 @@ abstract public class GameObject {
 				* Input.xStretchFactorInv, (this.height / 2)
 				* Input.yStretchFactorInv,
 				this.width * Input.xStretchFactorInv, this.height
-						* Input.yStretchFactorInv, scale.x, scale.y, this.rotation);
+						* Input.yStretchFactorInv, scale.x, scale.y,
+				this.rotation);
 	}
 
 	public String toString() {
-		return getName() + " " + this.position.x + " " + this.position.y;
+		return getName() + " PosX: " + this.position.x + " PosY: "
+				+ this.position.y + " Width: " + this.width + " Height: "
+				+ this.height + " Bounding: " + this.boundingCircleRadius;
 	}
 
 	public void toXml(XmlWriter writer) throws IOException {
@@ -117,18 +119,20 @@ abstract public class GameObject {
 
 	public void setMeasurements(int width, int height) {
 		this.width = width;
-		this.height = height;		
-		this.boundingCircleRadius = width > height ? width : height;
+		this.height = height;
+		//TODO: which method of choosin bounding rectangle??
+		//this.boundingCircleRadius = width > height ? width / 2 : height / 2;
+		this.boundingCircleRadius = width > height ? height / 2 : width / 2;
+		//this.boundingCircleRadius = (width + height) / 4;		
 	}
 
-	public void setTexture(String name) {		
+	public void setTexture(String name) {
 		// TODO: This condition is temporary hack due to loading levels in
 		// AssetsProcessor. REWRITE!
 		if (this.game != null) {
 			this.texture = this.game.assets.getGraphics(name);
 		}
 
-		
 	}
 
 	/**
@@ -138,9 +142,9 @@ abstract public class GameObject {
 	 * @return
 	 */
 	public boolean collides(GameObject object2) {
-		
-		float middlesDistance = new Vector2(this.position).sub(object2.position).len(); 
-		return  middlesDistance < (this.boundingCircleRadius + object2.boundingCircleRadius);
+		float objectsDistance = new Vector2(this.position).sub(object2.position).len();
+		float minimalDistance = this.boundingCircleRadius + object2.boundingCircleRadius;
+		return objectsDistance < minimalDistance;
 	}
 
 	/**
@@ -151,18 +155,18 @@ abstract public class GameObject {
 	 * @return
 	 */
 	public boolean positionCollides(GameObject object2) {
-		float middlesDistance = new Vector2(this.position).sub(object2.position).len(); 
-		return  middlesDistance < object2.boundingCircleRadius;		
+		return object2.includePosition(this.position);
 	}
-	
+
 	/**
 	 * Determinate when object is intersected with a position
+	 * 
 	 * @param position
 	 * @return
 	 */
 	public boolean includePosition(Vector2 position) {
-		float middlesDistance = new Vector2(this.position).sub(position).len(); 
-		return  middlesDistance < this.boundingCircleRadius;		
+		float middlesDistance = new Vector2(this.position).sub(position).len();
+		return middlesDistance < this.boundingCircleRadius;
 	}
 
 	abstract void aditionalsToXml(XmlWriter writer) throws IOException;
@@ -175,10 +179,11 @@ abstract public class GameObject {
 	public void setRotation(float rotation) {
 		this.rotation = rotation;
 	}
-	
+
 	/**
 	 * Gets the rotation of object in degrees (counterclockwise).
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public float getRotation() {
 		return this.rotation;
@@ -186,10 +191,9 @@ abstract public class GameObject {
 
 	public void setPosition(Vector2 position) {
 		this.position = position;
-		
-	}	
-	
+
+	}
+
 	public abstract GameObject copy();
-	
-	
+
 }

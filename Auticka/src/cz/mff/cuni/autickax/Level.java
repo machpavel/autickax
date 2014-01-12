@@ -118,17 +118,17 @@ public class Level {
 		// Loading car
 		Element car = root.getChildByName("car");
 		this.car = new Car(car.getFloat("X"), car.getFloat("Y"), gameScreen, car.getInt("type", 1));
-		System.out.println(car.toString());
+		System.out.println(this.car.toString());
 		
 		//Loading start
 		Element start = root.getChildByName("start");
 		this.start = new Start(start.getFloat("X"), start.getFloat("Y"), gameScreen, start.getInt("type", 1));
-		System.out.println(start.toString());
+		System.out.println(this.start.toString());
 		
 		//Loading finish
 		Element finish = root.getChildByName("finish");
 		this.finish = new Finish(finish.getFloat("X"), finish.getFloat("Y"), gameScreen, finish.getInt("type", 1));
-		System.out.println(finish.toString());
+		System.out.println(this.finish.toString());
 				
 		
 		// Background

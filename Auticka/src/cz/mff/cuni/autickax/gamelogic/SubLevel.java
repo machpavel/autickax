@@ -8,9 +8,12 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public abstract class SubLevel {
 	protected GameScreen Level;
 	protected ShapeRenderer shapeRenderer;
+	protected MessageDialog messageDialog = null;
+	protected MiniGame miniGame = null;
+	
 	public SubLevel(GameScreen gameScreen) {
 		this.Level = gameScreen;
-		shapeRenderer = new ShapeRenderer();
+		shapeRenderer = new ShapeRenderer();		
 	}
 	
 	public abstract void update(float delta);
