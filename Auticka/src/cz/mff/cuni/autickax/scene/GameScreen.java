@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Level;
-import cz.mff.cuni.autickax.drawing.Background;
+import cz.mff.cuni.autickax.drawing.LevelBackground;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -27,7 +27,7 @@ import cz.mff.cuni.autickax.pathway.Pathway;
 
 public class GameScreen extends BaseScreen {
 	// Textures
-	private Background levelBackground;
+	private LevelBackground levelBackground;
 	private TextureRegion pathwayTexture;
 
 
@@ -74,7 +74,7 @@ public class GameScreen extends BaseScreen {
 			level.parseLevel(this);
 			this.pathway = level.getPathway();
 			this.gameObjects = level.getGameObjects();
-			this.levelBackground = new Background();
+			this.levelBackground = new LevelBackground();
 			this.levelBackground.SetType(level.getBackgroundType());
 			this.car = level.getCar();
 			this.start = level.getStart();

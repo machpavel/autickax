@@ -25,7 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlWriter;
 
-import cz.mff.cuni.autickax.drawing.Background;
+import cz.mff.cuni.autickax.drawing.LevelBackground;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -47,7 +47,8 @@ public final class EditorScreen extends BaseScreenEditor {
 	private static final Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
 	private static final Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
 	private static final int PATHWAY_TEXTURE_TYPE = 0;
-	private static final float TIME_LIMIT = 5;
+	private static final float TIME_LIMIT = 10;
+
 
 	// Rendering
 	private OrthographicCamera camera;
@@ -67,7 +68,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	private Pathway pathway;
 
 	// Background
-	private Background background = new Background();
+	private LevelBackground background = new LevelBackground();
 
 	// Buttons
 	Button buttonGeneratePoints;
@@ -88,7 +89,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.anyButtonTouched = value;
 	}
 
-	public Background GetBackground() {
+	public LevelBackground GetBackground() {
 		return this.background;
 	}
 
@@ -394,7 +395,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	private void createBackgroundButtons() {
 		for (int i = 1; i <= Constants.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {
 			TextureRegionDrawable trd = new TextureRegionDrawable(
-					game.assets.getGraphics(Background.GetSmallTextureName(i)));
+					game.assets.getGraphics(LevelBackground.GetSmallTextureName(i)));
 			Button button = new ImageButton(trd);
 			button.setPosition(Constants.WORLD_WIDTH + 5 + (i - 1) * 30,
 					Constants.WORLD_HEIGHT - 18);
