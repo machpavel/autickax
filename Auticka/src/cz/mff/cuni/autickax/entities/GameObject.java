@@ -1,21 +1,25 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
 
-import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.input.Input;
 
 /**
  * Base class for all game entities
  */
-abstract public class GameObject {
-
+abstract public class GameObject implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** Position of the center of GameObject. */
 	protected Vector2 position;
 	protected int width;
@@ -25,16 +29,14 @@ abstract public class GameObject {
 	protected int boundingCircleRadius;
 
 	private boolean toDispose;
-	protected TextureRegion texture;
+	protected transient TextureRegion texture;
 
 
-	protected Autickax game;
 	protected GameScreen gameScreen;
 	protected int type;
 
 	public GameObject(float startX, float startY, GameScreen gameScreen) {
 		this.position = new Vector2(startX, startY);
-		this.game = Autickax.getInstance();
 		this.gameScreen = gameScreen;
 		this.rotation = 0;
 	}	
@@ -48,7 +50,6 @@ abstract public class GameObject {
 		this.boundingCircleRadius = object.boundingCircleRadius;
 		this.toDispose = object.toDispose;
 		this.texture = object.texture;
-		this.game = object.game;
 		this.gameScreen = object.gameScreen;
 		this.type = object.type;
 	}
@@ -124,8 +125,8 @@ abstract public class GameObject {
 	public void setTexture(String name) {		
 		// TODO: This condition is temporary hack due to loading levels in
 		// AssetsProcessor. REWRITE!
-		if (this.game != null) {
-			this.texture = this.game.assets.getGraphics(name);
+		if (this.gameScreen != null && this.gameScreen.getGame() != null) {
+			this.texture = this.gameScreen.getGame().assets.getGraphics(name);
 		}
 
 		
@@ -191,5 +192,9 @@ abstract public class GameObject {
 	
 	public abstract GameObject copy();
 	
+	public abstract void setTexture();
 	
+	public void setScreen(GameScreen screen) {
+		this.gameScreen = screen;
+	}
 }

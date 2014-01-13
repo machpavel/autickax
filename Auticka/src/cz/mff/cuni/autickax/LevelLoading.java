@@ -19,8 +19,10 @@ import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public class LevelLoading {
-	private final FileHandle file;
+public class LevelLoading implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	private Pathway pathway = new Pathway();
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	private Car car;
@@ -29,10 +31,6 @@ public class LevelLoading {
 	private Finish finish;
 	private int pathwayTextureType;
 	private float timeLimit;
-	
-	public LevelLoading (FileHandle file) {
-		this.file = file;
-	}
 	
 	public Pathway getPathway() {
 		return this.pathway;
@@ -68,11 +66,11 @@ public class LevelLoading {
 	}
 	
 	//TODO add TIMELIMIT to XML
-	public void parseLevel(GameScreen gameScreen) throws Exception {
+	public void parseLevel(GameScreen gameScreen, FileHandle file) throws Exception {
 	
 		System.out.println("Loading level...");
 		
-		Element root = new XmlReader().parse(this.file);			
+		Element root = new XmlReader().parse(file);			
 		
 		// Loading pathway
 		Element pathwayElement = root.getChildByName("pathway");
@@ -89,7 +87,6 @@ public class LevelLoading {
 		for (Vector2 point : this.pathway.getControlPoints()) {
 			System.out.println("point " + point);
 		}
-		this.pathway.CreateDistances();
 		
 				
 		// Loading game objects
@@ -138,5 +135,26 @@ public class LevelLoading {
 		this.timeLimit = root.getFloat("timeLimit");
 		
 		System.out.println("Loading done...");
+	}
+	
+	public void calculateDistanceMap() {
+		this.pathway.CreateDistances();
+	}
+	
+	public void deleteDistanceMap() {
+		this.pathway.deleteDistanceMap();
+	}
+	
+	public void setGameScreen(GameScreen screen) {
+		for (GameObject gameObject : this.gameObjects) {
+			gameObject.setScreen(screen);
+			gameObject.setTexture();
+		}
+		this.car.setScreen(screen);
+		this.start.setScreen(screen);
+		this.finish.setScreen(screen);
+		this.car.setTexture();
+		this.start.setTexture();
+		this.finish.setTexture();
 	}
 }

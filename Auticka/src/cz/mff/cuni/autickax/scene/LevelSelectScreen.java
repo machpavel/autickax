@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
-import cz.mff.cuni.autickax.Level;
+import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.menu.MenuLabel;
 import cz.mff.cuni.autickax.menu.MenuTextButton;
 
@@ -26,7 +26,7 @@ public class LevelSelectScreen extends BaseScreen {
 		this.difficulty = difficulty;
 
 		// Background
-		Image background = new Image(game.assets.getGraphics(Constants.BUTTON_MENU_BACKGROUND));
+		Image background = new Image(getGame().assets.getGraphics(Constants.BUTTON_MENU_BACKGROUND));
 		background.setSize(stageWidth, stageHeight);
 		stage.addActor(background); // stage initialized in superclass
 									// constructor
@@ -45,14 +45,14 @@ public class LevelSelectScreen extends BaseScreen {
 		label.setPosition(LevelSelectScreen.buttonsStartXPosition, 400);
 		this.stage.addActor(label);
 		
-		Vector<Level> levels;
+		Vector<LevelLoading> levels;
 		
 		switch (this.difficulty) {
-			case Kiddie: levels = this.game.assets.getAvailableLevels().kiddieLevels; break;
-			case Beginner: levels = this.game.assets.getAvailableLevels().beginnerLevels; break;
-			case Normal: levels = this.game.assets.getAvailableLevels().normalLevels; break;
-			case Hard: levels = this.game.assets.getAvailableLevels().hardLevels; break;
-			case Extreme: levels = this.game.assets.getAvailableLevels().extremeLevels; break;
+			case Kiddie: levels = this.getGame().assets.getAvailableLevels().kiddieLevels; break;
+			case Beginner: levels = this.getGame().assets.getAvailableLevels().beginnerLevels; break;
+			case Normal: levels = this.getGame().assets.getAvailableLevels().normalLevels; break;
+			case Hard: levels = this.getGame().assets.getAvailableLevels().hardLevels; break;
+			case Extreme: levels = this.getGame().assets.getAvailableLevels().extremeLevels; break;
 			default: levels = null;
 		}
 		
@@ -60,11 +60,11 @@ public class LevelSelectScreen extends BaseScreen {
 		int y = buttonsStartYPosition;
 		
 		for (int i = 0; i < levels.size(); ++i) {		
-			final String levelName = "level" + Integer.toString(i);
+			final LevelLoading level = levels.get(i);
 			MenuTextButton levelButton = new MenuTextButton (
 				Integer.toString(i),
-				game.assets.getGraphics(Constants.BUTTON_MENU_LEVEL),
-				game.assets.getGraphics(Constants.BUTTON_MENU_LEVEL_HOVER)
+				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL),
+				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL_HOVER)
 			)
 			{
 				@Override
@@ -73,8 +73,8 @@ public class LevelSelectScreen extends BaseScreen {
 						Autickax.gameScreen.dispose();
 						Autickax.gameScreen = null;
 					}
-					Autickax.gameScreen = new GameScreen(levelName, difficulty);
-					game.setScreen(Autickax.gameScreen);
+					Autickax.gameScreen = new GameScreen(level, difficulty);
+					getGame().setScreen(Autickax.gameScreen);
 				}
 			};
 			levelButton.setPosition(x, y);
@@ -94,7 +94,7 @@ public class LevelSelectScreen extends BaseScreen {
 	protected void onBackKeyPressed() {
 		Autickax.difficultySelectScreen.dispose();
 		Autickax.difficultySelectScreen = new DifficultySelectScreen();
-		this.game.setScreen(Autickax.difficultySelectScreen);	
+		this.getGame().setScreen(Autickax.difficultySelectScreen);	
 	}
 
 }

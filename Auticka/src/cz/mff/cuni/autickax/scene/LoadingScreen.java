@@ -12,7 +12,7 @@ public class LoadingScreen extends BaseScreen {
 	public LoadingScreen() {
 		super();
 		
-		game.assets.load();
+		getGame().assets.load();
 	}
 
 	@Override
@@ -21,10 +21,10 @@ public class LoadingScreen extends BaseScreen {
 		Gdx.gl.glClearColor(0f, 1f, 0f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		if (game.assets.update()) {
-			Autickax.font = new Font(game.assets.getFont());
+		if (getGame().assets.update()) {
+			Autickax.font = new Font(getGame().assets.getFont());
 			Autickax.mainMenuScreen = new MainMenuScreen(); // we know that it is null, no need for check
-			game.setScreen(Autickax.mainMenuScreen);						
+			getGame().setScreen(Autickax.mainMenuScreen);						
 			return;
 		}
 		//trace("loading progress:" + game.assets.getProgress()); //TODO visualize

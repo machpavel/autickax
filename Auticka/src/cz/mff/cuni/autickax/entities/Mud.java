@@ -1,19 +1,21 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Mud extends GameObject{
+public final class Mud extends GameObject implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	public Mud(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		super.type = type;
 		super.setMeasurements(Mud.GetWidth(type), Mud.GetHeight(type));
-		super.setTexture(Mud.GetTextureName(type));
+		this.setTexture();
 	}
 	
 	public Mud(GameObject object){
@@ -84,6 +86,11 @@ public final class Mud extends GameObject{
 	@Override
 	public GameObject copy() {
 		return new Mud(this);
+	}
+
+	@Override
+	public void setTexture() {
+		super.setTexture(Mud.GetTextureName(type));		
 	}
 
 }

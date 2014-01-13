@@ -2,7 +2,6 @@ package cz.mff.cuni.autickax.pathway;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Constants;
@@ -11,18 +10,19 @@ import cz.mff.cuni.autickax.Constants;
  * @author Shabby
  * Main class for representing a pathway.
  */
-public class Pathway {	
+public class Pathway implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private DistanceMap distanceMap;
 	private ArrayList<Vector2> controlPoints;
 	private PathwayType pathwayType;
 	private Splines.TypeOfInterpolation typeOfInterpolation;
 	
-	public enum PathwayType{
+	public enum PathwayType implements java.io.Serializable {
 		CLOSED, OPENED;
 	}
 		
 	public Pathway() {
-		 setDistanceMap(new DistanceMap(Constants.WORLD_HEIGHT, Constants.WORLD_WIDTH));
 		 setControlPoints(new ArrayList<Vector2>());
 	}
 	public Pathway(PathwayType pathwayType, Splines.TypeOfInterpolation typeOfInterpolation) {
@@ -37,6 +37,7 @@ public class Pathway {
 	 *  Method must be called if controlPoints are changed.
 	 */
 	public void CreateDistances() {
+		setDistanceMap(new DistanceMap(Constants.WORLD_HEIGHT, Constants.WORLD_WIDTH));
 		getDistanceMap().CreateDistances(getControlPoints(), pathwayType, typeOfInterpolation);		
 	}
 	
@@ -63,6 +64,10 @@ public class Pathway {
 
 	public void setDistanceMap(DistanceMap distanceMap) {
 		this.distanceMap = distanceMap;
+	}
+	
+	public void deleteDistanceMap() {
+		this.distanceMap.deleteMap();
 	}
 
 

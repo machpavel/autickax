@@ -1,5 +1,6 @@
 package cz.mff.cuni.autickax.pathway;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -7,8 +8,13 @@ import java.util.LinkedList;
 
 import java.util.Queue;
 
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 
  
@@ -17,7 +23,9 @@ import cz.mff.cuni.autickax.Constants;
  * Class for representing 2-dimensional field of the closest distances of a curve.
  */
 
-public class DistanceMap {	
+public class DistanceMap implements java.io.Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private float [][] map;	
 	private static float sqrtOfTwo = (float)Math.sqrt(2);	
 	private int height;
@@ -53,6 +61,10 @@ public class DistanceMap {
 					map[x][y] = Float.MAX_VALUE;				
 				}
 			}
+	}
+	
+	public void deleteMap() {
+		this.map = null;
 	}
 	
 	public int getWidth()
@@ -126,5 +138,27 @@ public class DistanceMap {
 			}
 			currentPoint = nodesToSearch.poll();			
 		}									
+	}
+	
+	public TextureRegion generateTexture() {
+		Pixmap pixmap = new Pixmap(1024, 512, Format.Alpha);
+		for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
+			for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
+
+				// distance map is flipped to the bitmap
+				float distance = this.At(column, Constants.WORLD_HEIGHT
+						- row - 1);
+
+				if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY) {
+					pixmap.drawPixel(column, row, Color.darkGray.getRGB());
+				}
+			}
+		}
+		
+		Texture texture = new Texture(pixmap);
+		
+		TextureRegion region = new TextureRegion(texture, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+		
+		return region;
 	}
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector2;
 
 public class Splines {
-	public enum TypeOfInterpolation {
+	public enum TypeOfInterpolation implements java.io.Serializable {
 		CUBIC_B_SPLINE, CUBIC_SPLINE
 	};
 
