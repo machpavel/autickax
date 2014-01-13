@@ -2,7 +2,6 @@ package cz.mff.cuni.autickax.pathway;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Constants;
