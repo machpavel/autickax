@@ -19,6 +19,7 @@ public class Autickax extends Game {
 	public static DifficultySelectScreen difficultySelectScreen;
 	public static LevelSelectScreen levelSelectScreen;
 	public static GameScreen gameScreen;	
+	public static boolean showTooltips = true;
 	
 	static public Font font;
 

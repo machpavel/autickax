@@ -12,6 +12,9 @@ public final class Constants {
 	/** Determines where is located finish on the curve in percents*/
 	public static final float FINISH_POSITION_IN_CURVE = 1;
 	
+	/** Determines how far should be the car ahead of the start line*/
+	public static final float CAR_DISTANCE_FROM_START = 30; 
+	
 	/** Determines maximal total distance from pathway (in pixels). Beyond it is no pathway.*/
 	public static final int MAX_DISTANCE_FROM_PATHWAY = 60;
 	
@@ -91,9 +94,45 @@ public final class Constants {
 	public final static int WORLD_WIDTH = 800;
 	/** Determines ideal world height. If the resolution is different, coordinates are stretched. */
 	public final static int WORLD_HEIGHT = 480; 
-
+	/** Determines ideal dialog world width. */ 
+	public final static int DIALOG_WORLD_WIDTH = 600;
+	/** Determines ideal dialog world height. */
+	public final static int DIALOG_WORLD_HEIGHT = 360; 
 	
-
+	
+	//
+	// DIALOG POSITIONING AND TEXTURES
+	//
+	
+	public static final String DIALOG_BACKGROUND_TEXTURE = "DialogBackground";
+	public static final float DIALOG_MESSAGE_POSITION_X = 400;
+	public static final float DIALOG_MESSAGE_POSITION_Y = 240;
+	
+	public static final String MESSAGE_DIALOG_BUTTON_OK_TEXTURE = "stone";
+	public static final float MESSAGE_DIALOG_BUTTON_OK_POSITION_X = 400;
+	public static final float MESSAGE_DIALOG_BUTTON_OK_POSITION_Y = 120;
+	
+	public static final String DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE = "stone";
+	public static final float DECISION_DIALOG_BUTTON_CONTINUE_POSITION_X = 600;
+	public static final float DECISION_DIALOG_BUTTON_CONTINUE_POSITION_Y = 120;
+	
+	public static final String DECISION_DIALOG_BUTTON_RESTART_TEXTURE = "stone";
+	public static final float DECISION_DIALOG_BUTTON_RESTART_POSITION_X = 400;
+	public static final float DECISION_DIALOG_BUTTON_RESTART_POSITION_Y = 120;
+	
+	public static final String DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_TEXTURE = "stone";
+	public static final float DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_X = 200;
+	public static final float DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_Y = 120;
+	
+	//
+	// STRINGS
+	//
+	public static final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway\nwith your finger,\nhurry to finish\nand avoid nasty \nobjects!";
+	public static final String PHASE_1_FINISH_REACHED = "Finish\nreached";
+	public static final String PHASE_1_OUT_OF_LINE = "You have gone\nout of the\npathway.";
+	public static final String PHASE_1_FINISH_NOT_REACHED = "You have not\nreached the\nfinish";
+	public static final String PHASE_1_TIME_EXPIRED = "Time limit\nexceeded.";
+	
 	//
 	// GAME OBJECTS
 	//

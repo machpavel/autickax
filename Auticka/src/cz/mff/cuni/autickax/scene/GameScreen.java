@@ -103,8 +103,11 @@ public class GameScreen extends BaseScreen {
 		return this.car;
 	}
 	
-	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map) {
-		this.currentPhase = new SubLevel2(this, checkpoints, map);
+	public void switchToPhase1(SubLevel1 phase1) {
+		this.currentPhase = phase1;
+	}
+	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, SubLevel1 lastPhase) {
+		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase);
 	}
 	
 	public void reset() {
@@ -138,9 +141,9 @@ public class GameScreen extends BaseScreen {
 		
 		this.currentPhase.update(delta);
 		this.currentPhase.render();
-		batch.begin();
+		//batch.begin();
 		this.currentPhase.draw(batch);		
-		batch.end();
+		//batch.end();
 		
 		
 	}
@@ -155,6 +158,10 @@ public class GameScreen extends BaseScreen {
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
 		this.getGame().setScreen(Autickax.levelSelectScreen);
+	}
+	
+	public void goToMainScreen(){
+		this.onBackKeyPressed();
 	}
 
 	@Override

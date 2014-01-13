@@ -18,6 +18,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public class SubLevel2 extends SubLevel {
 
 	private LinkedList<CheckPoint> checkpoints;
+	private SubLevel1 lastPhase;
 
 	private DistanceMap distMap;
 
@@ -29,14 +30,20 @@ public class SubLevel2 extends SubLevel {
 	private float penalizationFactor = 1f;
 
 	private float timeElapsed = 0;
+	private boolean timeMeasured = false;
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
+	
+	private SubLevel2States state = SubLevel2States.BEGINNING_STATE;
+	public enum SubLevel2States{
+		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
+	}
 
 	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints,
-			DistanceMap map) {
+			DistanceMap map, SubLevel1 lastPhase) {
 		super(gameScreen);
 
 		this.checkpoints = checkpoints;
-
+		this.lastPhase = lastPhase;
 		this.distMap = map;
 
 		this.from = this.checkpoints.removeFirst();
@@ -47,24 +54,90 @@ public class SubLevel2 extends SubLevel {
 
 	@Override
 	public void update(float delta) {
+		
 		for (GameObject gameObject : this.Level.getGameObjects()) {
 			gameObject.update(delta);
 		}
 		this.Level.getCar().update(delta);
 		this.Level.getStart().update(delta);
 		this.Level.getFinish().update(delta);
+
+		switch (state) {
+		case BEGINNING_STATE:
+			updateInBeginnigState(delta);
+			break;
+		case DRIVING_STATE:
+			updateInDrivingState(delta);
+			break;
+		case FINISH_STATE:
+			updateInFinishState(delta);
+			break;
+		case MISTAKE_STATE:
+			updateInMistakeState(delta);
+			break;		
+		default:
+			// TODO implementation of exception
+			break;
+		}
+		
+		
+		
+
+
+	}
+
+	private void updateInBeginnigState(float delta) {
+		// TODO Maybe some delay and countdown animation
+		state = SubLevel2States.DRIVING_STATE;
+		timeMeasured = true;
+		
+	}
+
+	private void updateInDrivingState(float delta) {
 		timeElapsed += delta;
 		
-		if (!checkpoints.isEmpty()) {
-			Vector2 newPos = moveCarToNewPosition(delta);
-			points.add(new Vector2(newPos));
-
+		//finish reached
+		if (checkpoints.isEmpty()){
+			timeMeasured = false;
+			state = SubLevel2States.FINISH_STATE;
+			return;
 		}
+		
+		Vector2 newPos = moveCarToNewPosition(delta);
+		points.add(new Vector2(newPos));
+		for (GameObject gameObject : this.Level.getGameObjects()) {
+			if(this.Level.getCar().collides(gameObject))
+			{
+			System.out.println(gameObject.toString());
+			System.out.println(this.Level.getCar().toString());
+			timeMeasured = false;
+			state = SubLevel2States.MISTAKE_STATE;
+			return;
+			}
+		}					
+	}
 
+	private void updateInFinishState(float delta) {
+		// TODO Iform user, score table bla bla bla
+		
+	}
+
+	private void updateInMistakeState(float delta) {
+		//TODO inform user that he has to try again - or fail menu or something
+		if(Gdx.input.justTouched()){
+			this.Level.switchToPhase1(this.lastPhase);
+			this.lastPhase.reset();
+		}		
+	}
+
+	private void updateInStoneAvoidingMinigame(float delta) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		batch.begin();
 		for (GameObject gameObject : this.Level.getGameObjects()) {
 			gameObject.draw(batch);
 		}
@@ -73,10 +146,12 @@ public class SubLevel2 extends SubLevel {
 		this.Level.getFinish().draw(batch);
 		Autickax.font.draw(batch, "time: " + String.format("%1$,.1f", timeElapsed), 10,
 				(int) Gdx.graphics.getHeight() - 32);
+		batch.end();
 	}
-
-	@Override
+	
 	public void render() {
+		//TODO if this.state == minigame
+		
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(Color.RED);
 		for (CheckPoint ce : checkpoints) {
@@ -89,7 +164,6 @@ public class SubLevel2 extends SubLevel {
 			shapeRenderer.circle(vec.x * Input.xStretchFactorInv, vec.y
 					* Input.yStretchFactorInv, 2);
 		}
-
 		shapeRenderer.end();
 
 	}
@@ -151,5 +225,17 @@ public class SubLevel2 extends SubLevel {
 		} else
 			penalizationFactor = 1;
 		penalizationFactor *= Constants.GLOBAL_SPEED_REGULATOR;
+	}
+
+	@Override
+	public void onDialogEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMinigameEnded() {
+		// TODO Auto-generated method stub
+		
 	}
 }
