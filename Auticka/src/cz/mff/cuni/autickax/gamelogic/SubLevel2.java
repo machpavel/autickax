@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.entities.GameObject;
-import cz.mff.cuni.autickax.gamelogic.SubLevel1.SubLevel1States;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -226,5 +225,17 @@ public class SubLevel2 extends SubLevel {
 		} else
 			penalizationFactor = 1;
 		penalizationFactor *= Constants.GLOBAL_SPEED_REGULATOR;
+	}
+
+	@Override
+	public void onDialogEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMinigameEnded() {
+		// TODO Auto-generated method stub
+		
 	}
 }

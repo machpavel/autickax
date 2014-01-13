@@ -7,8 +7,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public class StoneAvoidingMinigame extends MiniGame {
 	
 
-	public StoneAvoidingMinigame(GameScreen screen) {
-		super(screen);
+	public StoneAvoidingMinigame(GameScreen screen, SubLevel parent) {
+		super(screen, parent);
 	}
 
 	@Override
@@ -25,6 +25,18 @@ public class StoneAvoidingMinigame extends MiniGame {
 
 	@Override
 	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDialogEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMinigameEnded() {
 		// TODO Auto-generated method stub
 		
 	}

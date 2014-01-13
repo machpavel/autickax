@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class DecisionDialog extends Dialog {
@@ -14,8 +15,8 @@ public class DecisionDialog extends Dialog {
 	private DialogButton buttonGoToMainMenu;
 	private DecisionType decision;
 
-	public DecisionDialog(GameScreen gameScreen, String message, boolean enableContinueButton) {
-		super(gameScreen, message);
+	public DecisionDialog(GameScreen gameScreen, SubLevel subLevel, String message, boolean enableContinueButton) {
+		super(gameScreen, subLevel, message);
 		if (enableContinueButton)
 			CreateButtonContinue();
 		CreateButtonRestart();
@@ -34,8 +35,9 @@ public class DecisionDialog extends Dialog {
 
 			@Override
 			public void action() {
-				status = DialogAbstractStatus.FINISHED;
-				decision = DecisionType.CONTINUE;
+				status = DialogAbstractStatus.FINISHED;				
+				decision = DecisionType.CONTINUE;	
+				parent.onDialogEnded();
 			}
 		};
 		buttonContinue.setPosition(
@@ -56,7 +58,7 @@ public class DecisionDialog extends Dialog {
 			public void action() {
 				status = DialogAbstractStatus.FINISHED;
 				decision = DecisionType.RESTART;
-
+				parent.onDialogEnded();
 			}
 		};
 		buttonRestart.setPosition(
@@ -76,6 +78,7 @@ public class DecisionDialog extends Dialog {
 			public void action() {
 				status = DialogAbstractStatus.FINISHED;
 				decision = DecisionType.GO_TO_MAIN_MENU;
+				parent.onDialogEnded();
 			}
 		};
 		buttonGoToMainMenu.setPosition(
@@ -95,5 +98,17 @@ public class DecisionDialog extends Dialog {
 	@Override
 	public DecisionType getDecision() {
 		return this.decision;
+	}
+
+	@Override
+	public void onDialogEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onMinigameEnded() {
+		// TODO Auto-generated method stub
+		
 	}
 }

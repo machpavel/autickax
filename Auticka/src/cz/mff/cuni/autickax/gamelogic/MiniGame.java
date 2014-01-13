@@ -7,8 +7,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public abstract class MiniGame extends DialogAbstract {
 
-	public MiniGame(GameScreen gameScreen) {
-		super(gameScreen);
+	public MiniGame(GameScreen gameScreen, SubLevel parent) {
+		super(gameScreen, parent);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -56,58 +56,57 @@ public class SubLevel1 extends SubLevel {
 
 		reset();
 	}
+	
+	public void onDialogEnded() {
+		// code
+		switch (this.dialog.getDecision()) {
+		case CONTINUE:
+			break;
+		case RESTART:
+			reset();
+			return;
+		case GO_TO_MAIN_MENU:
+			this.Level.goToMainScreen();
+			return;
+		default:
+			// TODO assert for type
+			break;
+		}
+		this.dialog = null;
+	}
 
 	@Override
 	public void update(float delta) {
 		if (this.dialog != null) {
 			this.dialog.update(delta);
-			if (this.dialog.isInProgress()) {
-				return;
-			} else {
-				switch (this.dialog.getDecision()) {
-				case CONTINUE:
-					// do nothing = continue
-					break;
-				case RESTART:
-					reset();
-					return;
-				case GO_TO_MAIN_MENU:
-					this.Level.goToMainScreen();
-					return;
-				default:
-					// TODO assert for type
-					break;
-				}
-				this.dialog = null;
+		} else {
+			if (timeMeasured)
+				timeElapsed += delta;
+	
+			for (GameObject gameObject : this.Level.getGameObjects()) {
+				gameObject.update(delta);
 			}
-		}
-
-		if (timeMeasured)
-			timeElapsed += delta;
-
-		for (GameObject gameObject : this.Level.getGameObjects()) {
-			gameObject.update(delta);
-		}
-		this.Level.getCar().update(delta);
-		this.Level.getStart().update(delta);
-		this.Level.getFinish().update(delta);
-
-		switch (state) {
-		case BEGINNING_STATE:
-			updateInBeginnigState(delta);
-			break;
-		case DRIVING_STATE:
-			updateInDrivingState(delta);
-			break;
-		case FINISH_STATE:
-			updateInFinishState(delta);
-			break;
-		case MISTAKE_STATE:
-			updateInMistakeState(delta);
-			break;
-		default:
-			// TODO implementation of exception
-			break;
+			this.Level.getCar().update(delta);
+			this.Level.getStart().update(delta);
+			this.Level.getFinish().update(delta);
+	
+			switch (state) {
+			case BEGINNING_STATE:
+				updateInBeginnigState(delta);
+				break;
+			case DRIVING_STATE:
+				updateInDrivingState(delta);
+				break;
+			case FINISH_STATE:
+				updateInFinishState(delta);
+				break;
+			case MISTAKE_STATE:
+				updateInMistakeState(delta);
+				break;
+			default:
+				// TODO implementation of exception
+				break;
+			}
 		}
 	}
 
@@ -147,7 +146,7 @@ public class SubLevel1 extends SubLevel {
 					&& this.Level.getCar().positionCollides(
 							this.Level.getFinish())) {
 				state = SubLevel1States.FINISH_STATE;
-				dialog = new DecisionDialog(this.Level, Constants.PHASE_1_FINISH_REACHED, true);
+				dialog = new DecisionDialog(this.Level, this, Constants.PHASE_1_FINISH_REACHED, true);
 				timeMeasured = false;
 			}
 
@@ -183,8 +182,6 @@ public class SubLevel1 extends SubLevel {
 	}
 
 	private void updateInBeginnigState(float delta) {
-		this.Level.getCar().setRotation(
-				(this.Level.getCar().getRotation() + delta * 70) % 360);
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
@@ -229,14 +226,24 @@ public class SubLevel1 extends SubLevel {
 	public void reset() {
 		this.miniGame = null;
 		if (Autickax.showTooltips)
-			this.dialog = new MessageDialog(this.Level,
+			this.dialog = new MessageDialog(this.Level, this, 
 					Constants.TOOLTIP_PHASE_1_WHAT_TO_DO);
 		state = SubLevel1States.BEGINNING_STATE;
 		this.timeElapsed = 0;
 		checkPoints.clear();
 		initWayPoints(Constants.START_POSITION_IN_CURVE,
 				Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
-		this.Level.getCar().move(this.Level.getStart().getPosition());
+		
+		
+		// Car positioning
+		Vector2 carStartDirection = new Vector2(wayPoints.get(1)).sub(wayPoints.get(0)).nor(); 
+		float newCarAngle = carStartDirection.angle();
+		this.Level.getCar().setRotation(newCarAngle);
+		Vector2 startPosition = this.Level.getStart().getPosition();
+		Vector2 newCarPosition = new Vector2(this.Level.getStart().getPosition()).sub(carStartDirection.scl(Constants.CAR_DISTANCE_FROM_START));
+		this.Level.getCar().move(newCarPosition);
+		
+		
 
 	}
 
@@ -244,7 +251,7 @@ public class SubLevel1 extends SubLevel {
 	 * Player failed to finish the track
 	 */
 	private void switchToMistakeState(String str) {
-		this.dialog = new DecisionDialog(this.Level, str, false);
+		this.dialog = new DecisionDialog(this.Level, this, str, false);
 		this.state = SubLevel1States.MISTAKE_STATE;
 		this.Level.getCar().setDragged(false);
 		timeMeasured = false;
@@ -291,6 +298,12 @@ public class SubLevel1 extends SubLevel {
 		public String getMistakeMsg() {
 			return mistakeMsg;
 		}
+	}
+
+	@Override
+	public void onMinigameEnded() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

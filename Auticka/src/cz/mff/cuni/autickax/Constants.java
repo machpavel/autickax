@@ -12,6 +12,9 @@ public final class Constants {
 	/** Determines where is located finish on the curve in percents*/
 	public static final float FINISH_POSITION_IN_CURVE = 1;
 	
+	/** Determines how far should be the car ahead of the start line*/
+	public static final float CAR_DISTANCE_FROM_START = 30; 
+	
 	/** Determines maximal total distance from pathway (in pixels). Beyond it is no pathway.*/
 	public static final int MAX_DISTANCE_FROM_PATHWAY = 60;
 	

@@ -15,11 +15,13 @@ public abstract class DialogAbstract extends SubLevel{
 	protected TextureRegionDrawable backgrountTexture;
 	protected Stage stage;
 	protected DialogAbstractStatus status;
+	protected SubLevel parent;
 	
 	
 	
-	public DialogAbstract(GameScreen gameScreen) {
+	public DialogAbstract(GameScreen gameScreen, SubLevel sublevel) {
 		super(gameScreen);
+		this.parent = sublevel;
 		this.status = DialogAbstractStatus.IN_PROGRESS;
 		stage = new Stage(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 		this.stage.addListener(new ScreenInputListener(this.Level));
@@ -29,7 +31,8 @@ public abstract class DialogAbstract extends SubLevel{
 	
 	@Override
 	public void update(float delta){
-		stage.act(delta);
+		stage.act(delta);		
+		// scene1 onDialogEnded.
 	}
 
 	@Override

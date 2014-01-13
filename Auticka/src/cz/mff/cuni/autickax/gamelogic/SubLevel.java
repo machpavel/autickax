@@ -21,4 +21,7 @@ public abstract class SubLevel {
 	
 	public abstract void draw(SpriteBatch batch);
 	public abstract void render();
+	
+	public abstract void onDialogEnded();
+	public abstract void onMinigameEnded();
 }
