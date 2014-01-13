@@ -1,6 +1,6 @@
 package cz.mff.cuni.autickax.pathway;
 
-import java.awt.Color;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import java.util.Queue;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -149,7 +150,7 @@ public class DistanceMap implements java.io.Serializable {
 						- row - 1);
 
 				if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY) {
-					pixmap.drawPixel(column, row, Color.darkGray.getRGB());
+					pixmap.drawPixel(column, row, Color.DARK_GRAY.toIntBits());
 				}
 			}
 		}
