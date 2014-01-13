@@ -74,7 +74,7 @@ public class Main {
 					availableLevels.hardLevels.add(level);
 					break;
 				case Kiddie:
-					availableLevels.hardLevels.add(level);
+					availableLevels.kiddieLevels.add(level);
 					break;
 				case Normal:
 					availableLevels.normalLevels.add(level);
