@@ -1,14 +1,15 @@
-package cz.mff.cuni.autickax.gamelogic;
+package cz.mff.cuni.autickax.miniGames;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public class StoneAvoidingMinigame extends MiniGame {
-	
+public class AvoidObstaclesMinigame extends Minigame{
 
-	public StoneAvoidingMinigame(GameScreen screen, SubLevel parent) {
-		super(screen, parent);
+	public AvoidObstaclesMinigame(GameScreen gameScreen, SubLevel parent) {
+		super(gameScreen, parent);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -40,5 +41,5 @@ public class StoneAvoidingMinigame extends MiniGame {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }

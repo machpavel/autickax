@@ -9,7 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.scene.GameScreen;
+import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
+import cz.mff.cuni.autickax.miniGames.Minigame;
 
 /**
  * Base class for all game entities
@@ -178,7 +180,7 @@ abstract public class GameObject implements Serializable {
 	 * @param rotation
 	 */
 	public void setRotation(float rotation) {
-		this.rotation = rotation;
+		this.rotation = rotation % 360;
 	}
 
 	/**
@@ -202,4 +204,6 @@ abstract public class GameObject implements Serializable {
 	public void setScreen(GameScreen screen) {
 		this.gameScreen = screen;
 	}
+	
+	public abstract Minigame getMinigame(GameScreen gameScreen, SubLevel parent);
 }

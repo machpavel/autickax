@@ -6,6 +6,8 @@ import java.io.Serializable;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class Start extends GameObject implements Serializable {
@@ -44,6 +46,8 @@ public class Start extends GameObject implements Serializable {
 			return Constants.START_TYPE_2_WIDTH;	
 		case 3:
 			return Constants.START_TYPE_3_WIDTH;
+		case 4:
+			return Constants.START_TYPE_4_WIDTH;
 		default:
 			//TODO exception
 			return 0;
@@ -58,6 +62,8 @@ public class Start extends GameObject implements Serializable {
 			return Constants.START_TYPE_2_HEIGHT;	
 		case 3:
 			return Constants.START_TYPE_3_HEIGHT;
+		case 4:
+			return Constants.START_TYPE_4_HEIGHT;
 		default:
 			//TODO exception
 			return 0;
@@ -72,6 +78,8 @@ public class Start extends GameObject implements Serializable {
 			return Constants.START_TYPE_2_TEXTURE_NAME;
 		case 3:
 			return Constants.START_TYPE_3_TEXTURE_NAME;
+		case 4:
+			return Constants.START_TYPE_4_TEXTURE_NAME;
 		default:
 			//TODO exception
 			return null;
@@ -87,6 +95,12 @@ public class Start extends GameObject implements Serializable {
 	@Override
 	public void setTexture() {
 		super.setTexture(Start.GetTextureName(type));		
+	}
+
+	@Override
+	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

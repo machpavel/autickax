@@ -48,6 +48,8 @@ public final class EditorScreen extends BaseScreenEditor {
 	private static final Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
 	private static final int PATHWAY_TEXTURE_TYPE = 0;
 	private static final float TIME_LIMIT = 10;
+	protected static final int FINISH_TYPE = 2;
+	protected static final int START_TYPE = 4;
 
 
 	// Rendering
@@ -311,11 +313,11 @@ public final class EditorScreen extends BaseScreenEditor {
 				start = new Start(
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x,
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).y,
-						null, 1);
+						null, START_TYPE);
 				finish = new Finish(
 						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x,
 						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).y,
-						null, 1);
+						null, FINISH_TYPE);
 			}
 		});
 	}

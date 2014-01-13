@@ -6,6 +6,9 @@ import java.io.Serializable;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.miniGames.GearChangeMinigame;
+import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Hole extends GameObject implements Serializable {
@@ -86,4 +89,10 @@ public final class Hole extends GameObject implements Serializable {
 		// TODO Auto-generated method stub
 		super.setTexture(Hole.GetTextureName(type));		
 	}
+
+	@Override
+	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
+		return new GearChangeMinigame(gameScreen, parent, false);
+	}
+
 }

@@ -6,6 +6,9 @@ import java.io.Serializable;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.miniGames.Crash;
+import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Tree extends GameObject implements Serializable {
@@ -102,5 +105,10 @@ public final class Tree extends GameObject implements Serializable {
 	@Override
 	public void setTexture() {
 		super.setTexture(Tree.GetTextureName(type));		
+	}
+
+	@Override
+	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
+		return new Crash(gameScreen, parent);
 	}
 }

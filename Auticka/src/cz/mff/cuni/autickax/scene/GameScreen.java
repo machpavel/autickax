@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import cz.mff.cuni.autickax.Autickax;
@@ -26,6 +27,8 @@ import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
 
 public class GameScreen extends BaseScreen {
+	public static final float EPSILON_F = 0.01f;
+	
 	// Textures
 	private LevelBackground levelBackground;
 	private TextureRegion pathwayTexture;
@@ -84,9 +87,17 @@ public class GameScreen extends BaseScreen {
 		
 		this.levelBackground = new LevelBackground();
 		this.levelBackground.SetType(level.getBackgroundType());
-		this.car = level.getCar();
+		this.car = level.getCar();		
+		
+		
 		this.start = level.getStart();
+		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.START_POSITION_IN_CURVE + EPSILON_F)).sub(this.start.getPosition()).nor();
+		this.start.setRotation((startDirection.angle() + 270) % 360);
+		
 		this.finish = level.getFinish();
+		Vector2 finishDirection = new Vector2(this.pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE - EPSILON_F)).sub(this.finish.getPosition()).nor();
+		this.finish.setRotation((finishDirection.angle() + 90) % 360);
+		
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
 	}
 	
@@ -103,7 +114,7 @@ public class GameScreen extends BaseScreen {
 		return this.car;
 	}
 	
-	public void switchToPhase1(SubLevel1 phase1) {
+	public void switchToPhase(SubLevel1 phase1) {
 		this.currentPhase = phase1;
 	}
 	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, SubLevel1 lastPhase) {

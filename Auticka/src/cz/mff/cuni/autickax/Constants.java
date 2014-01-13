@@ -133,6 +133,9 @@ public final class Constants {
 	public static final String PHASE_1_FINISH_NOT_REACHED = "You have not\nreached the\nfinish";
 	public static final String PHASE_1_TIME_EXPIRED = "Time limit\nexceeded.";
 	
+	public static final String PHASE_2_MINIGAME_FAILED = "You failed.";
+	public static final String PHASE_2_FINISH_REACHED = "Finish reached\nin time: ";
+	
 	//
 	// GAME OBJECTS
 	//
@@ -160,6 +163,10 @@ public final class Constants {
 	public static final int  	FINISH_TYPE_1_WIDTH = 33;
 	public static final int 	FINISH_TYPE_1_HEIGHT = 52;
 	
+	public static final String 	FINISH_TYPE_2_TEXTURE_NAME = "finish2";
+	public static final int  	FINISH_TYPE_2_WIDTH = 60;
+	public static final int 	FINISH_TYPE_2_HEIGHT = 16;
+	
 	public static final String 	MUD_TYPE_1_TEXTURE_NAME = "mud1";
 	public static final int  	MUD_TYPE_1_WIDTH = 48;
 	public static final int 	MUD_TYPE_1_HEIGHT = 34;
@@ -183,6 +190,10 @@ public final class Constants {
 	public static final String 	START_TYPE_3_TEXTURE_NAME = "start3";
 	public static final int  	START_TYPE_3_WIDTH = 33;
 	public static final int 	START_TYPE_3_HEIGHT = 52;
+	
+	public static final String 	START_TYPE_4_TEXTURE_NAME = "start4";
+	public static final int  	START_TYPE_4_WIDTH = 41;
+	public static final int 	START_TYPE_4_HEIGHT = 24;
 	
 	public static final String 	STONE_TYPE_1_TEXTURE_NAME = "stone1";
 	public static final int  	STONE_TYPE_1_WIDTH = 15;

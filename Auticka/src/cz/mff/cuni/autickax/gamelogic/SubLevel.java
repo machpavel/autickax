@@ -4,17 +4,22 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import cz.mff.cuni.autickax.dialogs.Dialog;
+import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public abstract class SubLevel {
-	protected GameScreen Level;
+	protected GameScreen level;
 	protected ShapeRenderer shapeRenderer;
 	protected Dialog dialog = null;
-	protected MiniGame miniGame = null;
+	protected Minigame miniGame = null;
 	
 	public SubLevel(GameScreen gameScreen) {
-		this.Level = gameScreen;
+		this.level = gameScreen;
 		shapeRenderer = new ShapeRenderer();		
+	}
+	
+	public void setDialog(Dialog dialog){
+		this.dialog = dialog;
 	}
 	
 	public abstract void update(float delta);

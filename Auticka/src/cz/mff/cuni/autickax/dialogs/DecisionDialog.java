@@ -22,10 +22,7 @@ public class DecisionDialog extends Dialog {
 		CreateButtonRestart();
 		CreateCuttonGoToMainMenu();
 	}
-
-	public enum DecisionType {
-		CONTINUE, RESTART, GO_TO_MAIN_MENU;
-	}
+	
 
 	private void CreateButtonContinue() {
 		buttonContinue = new DialogButton(

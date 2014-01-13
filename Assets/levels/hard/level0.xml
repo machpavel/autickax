@@ -12,7 +12,7 @@
 		</controlPoints>
 	</pathway>
 	<entities>
-		<stone X="361.0" Y="254.0" type="2"/>
+		<tree X="361.0" Y="254.0" type="2"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="160.00002" Y="253.00002" type="1"/>

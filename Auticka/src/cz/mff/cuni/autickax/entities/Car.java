@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
+import cz.mff.cuni.autickax.miniGames.Minigame;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -141,5 +143,11 @@ public final class Car extends GameObject implements Serializable {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

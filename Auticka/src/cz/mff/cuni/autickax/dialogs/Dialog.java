@@ -5,11 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
-import cz.mff.cuni.autickax.dialogs.DecisionDialog.DecisionType;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public abstract class Dialog extends DialogAbstract{
+public abstract class Dialog extends Comunicator{
 	protected Label messageLabel;	
 		
 	public Dialog(GameScreen gameScreen, SubLevel parent, String message) {
@@ -21,4 +20,8 @@ public abstract class Dialog extends DialogAbstract{
 	}
 	
 	public abstract DecisionType getDecision();
+	
+	public enum DecisionType {
+		CONTINUE, RESTART, GO_TO_MAIN_MENU;
+	}
 }

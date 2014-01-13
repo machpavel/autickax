@@ -49,7 +49,7 @@ public class SubLevel1 extends SubLevel {
 				Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
 
 		checkPoints = new LinkedList<CheckPoint>();
-		this.Level.getCar().move(this.Level.getStart().getPosition());
+		this.level.getCar().move(this.level.getStart().getPosition());
 
 		state = SubLevel1States.BEGINNING_STATE;
 		timeLimit = tLimit;
@@ -58,7 +58,6 @@ public class SubLevel1 extends SubLevel {
 	}
 	
 	public void onDialogEnded() {
-		// code
 		switch (this.dialog.getDecision()) {
 		case CONTINUE:
 			break;
@@ -66,7 +65,7 @@ public class SubLevel1 extends SubLevel {
 			reset();
 			return;
 		case GO_TO_MAIN_MENU:
-			this.Level.goToMainScreen();
+			this.level.goToMainScreen();
 			return;
 		default:
 			// TODO assert for type
@@ -76,19 +75,26 @@ public class SubLevel1 extends SubLevel {
 	}
 
 	@Override
+	public void onMinigameEnded() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
 	public void update(float delta) {
 		if (this.dialog != null) {
-			this.dialog.update(delta);
-		} else {
+			this.dialog.update(delta);			
+		} 		
+		else {
 			if (timeMeasured)
 				timeElapsed += delta;
 	
-			for (GameObject gameObject : this.Level.getGameObjects()) {
+			for (GameObject gameObject : this.level.getGameObjects()) {
 				gameObject.update(delta);
 			}
-			this.Level.getCar().update(delta);
-			this.Level.getStart().update(delta);
-			this.Level.getFinish().update(delta);
+			this.level.getCar().update(delta);
+			this.level.getStart().update(delta);
+			this.level.getFinish().update(delta);
 	
 			switch (state) {
 			case BEGINNING_STATE:
@@ -117,12 +123,12 @@ public class SubLevel1 extends SubLevel {
 	}
 
 	private void updateInFinishState(float delta) {
-		this.Level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this);
+		this.level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this);
 	}
 
 	private void updateInDrivingState(float delta) {
 		// stopped dragging
-		if (!this.Level.getCar().isDragged()) {
+		if (!this.level.getCar().isDragged()) {
 			switchToMistakeState(Constants.PHASE_1_FINISH_NOT_REACHED);
 			return;
 		} else if (timeElapsed >= timeLimit) {
@@ -130,12 +136,12 @@ public class SubLevel1 extends SubLevel {
 			return;
 		}
 
-		this.Level.getCar().update(delta);
+		this.level.getCar().update(delta);
 		// did not move from last update
 		if (Gdx.input.getDeltaX() == 0 && Gdx.input.getDeltaY() == 0)
 			return;
 
-		Vector2 carPosition = this.Level.getCar().getPosition();
+		Vector2 carPosition = this.level.getCar().getPosition();
 
 		// coordinates ok
 		DistanceMap map = pathway.getDistanceMap();
@@ -143,10 +149,10 @@ public class SubLevel1 extends SubLevel {
 				&& carPosition.y >= 0 && carPosition.y < map.getHeight()) {
 
 			if (wayPoints.isEmpty()
-					&& this.Level.getCar().positionCollides(
-							this.Level.getFinish())) {
+					&& this.level.getCar().positionCollides(
+							this.level.getFinish())) {
 				state = SubLevel1States.FINISH_STATE;
-				dialog = new DecisionDialog(this.Level, this, Constants.PHASE_1_FINISH_REACHED, true);
+				dialog = new DecisionDialog(this.level, this, Constants.PHASE_1_FINISH_REACHED, true);
 				timeMeasured = false;
 			}
 
@@ -158,7 +164,7 @@ public class SubLevel1 extends SubLevel {
 			} else {
 				if (!checkPoints.isEmpty()) {
 					Vector2 lastCarPosition = checkPoints.peekLast().position;
-					this.Level.getCar().setRotation(
+					this.level.getCar().setRotation(
 							new Vector2(carPosition).sub(lastCarPosition)
 									.angle());
 				}
@@ -168,7 +174,7 @@ public class SubLevel1 extends SubLevel {
 					boolean canRemove = true;
 					while (canRemove && !wayPoints.isEmpty()) {
 						Vector2 way = new Vector2(wayPoints.peekFirst());
-						Vector2 pos = new Vector2(this.Level.getCar()
+						Vector2 pos = new Vector2(this.level.getCar()
 								.getPosition());
 						if (way.sub(pos).len() <= Constants.MAX_DISTANCE_FROM_PATHWAY)
 							wayPoints.removeFirst();
@@ -185,8 +191,8 @@ public class SubLevel1 extends SubLevel {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
-			if (this.Level.getCar().getPosition().dst(touchPos.x, touchPos.y) <= Constants.MAX_DISTANCE_FROM_PATHWAY) {
-				this.Level.getCar().setDragged(true);
+			if (this.level.getCar().getPosition().dst(touchPos.x, touchPos.y) <= Constants.MAX_DISTANCE_FROM_PATHWAY) {
+				this.level.getCar().setDragged(true);
 				state = SubLevel1States.DRIVING_STATE;
 				timeMeasured = true;
 			}
@@ -198,12 +204,12 @@ public class SubLevel1 extends SubLevel {
 	public void draw(SpriteBatch batch) {
 
 		batch.begin();
-		for (GameObject gameObject : this.Level.getGameObjects()) {
+		for (GameObject gameObject : this.level.getGameObjects()) {
 			gameObject.draw(batch);
 		}
-		this.Level.getStart().draw(batch);
-		this.Level.getFinish().draw(batch);
-		this.Level.getCar().draw(batch);
+		this.level.getStart().draw(batch);
+		this.level.getFinish().draw(batch);
+		this.level.getCar().draw(batch);
 
 		// TODO rewrite positioning into constants
 		float stageHeight = Gdx.graphics.getHeight();
@@ -217,6 +223,10 @@ public class SubLevel1 extends SubLevel {
 		if (dialog != null) {
 			dialog.draw(batch);
 		}
+		
+		if(miniGame != null){
+			dialog.draw(batch);
+		}
 	}
 
 	/**
@@ -226,7 +236,7 @@ public class SubLevel1 extends SubLevel {
 	public void reset() {
 		this.miniGame = null;
 		if (Autickax.showTooltips)
-			this.dialog = new MessageDialog(this.Level, this, 
+			this.dialog = new MessageDialog(this.level, this, 
 					Constants.TOOLTIP_PHASE_1_WHAT_TO_DO);
 		state = SubLevel1States.BEGINNING_STATE;
 		this.timeElapsed = 0;
@@ -238,10 +248,10 @@ public class SubLevel1 extends SubLevel {
 		// Car positioning
 		Vector2 carStartDirection = new Vector2(wayPoints.get(1)).sub(wayPoints.get(0)).nor(); 
 		float newCarAngle = carStartDirection.angle();
-		this.Level.getCar().setRotation(newCarAngle);
-		Vector2 startPosition = this.Level.getStart().getPosition();
-		Vector2 newCarPosition = new Vector2(this.Level.getStart().getPosition()).sub(carStartDirection.scl(Constants.CAR_DISTANCE_FROM_START));
-		this.Level.getCar().move(newCarPosition);
+		this.level.getCar().setRotation(newCarAngle);
+		Vector2 startPosition = this.level.getStart().getPosition();
+		Vector2 newCarPosition = new Vector2(this.level.getStart().getPosition()).sub(carStartDirection.scl(Constants.CAR_DISTANCE_FROM_START));
+		this.level.getCar().move(newCarPosition);
 		
 		
 
@@ -251,9 +261,9 @@ public class SubLevel1 extends SubLevel {
 	 * Player failed to finish the track
 	 */
 	private void switchToMistakeState(String str) {
-		this.dialog = new DecisionDialog(this.Level, this, str, false);
+		this.dialog = new DecisionDialog(this.level, this, str, false);
 		this.state = SubLevel1States.MISTAKE_STATE;
-		this.Level.getCar().setDragged(false);
+		this.level.getCar().setDragged(false);
 		timeMeasured = false;
 		this.state.setMistake(str);
 	}
@@ -300,10 +310,5 @@ public class SubLevel1 extends SubLevel {
 		}
 	}
 
-	@Override
-	public void onMinigameEnded() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
