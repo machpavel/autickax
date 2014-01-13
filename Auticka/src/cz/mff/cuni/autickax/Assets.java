@@ -15,18 +15,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cz.mff.cuni.cz.serialization.AvailableLevelsLoader;
 
-/**
- * This class takes care of all asset loading and parsing Call load to load
- * graphics, sounds, fonts etc
- * 
- * @author Ondrej Paska
- */
 public class Assets {
 
 	private static final String GRAPHICS_DIR = "images";
 	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images";
 	private static final String FONT_FILE = "fonts/font.fnt";
 	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
+	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
 	private static final String AVAILABLE_LEVELS_FILE = "levels/availableLevels.bin";
 	public AssetManager assetManager;
 
@@ -114,6 +109,7 @@ public class Assets {
 	private void loadFont() {
 		assetManager.load(FONT_FILE, BitmapFont.class);
 		assetManager.load(MENU_FONT_FILE, BitmapFont.class);
+		assetManager.load(DIALOG_FONT_FILE, BitmapFont.class);
 	}
 	
 	private void loadAvailableLevels() {
@@ -128,7 +124,11 @@ public class Assets {
 	public BitmapFont getMenuFont() {
 		return assetManager.get(MENU_FONT_FILE, BitmapFont.class);
 	}
-	
+
+	public BitmapFont getDialogFont() {
+		return assetManager.get(DIALOG_FONT_FILE, BitmapFont.class);
+	}
+		
 	public AvailableLevels getAvailableLevels() {
 		return assetManager.get(AVAILABLE_LEVELS_FILE, AvailableLevels.class);
 	}

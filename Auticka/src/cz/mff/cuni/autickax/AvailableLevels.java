@@ -13,10 +13,10 @@ public class AvailableLevels implements java.io.Serializable {
 	public Vector<Level> extremeLevels;
 	
 	public AvailableLevels() {
-		this.kiddieLevels = new Vector<>();
-		this.beginnerLevels = new Vector<>();
-		this.normalLevels = new Vector<>();
-		this.hardLevels = new Vector<>();
-		this.extremeLevels = new Vector<>();
+		this.kiddieLevels = new Vector<Level>();
+		this.beginnerLevels = new Vector<Level>();
+		this.normalLevels = new Vector<Level>();
+		this.hardLevels = new Vector<Level>();
+		this.extremeLevels = new Vector<Level>();
 	}
 }

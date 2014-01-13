@@ -138,6 +138,7 @@ public class SubLevel2 extends SubLevel {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		batch.begin();
 		for (GameObject gameObject : this.Level.getGameObjects()) {
 			gameObject.draw(batch);
 		}
@@ -146,6 +147,7 @@ public class SubLevel2 extends SubLevel {
 		this.Level.getFinish().draw(batch);
 		Autickax.font.draw(batch, "time: " + String.format("%1$,.1f", timeElapsed), 10,
 				(int) Gdx.graphics.getHeight() - 32);
+		batch.end();
 	}
 	
 	public void render() {

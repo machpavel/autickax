@@ -10,12 +10,12 @@ import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
-import cz.mff.cuni.autickax.drawing.Font;
+import cz.mff.cuni.autickax.dialogs.DecisionDialog;
+import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
-import cz.mff.cuni.autickax.scene.BaseScreen;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class SubLevel1 extends SubLevel {
@@ -26,51 +26,20 @@ public class SubLevel1 extends SubLevel {
 	/** Time available for player to finish the race */
 	private float timeLimit;
 
-	/**
-	 * Path representation
-	 */
+	/** Path representation */
 	private Pathway pathway;
 
-	/**
-	 * state of the phase: beginning, driving, finish, mistake - must repeat
-	 */
+	/** state of the phase: beginning, driving, finish, mistake - must repeat */
 	private SubLevel1States state;
-
-	/**
-	 * Player just starts this phase or made a mistake and was moved again
-	 */
-	public enum SubLevel1States {
-		BEGINNING_STATE, DRIVING_STATE, // Driving in progress
-		FINISH_STATE, // Player successfully finished the race
-		MISTAKE_STATE;
-
-		String mistakeMsg;
-
-		public void setMistake(String str) {
-			mistakeMsg = str;
-		}
-
-		public String getMistakeMsg() {
-			return mistakeMsg;
-		}
-	}
 
 	/** Coordinates to check whether whole track was raced through */
 	private LinkedList<Vector2> wayPoints;
 
-	/**
-	 * Record of movement through the track;
-	 */
+	/** Record of movement through the track; */
 	private LinkedList<CheckPoint> checkPoints;
-	/**
-	 * true if time is being measure, false otherwise
-	 */
-	private boolean timeMeasured = false;
 
-	/**
-	 * For printing messages
-	 */
-	private String status = "";
+	/** true if time is being measure, false otherwise */
+	private boolean timeMeasured = false;
 
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
@@ -84,20 +53,35 @@ public class SubLevel1 extends SubLevel {
 
 		state = SubLevel1States.BEGINNING_STATE;
 		timeLimit = tLimit;
-		
+
 		reset();
 	}
 
 	@Override
 	public void update(float delta) {
-		if(messageDialog != null){
-			messageDialog.update(delta);
-			if(messageDialog.isInProgress())
+		if (this.dialog != null) {
+			this.dialog.update(delta);
+			if (this.dialog.isInProgress()) {
 				return;
-			else
-				messageDialog = null;
+			} else {
+				switch (this.dialog.getDecision()) {
+				case CONTINUE:
+					// do nothing = continue
+					break;
+				case RESTART:
+					reset();
+					return;
+				case GO_TO_MAIN_MENU:
+					this.Level.goToMainScreen();
+					return;
+				default:
+					// TODO assert for type
+					break;
+				}
+				this.dialog = null;
+			}
 		}
-		
+
 		if (timeMeasured)
 			timeElapsed += delta;
 
@@ -134,20 +118,16 @@ public class SubLevel1 extends SubLevel {
 	}
 
 	private void updateInFinishState(float delta) {
-		// switch whenever ready
-		if (Gdx.input.justTouched()) {
-			this.Level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this);
-		}
-
+		this.Level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this);
 	}
 
 	private void updateInDrivingState(float delta) {
 		// stopped dragging
 		if (!this.Level.getCar().isDragged()) {
-			switchToMistakeState("You have not reached finish.");
+			switchToMistakeState(Constants.PHASE_1_FINISH_NOT_REACHED);
 			return;
 		} else if (timeElapsed >= timeLimit) {
-			switchToMistakeState("Time limit exceeded.");
+			switchToMistakeState(Constants.PHASE_1_TIME_EXPIRED);
 			return;
 		}
 
@@ -167,13 +147,14 @@ public class SubLevel1 extends SubLevel {
 					&& this.Level.getCar().positionCollides(
 							this.Level.getFinish())) {
 				state = SubLevel1States.FINISH_STATE;
+				dialog = new DecisionDialog(this.Level, Constants.PHASE_1_FINISH_REACHED, true);
 				timeMeasured = false;
 			}
 
 			// not on track OR all checkpoint not yet reached (if reached, we
 			// may have reached the finish line)
 			if (map.At(carPosition) > Constants.MAX_DISTANCE_FROM_PATHWAY) {
-				switchToMistakeState("You are too far from track.");
+				switchToMistakeState(Constants.PHASE_1_OUT_OF_LINE);
 
 			} else {
 				if (!checkPoints.isEmpty()) {
@@ -201,7 +182,7 @@ public class SubLevel1 extends SubLevel {
 
 	}
 
-	private void updateInBeginnigState(float delta) {		
+	private void updateInBeginnigState(float delta) {
 		this.Level.getCar().setRotation(
 				(this.Level.getCar().getRotation() + delta * 70) % 360);
 		if (Gdx.input.justTouched()) {
@@ -218,13 +199,9 @@ public class SubLevel1 extends SubLevel {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		//TODO maybe all will be needed to draw?
-		if(messageDialog != null){
-			messageDialog.draw(batch);
-			return;
-		}
-		
-		for (GameObject gameObject : this.Level.getGameObjects()) {			
+
+		batch.begin();
+		for (GameObject gameObject : this.Level.getGameObjects()) {
 			gameObject.draw(batch);
 		}
 		this.Level.getStart().draw(batch);
@@ -233,15 +210,16 @@ public class SubLevel1 extends SubLevel {
 
 		// TODO rewrite positioning into constants
 		float stageHeight = Gdx.graphics.getHeight();
-		float stageWidth = Gdx.graphics.getWidth();
 		// Draw time
 		Autickax.font.draw(batch,
 				"time: " + String.format("%1$,.1f", timeElapsed) + " limit: "
 						+ String.format("%1$,.1f", timeLimit), 10,
 				(int) stageHeight - 32);
+		batch.end();
 
-		status = updateStatus();
-		Autickax.font.draw(batch, status, 10, 64);
+		if (dialog != null) {
+			dialog.draw(batch);
+		}
 	}
 
 	/**
@@ -250,9 +228,9 @@ public class SubLevel1 extends SubLevel {
 	 */
 	public void reset() {
 		this.miniGame = null;
-		this.messageDialog = new MessageDialog(this.Level, "BLABLABLA");
-		
-		
+		if (Autickax.showTooltips)
+			this.dialog = new MessageDialog(this.Level,
+					Constants.TOOLTIP_PHASE_1_WHAT_TO_DO);
 		state = SubLevel1States.BEGINNING_STATE;
 		this.timeElapsed = 0;
 		checkPoints.clear();
@@ -266,48 +244,11 @@ public class SubLevel1 extends SubLevel {
 	 * Player failed to finish the track
 	 */
 	private void switchToMistakeState(String str) {
+		this.dialog = new DecisionDialog(this.Level, str, false);
 		this.state = SubLevel1States.MISTAKE_STATE;
 		this.Level.getCar().setDragged(false);
 		timeMeasured = false;
 		this.state.setMistake(str);
-	}
-
-	/**
-	 * 
-	 * @return string representation of the current state of this sublevel
-	 */
-	private String getStateString() {
-		switch (state) {
-		case BEGINNING_STATE:
-			return "Beginning";
-		case DRIVING_STATE:
-			return "Driving";
-		case FINISH_STATE:
-			return "Finished";
-		case MISTAKE_STATE:
-			return "Mistake";
-		default:
-			return "";
-		}
-	}
-
-	private String updateStatus() {
-		switch (state) {
-		case BEGINNING_STATE:
-			status = "Draw the path for your vehicle";
-			break;
-		case DRIVING_STATE:
-			status = "Continue to finish";
-			break;
-		case FINISH_STATE:
-			status = "Finished - well done! ";
-			break;
-		case MISTAKE_STATE:
-			status = state.getMistakeMsg();
-			break;
-		}
-
-		return status;
 	}
 
 	private void initWayPoints(float start, float finish, int nofWayPoints) {
@@ -333,6 +274,23 @@ public class SubLevel1 extends SubLevel {
 		}
 
 		shapeRenderer.end();
+	}
+
+	/** Player just starts this phase or made a mistake and was moved again */
+	public enum SubLevel1States {
+		BEGINNING_STATE, DRIVING_STATE, // Driving in progress
+		FINISH_STATE, // Player successfully finished the race
+		MISTAKE_STATE;
+
+		String mistakeMsg;
+
+		public void setMistake(String str) {
+			mistakeMsg = str;
+		}
+
+		public String getMistakeMsg() {
+			return mistakeMsg;
+		}
 	}
 
 }

@@ -150,9 +150,9 @@ public class GameScreen extends BaseScreen {
 		
 		this.currentPhase.update(delta);
 		this.currentPhase.render();
-		batch.begin();
+		//batch.begin();
 		this.currentPhase.draw(batch);		
-		batch.end();
+		//batch.end();
 		
 		
 	}
@@ -167,6 +167,10 @@ public class GameScreen extends BaseScreen {
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
 		this.game.setScreen(Autickax.levelSelectScreen);
+	}
+	
+	public void goToMainScreen(){
+		this.onBackKeyPressed();
 	}
 
 

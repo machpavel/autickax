@@ -3,12 +3,13 @@ package cz.mff.cuni.autickax.gamelogic;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
+import cz.mff.cuni.autickax.dialogs.Dialog;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public abstract class SubLevel {
 	protected GameScreen Level;
 	protected ShapeRenderer shapeRenderer;
-	protected MessageDialog messageDialog = null;
+	protected Dialog dialog = null;
 	protected MiniGame miniGame = null;
 	
 	public SubLevel(GameScreen gameScreen) {
