@@ -31,8 +31,8 @@
 		<mud X="238.0" Y="322.0" type="1"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
-	<start X="88.83334" Y="382.5" type="1"/>
-	<finish X="647.0" Y="325.0" type="1"/>
+	<start X="88.83334" Y="382.5" type="4"/>
+	<finish X="647.0" Y="325.0" type="2"/>
 	<levelBackgroundType>1</levelBackgroundType>
 	<timeLimit>10.0</timeLimit>
 </AutickaX>
