@@ -1,6 +1,7 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,8 +15,9 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Car extends GameObject {
-
+public final class Car extends GameObject implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private boolean isDragged = false;
 	private TextureRegion[] positionTextures = new TextureRegion[8];
 
@@ -25,30 +27,8 @@ public final class Car extends GameObject {
 		super.setMeasurements(Car.GetWidth(type), Car.GetHeight(type));
 		// TODO: This condition is temporary hack due to loading levels in
 		// AssetsProcessor. REWRITE!
-		if (this.game != null) {
-			switch (type) {
-			case 1:
-				this.positionTextures[0] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_1_POSITION_0_TEXTURE_NAME);
-				this.positionTextures[1] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_1_POSITION_1_TEXTURE_NAME);
-				this.positionTextures[2] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_1_POSITION_2_TEXTURE_NAME);
-				this.positionTextures[3] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_1_POSITION_3_TEXTURE_NAME);
-				this.positionTextures[4] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_1_POSITION_4_TEXTURE_NAME);
-				this.positionTextures[5] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_1_POSITION_5_TEXTURE_NAME);
-				this.positionTextures[6] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_1_POSITION_6_TEXTURE_NAME);
-				this.positionTextures[7] = this.game.assets
-						.getGraphics(Constants.CAR_TYPE_1_POSITION_7_TEXTURE_NAME);
-				super.texture = this.positionTextures[0];
-				break;
-			default:
-				break;
-			}
+		if (this.gameScreen != null && this.gameScreen.getGame() != null) {
+			this.setTexture();
 		}
 	}
 
@@ -134,5 +114,32 @@ public final class Car extends GameObject {
 	public GameObject copy() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setTexture() {
+		switch (type) {
+		case 1:
+			this.positionTextures[0] = this.gameScreen.getGame().assets
+					.getGraphics(Constants.CAR_TYPE_1_POSITION_0_TEXTURE_NAME);
+			this.positionTextures[1] = this.gameScreen.getGame().assets
+					.getGraphics(Constants.CAR_TYPE_1_POSITION_1_TEXTURE_NAME);
+			this.positionTextures[2] = this.gameScreen.getGame().assets
+					.getGraphics(Constants.CAR_TYPE_1_POSITION_2_TEXTURE_NAME);
+			this.positionTextures[3] = this.gameScreen.getGame().assets
+					.getGraphics(Constants.CAR_TYPE_1_POSITION_3_TEXTURE_NAME);
+			this.positionTextures[4] = this.gameScreen.getGame().assets
+					.getGraphics(Constants.CAR_TYPE_1_POSITION_4_TEXTURE_NAME);
+			this.positionTextures[5] = this.gameScreen.getGame().assets
+					.getGraphics(Constants.CAR_TYPE_1_POSITION_5_TEXTURE_NAME);
+			this.positionTextures[6] = this.gameScreen.getGame().assets
+					.getGraphics(Constants.CAR_TYPE_1_POSITION_6_TEXTURE_NAME);
+			this.positionTextures[7] = this.gameScreen.getGame().assets
+					.getGraphics(Constants.CAR_TYPE_1_POSITION_7_TEXTURE_NAME);
+			super.texture = this.positionTextures[0];
+			break;
+		default:
+			break;
+		}
 	}
 }

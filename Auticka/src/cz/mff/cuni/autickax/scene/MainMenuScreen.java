@@ -28,15 +28,15 @@ public class MainMenuScreen extends BaseScreen {
 		super();
 
 		// Background
-		Image background = new Image(game.assets.getGraphics(Constants.BUTTON_MENU_BACKGROUND));
+		Image background = new Image(getGame().assets.getGraphics(Constants.BUTTON_MENU_BACKGROUND));
 		background.setSize(stageWidth, stageHeight);
 		stage.addActor(background); // stage initialized in superclass
 									// constructor
 
 		// Play Button-----------------------------------------------------
 		this.buttonPlay = new MenuButton (
-			game.assets.getGraphics(Constants.BUTTON_MENU_PLAY),
-			game.assets.getGraphics(Constants.BUTTON_MENU_PLAY_HOVER)
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_PLAY),
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_PLAY_HOVER)
 		)
 		{
 			@Override
@@ -46,7 +46,7 @@ public class MainMenuScreen extends BaseScreen {
 					Autickax.difficultySelectScreen = null;
 				}
 				Autickax.difficultySelectScreen = new DifficultySelectScreen();
-				game.setScreen(Autickax.difficultySelectScreen);
+				getGame().setScreen(Autickax.difficultySelectScreen);
 			}
 		};
 		this.buttonPlay.setPosition(this.buttonsXPositionStart, 250);
@@ -54,8 +54,8 @@ public class MainMenuScreen extends BaseScreen {
 		
 		// Exit Button-----------------------------------------------------
 		this.buttonExit = new MenuButton (
-			game.assets.getGraphics(Constants.BUTTON_MENU_EXIT),
-			game.assets.getGraphics(Constants.BUTTON_MENU_EXIT_HOVER)
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_EXIT),
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_EXIT_HOVER)
 		)
 		{
 			@Override

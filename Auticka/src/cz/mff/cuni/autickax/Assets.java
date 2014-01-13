@@ -22,8 +22,7 @@ public class Assets {
 	private static final String FONT_FILE = "fonts/font.fnt";
 	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
 	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
-	private static final String AVAILABLE_LEVELS_FILE = "levels/availableLevels.bin";
-	public AssetManager assetManager;
+	private static final String AVAILABLE_LEVELS_FILE = "availableLevels.bin";	public AssetManager assetManager;
 
 	private Map<String, TextureRegion> graphicsCacheMap;
 

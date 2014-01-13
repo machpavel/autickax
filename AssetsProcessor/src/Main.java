@@ -3,7 +3,7 @@ import com.badlogic.gdx.tools.imagepacker.TexturePacker;
 
 import cz.mff.cuni.autickax.AvailableLevels;
 import cz.mff.cuni.autickax.Difficulty;
-import cz.mff.cuni.autickax.Level;
+import cz.mff.cuni.autickax.LevelLoading;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -24,11 +24,6 @@ public class Main {
 	private static final Path ANDROID_IMAGES_PATH = Paths.get(ANDROID_PATH + "images");
 	private static final Path ANDROID_FONTS_PATH = Paths.get(ANDROID_PATH + "fonts");
 	private static final Path ANDROID_SFX_PATH = Paths.get(ANDROID_PATH + "sfx");
-	private static final Path ANDROID_LEVELS_PATH = Paths.get(ANDROID_PATH + "levels");
-	
-	
-	private static final String ASSETS_LEVELS_PATH_IMAGES = ASSETS_IMAGES_PATH + "/levels-paths";
-	private static final String ASSETS_PATHWAY_TEXTURES = ASSETS_PATH + "/pathwayTextures";
 	
     public static void main(String[] args) throws IOException {
     	
@@ -44,18 +39,15 @@ public class Main {
     	copySfx();
     	System.out.println("Audio copied.");
     	
-    	copyLevels();
-    	System.out.println("Levels copied.");
-    	
     	System.out.println("Assets processed.");
     }
     
     private static void createLevelsPaths() {
     	AvailableLevels availableLevels = new AvailableLevels();
     	
-    	File levelsImagesDirectory = new File(ASSETS_LEVELS_PATH_IMAGES);
+    	File levelsImagesDirectory = new File(ANDROID_PATH.toString());
     	if (!levelsImagesDirectory.exists()) {
-    		System.out.println("creating directory: " + ASSETS_LEVELS_PATH_IMAGES);
+    		System.out.println("creating directory: " + ANDROID_PATH);
     		levelsImagesDirectory.mkdir();
     	}
     	  
@@ -68,33 +60,34 @@ public class Main {
         	
         	for( File file : files ) {
 	    		LevelPath levelPath = new LevelPath(file, directory.getName());
-	    		levelPath.createBitmap(800, 480, ASSETS_PATHWAY_TEXTURES, ASSETS_LEVELS_PATH_IMAGES);
-        	}
+	    		levelPath.parseLevel();
+	    		LevelLoading level = levelPath.getLevel();
         	
-        	switch (levelDifficulty) {
-			case Beginner:
-				availableLevels.beginnerLevels.add(new Level());
-				break;
-			case Extreme:
-				availableLevels.extremeLevels.add(new Level());
-				break;
-			case Hard:
-				availableLevels.hardLevels.add(new Level());
-				break;
-			case Kiddie:
-				availableLevels.hardLevels.add(new Level());
-				break;
-			case Normal:
-				availableLevels.normalLevels.add(new Level());
-				break;
-			default:
-				break;
+	        	switch (levelDifficulty) {
+				case Beginner:
+					availableLevels.beginnerLevels.add(level);
+					break;
+				case Extreme:
+					availableLevels.extremeLevels.add(level);
+					break;
+				case Hard:
+					availableLevels.hardLevels.add(level);
+					break;
+				case Kiddie:
+					availableLevels.kiddieLevels.add(level);
+					break;
+				case Normal:
+					availableLevels.normalLevels.add(level);
+					break;
+				default:
+					break;
+	        	}
         	}
     	}
     	
     	 try
          {
-            FileOutputStream fileOut = new FileOutputStream(ANDROID_LEVELS_PATH.toString() + "\\availableLevels.bin");
+            FileOutputStream fileOut = new FileOutputStream(ANDROID_PATH + "\\availableLevels.bin");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(availableLevels);
             out.close();
@@ -106,13 +99,6 @@ public class Main {
              i.printStackTrace();
          }
     }
-
-	private static void copyLevels() throws IOException {
-		FileUtilities.copyDirectory(
-    		ASSETS_LEVELS_PATH.toFile(),
-			ANDROID_LEVELS_PATH.toFile()
-		);
-	}
 
 	private static void copySfx() throws IOException {
 		FileUtilities.copyDirectory(

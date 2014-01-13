@@ -6,17 +6,17 @@ public class AvailableLevels implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public Vector<Level> kiddieLevels;
-	public Vector<Level> beginnerLevels;
-	public Vector<Level> normalLevels;
-	public Vector<Level> hardLevels;
-	public Vector<Level> extremeLevels;
+	public Vector<LevelLoading> kiddieLevels;
+	public Vector<LevelLoading> beginnerLevels;
+	public Vector<LevelLoading> normalLevels;
+	public Vector<LevelLoading> hardLevels;
+	public Vector<LevelLoading> extremeLevels;
 	
 	public AvailableLevels() {
-		this.kiddieLevels = new Vector<Level>();
-		this.beginnerLevels = new Vector<Level>();
-		this.normalLevels = new Vector<Level>();
-		this.hardLevels = new Vector<Level>();
-		this.extremeLevels = new Vector<Level>();
+		this.kiddieLevels = new Vector<LevelLoading>();
+		this.beginnerLevels = new Vector<LevelLoading>();
+		this.normalLevels = new Vector<LevelLoading>();
+		this.hardLevels = new Vector<LevelLoading>();
+		this.extremeLevels = new Vector<LevelLoading>();
 	}
 }

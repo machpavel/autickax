@@ -16,24 +16,31 @@ public class LevelPath {
 
 	private final File file;
 	private final String directory;
+	
+	public LevelLoading level;
 
 	public LevelPath(File file, String directory) {
 		this.file = file;
 		this.directory = directory; 
 	}
-
-	public void createBitmap(int width, int height, String inputPath,
-			String outputPath) {
-
-		LevelLoading level = new LevelLoading(new FileHandle(this.file));
+	
+	public void parseLevel() {
+		this.level = new LevelLoading();
 		try {
-			level.parseLevel(null);
+			level.parseLevel(null, new FileHandle(this.file));
 		} catch (Exception e) {
 			System.out.println("Unable to parse file " + this.file.getName()
 					+ ". Details: " + e.getMessage());
 			e.printStackTrace();
 		}
+	}
+	
+	public LevelLoading getLevel() {
+		return this.level;
+	}
 
+	public void createBitmap(int width, int height, String inputPath,
+			String outputPath) {
 		BufferedImage texture = null;
 		try {
 			String inputTextureFileName = "";

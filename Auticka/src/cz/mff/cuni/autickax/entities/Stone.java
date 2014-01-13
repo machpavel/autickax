@@ -1,19 +1,21 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Stone extends GameObject {
+public final class Stone extends GameObject implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	public Stone(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		super.type = type;
 		super.setMeasurements(Stone.GetWidth(type), Stone.GetHeight(type));
-		super.setTexture(Stone.GetTextureName(type));
+		this.setTexture();
 	}
 	
 	public Stone(GameObject object){
@@ -96,6 +98,11 @@ public final class Stone extends GameObject {
 	@Override
 	public GameObject copy() {
 		return new Stone(this);
+	}
+
+	@Override
+	public void setTexture() {
+		super.setTexture(Stone.GetTextureName(type));		
 	}
 
 }

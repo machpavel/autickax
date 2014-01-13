@@ -1,19 +1,21 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Tree extends GameObject {
+public final class Tree extends GameObject implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	public Tree(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		super.type = type;
 		super.setMeasurements(Tree.GetWidth(type), Tree.GetHeight(type));
-		super.setTexture(Tree.GetTextureName(type));
+		this.setTexture();
 	}
 	
 	public Tree(GameObject object){
@@ -95,5 +97,10 @@ public final class Tree extends GameObject {
 	@Override
 	public GameObject copy() {
 		return new Tree(this);
+	}
+
+	@Override
+	public void setTexture() {
+		super.setTexture(Tree.GetTextureName(type));		
 	}
 }

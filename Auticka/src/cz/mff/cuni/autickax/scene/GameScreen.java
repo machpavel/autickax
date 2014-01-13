@@ -1,6 +1,5 @@
 package cz.mff.cuni.autickax.scene;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -37,6 +36,7 @@ public class GameScreen extends BaseScreen {
 	
 	// Levels
 	private SubLevel currentPhase;
+	private LevelLoading level;
 
 	// Entities
 	private ArrayList<GameObject> gameObjects;
@@ -58,42 +58,36 @@ public class GameScreen extends BaseScreen {
 	
 	
 	// Creates instance according to a given xml file
-	public GameScreen(String name, Difficulty difficulty) {
+	public GameScreen(LevelLoading level, Difficulty difficulty) {
 		super();
+		
+		this.level = level;
 		
 		this.difficulty = difficulty;
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, stageWidth, stageHeight);
-								
-		this.pathwayTexture = game.assets.getGraphics(name);
 		
 		// Start Music!
-		game.assets.music.setLooping(true);
-		game.assets.music.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-		game.assets.music.play();
+		getGame().assets.music.setLooping(true);
+		getGame().assets.music.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
+		getGame().assets.music.play();
 		
 	
-		try {
-			LevelLoading level = new LevelLoading(game.assets.loadLevel(name, difficulty));		
-			level.parseLevel(this);
-			this.pathway = level.getPathway();
-			this.gameObjects = level.getGameObjects();
-			this.levelBackground = new LevelBackground();
-			this.levelBackground.SetType(level.getBackgroundType());
-			this.car = level.getCar();
-			this.start = level.getStart();
-			this.finish = level.getFinish();			
-			this.currentPhase = new SubLevel1(this, level.getTimeLimit());	
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		level.calculateDistanceMap();
+		level.setGameScreen(this);
+								
+		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture();
 		
-			
+		this.pathway = level.getPathway();
+		this.gameObjects = level.getGameObjects();
+		
+		this.levelBackground = new LevelBackground();
+		this.levelBackground.SetType(level.getBackgroundType());
+		this.car = level.getCar();
+		this.start = level.getStart();
+		this.finish = level.getFinish();
+		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
 	}
 	
 	public Start getStart(){
@@ -129,10 +123,7 @@ public class GameScreen extends BaseScreen {
 	}
 
 	@Override
-	public void render(float delta) {
-		
-		
-		
+	public void render(float delta) {		
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen
 
 		camera.update();
@@ -163,15 +154,21 @@ public class GameScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
-		this.game.assets.music.stop();
+		this.getGame().assets.music.stop();
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
-		this.game.setScreen(Autickax.levelSelectScreen);
+		this.getGame().setScreen(Autickax.levelSelectScreen);
 	}
 	
 	public void goToMainScreen(){
 		this.onBackKeyPressed();
 	}
 
+	@Override
+	public void dispose() {
+		super.dispose();
+		
+		this.level.deleteDistanceMap();
+	}
 
 }
