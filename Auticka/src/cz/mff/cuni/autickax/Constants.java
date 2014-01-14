@@ -138,19 +138,23 @@ public final class Constants {
 	public static final float DIALOG_MESSAGE_POSITION_X = 400;
 	public static final float DIALOG_MESSAGE_POSITION_Y = 240;
 	
-	public static final String MESSAGE_DIALOG_BUTTON_OK_TEXTURE = "stone";
+	public static final String MESSAGE_DIALOG_BUTTON_OK_TEXTURE = "popOk";
+	public static final String MESSAGE_DIALOG_BUTTON_OK_OVER_TEXTURE = "popOkOver";
 	public static final float MESSAGE_DIALOG_BUTTON_OK_POSITION_X = 400;
 	public static final float MESSAGE_DIALOG_BUTTON_OK_POSITION_Y = 120;
 	
-	public static final String DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE = "stone";
+	public static final String DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE = "popNext";
+	public static final String DECISION_DIALOG_BUTTON_CONTINUE_OVER_TEXTURE = "popNextOver";
 	public static final float DECISION_DIALOG_BUTTON_CONTINUE_POSITION_X = 600;
 	public static final float DECISION_DIALOG_BUTTON_CONTINUE_POSITION_Y = 120;
 	
-	public static final String DECISION_DIALOG_BUTTON_RESTART_TEXTURE = "stone";
+	public static final String DECISION_DIALOG_BUTTON_RESTART_TEXTURE = "popRestart";
+	public static final String DECISION_DIALOG_BUTTON_RESTART_OVER_TEXTURE = "popRestartOver";
 	public static final float DECISION_DIALOG_BUTTON_RESTART_POSITION_X = 400;
 	public static final float DECISION_DIALOG_BUTTON_RESTART_POSITION_Y = 120;
 	
-	public static final String DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_TEXTURE = "stone";
+	public static final String DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_TEXTURE = "popMenu";
+	public static final String DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_OVER_TEXTURE = "popMenuOver";
 	public static final float DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_X = 200;
 	public static final float DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_Y = 120;
 	

@@ -1,16 +1,15 @@
 package cz.mff.cuni.autickax.dialogs;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-
 import cz.mff.cuni.autickax.input.Input;
 
 public abstract class DialogButton extends Button {
 	
-	public DialogButton(Drawable drawable) {
-		super(drawable);
+	public DialogButton(TextureRegion image, TextureRegion imageHover) {
+		super(new DialogButtonStyle(image, imageHover));
 		
 		this.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,

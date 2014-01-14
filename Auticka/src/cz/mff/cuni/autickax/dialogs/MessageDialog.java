@@ -1,8 +1,6 @@
 package cz.mff.cuni.autickax.dialogs;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
@@ -12,11 +10,14 @@ public class MessageDialog extends Dialog {
 
 	private Button buttonOk;
 
-	public MessageDialog(GameScreen gameScreen, SubLevel subLevel, String message) {
+	public MessageDialog(GameScreen gameScreen, SubLevel subLevel,
+			String message) {
 		super(gameScreen, subLevel, message);
 		buttonOk = new DialogButton(
-				new TextureRegionDrawable(
-						Autickax.getInstance().assets.getGraphics(Constants.MESSAGE_DIALOG_BUTTON_OK_TEXTURE))) {
+				Autickax.getInstance().assets
+						.getGraphics(Constants.MESSAGE_DIALOG_BUTTON_OK_TEXTURE),
+				Autickax.getInstance().assets
+						.getGraphics(Constants.MESSAGE_DIALOG_BUTTON_OK_OVER_TEXTURE)) {
 			@Override
 			public void action() {
 				status = DialogAbstractStatus.FINISHED;
@@ -34,7 +35,7 @@ public class MessageDialog extends Dialog {
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -45,13 +46,13 @@ public class MessageDialog extends Dialog {
 	@Override
 	public void onDialogEnded() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onMinigameEnded() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -1,8 +1,6 @@
 package cz.mff.cuni.autickax.dialogs;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
@@ -15,25 +13,26 @@ public class DecisionDialog extends Dialog {
 	private DialogButton buttonGoToMainMenu;
 	private DecisionType decision;
 
-	public DecisionDialog(GameScreen gameScreen, SubLevel subLevel, String message, boolean enableContinueButton) {
+	public DecisionDialog(GameScreen gameScreen, SubLevel subLevel,
+			String message, boolean enableContinueButton) {
 		super(gameScreen, subLevel, message);
 		if (enableContinueButton)
 			CreateButtonContinue();
 		CreateButtonRestart();
 		CreateCuttonGoToMainMenu();
 	}
-	
 
 	private void CreateButtonContinue() {
 		buttonContinue = new DialogButton(
-				new TextureRegionDrawable(
-						Autickax.getInstance().assets
-								.getGraphics(Constants.DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE))) {
+				Autickax.getInstance().assets
+						.getGraphics(Constants.DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE),
+				Autickax.getInstance().assets
+						.getGraphics(Constants.DECISION_DIALOG_BUTTON_CONTINUE_OVER_TEXTURE)) {
 
 			@Override
 			public void action() {
-				status = DialogAbstractStatus.FINISHED;				
-				decision = DecisionType.CONTINUE;	
+				status = DialogAbstractStatus.FINISHED;
+				decision = DecisionType.CONTINUE;
 				parent.onDialogEnded();
 			}
 		};
@@ -47,9 +46,10 @@ public class DecisionDialog extends Dialog {
 
 	private void CreateButtonRestart() {
 		buttonRestart = new DialogButton(
-				new TextureRegionDrawable(
-						Autickax.getInstance().assets
-								.getGraphics(Constants.DECISION_DIALOG_BUTTON_RESTART_TEXTURE))) {
+				Autickax.getInstance().assets
+						.getGraphics(Constants.DECISION_DIALOG_BUTTON_RESTART_TEXTURE),
+				Autickax.getInstance().assets
+						.getGraphics(Constants.DECISION_DIALOG_BUTTON_RESTART_OVER_TEXTURE)) {
 
 			@Override
 			public void action() {
@@ -68,9 +68,10 @@ public class DecisionDialog extends Dialog {
 
 	private void CreateCuttonGoToMainMenu() {
 		buttonGoToMainMenu = new DialogButton(
-				new TextureRegionDrawable(
-						Autickax.getInstance().assets
-								.getGraphics(Constants.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_TEXTURE))) {
+				Autickax.getInstance().assets
+						.getGraphics(Constants.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_TEXTURE),
+				Autickax.getInstance().assets
+						.getGraphics(Constants.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_OVER_TEXTURE)) {
 			@Override
 			public void action() {
 				status = DialogAbstractStatus.FINISHED;
@@ -100,12 +101,12 @@ public class DecisionDialog extends Dialog {
 	@Override
 	public void onDialogEnded() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onMinigameEnded() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
