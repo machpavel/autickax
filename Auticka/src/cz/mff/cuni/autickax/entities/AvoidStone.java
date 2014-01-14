@@ -4,64 +4,68 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
+
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.miniGames.Crash;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Tree extends GameObject implements Serializable {
+public final class AvoidStone extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public Tree(float x, float y, GameScreen gameScreen, int type) {	
+	public AvoidStone(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		super.type = type;		
 		this.setTexture();
 	}
 	
-	public Tree(GameObject object){
+	public AvoidStone(GameObject object){
 		super(object);		
 	}
+	
 
 	@Override
 	public void update(float delta) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public String getName() {
-		return "tree";
+	public String getName() {		
+		return "avoidstone";
 	}
 
 	@Override
 	void aditionalsToXml(XmlWriter writer) throws IOException {
 		// TODO Auto-generated method stub
-
-	}
 		
-	/** Gets the texture name according to a type*/
-	public static String GetTextureName(int type){
-		return Constants.TREE_TEXTURE_PREFIX + type;
 	}
-
+	
+	
+	/** Gets the texture name according to a type*/
+	public static  String GetTextureName(int type){
+		return Constants.AVOID_STONE_TEXTURE_NAME_PREFIX;
+		
+	}
+	
 	@Override
 	public GameObject copy() {
-		return new Tree(this);
+		return new AvoidStone(this);
 	}
 
 	@Override
 	public void setTexture() {
-		super.setTexture(Tree.GetTextureName(type));		
+		super.setTexture(AvoidStone.GetTextureName(type));		
 	}
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new Crash(gameScreen, parent);
+		return null;
 	}
 	
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_TREE;
+		return Constants.SOUND_STONE;
 	}
+
 }

@@ -26,11 +26,11 @@ public final class Car extends GameObject implements Serializable {
 	public Car(float x, float y, GameScreen gameScreen, int type) {
 		super(x, y, gameScreen);
 		this.type = type;
-		super.setMeasurements(Car.GetWidth(type), Car.GetHeight(type));
+		
 		// TODO: This condition is temporary hack due to loading levels in
 		// AssetsProcessor. REWRITE!
 		if (this.gameScreen != null && this.gameScreen.getGame() != null) {
-			this.setTexture();
+			this.setTexture();			
 		}
 	}
 
@@ -91,27 +91,6 @@ public final class Car extends GameObject implements Serializable {
 		super.draw(batch);
 	}
 	
-	/** Gets the width according to a type*/
-	public static int GetWidth(int type){
-		switch (type) {
-		case 1:
-			return Constants.CAR_TYPE_1_WIDTH;							
-		default:
-			//TODO exception
-			return 0;
-		}
-	}
-	/** Gets the height according to a type*/
-	public static int GetHeight(int type){
-		switch (type) {
-		case 1:
-			return Constants.CAR_TYPE_1_HEIGHT;				
-		default:
-			//TODO exception
-			return 0;
-		}
-	}	
-	
 	@Override
 	public GameObject copy() {
 		// TODO Auto-generated method stub
@@ -138,7 +117,8 @@ public final class Car extends GameObject implements Serializable {
 					.getGraphics(Constants.CAR_TYPE_1_POSITION_6_TEXTURE_NAME);
 			this.positionTextures[7] = this.gameScreen.getGame().assets
 					.getGraphics(Constants.CAR_TYPE_1_POSITION_7_TEXTURE_NAME);
-			super.texture = this.positionTextures[0];
+			super.texture = this.positionTextures[0];			
+			super.setMeasurements(texture.getRegionWidth(), texture.getRegionHeight());
 			break;
 		default:
 			break;

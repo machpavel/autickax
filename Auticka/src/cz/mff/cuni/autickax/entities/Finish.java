@@ -16,8 +16,8 @@ public class Finish extends GameObject implements Serializable {
 	public Finish(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		super.type = type;
-		super.setMeasurements(Finish.GetWidth(type), Finish.GetHeight(type));
-		this.setTexture();
+		
+		this.setTexture();		
 	}
 
 	@Override
@@ -36,42 +36,10 @@ public class Finish extends GameObject implements Serializable {
 	void aditionalsToXml(XmlWriter writer) throws IOException {
 		// TODO Auto-generated method stub		
 	}
-	
-	/** Gets the width according to a type*/
-	public static int GetWidth(int type){
-		switch (type) {
-		case 1:
-			return Constants.FINISH_TYPE_1_WIDTH;					
-		case 2:
-			return Constants.FINISH_TYPE_2_WIDTH;
-		default:
-			//TODO exception
-			return 0;
-		}
-	}
-	/** Gets the height according to a type*/
-	public static int GetHeight(int type){
-		switch (type) {
-		case 1:
-			return Constants.FINISH_TYPE_1_HEIGHT;			
-		case 2:
-			return Constants.FINISH_TYPE_2_HEIGHT;
-		default:
-			//TODO exception
-			return 0;
-		}
-	}	
+		
 	/** Gets the texture name according to a type*/
-	public static  String GetTextureName(int type){
-		switch (type) {
-		case 1:
-			return Constants.FINISH_TYPE_1_TEXTURE_NAME;
-		case 2:
-			return Constants.FINISH_TYPE_2_TEXTURE_NAME;
-		default:
-			//TODO exception
-			return null;
-		}
+	public static  String GetTextureName(int type){		
+			return Constants.FINISH_TEXTURE_PREFIX + type;		
 	}
 	
 	@Override
