@@ -2,17 +2,23 @@ package cz.mff.cuni.autickax.gamelogic;
 
 import java.util.LinkedList;
 
+import javax.swing.plaf.LabelUI;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
+import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
@@ -38,12 +44,15 @@ public class SubLevel1 extends SubLevel {
 
 	/** Record of movement through the track; */
 	private LinkedList<CheckPoint> checkPoints;
-
+	
+	private TimeStatusBar timeStatusBar;
+	
 	/** true if time is being measure, false otherwise */
 	private boolean timeMeasured = false;
 
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
+		timeStatusBar = new TimeStatusBar(gameScreen,tLimit);
 		playStartEngineSound();
 		pathway = gameScreen.getPathWay();
 
@@ -55,6 +64,7 @@ public class SubLevel1 extends SubLevel {
 
 		state = SubLevel1States.BEGINNING_STATE;
 		timeLimit = tLimit;
+		
 
 		reset();
 	}
@@ -122,6 +132,8 @@ public class SubLevel1 extends SubLevel {
 				break;
 			}
 		}
+		timeStatusBar.update(timeElapsed);
+		
 	}
 
 	private void updateInMistakeState(float delta) {
@@ -217,14 +229,7 @@ public class SubLevel1 extends SubLevel {
 		this.level.getStart().draw(batch);
 		this.level.getFinish().draw(batch);
 		this.level.getCar().draw(batch);
-
-		// TODO rewrite positioning into constants
-		float stageHeight = Gdx.graphics.getHeight();
-		// Draw time
-		Autickax.font.draw(batch,
-				"time: " + String.format("%1$,.1f", timeElapsed) + " limit: "
-						+ String.format("%1$,.1f", timeLimit), 10,
-				(int) stageHeight - 32);
+		
 		batch.end();
 
 		if (dialog != null) {
@@ -234,6 +239,10 @@ public class SubLevel1 extends SubLevel {
 		if(miniGame != null){
 			dialog.draw(batch);
 		}
+		
+		timeStatusBar.draw(batch);
+		
+		
 	}
 
 	/**

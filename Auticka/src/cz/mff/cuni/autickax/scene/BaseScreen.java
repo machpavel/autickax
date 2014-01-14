@@ -77,5 +77,6 @@ public abstract class BaseScreen implements Screen {
 	public void setGame(Autickax game) {
 		this.game = game;
 	}
+	
 
 }

@@ -52,9 +52,8 @@ public class SubLevel2 extends SubLevel {
 		this.checkpoints = checkpoints;
 		this.phase1 = lastPhase;
 		this.distMap = map;
-		
-		this.difficulty = gameScreen.getDifficulty();
 
+		this.difficulty = gameScreen.getDifficulty();
 		this.from = this.checkpoints.removeFirst();
 		this.to = this.checkpoints.removeFirst();
 		this.level.getCar().move(this.from.position);
