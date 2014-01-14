@@ -18,10 +18,8 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidObstaclesMinigame extends Minigame {
-	private static final float CAR_START_POSITION_X = Constants.DIALOG_WORLD_X_OFFSET
-			+ 30;
-	private static final float FINISH_START_POSITION_X = Constants.WORLD_WIDTH
-			- Constants.DIALOG_WORLD_X_OFFSET - 20;
+	private static final float CAR_START_POSITION_X = Constants.DIALOG_WORLD_X_OFFSET + 30;
+	private static final float FINISH_START_POSITION_X = Constants.WORLD_WIDTH - Constants.DIALOG_WORLD_X_OFFSET - 20;
 	private static final int FINISH_TYPE = 1;
 	private ArrayList<GameObject> gameObjects;
 	private Car car;
@@ -41,10 +39,8 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		this.gameObjects = new ArrayList<GameObject>();
 		generateObstacles(gameObjects);
 
-		this.finish = new Finish(FINISH_START_POSITION_X,
-				Constants.WORLD_HEIGHT / 2, gameScreen, FINISH_TYPE);
-		this.car = new Car(CAR_START_POSITION_X, Constants.WORLD_HEIGHT / 2,
-				gameScreen, 1);
+		this.finish = new Finish(FINISH_START_POSITION_X, Constants.WORLD_HEIGHT / 2, gameScreen, FINISH_TYPE);
+		this.car = new Car(CAR_START_POSITION_X, Constants.WORLD_HEIGHT / 2, gameScreen, 1);
 		this.car.setDragged(false);
 	}
 
