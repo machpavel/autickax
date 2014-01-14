@@ -120,7 +120,7 @@ public final class Constants {
 	//MENU
 	public static final String MUSIC_MENU_PATH = "sfx/music/exciting_race_tune.mp3";
 	//RACE
-	public static final String MUSIC_RACE_PATH = "sfx/music/escape.mp3";
+	public static final String MUSIC_RACE_PATH = "sfx/music/sports_card.mp3";
 	
 	
 	/** Default value of volume */
