@@ -44,7 +44,7 @@ public final class AvoidStone extends GameObject implements Serializable {
 	
 	/** Gets the texture name according to a type*/
 	public static  String GetTextureName(int type){
-		return Constants.AVOID_STONE_TEXTURE_NAME_PREFIX;
+		return Constants.AVOID_STONE_TEXTURE_NAME_PREFIX + type;
 		
 	}
 	

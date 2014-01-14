@@ -168,9 +168,9 @@ public class SubLevel2 extends SubLevel {
 			Vector2 newPos = moveCarToNewPosition(delta);
 			points.add(new Vector2(newPos));
 			for (GameObject gameObject : this.level.getGameObjects()) {
-				if (this.level.getCar().collides(gameObject)) {
-
+				if (gameObject.isActive() && this.level.getCar().collides(gameObject)) {
 					playSound(gameObject);
+					gameObject.deactivate();
 					this.miniGame = gameObject.getMinigame(this.level, this);
 				}
 			}

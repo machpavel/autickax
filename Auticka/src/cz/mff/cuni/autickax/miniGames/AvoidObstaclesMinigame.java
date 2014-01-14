@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
+import cz.mff.cuni.autickax.entities.AvoidStone;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -18,39 +21,89 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidObstaclesMinigame extends Minigame {
-	private static final float CAR_START_POSITION_X = Constants.DIALOG_WORLD_X_OFFSET + 30;
-	private static final float FINISH_START_POSITION_X = Constants.WORLD_WIDTH - Constants.DIALOG_WORLD_X_OFFSET - 20;
-	private static final int FINISH_TYPE = 1;
+	private final float CAR_START_POSITION_X = Constants.AVOID_OBSTACLES_CAR_START_POSITION_X;
+	private final float FINISH_START_POSITION_X = Constants.AVOID_OBSTACLES_FINISH_START_POSITION_X;
+	private final int FINISH_TYPE = Constants.AVOID_OBSTACLES_FINISH_TYPE;	
+	private float MINIMAL_DISTANCE_BETWEEN_OBSTACLES;
+	private final float MINIMAL_DISTANCE_BETWEEN_CAR = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_CAR;
+	private final float MINIMAL_DISTANCE_BETWEEN_FINISH = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_FINISH;
+	private final int NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE = Constants.AVOID_OBSTACLES_NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE;
+	
+	
 	private ArrayList<GameObject> gameObjects;
 	private Car car;
 	private Finish finish;
 	States state = States.BEGINNING_STATE;
+	private Vector2 lastCarPosition = new Vector2(0, Constants.WORLD_HEIGHT / 2);
 
 	public AvoidObstaclesMinigame(GameScreen gameScreen, SubLevel parent) {
-		super(gameScreen, parent);
-		this.backgrountTexture = new TextureRegionDrawable(
-				Autickax.getInstance().assets
-						.getGraphics(Constants.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
+		super(gameScreen, parent);		
+				
+		setDifficulty(this.level.getDifficulty());
+				
+		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Autickax.showTooltips)
-			this.parent.setDialog(new MessageDialog(gameScreen, parent,
-					Constants.TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO));
+			this.parent.setDialog(new MessageDialog(gameScreen, parent, Constants.TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO));
 
 		this.gameObjects = new ArrayList<GameObject>();
-		generateObstacles(gameObjects);
-
+		
 		this.finish = new Finish(FINISH_START_POSITION_X, Constants.WORLD_HEIGHT / 2, gameScreen, FINISH_TYPE);
 		this.car = new Car(CAR_START_POSITION_X, Constants.WORLD_HEIGHT / 2, gameScreen, 1);
 		this.car.setDragged(false);
+		
+		generateObstacles(gameObjects);
 	}
 
 	private void generateObstacles(ArrayList<GameObject> gameObjects) {
+		int tryCount = 0;
+		boolean limitReached = false;
+		do {
+			tryCount = 0;
+			float xPosition = 0;
+			float yPosition = 0;
+			
+			// Finds new position. It has to be farer from another obstacles.			
+			boolean positionIsCorrect = true;
+			do  {
+				positionIsCorrect = true;
+				
+				xPosition = MathUtils.random(Constants.DIALOG_WORLD_WIDTH - 20) + Constants.DIALOG_WORLD_X_OFFSET + 10;
+				yPosition = MathUtils.random(Constants.DIALOG_WORLD_HEIGHT - 20) + Constants.DIALOG_WORLD_Y_OFFSET + 10;
+				Vector2 position = new Vector2(xPosition, yPosition);
 
+				
+				if(position.dst(car.getPosition()) < MINIMAL_DISTANCE_BETWEEN_CAR){
+					positionIsCorrect = false;
+				}
+				else if(position.dst(finish.getPosition()) < MINIMAL_DISTANCE_BETWEEN_FINISH) {
+					positionIsCorrect = false;
+				}
+				else{				
+					for (GameObject gameObject : gameObjects) {
+
+						if(position.dst(gameObject.getPosition()) < MINIMAL_DISTANCE_BETWEEN_OBSTACLES){
+							positionIsCorrect = false;
+							break;
+						}
+					}				
+				}												
+				++tryCount;
+				limitReached = tryCount > NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE;
+			} while (!positionIsCorrect && !limitReached);
+			
+			if(!limitReached)
+			{
+				int typeOfObstacle = MathUtils.random(1, Constants.AVOID_STONE_TYPES_COUNT);
+				gameObjects.add(new AvoidStone(xPosition, yPosition, this.level, typeOfObstacle));
+			}					
+		} while (!limitReached);
 	}
+
 
 	@Override
 	public void update(float delta) {
-		for (GameObject gameObject : this.level.getGameObjects()) {
+		for (GameObject gameObject : gameObjects) {
 			gameObject.update(delta);
 		}
 		this.car.update(delta);
@@ -100,11 +153,14 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		}
 		else {
 			// Collision detection
-			for (GameObject gameObject : this.level.getGameObjects()) {
-				this.car.collides(gameObject);
+			for (GameObject gameObject : gameObjects) {
+				if(this.car.collides(gameObject)){
 				// this.parent.setDialog(new DecisionDialog(this.level, this, "Narazil jsi do kamene", false));
 				this.status = DialogAbstractStatus.FINISHED;
 				this.result = ResultType.FAILED;
+				parent.onMinigameEnded();
+				break;
+				}
 			}
 		}
 	}
@@ -120,7 +176,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	public void draw(SpriteBatch batch) {
 		super.draw(batch);
 		batch.begin();
-		for (GameObject gameObject : this.level.getGameObjects()) {
+		for (GameObject gameObject : gameObjects) {
 			gameObject.draw(batch);
 		}
 		this.finish.draw(batch);
@@ -148,6 +204,25 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	
 	private enum States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
+	}
+
+
+	private void setDifficulty(Difficulty difficulty) {
+		switch (this.level.getDifficulty()) {
+		case Beginner:
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_BEGINNER;
+			break;
+		case Normal:
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_NORMAL;
+			break;
+		case Hard:
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_HARD;
+			break;
+		default:
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_DEFAULT;
+			break;
+		}
+		return;
 	}
 
 }
