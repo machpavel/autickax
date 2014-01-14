@@ -12,6 +12,7 @@ import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -37,6 +38,8 @@ public class SubLevel2 extends SubLevel {
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
 
 	private SubLevel2States state = SubLevel2States.BEGINNING_STATE;
+	
+	private Difficulty difficulty;
 
 	public enum SubLevel2States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
@@ -49,6 +52,8 @@ public class SubLevel2 extends SubLevel {
 		this.checkpoints = checkpoints;
 		this.phase1 = lastPhase;
 		this.distMap = map;
+		
+		this.difficulty = gameScreen.getDifficulty();
 
 		this.from = this.checkpoints.removeFirst();
 		this.to = this.checkpoints.removeFirst();
@@ -282,7 +287,7 @@ public class SubLevel2 extends SubLevel {
 
 		float distanceFromCurveCenter = distMap.At(this.level.getCar()
 				.getPosition());
-		if (distanceFromCurveCenter > Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY) {
+		if (distanceFromCurveCenter > difficulty.getMaxDistanceFromSurface()) {
 			penalizationFactor = Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR
 					/ (float) Math.log(distanceFromCurveCenter + 2);
 		} else

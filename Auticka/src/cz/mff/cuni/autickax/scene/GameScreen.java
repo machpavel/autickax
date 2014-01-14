@@ -73,16 +73,13 @@ public class GameScreen extends BaseScreen {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, stageWidth, stageHeight);
 		
-		// Start Music!
-		getGame().assets.raceMusic.setLooping(true);
-		getGame().assets.raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-		getGame().assets.raceMusic.play();
+
 		
 		
 		level.calculateDistanceMap();
 		level.setGameScreen(this);
 								
-		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture();
+		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture(this.difficulty);
 		
 		this.pathway = level.getPathway();
 		this.gameObjects = level.getGameObjects();
@@ -101,6 +98,10 @@ public class GameScreen extends BaseScreen {
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 		
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
+		// Start Music!
+		getGame().assets.raceMusic.setLooping(true);
+		getGame().assets.raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
+		getGame().assets.raceMusic.play();
 	}
 	
 	public Start getStart(){
@@ -183,6 +184,11 @@ public class GameScreen extends BaseScreen {
 		super.dispose();
 		
 		this.level.deleteDistanceMap();
+	}
+	
+	public Difficulty getDifficulty()
+	{
+		return this.difficulty;
 	}
 
 }
