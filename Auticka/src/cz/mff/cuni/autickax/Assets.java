@@ -22,6 +22,8 @@ public class Assets {
 	private static final String FONT_FILE = "fonts/font.fnt";
 	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
 	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
+	private static final String TIME_STRINGS_FONT = "fonts/timeString.fnt";
+	private static final String TIME_INT_FONT = "fonts/timeInt.fnt";
 	private static final String AVAILABLE_LEVELS_FILE = "availableLevels.bin";	public AssetManager assetManager;
 
 	private Map<String, TextureRegion> graphicsCacheMap;
@@ -89,7 +91,6 @@ public class Assets {
 			graphicsFile = GRAPHICS_FILE_L;
 		}*/
 		assetManager.load(GRAPHICS_FILE , TextureAtlas.class);
-		assetManager.load(GRAPHICS_FILE , TextureAtlas.class);
 	}
 
 	private void loadSounds() {
@@ -115,6 +116,8 @@ public class Assets {
 		assetManager.load(FONT_FILE, BitmapFont.class);
 		assetManager.load(MENU_FONT_FILE, BitmapFont.class);
 		assetManager.load(DIALOG_FONT_FILE, BitmapFont.class);
+		assetManager.load(TIME_INT_FONT, BitmapFont.class);
+		assetManager.load(TIME_STRINGS_FONT, BitmapFont.class);
 	}
 	
 	private void loadAvailableLevels() {
@@ -140,5 +143,15 @@ public class Assets {
 
 	public FileHandle loadLevel(String name, Difficulty difficulty) {
 		return Gdx.files.internal("levels\\"+ difficulty.toString() + "\\" + name + ".xml");
+	}
+	
+	public BitmapFont getTimeStringFont()
+	{
+		return assetManager.get(TIME_STRINGS_FONT, BitmapFont.class);
+	}
+	
+	public BitmapFont getTimeIntFont()
+	{
+		return assetManager.get(TIME_INT_FONT, BitmapFont.class);
 	}
 }

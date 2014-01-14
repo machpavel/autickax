@@ -67,7 +67,6 @@ public class GameScreen extends BaseScreen {
 		super();
 		
 		this.level = level;
-		
 		this.difficulty = difficulty;
 		
 		camera = new OrthographicCamera();
