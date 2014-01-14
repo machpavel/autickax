@@ -15,8 +15,7 @@ public class Start extends GameObject implements Serializable {
 
 	public Start(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
-		super.type = type;
-		super.setMeasurements(Start.GetWidth(type), Start.GetHeight(type));
+		super.type = type;		
 		this.setTexture();
 	}
 
@@ -37,53 +36,9 @@ public class Start extends GameObject implements Serializable {
 		// TODO Auto-generated method stub		
 	}
 	
-	/** Gets the width according to a type*/
-	public static int GetWidth(int type){
-		switch (type) {
-		case 1:
-			return Constants.START_TYPE_1_WIDTH;			
-		case 2:
-			return Constants.START_TYPE_2_WIDTH;	
-		case 3:
-			return Constants.START_TYPE_3_WIDTH;
-		case 4:
-			return Constants.START_TYPE_4_WIDTH;
-		default:
-			//TODO exception
-			return 0;
-		}
-	}
-	/** Gets the height according to a type*/
-	public static int GetHeight(int type){
-		switch (type) {
-		case 1:
-			return Constants.START_TYPE_1_HEIGHT;			
-		case 2:
-			return Constants.START_TYPE_2_HEIGHT;	
-		case 3:
-			return Constants.START_TYPE_3_HEIGHT;
-		case 4:
-			return Constants.START_TYPE_4_HEIGHT;
-		default:
-			//TODO exception
-			return 0;
-		}
-	}	
 	/** Gets the texture name according to a type*/
 	public static  String GetTextureName(int type){
-		switch (type) {
-		case 1:
-			return Constants.START_TYPE_1_TEXTURE_NAME;			
-		case 2:
-			return Constants.START_TYPE_2_TEXTURE_NAME;
-		case 3:
-			return Constants.START_TYPE_3_TEXTURE_NAME;
-		case 4:
-			return Constants.START_TYPE_4_TEXTURE_NAME;
-		default:
-			//TODO exception
-			return null;
-		}
+		return Constants.START_TEXTURE_PREFIX + type;
 	}
 	
 	@Override

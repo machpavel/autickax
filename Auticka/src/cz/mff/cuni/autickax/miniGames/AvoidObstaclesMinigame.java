@@ -19,7 +19,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidObstaclesMinigame extends Minigame {
 	private static final float CAR_START_POSITION_X = Constants.DIALOG_WORLD_X_OFFSET
-			+ Constants.CAR_TYPE_1_WIDTH / 2;
+			+ 30;
 	private static final float FINISH_START_POSITION_X = Constants.WORLD_WIDTH
 			- Constants.DIALOG_WORLD_X_OFFSET - 20;
 	private static final int FINISH_TYPE = 1;

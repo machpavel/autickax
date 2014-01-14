@@ -9,16 +9,16 @@ import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class GearChangeMinigame extends Minigame {
+public final class GearShiftMinigame extends Minigame {
 	private boolean floatResultNeeded;
 
-	public GearChangeMinigame(GameScreen screen, SubLevel parent, boolean floatResultNeeded) {
+	public GearShiftMinigame(GameScreen screen, SubLevel parent, boolean floatResultNeeded) {
 		super(screen, parent);
-		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.GEAT_CHANGE_MINIGAME_BACKGROUND_TEXTURE));
+		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
 		
 		this.floatResultNeeded = floatResultNeeded;
 		if(Autickax.showTooltips)
-			this.parent.setDialog(new MessageDialog(screen, parent, Constants.TOOLTIP_MINIGAME_GEAR_CHANGE_WHAT_TO_DO));
+			this.parent.setDialog(new MessageDialog(screen, parent, Constants.TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO));
 	}
 
 	@Override

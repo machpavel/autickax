@@ -131,8 +131,8 @@ public final class Constants {
 	//
 	
 	public static final String DIALOG_BACKGROUND_TEXTURE = "DialogBackground";
-	public static final String AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE = "DialogBackground";
-	public static final String GEAT_CHANGE_MINIGAME_BACKGROUND_TEXTURE = "DialogBackground";
+	public static final String AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE = "AvoidObstaclesMinigameBackground";
+	public static final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "GearShiftMinigameBackground";
 	
 	
 	public static final float DIALOG_MESSAGE_POSITION_X = 400;
@@ -160,7 +160,7 @@ public final class Constants {
 	public static final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway\nwith your finger,\nhurry to finish\nand avoid nasty \nobjects!";
 	public static final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid trees";
 	public static final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and\nreach finish";
-	public static final String TOOLTIP_MINIGAME_GEAR_CHANGE_WHAT_TO_DO = "Move the gearshift lever\nto the right position";
+	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever\nto the right position";
 	public static final String PHASE_1_FINISH_REACHED = "Finish\nreached";
 	public static final String PHASE_1_OUT_OF_LINE = "You have gone\nout of the\npathway.";
 	public static final String PHASE_1_FINISH_NOT_REACHED = "You have not\nreached the\nfinish";
@@ -189,90 +189,12 @@ public final class Constants {
 	public static final String 	CAR_TYPE_1_POSITION_5_TEXTURE_NAME = "car5";
 	public static final String 	CAR_TYPE_1_POSITION_6_TEXTURE_NAME = "car6";
 	public static final String 	CAR_TYPE_1_POSITION_7_TEXTURE_NAME = "car7";
-	public static final int  	CAR_TYPE_1_WIDTH = 65;
-	public static final int 	CAR_TYPE_1_HEIGHT = 35;
 	
-	public static final String 	FINISH_TYPE_1_TEXTURE_NAME = "finish1";
-	public static final int  	FINISH_TYPE_1_WIDTH = 33;
-	public static final int 	FINISH_TYPE_1_HEIGHT = 52;
-	
-	public static final String 	FINISH_TYPE_2_TEXTURE_NAME = "finish2";
-	public static final int  	FINISH_TYPE_2_WIDTH = 60;
-	public static final int 	FINISH_TYPE_2_HEIGHT = 16;
-	
-	public static final String 	MUD_TYPE_1_TEXTURE_NAME = "mud1";
-	public static final int  	MUD_TYPE_1_WIDTH = 48;
-	public static final int 	MUD_TYPE_1_HEIGHT = 34;
-	
-	public static final String 	MUD_TYPE_2_TEXTURE_NAME = "mud2";
-	public static final int  	MUD_TYPE_2_WIDTH = 29;
-	public static final int 	MUD_TYPE_2_HEIGHT = 27;
-	
-	public static final String 	MUD_TYPE_3_TEXTURE_NAME = "mud3";
-	public static final int  	MUD_TYPE_3_WIDTH = 18;
-	public static final int 	MUD_TYPE_3_HEIGHT = 18;
-	
-	public static final String 	START_TYPE_1_TEXTURE_NAME = "start1";
-	public static final int  	START_TYPE_1_WIDTH = 72;
-	public static final int 	START_TYPE_1_HEIGHT = 52;
-	
-	public static final String 	START_TYPE_2_TEXTURE_NAME = "start2";
-	public static final int  	START_TYPE_2_WIDTH = 33;
-	public static final int 	START_TYPE_2_HEIGHT = 52;
-	
-	public static final String 	START_TYPE_3_TEXTURE_NAME = "start3";
-	public static final int  	START_TYPE_3_WIDTH = 33;
-	public static final int 	START_TYPE_3_HEIGHT = 52;
-	
-	public static final String 	START_TYPE_4_TEXTURE_NAME = "start4";
-	public static final int  	START_TYPE_4_WIDTH = 41;
-	public static final int 	START_TYPE_4_HEIGHT = 24;
-	
-	public static final String 	STONE_TYPE_1_TEXTURE_NAME = "stone1";
-	public static final int  	STONE_TYPE_1_WIDTH = 15;
-	public static final int 	STONE_TYPE_1_HEIGHT = 14;
-	
-	public static final String 	STONE_TYPE_2_TEXTURE_NAME = "stone2";
-	public static final int  	STONE_TYPE_2_WIDTH = 22;
-	public static final int 	STONE_TYPE_2_HEIGHT = 21;
-	
-	public static final String 	STONE_TYPE_3_TEXTURE_NAME = "stone3";
-	public static final int  	STONE_TYPE_3_WIDTH = 50;
-	public static final int 	STONE_TYPE_3_HEIGHT = 43;
-	
-	public static final String 	STONE_TYPE_4_TEXTURE_NAME = "stone4";
-	public static final int  	STONE_TYPE_4_WIDTH = 50;
-	public static final int 	STONE_TYPE_4_HEIGHT = 43;
-	
-	public static final String 	STONE_TYPE_5_TEXTURE_NAME = "stone5";
-	public static final int  	STONE_TYPE_5_WIDTH = 50;
-	public static final int 	STONE_TYPE_5_HEIGHT = 32;
-	
-	public static final String 	TREE_TYPE_1_TEXTURE_NAME = "tree1";
-	public static final int  	TREE_TYPE_1_WIDTH = 29;
-	public static final int 	TREE_TYPE_1_HEIGHT = 42;
-	
-	public static final String 	TREE_TYPE_2_TEXTURE_NAME = "tree2";
-	public static final int  	TREE_TYPE_2_WIDTH = 28;
-	public static final int 	TREE_TYPE_2_HEIGHT = 42;
-	
-	public static final String 	TREE_TYPE_3_TEXTURE_NAME = "tree3";
-	public static final int  	TREE_TYPE_3_WIDTH = 28;
-	public static final int 	TREE_TYPE_3_HEIGHT = 42;
-	
-	public static final String 	TREE_TYPE_4_TEXTURE_NAME = "tree4";
-	public static final int  	TREE_TYPE_4_WIDTH = 28;
-	public static final int 	TREE_TYPE_4_HEIGHT = 42;
-	
-	public static final String 	TREE_TYPE_5_TEXTURE_NAME = "tree5";
-	public static final int  	TREE_TYPE_5_WIDTH = 29;
-	public static final int 	TREE_TYPE_5_HEIGHT = 42;
-	
-	public static final String 	HOLE_TYPE_1_TEXTURE_NAME = "hole1";
-	public static final int  	HOLE_TYPE_1_WIDTH = 24;
-	public static final int 	HOLE_TYPE_1_HEIGHT = 11;
-	
-	public static final String 	HOLE_TYPE_2_TEXTURE_NAME = "hole2";
-	public static final int  	HOLE_TYPE_2_WIDTH = 13;
-	public static final int 	HOLE_TYPE_2_HEIGHT = 9;
+	public static final String 	FINISH_TEXTURE_PREFIX = "finish";
+	public static final String 	MUD_TEXTURE_PREFIX = "mud";	
+	public static final String 	START_TEXTURE_PREFIX = "start";
+	public static final String 	STONE_TEXTURE_PREFIX = "stone";
+	public static final String 	TREE_TEXTURE_PREFIX = "tree";
+	public static final String 	HOLE_TEXTURE_NAME_PREFIX = "hole";
+	public static final String 	AVOID_STONE_TEXTURE_NAME_PREFIX = "avoidstone";
 }

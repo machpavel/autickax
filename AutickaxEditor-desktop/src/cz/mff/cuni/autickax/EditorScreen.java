@@ -421,7 +421,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Hole
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.HOLE, i,
-					offsetOnScreen, Hole.GetWidth(i), Hole.GetHeight(i),
+					offsetOnScreen,
 					maxValue);
 		}
 
@@ -430,7 +430,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Mud
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.MUD, i,
-					offsetOnScreen, Mud.GetWidth(i), Mud.GetHeight(i), maxValue);
+					offsetOnScreen, maxValue);
 		}
 
 		// Stones
@@ -438,7 +438,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Stone
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.STONE, i,
-					offsetOnScreen, Stone.GetWidth(i), Stone.GetHeight(i),
+					offsetOnScreen,
 					maxValue);
 		}
 
@@ -447,25 +447,29 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Tree
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.TREE, i,
-					offsetOnScreen, Tree.GetWidth(i), Tree.GetHeight(i),
+					offsetOnScreen,
 					maxValue);
 		}
 	}
 
 	private void createGameObjectButtons(TextureRegionDrawable trd,
 			TypeOfGameObjectButton typeOfClass, int type,
-			Vector2i offsetOnScreen, int objectWidth, int objectHeight,
+			Vector2i offsetOnScreen,
 			Vector2i maxValue) {
 
+		Button button = new ImageButton(trd);
+		float objectWidth = button.getWidth();
+		float objectHeight = button.getHeight();
+		
 		if (offsetOnScreen.x + objectWidth > EditorConstants.CONTROL_PANEL_WIDTH) {
 			offsetOnScreen.x = 0;
 			maxValue.y = 0;
 		}
 		if (maxValue.y < objectHeight) {
 			offsetOnScreen.y += objectHeight - maxValue.y;
-			maxValue.y = objectHeight;
+			maxValue.y = (int)objectHeight;
 		}
-		Button button = new ImageButton(trd);
+		
 		button.setPosition(Constants.WORLD_WIDTH + 5 + offsetOnScreen.x,
 				Constants.WORLD_HEIGHT - 30 - offsetOnScreen.y);
 		button.addListener(new MyInputListenerForGameObjects(typeOfClass, type,

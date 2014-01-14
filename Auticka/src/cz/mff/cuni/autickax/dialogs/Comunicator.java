@@ -38,7 +38,7 @@ public abstract class Comunicator extends SubLevel{
 	@Override
 	public void draw(SpriteBatch batch){
 		batch.begin();
-		this.backgrountTexture.draw(batch, (Constants.WORLD_WIDTH - Constants.DIALOG_WORLD_WIDTH) / 2, (Constants.WORLD_HEIGHT - Constants.DIALOG_WORLD_HEIGHT) / 2, Constants.DIALOG_WORLD_WIDTH* Input.xStretchFactorInv, Constants.DIALOG_WORLD_HEIGHT * Input.yStretchFactorInv);
+		this.backgrountTexture.draw(batch, 0, 0, Constants.WORLD_WIDTH* Input.xStretchFactorInv, Constants.WORLD_HEIGHT * Input.yStretchFactorInv);
 		batch.end();
 		stage.draw();
 	};

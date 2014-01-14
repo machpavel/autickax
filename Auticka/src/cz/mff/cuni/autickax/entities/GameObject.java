@@ -120,7 +120,7 @@ abstract public class GameObject implements Serializable {
 		writer.pop();
 	}
 
-	public void setMeasurements(int width, int height) {
+	protected void setMeasurements(int width, int height) {
 		this.width = width;
 		this.height = height;
 		//TODO: which method of choosin bounding rectangle??
@@ -134,8 +134,8 @@ abstract public class GameObject implements Serializable {
 		// AssetsProcessor. REWRITE!
 		if (this.gameScreen != null && this.gameScreen.getGame() != null) {
 			this.texture = this.gameScreen.getGame().assets.getGraphics(name);
+			setMeasurements(this.texture.getRegionWidth(), this.texture.getRegionHeight());
 		}
-
 	}
 
 	/**
