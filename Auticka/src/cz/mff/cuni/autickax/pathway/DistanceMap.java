@@ -141,7 +141,8 @@ public class DistanceMap implements java.io.Serializable {
         }
         
         public TextureRegion generateTexture() {
-                Pixmap pixmap = new Pixmap(1024, 512, Format.Alpha);
+                Pixmap pixmap = new Pixmap(1024, 512, Format.RGBA8888);
+                pixmap.setColor( 0.75f, 0.7f, 0.6f, 0.9f );
                 for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
                         for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
 
@@ -150,7 +151,7 @@ public class DistanceMap implements java.io.Serializable {
                                                 - row - 1);
 
                                 if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY) {
-                                        pixmap.drawPixel(column, row, Color.DARK_GRAY.toIntBits());
+                                        pixmap.drawPixel(column, row);
                                 }
                         }
                 }

@@ -9,6 +9,7 @@ import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 
 public class LevelPath {
 	private final static int TRANSPARENT_PATHWAY = Constants.MAX_DISTANCE_FROM_PATHWAY
