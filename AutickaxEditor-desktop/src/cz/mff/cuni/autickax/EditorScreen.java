@@ -191,18 +191,19 @@ public final class EditorScreen extends BaseScreenEditor {
 		Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl10.glPointSize(1);
 		shapeRenderer.begin(ShapeType.Point);
+		pathway.CreateDistances();
 		for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
 			for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
 				// distance map is flipped to the bitmap
 				float distance = pathway.getDistanceMap().At(column, row);
 
-				if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY) {
+				if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT) {
 					shapeRenderer.setColor(196.f / 255, 154.f / 255,
 							108.f / 255, 1);
 					shapeRenderer.point(column, row, 0);
 				} else if (distance < Constants.MAX_DISTANCE_FROM_PATHWAY) {
 					// cause this is where the transparency begin
-					distance -= Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY;
+					distance -= Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
 					float alpha = (Constants.MAX_DISTANCE_FROM_PATHWAY - distance)
 							/ Constants.MAX_DISTANCE_FROM_PATHWAY;
 					shapeRenderer.setColor(196.f / 255, 154.f / 255,
@@ -282,14 +283,14 @@ public final class EditorScreen extends BaseScreenEditor {
 			fileWriter.close();
 
 		} catch (IOException e) {
-			if (fileWriter != null)
+			if (fileWriter != null) {
 				try {
 					fileWriter.close();
 				} catch (Exception e2) {
+					System.out.println("Writing to XML unsuccesfull:");
+					e.printStackTrace();
 				}
-			// TODO Auto-generated catch block
-			System.out.println("Writing to XML unsuccesfull:");
-			e.printStackTrace();
+			}
 		}
 	}
 
