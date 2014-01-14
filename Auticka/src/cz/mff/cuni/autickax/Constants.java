@@ -128,6 +128,9 @@ public final class Constants {
 	// STRINGS
 	//
 	public static final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway\nwith your finger,\nhurry to finish\nand avoid nasty \nobjects!";
+	public static final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid trees";
+	public static final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and\nreach finish";
+	public static final String TOOLTIP_MINIGAME_GEAR_CHANGE_WHAT_TO_DO = "Move the gearshift lever\nto the right position";
 	public static final String PHASE_1_FINISH_REACHED = "Finish\nreached";
 	public static final String PHASE_1_OUT_OF_LINE = "You have gone\nout of the\npathway.";
 	public static final String PHASE_1_FINISH_NOT_REACHED = "You have not\nreached the\nfinish";
