@@ -12,12 +12,13 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class Finish extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 
 	public Finish(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		super.type = type;
-		
-		this.setTexture();		
+		this.setTexture();
+		this.boundingCircleRadius = Constants.FINISH_BOUNDING_RADIUS;
 	}
 
 	@Override

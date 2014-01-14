@@ -191,10 +191,17 @@ public final class Constants {
 	public static final String 	CAR_TYPE_1_POSITION_7_TEXTURE_NAME = "car7";
 	
 	public static final String 	FINISH_TEXTURE_PREFIX = "finish";
-	public static final String 	MUD_TEXTURE_PREFIX = "mud";	
+	public static final int FINISH_BOUNDING_RADIUS = 50;
+	
+	public static final String 	MUD_TEXTURE_PREFIX = "mud";
+	
 	public static final String 	START_TEXTURE_PREFIX = "start";
+	
 	public static final String 	STONE_TEXTURE_PREFIX = "stone";
+	
 	public static final String 	TREE_TEXTURE_PREFIX = "tree";
+	
 	public static final String 	HOLE_TEXTURE_NAME_PREFIX = "hole";
+	
 	public static final String 	AVOID_STONE_TEXTURE_NAME_PREFIX = "avoidstone";
 }
