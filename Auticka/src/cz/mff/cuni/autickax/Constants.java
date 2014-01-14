@@ -119,7 +119,11 @@ public final class Constants {
 	/** Determines ideal dialog world width. */ 
 	public final static int DIALOG_WORLD_WIDTH = 600;
 	/** Determines ideal dialog world height. */
-	public final static int DIALOG_WORLD_HEIGHT = 360; 
+	public final static int DIALOG_WORLD_HEIGHT = 360;
+	/** Determines dialog x shift. */ 
+	public final static int DIALOG_WORLD_X_OFFSET = 100;
+	/** Determines dialog y shift. */
+	public final static int DIALOG_WORLD_Y_OFFSET = 60;
 	
 	
 	//
@@ -127,6 +131,10 @@ public final class Constants {
 	//
 	
 	public static final String DIALOG_BACKGROUND_TEXTURE = "DialogBackground";
+	public static final String AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE = "DialogBackground";
+	public static final String GEAT_CHANGE_MINIGAME_BACKGROUND_TEXTURE = "DialogBackground";
+	
+	
 	public static final float DIALOG_MESSAGE_POSITION_X = 400;
 	public static final float DIALOG_MESSAGE_POSITION_Y = 240;
 	

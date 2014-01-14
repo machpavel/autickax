@@ -34,7 +34,6 @@ public class SubLevel2 extends SubLevel {
 	private float penalizationFactor = 1f;
 
 	private float timeElapsed = 0;
-	private boolean timeMeasured = false;
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
 
 	private SubLevel2States state = SubLevel2States.BEGINNING_STATE;
@@ -66,10 +65,12 @@ public class SubLevel2 extends SubLevel {
 		case RESTART:
 			this.level.switchToPhase(this.phase1);
 			this.phase1.reset();
-			return;
+
+			break;
 		case GO_TO_MAIN_MENU:
 			this.level.goToMainScreen();
-			return;
+
+			break;
 		default:
 			// TODO assert for type
 			break;
@@ -136,7 +137,6 @@ public class SubLevel2 extends SubLevel {
 	private void updateInBeginnigState(float delta) {
 		// TODO Maybe some delay and countdown animation
 		state = SubLevel2States.DRIVING_STATE;
-		timeMeasured = true;
 
 	}
 
@@ -156,7 +156,6 @@ public class SubLevel2 extends SubLevel {
 
 		// finish reached
 		if (checkpoints.isEmpty()) {
-			timeMeasured = false;
 			state = SubLevel2States.FINISH_STATE;
 			dialog = new MessageDialog(this.level, this, Constants.PHASE_2_FINISH_REACHED + String.format("%1$,.2f", timeElapsed));
 		}
@@ -165,7 +164,7 @@ public class SubLevel2 extends SubLevel {
 			points.add(new Vector2(newPos));
 			for (GameObject gameObject : this.level.getGameObjects()) {
 				if (this.level.getCar().collides(gameObject)) {
-					System.out.println("XX");
+
 					playSound(gameObject);
 					this.miniGame = gameObject.getMinigame(this.level, this);
 				}
@@ -204,6 +203,9 @@ public class SubLevel2 extends SubLevel {
 
 		if (dialog != null) {
 			dialog.draw(batch);
+		}
+		else if (miniGame != null) {
+			miniGame.draw(batch);
 		}
 	}
 
