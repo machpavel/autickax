@@ -30,7 +30,8 @@ public class Assets {
 
 	private Map<String, Sound> soundsMap;
 	
-	public Music music;
+	public Music raceMusic;
+	public Music menuMusic;
 
 	public Assets() {
 		assetManager = new AssetManager();
@@ -93,9 +94,13 @@ public class Assets {
 
 	private void loadSounds() {
 		soundsMap = new HashMap<String, Sound>();
-		soundsMap.put(Constants.SOUND_JUMP, Gdx.audio.newSound(Gdx.files.internal("sfx/jump.wav")));
-		soundsMap.put(Constants.SOUND_HIT, Gdx.audio.newSound(Gdx.files.internal("sfx/hit.wav")));
-		music = Gdx.audio.newMusic(Gdx.files.internal("sfx/music.mp3"));
+		soundsMap.put(Constants.SOUND_EDITOR, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_EDITOR_PATH)));
+		soundsMap.put(Constants.SOUND_MUD, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_MUD_PATH)));
+		soundsMap.put(Constants.SOUND_TREE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_TREE_PATH)));
+		soundsMap.put(Constants.SOUND_HOLE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_HOLE_PATH)));
+		soundsMap.put(Constants.SOUND_STONE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_STONE_PATH)));
+		menuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_MENU_PATH));
+		raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_RACE_PATH));
 	}
 
 	public Sound getSound(String name) {

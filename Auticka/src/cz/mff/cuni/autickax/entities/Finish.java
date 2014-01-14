@@ -90,5 +90,10 @@ public class Finish extends GameObject implements Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public String getSoundName() {
+		return Constants.SOUND_NO_SOUND;
+	}
 
 }

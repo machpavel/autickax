@@ -100,5 +100,10 @@ public final class Mud extends GameObject implements Serializable {
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
 		return new GearChangeMinigame(gameScreen, parent, true);
 	}
+	
+	@Override
+	public String getSoundName() {
+		return Constants.SOUND_MUD;
+	}
 
 }

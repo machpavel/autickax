@@ -150,4 +150,9 @@ public final class Car extends GameObject implements Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getSoundName() {
+		return Constants.SOUND_NO_SOUND;
+	}
 }

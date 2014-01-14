@@ -111,4 +111,9 @@ public final class Tree extends GameObject implements Serializable {
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
 		return new Crash(gameScreen, parent);
 	}
+	
+	@Override
+	public String getSoundName() {
+		return Constants.SOUND_TREE;
+	}
 }

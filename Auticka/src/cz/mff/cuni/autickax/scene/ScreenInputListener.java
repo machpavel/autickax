@@ -12,7 +12,7 @@ public class ScreenInputListener extends InputListener {
 	}
 	
 	@Override
-	public boolean keyUp(InputEvent event, int keycode) {
+	public boolean keyDown(InputEvent event, int keycode) {
 		if (keycode == Keys.BACK || keycode == Keys.ESCAPE) {
 			this.screen.onBackKeyPressed();
 		}

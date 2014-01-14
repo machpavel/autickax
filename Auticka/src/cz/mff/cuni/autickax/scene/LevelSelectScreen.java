@@ -74,6 +74,7 @@ public class LevelSelectScreen extends BaseScreen {
 						Autickax.gameScreen = null;
 					}
 					Autickax.gameScreen = new GameScreen(level, difficulty);
+					getGame().assets.menuMusic.pause();
 					getGame().setScreen(Autickax.gameScreen);
 				}
 			};

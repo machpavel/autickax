@@ -94,5 +94,10 @@ public final class Hole extends GameObject implements Serializable {
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
 		return new GearChangeMinigame(gameScreen, parent, false);
 	}
+	
+	@Override
+	public String getSoundName() {
+		return Constants.SOUND_HOLE;
+	}
 
 }
