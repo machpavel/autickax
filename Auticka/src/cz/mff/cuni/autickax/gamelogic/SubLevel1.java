@@ -3,6 +3,7 @@ package cz.mff.cuni.autickax.gamelogic;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -43,6 +44,7 @@ public class SubLevel1 extends SubLevel {
 
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
+		playStartEngineSound();
 		pathway = gameScreen.getPathWay();
 
 		initWayPoints(Constants.START_POSITION_IN_CURVE,
@@ -55,6 +57,12 @@ public class SubLevel1 extends SubLevel {
 		timeLimit = tLimit;
 
 		reset();
+	}
+	
+	private void playStartEngineSound()
+	{
+		Sound engine = this.level.getGame().assets.getSound(Constants.SOUND_ENGINE_START);
+		engine.play(Constants.SOUND_ENGINE_VOLUME);
 	}
 	
 	public void onDialogEnded() {

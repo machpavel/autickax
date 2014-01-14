@@ -99,6 +99,7 @@ public class Assets {
 		soundsMap.put(Constants.SOUND_TREE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_TREE_PATH)));
 		soundsMap.put(Constants.SOUND_HOLE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_HOLE_PATH)));
 		soundsMap.put(Constants.SOUND_STONE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_STONE_PATH)));
+		soundsMap.put(Constants.SOUND_ENGINE_START, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_ENGINE_START_PATH)));
 		menuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_MENU_PATH));
 		raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_RACE_PATH));
 	}

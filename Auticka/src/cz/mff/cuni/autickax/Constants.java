@@ -15,11 +15,25 @@ public final class Constants {
 	/** Determines how far should be the car ahead of the start line*/
 	public static final float CAR_DISTANCE_FROM_START = 30; 
 	
+	//DISTANCE LIMITS
 	/** Determines maximal total distance from pathway (in pixels). Beyond it is no pathway.*/
+	//public static final int MAX_DISTANCE_FROM_PATHWAY_DEFAULT = 60;
 	public static final int MAX_DISTANCE_FROM_PATHWAY = 60;
 	
 	/** Determines maximal distance of proper surface  from pathway (in pixels)*/
 	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY = 30;
+	
+	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_KIDDIE = 60;
+	
+	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_BEGINNER = 50;
+	
+	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_NORMAL = 40;
+	
+	public static final int MAX_DISTANCE_FROM_PATHWAY_HARD = 45;
+	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_HARD = 30;
+	
+	public static final int MAX_DISTANCE_FROM_PATHWAY_EXTREME = 30;
+	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_EXTREME = 30;
 	
 	/** Number of waypoints that check if the player raced through all the track */
 	public static final int WAYPOINTS_COUNT = 40;
@@ -92,6 +106,11 @@ public final class Constants {
 	//TREE
 	public static final String SOUND_TREE = "tree";
 	public static final String SOUND_TREE_PATH = "sfx/collisions/vehicle_crash_large_tree.mp3";
+	
+	//CAR IGNITION SOUND
+	public static final String SOUND_ENGINE_START = "engine_start";
+	public static final String SOUND_ENGINE_START_PATH = "sfx/car-ignition-1.wav";
+	public static final float SOUND_ENGINE_VOLUME = 1;
 	
 	//EDITOR SOUND
 	public static final String SOUND_EDITOR = "editor";
