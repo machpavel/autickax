@@ -21,6 +21,7 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidObstaclesMinigame extends Minigame {
+	private static final float MINIMAL_DISTANCE_TO_SHOW_ROTATION = 2;
 	private final float CAR_START_POSITION_X = Constants.AVOID_OBSTACLES_CAR_START_POSITION_X;
 	private final float FINISH_START_POSITION_X = Constants.AVOID_OBSTACLES_FINISH_START_POSITION_X;
 	private final int FINISH_TYPE = Constants.AVOID_OBSTACLES_FINISH_TYPE;	
@@ -107,6 +108,13 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			gameObject.update(delta);
 		}
 		this.car.update(delta);
+				
+		Vector2 carPosition = this.car.getPosition(); 
+		if(carPosition.dst(lastCarPosition) > MINIMAL_DISTANCE_TO_SHOW_ROTATION){			
+			this.car.setRotation(this.lastCarPosition.sub(carPosition).scl(-1).angle());
+			this.lastCarPosition = carPosition;
+		}
+		
 		this.finish.update(delta);
 
 		switch (state) {
@@ -126,7 +134,6 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	}
 
 	private void updateInBeginnigState(float delta) {
-		this.car.setRotation((this.car.getRotation() + delta * 50) % 360);
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 			if (this.car.getPosition().dst(touchPos.x, touchPos.y) <= Constants.MAX_DISTANCE_FROM_PATHWAY) {
