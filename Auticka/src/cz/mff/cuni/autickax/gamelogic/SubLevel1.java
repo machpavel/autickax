@@ -63,10 +63,10 @@ public class SubLevel1 extends SubLevel {
 			break;
 		case RESTART:
 			reset();
-			return;
+			break;
 		case GO_TO_MAIN_MENU:
 			this.level.goToMainScreen();
-			return;
+			break;
 		default:
 			// TODO assert for type
 			break;
@@ -197,7 +197,6 @@ public class SubLevel1 extends SubLevel {
 				timeMeasured = true;
 			}
 		}
-
 	}
 
 	@Override

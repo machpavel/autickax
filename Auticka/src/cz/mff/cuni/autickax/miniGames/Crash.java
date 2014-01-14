@@ -18,6 +18,7 @@ public class Crash extends Minigame {
 
 	@Override
 	public void update(float delta) {
+		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.FAILED;
 		this.resultValue = 0;
 		parent.onMinigameEnded();		
