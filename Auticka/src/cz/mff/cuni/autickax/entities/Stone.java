@@ -112,5 +112,10 @@ public final class Stone extends GameObject implements Serializable {
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
 		return new AvoidObstaclesMinigame(gameScreen, parent);
 	}
+	
+	@Override
+	public String getSoundName() {
+		return Constants.SOUND_STONE;
+	}
 
 }

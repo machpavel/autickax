@@ -76,11 +76,33 @@ public final class Constants {
 	//
 	// SOUNDS & MUSIC
 	//
+	public static final float SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME = 0.5f;
 	
-	//TODO: dont use this
-	public static final String 	SOUND_JUMP = "jump";
-	//TODO: dont use this
-	public static final String 	SOUND_HIT = "hit";	
+	//OBJECTS WITH NO SOUND INTERACTION
+	public static final String SOUND_NO_SOUND = "no_sound";
+	//MUD
+	public static final String SOUND_MUD = "mud";
+	public static final String SOUND_MUD_PATH = "sfx/collisions/mud02.wav";
+	//HOLE
+	public static final String SOUND_HOLE = "hole";
+	public static final String SOUND_HOLE_PATH = "sfx/collisions/vehicle_crash_small_hole.mp3";
+	//STONE
+	public static final String SOUND_STONE = "stone";
+	public static final String SOUND_STONE_PATH = "sfx/collisions/vehicle_crash_large_stone.mp3";
+	//TREE
+	public static final String SOUND_TREE = "tree";
+	public static final String SOUND_TREE_PATH = "sfx/collisions/vehicle_crash_large_tree.mp3";
+	
+	//EDITOR SOUND
+	public static final String SOUND_EDITOR = "editor";
+	public static final String SOUND_EDITOR_PATH = "sfx/editorItemAdded.mp3";
+	
+	//MUSIC
+	//MENU
+	public static final String MUSIC_MENU_PATH = "sfx/music/exciting_race_tune.mp3";
+	//RACE
+	public static final String MUSIC_RACE_PATH = "sfx/music/escape.mp3";
+	
 	
 	/** Default value of volume */
 	public static final float 	MUSIC_DEFAULT_VOLUME = 0.5f;

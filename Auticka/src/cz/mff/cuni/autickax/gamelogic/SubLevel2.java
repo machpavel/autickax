@@ -3,17 +3,18 @@ package cz.mff.cuni.autickax.gamelogic;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.entities.GameObject;
-import cz.mff.cuni.autickax.gamelogic.SubLevel1.SubLevel1States;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -139,6 +140,17 @@ public class SubLevel2 extends SubLevel {
 
 	}
 
+	private void playSound(GameObject collisionOrigin)
+	{
+		String soundName = collisionOrigin.getSoundName();
+		if (!soundName.equals(Constants.SOUND_NO_SOUND))
+		{
+			Sound sound = this.level.getGame().assets.getSound(soundName);
+			sound.play(Constants.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
+		}
+			
+	}
+	
 	private void updateInDrivingState(float delta) {
 		timeElapsed += delta;
 
@@ -154,6 +166,7 @@ public class SubLevel2 extends SubLevel {
 			for (GameObject gameObject : this.level.getGameObjects()) {
 				if (this.level.getCar().collides(gameObject)) {
 					System.out.println("XX");
+					playSound(gameObject);
 					this.miniGame = gameObject.getMinigame(this.level, this);
 				}
 			}

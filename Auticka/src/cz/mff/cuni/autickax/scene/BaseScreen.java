@@ -2,11 +2,13 @@ package cz.mff.cuni.autickax.scene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.Constants;
 
 public abstract class BaseScreen implements Screen {	
 	private Autickax game;

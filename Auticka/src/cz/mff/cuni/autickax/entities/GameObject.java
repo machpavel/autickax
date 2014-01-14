@@ -206,4 +206,6 @@ abstract public class GameObject implements Serializable {
 	}
 	
 	public abstract Minigame getMinigame(GameScreen gameScreen, SubLevel parent);
+	
+	public abstract String getSoundName();
 }

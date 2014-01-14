@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
@@ -72,11 +74,11 @@ public class GameScreen extends BaseScreen {
 		camera.setToOrtho(false, stageWidth, stageHeight);
 		
 		// Start Music!
-		getGame().assets.music.setLooping(true);
-		getGame().assets.music.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-		getGame().assets.music.play();
+		getGame().assets.raceMusic.setLooping(true);
+		getGame().assets.raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
+		getGame().assets.raceMusic.play();
 		
-	
+		
 		level.calculateDistanceMap();
 		level.setGameScreen(this);
 								
@@ -165,7 +167,8 @@ public class GameScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
-		this.getGame().assets.music.stop();
+		this.getGame().assets.raceMusic.stop();
+		this.getGame().assets.menuMusic.play();
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
 		this.getGame().setScreen(Autickax.levelSelectScreen);
