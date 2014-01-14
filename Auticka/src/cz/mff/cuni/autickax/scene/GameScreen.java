@@ -79,7 +79,7 @@ public class GameScreen extends BaseScreen {
 		level.calculateDistanceMap();
 		level.setGameScreen(this);
 								
-		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture();
+		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture(this.difficulty);
 		
 		this.pathway = level.getPathway();
 		this.gameObjects = level.getGameObjects();
@@ -184,6 +184,11 @@ public class GameScreen extends BaseScreen {
 		super.dispose();
 		
 		this.level.deleteDistanceMap();
+	}
+	
+	public Difficulty getDifficulty()
+	{
+		return this.difficulty;
 	}
 
 }

@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.Difficulty;
 
  
 /**
@@ -140,7 +141,7 @@ public class DistanceMap implements java.io.Serializable {
                 }                                                                        
         }
         
-        public TextureRegion generateTexture() {
+        public TextureRegion generateTexture(Difficulty difficulty) {
                 Pixmap pixmap = new Pixmap(1024, 512, Format.RGBA8888);
                 pixmap.setColor( 0.75f, 0.7f, 0.6f, 0.9f );
                 for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
@@ -150,7 +151,7 @@ public class DistanceMap implements java.io.Serializable {
                                 float distance = this.At(column, Constants.WORLD_HEIGHT
                                                 - row - 1);
 
-                                if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY) {
+                                if (distance < difficulty.getMaxDistanceFromSurface()) {
                                         pixmap.drawPixel(column, row);
                                 }
                         }

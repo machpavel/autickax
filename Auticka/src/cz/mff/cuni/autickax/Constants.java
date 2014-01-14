@@ -17,11 +17,11 @@ public final class Constants {
 	
 	//DISTANCE LIMITS
 	/** Determines maximal total distance from pathway (in pixels). Beyond it is no pathway.*/
-	//public static final int MAX_DISTANCE_FROM_PATHWAY_DEFAULT = 60;
 	public static final int MAX_DISTANCE_FROM_PATHWAY = 60;
 	
 	/** Determines maximal distance of proper surface  from pathway (in pixels)*/
-	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY = 30;
+	//public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY = 30;
+	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT = 30;
 	
 	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_KIDDIE = 60;
 	
@@ -29,11 +29,9 @@ public final class Constants {
 	
 	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_NORMAL = 40;
 	
-	public static final int MAX_DISTANCE_FROM_PATHWAY_HARD = 45;
 	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_HARD = 30;
 	
-	public static final int MAX_DISTANCE_FROM_PATHWAY_EXTREME = 30;
-	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_EXTREME = 30;
+	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_EXTREME = 20;
 	
 	/** Number of waypoints that check if the player raced through all the track */
 	public static final int WAYPOINTS_COUNT = 40;
