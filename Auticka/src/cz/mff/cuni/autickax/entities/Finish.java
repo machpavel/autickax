@@ -17,7 +17,6 @@ public class Finish extends GameObject implements Serializable {
 	public Finish(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		super.type = type;
-		this.setTexture();
 		this.boundingCircleRadius = Constants.FINISH_BOUNDING_RADIUS;
 	}
 

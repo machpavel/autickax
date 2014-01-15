@@ -17,7 +17,6 @@ public class GearShiftMinigameFinish extends GameObject implements Serializable 
 	public GearShiftMinigameFinish(float x, float y, GameScreen gameScreen) {	
 		super(x,y,gameScreen);
 		super.type = type;
-		this.setTexture();
 		this.boundingCircleRadius = Constants.GEAR_SHIFT_MINIGAME_FINISH_RADIUS;
 	}
 

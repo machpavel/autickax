@@ -2,6 +2,7 @@ import java.io.File;
 
 import com.badlogic.gdx.files.FileHandle;
 
+import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
 
 public class LevelPath {
@@ -9,9 +10,9 @@ public class LevelPath {
 
 	private final File file;
 	
-	public LevelLoading level;
+	private LevelLoading level = null;
 
-	public LevelPath(File file, String directory) {
+	public LevelPath(File file) {
 		this.file = file;
 	}
 	

@@ -49,7 +49,7 @@ public final class Constants {
 	public static final float OUT_OF_SURFACE_PENALIZATION_FACTOR = 1.8f;
 	
 	/** Global speed. It can be used for slowing or accelerating the phase two game.*/ 
-	public static final float GLOBAL_SPEED_REGULATOR = 0.5f;
+	public static final float GLOBAL_SPEED_REGULATOR = 0.75f;
 	
 	
 	
@@ -57,9 +57,13 @@ public final class Constants {
 	// Menu textures
 	//
 	
-	public static final String 	BUTTON_MENU_BACKGROUND = "menuBackground";
-	public static final String 	BUTTON_MENU_PLAY = "menuPlay";
-	public static final String 	BUTTON_MENU_PLAY_HOVER = "menuPlayHover";
+	public static final String 	MAIN_MENU_BACKGROUND = "mainMenuBackground";
+	public static final String 	DIFFICULTY_MENU_BACKGROUND = "difficultyMenuBackground";
+	public static final float 	LEVELS_MENU_RED = (float)169 / 255;
+	public static final float 	LEVELS_MENU_GREEN = (float)207 / 255;
+	public static final float 	LEVELS_MENU_BLUE = (float)56 / 255;
+	public static final String 	BUTTON_MENU_PLAY = "menuStart";
+	public static final String 	BUTTON_MENU_PLAY_HOVER = "menuStartHover";
 	public static final String 	BUTTON_MENU_EXIT = "menuExit";
 	public static final String 	BUTTON_MENU_EXIT_HOVER = "menuExitHover";
 	public static final String 	BUTTON_MENU_LEVEL = "menuLevel";
