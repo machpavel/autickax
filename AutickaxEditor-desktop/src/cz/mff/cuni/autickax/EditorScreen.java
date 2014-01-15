@@ -155,51 +155,51 @@ public final class EditorScreen extends BaseScreenEditor {
 			update(delta);
 
 		renderScene();
-//
-//		if (objectIsDragging) {
-//			if (Gdx.input.isTouched()) {
-//				if (this.draggedObject != null) {
-//					// dragging new object
-//					draggedObject.setPosition(new Vector2(Gdx.input.getX(),
-//							Constants.WORLD_HEIGHT - Gdx.input.getY()));
-//					batch.begin();
-//					draggedObject.draw(batch);
-//					batch.end();
-//				} else {
-//					// dragging placed object
-//					this.draggedButton.setPosition (
-//							Gdx.input.getX() - this.draggedButton.getWidth() / 2,
-//							Constants.WORLD_HEIGHT - Gdx.input.getY() - this.draggedButton.getHeight() / 2
-//						);
-//				}
-//			} else {
-//				float x = Gdx.input.getX();
-//				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
-//
-//				if (this.newObjectIsDragging &&
-//						x > 0 && x < Constants.WORLD_WIDTH &&
-//						y > 0 && y < Constants.WORLD_HEIGHT) {
-//					
-//							Button button = new ImageButton (
-//									new TextureRegionDrawable(this.draggedObject.getTexture()),
-//									new TextureRegionDrawable(this.draggedObject.getTexture())
-//								);
-//							
-//							button.setPosition (
-//									this.draggedObject.getPosition().x - this.draggedObject.getWidth() / 2,
-//									this.draggedObject.getPosition().y - this.draggedObject.getHeight() / 2);
-//							
-//							this.gameObjects.add(this.draggedObject.copy());
-//							
-//							button.addListener(new PlacedObjectsInputListener(draggedObject, button, this));
-//							stage.addActor(button);
-//				}
-//
-//				objectIsDragging = false;
-//				draggedObject = null;
-//			}
-//
-//		}
+
+		if (objectIsDragging) {
+			if (Gdx.input.isTouched()) {
+				if (this.draggedObject != null) {
+					// dragging new object
+					draggedObject.setPosition(new Vector2(Gdx.input.getX(),
+							Constants.WORLD_HEIGHT - Gdx.input.getY()));
+					batch.begin();
+					draggedObject.draw(batch);
+					batch.end();
+				} else {
+					// dragging placed object
+					this.draggedButton.setPosition (
+							Gdx.input.getX() - this.draggedButton.getWidth() / 2,
+							Constants.WORLD_HEIGHT - Gdx.input.getY() - this.draggedButton.getHeight() / 2
+						);
+				}
+			} else {
+				float x = Gdx.input.getX();
+				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
+
+				if (this.newObjectIsDragging &&
+						x > 0 && x < Constants.WORLD_WIDTH &&
+						y > 0 && y < Constants.WORLD_HEIGHT) {
+					
+							Button button = new ImageButton (
+									new TextureRegionDrawable(this.draggedObject.getTexture()),
+									new TextureRegionDrawable(this.draggedObject.getTexture())
+								);
+							
+							button.setPosition (
+									this.draggedObject.getPosition().x - this.draggedObject.getWidth() / 2,
+									this.draggedObject.getPosition().y - this.draggedObject.getHeight() / 2);
+							
+							this.gameObjects.add(this.draggedObject.copy());
+							
+							button.addListener(new PlacedObjectsInputListener(draggedObject, button, this));
+							stage.addActor(button);
+				}
+
+				objectIsDragging = false;
+				draggedObject = null;
+			}
+
+		}
 
 	}
 
@@ -346,7 +346,6 @@ public final class EditorScreen extends BaseScreenEditor {
 				start = new Start(
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x,
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).y,
-<<<<<<< HEAD
 						null, START_TYPE);
 				start.setTexture();
 				
@@ -355,13 +354,6 @@ public final class EditorScreen extends BaseScreenEditor {
 						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).y,
 						null, FINISH_TYPE);
 				finish.setTexture();
-=======
-						new GameScreen() , START_TYPE);
-				finish = new Finish(
-						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x,
-						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).y,
-						new GameScreen(), FINISH_TYPE);
->>>>>>> 461b24f64d0d36e5b67ac8a939f25dac6fb34673
 			}
 		});
 	}
