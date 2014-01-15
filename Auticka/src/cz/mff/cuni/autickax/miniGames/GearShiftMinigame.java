@@ -1,7 +1,5 @@
 package cz.mff.cuni.autickax.miniGames;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -46,8 +44,23 @@ public final class GearShiftMinigame extends Minigame {
 	public void randomizeStartAndFinish(GameScreen screen){
 		float[] rows = new float[] { ROW_1, ROW_2, ROW_3 };
 		float[] columns = new float[] { COLUMN_1, COLUMN_2, COLUMN_3 };
-		this.gearShifter = new GearShifter(columns[MathUtils.random(2)], rows[MathUtils.random(2)], this.level);		
-		this.finish = new GearShiftMinigameFinish(columns[MathUtils.random(2)], rows[MathUtils.random(2)], screen);
+		
+		int gearFinishRandomX = 0;
+		int gearFinishRandomY= 0;
+		do {
+			gearFinishRandomX = MathUtils.random(2);
+			gearFinishRandomY = MathUtils.random(2);
+		} while (gearFinishRandomY == 1);				
+		this.finish = new GearShiftMinigameFinish(columns[gearFinishRandomX], rows[gearFinishRandomY], screen);
+		
+		int gearShifterRandomX = 0;
+		int gearShifterRandomY = 0;		
+		do {
+			gearShifterRandomX = MathUtils.random(2);
+			gearShifterRandomY = MathUtils.random(2);
+		} while (gearShifterRandomY == 1 || (gearShifterRandomX == gearFinishRandomX && gearShifterRandomY == gearFinishRandomY));				
+		this.gearShifter = new GearShifter(columns[gearShifterRandomX], rows[gearShifterRandomY], screen);		
+		
 	}
 
 	@Override
