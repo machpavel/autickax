@@ -38,8 +38,9 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			break;
 		}
 		this.screen.draggedObject.setTexture();
-		//this.screen.draggedObject.setScreen(this.screen);
+		this.screen.draggedObject.setCanBeDragged(true);
 		this.screen.objectIsDragging = true;
+		this.screen.newObjectIsDragging = true;
 		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer, button);
 	}
 }

@@ -3,6 +3,7 @@ package cz.mff.cuni.autickax.entities;
 import java.io.IOException;
 import java.io.Serializable;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -25,8 +26,8 @@ abstract public class GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/** Position of the center of GameObject. */
 	protected Vector2 position;
-	protected int width;
-	protected int height;
+	private int width;
+	private int height;
 	protected float rotation;
 	protected Vector2 scale = new Vector2(1, 1);
 	protected float boundingCircleRadius;
@@ -37,6 +38,16 @@ abstract public class GameObject implements Serializable {
 	protected GameScreen gameScreen;
 	protected int type;
 	protected boolean isActive = true;
+	
+	protected transient boolean canBeDragged = false;
+	public boolean canBeDragged() {
+		return this.canBeDragged;
+	}
+
+	public void setCanBeDragged(boolean canBeDragged) {
+		this.canBeDragged = canBeDragged;
+	}
+	protected transient boolean isDragged = false;
 
 	public GameObject(float startX, float startY, GameScreen gameScreen) {
 		this.position = new Vector2(startX, startY);
@@ -50,13 +61,13 @@ abstract public class GameObject implements Serializable {
 
 	public GameObject(GameObject object) {
 		this.position = object.position;
-		this.width = object.width;
-		this.height = object.height;
+		this.setWidth(object.getWidth());
+		this.setHeight(object.getHeight());
 		this.rotation = object.rotation;
 		this.scale = object.scale;
 		this.boundingCircleRadius = object.boundingCircleRadius;
 		this.toDispose = object.toDispose;
-		this.texture = object.texture;
+		this.setTexture(object.getTexture());
 		this.gameScreen = object.gameScreen;
 		this.type = object.type;
 	}
@@ -102,25 +113,38 @@ abstract public class GameObject implements Serializable {
 		this.position = newPos;
 	}
 
-	abstract public void update(float delta);
+	public void update(float delta) {
+		if (this.canBeDragged) {
+			if (this.isDragged) {
+				if (Gdx.input.isTouched()) {
+					Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
+					this.move(touchPos);
+				}
+			}
+	
+			if (!Gdx.input.isTouched()) {
+				this.isDragged = false;
+			}
+		}
+	}
 
 	abstract public String getName();
 
 	public void draw(SpriteBatch batch) {
-		batch.draw(this.texture, (this.position.x - this.width / 2)
-				* Input.xStretchFactorInv, (this.position.y - this.height / 2)
-				* Input.yStretchFactorInv, (this.width / 2)
-				* Input.xStretchFactorInv, (this.height / 2)
+		batch.draw(this.getTexture(), (this.position.x - this.getWidth() / 2)
+				* Input.xStretchFactorInv, (this.position.y - this.getHeight() / 2)
+				* Input.yStretchFactorInv, (this.getWidth() / 2)
+				* Input.xStretchFactorInv, (this.getHeight() / 2)
 				* Input.yStretchFactorInv,
-				this.width * Input.xStretchFactorInv, this.height
+				this.getWidth() * Input.xStretchFactorInv, this.getHeight()
 						* Input.yStretchFactorInv, scale.x, scale.y,
 				this.rotation);
 	}
 
 	public String toString() {
 		return getName() + " PosX: " + this.position.x + " PosY: "
-				+ this.position.y + " Width: " + this.width + " Height: "
-				+ this.height + " Bounding: " + this.boundingCircleRadius;
+				+ this.position.y + " Width: " + this.getWidth() + " Height: "
+				+ this.getHeight() + " Bounding: " + this.boundingCircleRadius;
 	}
 
 	public void toXml(XmlWriter writer) throws IOException {
@@ -133,8 +157,8 @@ abstract public class GameObject implements Serializable {
 	}
 
 	protected void setMeasurements(int width, int height) {
-		this.width = width;
-		this.height = height;
+		this.setWidth(width);
+		this.setHeight(height);
 		//TODO: which method of choosin bounding rectangle??
 		//this.boundingCircleRadius = width > height ? width / 2 : height / 2;
 		this.boundingCircleRadius = width > height ? height / 2 : width / 2;
@@ -226,5 +250,29 @@ abstract public class GameObject implements Serializable {
 	}
 	public void deactivate(){
 		this.isActive = false;
+	}
+
+	public TextureRegion getTexture() {
+		return texture;
+	}
+
+	public void setTexture(TextureRegion texture) {
+		this.texture = texture;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	protected void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	protected void setHeight(int height) {
+		this.height = height;
 	}
 }

@@ -37,6 +37,7 @@ import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.myInputListener.MyInputListener;
 import cz.mff.cuni.autickax.myInputListener.MyInputListenerForBackground;
 import cz.mff.cuni.autickax.myInputListener.MyInputListenerForGameObjects;
+import cz.mff.cuni.autickax.myInputListener.PlacedObjectsInputListener;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
 import cz.mff.cuni.autickax.pathway.Vector2i;
@@ -85,7 +86,9 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	// Variables for dragging new object values
 	public boolean objectIsDragging = false;
+	public boolean newObjectIsDragging = false;
 	public GameObject draggedObject = null;
+	public Button draggedButton = null;
 
 	public void SetAnyButtonTouched(boolean value) {
 		this.anyButtonTouched = value;
@@ -152,18 +155,41 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		if (objectIsDragging) {
 			if (Gdx.input.isTouched()) {
-				draggedObject.setPosition(new Vector2(Gdx.input.getX(),
-						Constants.WORLD_HEIGHT - Gdx.input.getY()));
-				batch.begin();
-				draggedObject.draw(batch);
-				batch.end();
+				if (this.draggedObject != null) {
+					// dragging new object
+					draggedObject.setPosition(new Vector2(Gdx.input.getX(),
+							Constants.WORLD_HEIGHT - Gdx.input.getY()));
+					batch.begin();
+					draggedObject.draw(batch);
+					batch.end();
+				} else {
+					// dragging placed object
+					this.draggedButton.setPosition (
+							Gdx.input.getX() - this.draggedButton.getWidth() / 2,
+							Constants.WORLD_HEIGHT - Gdx.input.getY() - this.draggedButton.getHeight() / 2
+						);
+				}
 			} else {
 				float x = Gdx.input.getX();
 				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
 
-				if (x > 0 && x < Constants.WORLD_WIDTH && y > 0
-						&& y < Constants.WORLD_HEIGHT) {
-					this.gameObjects.add(draggedObject.copy());
+				if (this.newObjectIsDragging &&
+						x > 0 && x < Constants.WORLD_WIDTH &&
+						y > 0 && y < Constants.WORLD_HEIGHT) {
+					
+							Button button = new ImageButton (
+									new TextureRegionDrawable(this.draggedObject.getTexture()),
+									new TextureRegionDrawable(this.draggedObject.getTexture())
+								);
+							
+							button.setPosition (
+									this.draggedObject.getPosition().x - this.draggedObject.getWidth() / 2,
+									this.draggedObject.getPosition().y - this.draggedObject.getHeight() / 2);
+							
+							this.gameObjects.add(this.draggedObject.copy());
+							
+							button.addListener(new PlacedObjectsInputListener(draggedObject, button, this));
+							stage.addActor(button);
 				}
 
 				objectIsDragging = false;
@@ -227,10 +253,10 @@ public final class EditorScreen extends BaseScreenEditor {
 		stage.draw(); // and also display it :)
 
 		batch.begin();
-		for (GameObject gameObject : gameObjects) {
-			gameObject.draw(batch);
-
-		}
+//		for (GameObject gameObject : gameObjects) {
+//			gameObject.draw(batch);
+//
+//		}
 		// car.draw(batch);
 		if (start != null)
 			start.draw(batch);

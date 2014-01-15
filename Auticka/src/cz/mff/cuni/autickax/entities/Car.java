@@ -69,22 +69,22 @@ public final class Car extends GameObject implements Serializable {
 	@Override
 	public void draw(SpriteBatch batch) {
 		if (this.rotation >= 22.5 && this.rotation < 67.5)
-			this.texture = positionTextures[1];
+			this.setTexture(positionTextures[1]);
 		else if (this.rotation >= 67.5 && this.rotation < 112.5)
-			this.texture = positionTextures[2];
+			this.setTexture(positionTextures[2]);
 		else if (this.rotation >= 112.5 && this.rotation < 157.5)
-			this.texture = positionTextures[3];
+			this.setTexture(positionTextures[3]);
 		else if (this.rotation >= 157.5 && this.rotation < 202.5)
-			this.texture = positionTextures[4];
+			this.setTexture(positionTextures[4]);
 		else if (this.rotation >= 202.5 && this.rotation < 247.5)
-			this.texture = positionTextures[5];
+			this.setTexture(positionTextures[5]);
 		else if (this.rotation >= 247.5 && this.rotation < 292.5)
-			this.texture = positionTextures[6];
+			this.setTexture(positionTextures[6]);
 		else if (this.rotation >= 292.5 && this.rotation < 337.5)
-			this.texture = positionTextures[7];
+			this.setTexture(positionTextures[7]);
 		else if ((this.rotation >= 337.5 && this.rotation < 360)
 				|| (this.rotation >= 0 && this.rotation < 22.5))
-			this.texture = positionTextures[0];
+			this.setTexture(positionTextures[0]);
 		else {
 			// TODO: throw Exception
 		}
