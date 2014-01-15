@@ -36,6 +36,8 @@ abstract public class GameObject implements Serializable {
 	protected GameScreen gameScreen;
 	protected int type;
 	protected boolean isActive = true;
+	
+	
 
 	public GameObject(float startX, float startY, GameScreen gameScreen) {
 		this.position = new Vector2(startX, startY);

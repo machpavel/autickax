@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -21,11 +22,15 @@ public final class Car extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private boolean isDragged = false;
-	private TextureRegion[] positionTextures = new TextureRegion[8];
+	private TextureRegion[] positionTextures = new TextureRegion[8];	
+	private Vector2 lastCarPosition;
+	private float lastRotationDistance = 0;
 
 	public Car(float x, float y, GameScreen gameScreen, int type) {
 		super(x, y, gameScreen);
 		this.type = type;
+		
+		this.lastCarPosition = new Vector2(x, y);
 		
 		// TODO: This condition is temporary hack due to loading levels in
 		// AssetsProcessor. REWRITE!
@@ -48,6 +53,18 @@ public final class Car extends GameObject implements Serializable {
 	}
 
 	@Override
+	public void move(Vector2 newPos) {
+		super.move(newPos); 
+				
+		lastRotationDistance += newPos.dst(lastCarPosition);
+		if(lastRotationDistance > Constants.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION){	
+			lastRotationDistance = 0;
+			this.setRotation(this.lastCarPosition.sub(newPos).scl(-1).angle());
+			this.lastCarPosition = newPos;
+		}
+	}
+	
+	@Override
 	public void update(float delta) {		
 		if (this.isDragged()) {
 			if (Gdx.input.isTouched()) {
@@ -67,7 +84,7 @@ public final class Car extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch) {
+	public void draw(SpriteBatch batch) {				                
 		if (this.rotation >= 22.5 && this.rotation < 67.5)
 			this.texture = positionTextures[1];
 		else if (this.rotation >= 67.5 && this.rotation < 112.5)
@@ -88,7 +105,11 @@ public final class Car extends GameObject implements Serializable {
 		else {
 			// TODO: throw Exception
 		}
-		super.draw(batch);
+		
+		Color c = batch.getColor();
+        batch.setColor(c.r, c.g, c.b, .3f);
+		super.draw(batch);		 		
+        batch.setColor(c.r, c.g, c.b, 1f);
 	}
 	
 	@Override

@@ -21,8 +21,7 @@ import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class AvoidObstaclesMinigame extends Minigame {
-	private static final float MINIMAL_DISTANCE_TO_SHOW_ROTATION = 3;
+public final class AvoidObstaclesMinigame extends Minigame {	
 	private final float CAR_START_POSITION_X = Constants.AVOID_OBSTACLES_CAR_START_POSITION_X;
 	private final float FINISH_START_POSITION_X = Constants.AVOID_OBSTACLES_FINISH_START_POSITION_X;
 	private final int FINISH_TYPE = Constants.AVOID_OBSTACLES_FINISH_TYPE;	
@@ -38,7 +37,6 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	private Car car;
 	private Finish finish;
 	States state = States.BEGINNING_STATE;
-	private Vector2 lastCarPosition = new Vector2(0, Constants.WORLD_HEIGHT / 2);
 
 	public AvoidObstaclesMinigame(GameScreen gameScreen, SubLevel parent, ObstaclesType obstacleType) {
 		super(gameScreen, parent);						
@@ -122,14 +120,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		for (GameObject gameObject : gameObjects) {
 			gameObject.update(delta);
 		}
-		this.car.update(delta);
-				
-		Vector2 carPosition = this.car.getPosition(); 
-		if(carPosition.dst(lastCarPosition) > MINIMAL_DISTANCE_TO_SHOW_ROTATION){			
-			this.car.setRotation(this.lastCarPosition.sub(carPosition).scl(-1).angle());
-			this.lastCarPosition = carPosition;
-		}
-		
+		this.car.update(delta);								
 		this.finish.update(delta);
 
 		switch (state) {
