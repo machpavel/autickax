@@ -40,13 +40,14 @@ abstract public class GameObject implements Serializable {
 	
 	
 
-	public GameObject(float startX, float startY, GameScreen gameScreen) {
+	public GameObject(float startX, float startY, GameScreen gameScreen, int type) {
 		this.position = new Vector2(startX, startY);
 		this.gameScreen = gameScreen;
 		this.rotation = 0;
+		this.type = type;
 		
 		if (this.gameScreen != null) { // caused by asset processor
-			this.setTexture();
+			this.setTexture(type);
 		}
 	}
 
@@ -213,7 +214,10 @@ abstract public class GameObject implements Serializable {
 
 	public abstract GameObject copy();
 	
-	public abstract void setTexture();
+	public abstract void setTexture(int type);
+	public void setTexture(){
+		setTexture(this.type);
+	}
 	
 	public void setScreen(GameScreen screen) {
 		this.gameScreen = screen;

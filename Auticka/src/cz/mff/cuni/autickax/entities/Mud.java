@@ -15,8 +15,7 @@ public final class Mud extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Mud(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen);
-		super.type = type;
+		super(x,y,gameScreen, type);
 	}
 	
 	public Mud(GameObject object){
@@ -53,7 +52,7 @@ public final class Mud extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
 		super.setTexture(Mud.GetTextureName(type));		
 	}
 

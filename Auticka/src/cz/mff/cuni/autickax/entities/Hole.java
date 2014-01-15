@@ -16,8 +16,7 @@ public final class Hole extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Hole(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen);
-		super.type = type;
+		super(x,y,gameScreen, type);
 	}
 
 	public Hole(GameObject object){
@@ -52,7 +51,7 @@ public final class Hole extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
 		// TODO Auto-generated method stub
 		super.setTexture(Hole.GetTextureName(type));		
 	}

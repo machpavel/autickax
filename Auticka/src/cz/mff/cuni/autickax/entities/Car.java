@@ -22,21 +22,13 @@ public final class Car extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private boolean isDragged = false;
-	private TextureRegion[] positionTextures = new TextureRegion[8];	
+	private TextureRegion[] positionTextures;	
 	private Vector2 lastCarPosition;
 	private float lastRotationDistance = 0;
 
 	public Car(float x, float y, GameScreen gameScreen, int type) {
-		super(x, y, gameScreen);
-		this.type = type;
-		
-		this.lastCarPosition = new Vector2(x, y);
-		
-		// TODO: This condition is temporary hack due to loading levels in
-		// AssetsProcessor. REWRITE!
-		if (this.gameScreen != null && this.gameScreen.getGame() != null) {
-			this.setTexture();			
-		}
+		super(x, y, gameScreen, type);		
+		this.lastCarPosition = new Vector2(x, y);		
 	}
 
 	public boolean isDragged() {
@@ -119,7 +111,9 @@ public final class Car extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
+		if(this.positionTextures == null)
+			this.positionTextures = new TextureRegion[8];
 		switch (type) {
 		case 1:
 			this.positionTextures[0] = this.gameScreen.getGame().assets
@@ -145,6 +139,8 @@ public final class Car extends GameObject implements Serializable {
 			break;
 		}
 	}
+	
+
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {

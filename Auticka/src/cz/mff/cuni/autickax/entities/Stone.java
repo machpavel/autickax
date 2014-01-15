@@ -16,8 +16,7 @@ public final class Stone extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Stone(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen);
-		super.type = type;
+		super(x,y,gameScreen, type);
 	}
 	
 	public Stone(GameObject object){
@@ -53,7 +52,7 @@ public final class Stone extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
 		super.setTexture(Stone.GetTextureName(type));		
 	}
 

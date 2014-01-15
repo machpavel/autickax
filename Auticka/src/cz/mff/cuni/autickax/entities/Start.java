@@ -14,8 +14,7 @@ public class Start extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Start(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen);
-		super.type = type;
+		super(x,y,gameScreen, type);
 	}
 
 	@Override
@@ -47,7 +46,7 @@ public class Start extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
 		super.setTexture(Start.GetTextureName(type));		
 	}
 

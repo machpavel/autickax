@@ -21,8 +21,7 @@ public final class GearShifter extends GameObject implements Serializable {
 	private boolean isDragged = false;
 
 	public GearShifter(float x, float y, GameScreen gameScreen) {
-		super(x, y, gameScreen);	
-		
+		super(x, y, gameScreen, 0);			
 	}
 	
 	public GearShifter(GameObject object){
@@ -79,7 +78,7 @@ public final class GearShifter extends GameObject implements Serializable {
 	}
 	
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
 		super.setTexture(Constants.GEAR_SHIFTER_TEXTURE);		
 	}
 	
