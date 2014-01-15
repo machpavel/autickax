@@ -45,7 +45,7 @@ public class SubLevel1 extends SubLevel {
 
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
-		timeStatusBar = new TimeStatusBar(gameScreen,tLimit);
+		timeStatusBar = new TimeStatusBar(gameScreen,tLimit, true);
 		playStartEngineSound();
 		pathway = gameScreen.getPathWay();
 
@@ -63,7 +63,7 @@ public class SubLevel1 extends SubLevel {
 	private void playStartEngineSound()
 	{
 		if (Autickax.settings.playSounds) {
-			this.level.getGame().assets.playSound(Constants.SOUND_ENGINE_START, Constants.SOUND_ENGINE_VOLUME);
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_ENGINE_START, Constants.SOUND_ENGINE_VOLUME);
 		}
 	}
 	

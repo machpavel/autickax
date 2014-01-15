@@ -141,7 +141,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			Vector2 point = new Vector2(Gdx.input.getX(), stageHeight
 					- Gdx.input.getY());
 			pathway.getControlPoints().add(point);
-			game.assets.playSound(Constants.SOUND_EDITOR, Constants.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
+			game.assets.soundAndMusicManager.playSound(Constants.SOUND_EDITOR, Constants.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
 		}
 	}
 
