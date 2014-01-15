@@ -291,7 +291,8 @@ public class SubLevel1 extends SubLevel {
 		wayPoints = new LinkedList<Vector2>();
 		float step = (finish - start) / nofWayPoints;
 		Vector2 lastAdded = null;
-		for (float f = start; f < finish; f += step) {
+		float skipTwo = 2*step;
+		for (float f = start+skipTwo; f < finish; f += step) {
 			lastAdded = pathway.GetPosition(f);
 			wayPoints.add(lastAdded);
 		}
@@ -308,7 +309,6 @@ public class SubLevel1 extends SubLevel {
 					* Input.xStretchFactorInv, (float) ce.position.y
 					* Input.yStretchFactorInv, 2);
 		}
-
 		shapeRenderer.end();
 	}
 
