@@ -94,6 +94,7 @@ public class SubLevel2 extends SubLevel {
 		case PROCEEDED_WITH_VALUE:
 			float result = this.miniGame.getResultValue();
 			// TODO: implementation of speed regulation or something like this
+			break;
 		default:
 			// TODO assert state
 			break;

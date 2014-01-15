@@ -28,7 +28,7 @@
 		<tree X="321.0" Y="296.0" type="3"/>
 		<tree X="650.0" Y="252.0" type="5"/>
 		<stone X="214.0" Y="198.0" type="4"/>
-		<mud X="238.0" Y="322.0" type="1"/>
+		<hole X="238.0" Y="322.0" type="1"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="88.83334" Y="382.5" type="1"/>

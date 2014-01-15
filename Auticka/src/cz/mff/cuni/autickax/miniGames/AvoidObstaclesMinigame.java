@@ -12,6 +12,7 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
+import cz.mff.cuni.autickax.entities.AvoidHole;
 import cz.mff.cuni.autickax.entities.AvoidStone;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
@@ -30,16 +31,19 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	private final float MINIMAL_DISTANCE_BETWEEN_FINISH = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_FINISH;
 	private final int NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE = Constants.AVOID_OBSTACLES_NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE;
 	
+	private final float FAIL_VALUE = Constants.AVOID_HOLES_FAIL_VALUE;
 	
+	private ObstaclesType obstaclesType;
 	private ArrayList<GameObject> gameObjects;
 	private Car car;
 	private Finish finish;
 	States state = States.BEGINNING_STATE;
 	private Vector2 lastCarPosition = new Vector2(0, Constants.WORLD_HEIGHT / 2);
 
-	public AvoidObstaclesMinigame(GameScreen gameScreen, SubLevel parent) {
-		super(gameScreen, parent);		
-				
+	public AvoidObstaclesMinigame(GameScreen gameScreen, SubLevel parent, ObstaclesType obstacleType) {
+		super(gameScreen, parent);						
+		this.obstaclesType = obstacleType;
+		
 		setDifficulty(this.level.getDifficulty());
 				
 		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
@@ -95,8 +99,19 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			
 			if(!limitReached)
 			{
-				int typeOfObstacle = MathUtils.random(1, Constants.AVOID_STONE_TYPES_COUNT);
-				gameObjects.add(new AvoidStone(xPosition, yPosition, this.level, typeOfObstacle));
+				switch (obstaclesType) {
+				case HOLES:
+					int avoidHoleType = MathUtils.random(1, Constants.AVOID_HOLES_TYPES_COUNT);
+					gameObjects.add(new AvoidHole(xPosition, yPosition, this.level, avoidHoleType));
+					break;
+				case STONES:
+					int avoidStoneType = MathUtils.random(1, Constants.AVOID_STONE_TYPES_COUNT);
+					gameObjects.add(new AvoidStone(xPosition, yPosition, this.level, avoidStoneType));
+					break;
+				default:
+					//TODO assert type
+					break;
+				}				
 			}					
 		} while (!limitReached);
 	}
@@ -148,9 +163,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		// Focus was lost
 		if (!this.car.isDragged()) {
 			// this.parent.setDialog(new DecisionDialog(this.level, this, "Pustil jsi auto", false));
-			this.status = DialogAbstractStatus.FINISHED;
-			this.result = ResultType.FAILED;
-			parent.onMinigameEnded();
+			fail();
 		}
 		//Finish reached
 		else if (this.car.positionCollides(finish)) {
@@ -163,13 +176,28 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			for (GameObject gameObject : gameObjects) {
 				if(this.car.collides(gameObject)){
 				// this.parent.setDialog(new DecisionDialog(this.level, this, "Narazil jsi do kamene", false));
-				this.status = DialogAbstractStatus.FINISHED;
-				this.result = ResultType.FAILED;
-				parent.onMinigameEnded();
+				fail();
 				break;
 				}
 			}
 		}
+	}
+	
+	private void fail(){
+		this.status = DialogAbstractStatus.FINISHED;
+		switch (obstaclesType) {
+		case STONES:
+			this.result = ResultType.FAILED;
+			break;
+		case HOLES:
+			this.result = ResultType.PROCEEDED_WITH_VALUE;
+			this.resultValue = FAIL_VALUE; 
+			break;
+		default:
+			this.result = ResultType.FAILED;
+			break;
+		}		
+		parent.onMinigameEnded();
 	}
 
 	private void updateInFinishState(float delta) {
@@ -211,6 +239,10 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	
 	private enum States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
+	}
+	
+	public enum ObstaclesType{
+		STONES, HOLES
 	}
 
 

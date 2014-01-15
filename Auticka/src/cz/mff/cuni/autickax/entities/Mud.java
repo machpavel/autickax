@@ -60,7 +60,7 @@ public final class Mud extends GameObject implements Serializable {
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new GearShiftMinigame(gameScreen, parent, true);
+		return new GearShiftMinigame(gameScreen, parent);
 	}
 	
 	@Override
