@@ -1,6 +1,7 @@
 package cz.mff.cuni.autickax;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.audio.Sound;
 
 import cz.mff.cuni.autickax.scene.DifficultySelectScreen;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -19,7 +20,10 @@ public class Autickax extends Game {
 	public static DifficultySelectScreen difficultySelectScreen;
 	public static LevelSelectScreen levelSelectScreen;
 	public static GameScreen gameScreen;	
+	
 	public static boolean showTooltips = false;
+	public static boolean musicEnabled = true;
+	public static boolean soundEnabled = true;
 	
 	static public Font font;
 
@@ -29,6 +33,8 @@ public class Autickax extends Game {
 		_instance = this;
 		assets = new Assets();
 	}
+	
+
 	
 
 	@Override

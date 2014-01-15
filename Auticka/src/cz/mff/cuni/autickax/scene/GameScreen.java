@@ -93,9 +93,8 @@ public class GameScreen extends BaseScreen {
 		
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
 		// Start Music!
-		getGame().assets.raceMusic.setLooping(true);
-		getGame().assets.raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-		getGame().assets.raceMusic.play();
+		getGame().assets.playRaceMusic();
+
 	}
 	
 	public Start getStart(){
@@ -162,8 +161,8 @@ public class GameScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
-		this.getGame().assets.raceMusic.stop();
-		this.getGame().assets.menuMusic.play();
+		this.getGame().assets.stopRaceMusic();
+		this.getGame().assets.playMenuMusic();
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
 		this.getGame().setScreen(Autickax.levelSelectScreen);
