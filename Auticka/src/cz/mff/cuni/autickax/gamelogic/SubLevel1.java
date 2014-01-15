@@ -3,7 +3,6 @@ package cz.mff.cuni.autickax.gamelogic;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -63,8 +62,7 @@ public class SubLevel1 extends SubLevel {
 	
 	private void playStartEngineSound()
 	{
-		Sound engine = this.level.getGame().assets.getSound(Constants.SOUND_ENGINE_START);
-		engine.play(Constants.SOUND_ENGINE_VOLUME);
+		this.level.getGame().assets.playSound(Constants.SOUND_ENGINE_START, Constants.SOUND_ENGINE_VOLUME);
 	}
 	
 	public void onDialogEnded() {
