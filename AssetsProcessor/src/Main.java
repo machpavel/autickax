@@ -59,7 +59,7 @@ public class Main {
         	Difficulty levelDifficulty = Difficulty.valueOf(directory.getName());
         	
         	for( File file : files ) {
-	    		LevelPath levelPath = new LevelPath(file, directory.getName());
+	    		LevelPath levelPath = new LevelPath(file);
 	    		levelPath.parseLevel();
 	    		LevelLoading level = levelPath.getLevel();
         	

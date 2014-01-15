@@ -18,7 +18,6 @@ public final class Hole extends GameObject implements Serializable {
 	public Hole(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		super.type = type;
-		setTexture();	
 	}
 
 	public Hole(GameObject object){

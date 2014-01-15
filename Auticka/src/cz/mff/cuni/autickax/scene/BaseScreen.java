@@ -2,13 +2,11 @@ package cz.mff.cuni.autickax.scene;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
 
 public abstract class BaseScreen implements Screen {	
 	private Autickax game;
@@ -29,10 +27,15 @@ public abstract class BaseScreen implements Screen {
 		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCatchBackKey(true);
 	}
+	
+	protected void clearScreenWithColor() {
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		this.clearScreenWithColor();
+		
 		stage.act(delta); // don't forget to advance the stage ( input + actions
 							// )
 		stage.draw(); // and also display it :)

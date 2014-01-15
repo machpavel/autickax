@@ -2,7 +2,8 @@ package cz.mff.cuni.autickax.scene;
 
 import java.util.Vector;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
@@ -24,12 +25,6 @@ public class LevelSelectScreen extends BaseScreen {
 	public LevelSelectScreen(final Difficulty difficulty) {
 		
 		this.difficulty = difficulty;
-
-		// Background
-		Image background = new Image(getGame().assets.getGraphics(Constants.LEVELS_MENU_BACKGROUND));
-		background.setSize(stageWidth, stageHeight);
-		stage.addActor(background); // stage initialized in superclass
-									// constructor
 		
 		String difficultyDescription;
 		switch (this.difficulty) {
@@ -96,6 +91,12 @@ public class LevelSelectScreen extends BaseScreen {
 		Autickax.difficultySelectScreen.dispose();
 		Autickax.difficultySelectScreen = new DifficultySelectScreen();
 		this.getGame().setScreen(Autickax.difficultySelectScreen);	
+	}
+	
+	@Override
+	protected void clearScreenWithColor() {
+		Gdx.gl.glClearColor(Constants.LEVELS_MENU_RED, Constants.LEVELS_MENU_GREEN, Constants.LEVELS_MENU_BLUE, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	}
 
 }

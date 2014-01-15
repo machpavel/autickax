@@ -16,8 +16,7 @@ public final class Mud extends GameObject implements Serializable {
 
 	public Mud(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
-		super.type = type;		
-		this.setTexture();
+		super.type = type;
 	}
 	
 	public Mud(GameObject object){

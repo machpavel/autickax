@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
 
+import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
@@ -41,6 +42,10 @@ abstract public class GameObject implements Serializable {
 		this.position = new Vector2(startX, startY);
 		this.gameScreen = gameScreen;
 		this.rotation = 0;
+		
+		if (this.gameScreen != null) { // caused by asset processor
+			this.setTexture();
+		}
 	}
 
 	public GameObject(GameObject object) {
@@ -139,10 +144,10 @@ abstract public class GameObject implements Serializable {
 	public void setTexture(String name) {
 		// TODO: This condition is temporary hack due to loading levels in
 		// AssetsProcessor. REWRITE!
-		if (this.gameScreen != null && this.gameScreen.getGame() != null) {
-			this.texture = this.gameScreen.getGame().assets.getGraphics(name);
+//		if (this.gameScreen != null && this.gameScreen.getGame() != null) {
+			this.texture = Autickax.getInstance().assets.getGraphics(name);
 			setMeasurements(this.texture.getRegionWidth(), this.texture.getRegionHeight());
-		}
+//		}
 	}
 
 	/**
