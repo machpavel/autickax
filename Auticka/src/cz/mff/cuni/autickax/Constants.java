@@ -196,6 +196,21 @@ public final class Constants {
 	
 	// Gear shift
 	public static final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "GearShiftMinigameBackground";
+	public static final String GEAR_SHIFTER_TEXTURE = "gearShifter";
+	public static final float GEAR_SHIFT_FAIL_VALUE = 0.5f;
+	public static final String GEAR_SHIFT_MINIGAME_FINISH_TEXTURE = "gearShiftMinigameFinish";
+	public static final float GEAR_SHIFT_MINIGAME_FINISH_RADIUS = 30;
+	public static final float GEAR_SHIFT_MINIGAME_ROW_1 = 180;
+	public static final float GEAR_SHIFT_MINIGAME_ROW_2 = 245;
+	public static final float GEAR_SHIFT_MINIGAME_ROW_3 = 310;
+	public static final float GEAR_SHIFT_MINIGAME_COLUMN_1 = 320;
+	public static final float GEAR_SHIFT_MINIGAME_COLUMN_2 = 400;
+	public static final float GEAR_SHIFT_MINIGAME_COLUMN_3 = 480;	
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_KIDDIE = 40;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_BEGINNER = 30;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_NORMAL = 20;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD = 10;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME = 5;
 	
 	//
 	// STRINGS
@@ -212,16 +227,11 @@ public final class Constants {
 	public static final String PHASE_2_MINIGAME_FAILED = "You failed.";
 	public static final String PHASE_2_FINISH_REACHED = "Finish reached\nin time: ";
 	
+	
+	
 	//
 	// GAME OBJECTS
 	//
-	
-	
-	
-	
-	
-	
-	
 	
 	public static final int CAR_TYPES_COUNT = 1;
 	public static final String 	CAR_TYPE_1_POSITION_0_TEXTURE_NAME = "car0";
@@ -235,7 +245,7 @@ public final class Constants {
 	
 	public static final int FINISH_TYPES_COUNT = 2;
 	public static final String 	FINISH_TEXTURE_PREFIX = "finish";
-	public static final int FINISH_BOUNDING_RADIUS = 50;
+	public static final float FINISH_BOUNDING_RADIUS = 50;
 	
 	public static final int MUD_TYPES_COUNT = 3;
 	public static final String 	MUD_TEXTURE_PREFIX = "mud";

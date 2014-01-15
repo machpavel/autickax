@@ -28,7 +28,7 @@ abstract public class GameObject implements Serializable {
 	protected int height;
 	protected float rotation;
 	protected Vector2 scale = new Vector2(1, 1);
-	protected int boundingCircleRadius;
+	protected float boundingCircleRadius;
 
 	private boolean toDispose;
 	protected transient TextureRegion texture;

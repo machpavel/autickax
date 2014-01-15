@@ -167,9 +167,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		}
 		//Finish reached
 		else if (this.car.positionCollides(finish)) {
-			this.state = States.FINISH_STATE;
-			this.result = ResultType.PROCEEDED;
-			parent.onMinigameEnded();
+			this.state = States.FINISH_STATE;			
 		}
 		else {
 			// Collision detection
@@ -237,7 +235,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 
 	}
 	
-	private enum States {
+	public enum States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
 	}
 	
@@ -247,7 +245,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 
 
 	private void setDifficulty(Difficulty difficulty) {
-		switch (this.level.getDifficulty()) {
+		switch (difficulty) {
 		case Kiddie:
 			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_KIDDIE;
 			break;
