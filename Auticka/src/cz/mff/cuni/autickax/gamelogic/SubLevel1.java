@@ -45,7 +45,7 @@ public class SubLevel1 extends SubLevel {
 
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
-		timeStatusBar = new TimeStatusBar(gameScreen,tLimit);
+		timeStatusBar = new TimeStatusBar(gameScreen,tLimit, true);
 		playStartEngineSound();
 		pathway = gameScreen.getPathWay();
 

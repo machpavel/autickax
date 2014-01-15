@@ -18,15 +18,15 @@ public class TimeStatusBar {
 	private final BitmapFont bigfont = Autickax.getInstance().assets.getTimeIntFont();
 	private final BitmapFont smallfont = Autickax.getInstance().assets.getTimeStringFont();
 	private final Label timeStrLabel;
-	private final Label timeLimitIntLabel;
+	private  Label timeLimitIntLabel;
 	private final Label timeIntLabel;
-	private final Label timeLimitStrLabel;
+	private  Label timeLimitStrLabel;
 	private final TextureRegion line;
 
 	private final int xStringLabels;
 	private final int yLine;
 	
-	public TimeStatusBar(GameScreen level, float timeLimit)
+	public TimeStatusBar(GameScreen level, float timeLimit, boolean showLimit)
 	{
 		bigfont.setScale(0.46527f);
 		smallfont.setScale(0.3f);
@@ -35,26 +35,39 @@ public class TimeStatusBar {
 		this.stage = new Stage(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 		
 		timeStrLabel = new Label("time:",new LabelStyle(smallfont, Color.GRAY));
-		timeLimitStrLabel = new Label("limit:",new LabelStyle(smallfont, Color.GRAY));
-		timeLimitIntLabel = new Label(String.format("%1$,.1f", timeLimit) ,new LabelStyle(bigfont, Color.GRAY));
+
 		timeIntLabel = new Label(String.format("%1$,.1f", 0.0f) ,new LabelStyle(bigfont, Color.GRAY));
-		
-		this.stage.addActor(timeStrLabel);
-		this.stage.addActor(timeLimitIntLabel);
-		this.stage.addActor(timeIntLabel);
-		this.stage.addActor(timeLimitStrLabel);
 		
 		int distUpDown = 20;
 		int distAdd = 75;
 		yLine = Constants.WORLD_HEIGHT - 60;
 		xStringLabels = Constants.WORLD_WIDTH - 150;
 		timeStrLabel.setPosition(xStringLabels, yLine + distUpDown);
-		timeLimitStrLabel.setPosition(xStringLabels,yLine - distUpDown);
+
 		
 		timeIntLabel.setPosition(xStringLabels + distAdd, yLine + distUpDown-5);
-		timeLimitIntLabel.setPosition(xStringLabels + distAdd, yLine - distUpDown-5);
+
 		
 		line = level.getGame().assets.getGraphics("cara-88");
+		
+		this.stage.addActor(timeStrLabel);
+		this.stage.addActor(timeIntLabel);
+		if (showLimit)
+		{
+			timeLimitStrLabel = new Label("limit:",new LabelStyle(smallfont, Color.GRAY));
+			timeLimitIntLabel = new Label(String.format("%1$,.1f", timeLimit) ,new LabelStyle(bigfont, Color.GRAY));
+			this.stage.addActor(timeLimitIntLabel);
+			this.stage.addActor(timeLimitStrLabel);
+			timeLimitStrLabel.setPosition(xStringLabels,yLine - distUpDown);
+			timeLimitIntLabel.setPosition(xStringLabels + distAdd, yLine - distUpDown-5);
+		}
+		
+
+	}
+	
+	public TimeStatusBar(GameScreen level)
+	{
+		this(level, 0, false);
 	}
 	
 	public void update(float elapsed)

@@ -12,6 +12,7 @@ import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
+import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.ISpeedRegulator;
@@ -40,6 +41,8 @@ public class SubLevel2 extends SubLevel {
 	private SubLevel2States state = SubLevel2States.BEGINNING_STATE;
 	
 	private Difficulty difficulty;
+	
+	private TimeStatusBar timeStatusBar;
 
 	public enum SubLevel2States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
@@ -49,6 +52,8 @@ public class SubLevel2 extends SubLevel {
 			DistanceMap map, SubLevel1 lastPhase) {
 		super(gameScreen);
 
+		this.timeStatusBar = new TimeStatusBar(gameScreen);
+		
 		this.checkpoints = checkpoints;
 		this.phase1 = lastPhase;
 		this.distMap = map;
@@ -145,6 +150,7 @@ public class SubLevel2 extends SubLevel {
 				// TODO implementation of exception
 				break;
 			}
+			timeStatusBar.update(timeElapsed);
 		}
 	}
 
@@ -219,6 +225,7 @@ public class SubLevel2 extends SubLevel {
 		else if (miniGame != null) {
 			miniGame.draw(batch);
 		}
+		timeStatusBar.draw(batch);
 	}
 
 	public void render() {
