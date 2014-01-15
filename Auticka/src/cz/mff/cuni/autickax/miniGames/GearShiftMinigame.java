@@ -1,5 +1,7 @@
 package cz.mff.cuni.autickax.miniGames;
 
+import java.util.LinkedList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,7 +18,7 @@ import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class GearShiftMinigame extends Minigame {	
+public final class GearShiftMinigame extends Minigame implements ISpeedRegulator {	
 	private static final float FAIL_VALUE = Constants.GEAR_SHIFT_FAIL_VALUE;
 	private static final float ROW_1 = Constants.GEAR_SHIFT_MINIGAME_ROW_1;
 	private static final float ROW_2 = Constants.GEAR_SHIFT_MINIGAME_ROW_2;
@@ -114,8 +116,7 @@ public final class GearShiftMinigame extends Minigame {
 	
 
 	private void fail(){
-		//this.result = ResultType.PROCEEDED_WITH_VALUE;
-		this.result = ResultType.FAILED;
+		this.result = ResultType.PROCEEDED_WITH_VALUE;
 		this.resultValue = FAIL_VALUE; 
 		parent.onMinigameEnded();
 	}
@@ -207,5 +208,11 @@ public final class GearShiftMinigame extends Minigame {
 	
 	private enum States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
+	}
+
+
+	@Override
+	public void addSpeedModifier(LinkedList<Float> speedModifiers) {
+		speedModifiers.add(Constants.MUD_SPEED_PENALIZATION);
 	}
 }
