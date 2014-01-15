@@ -196,7 +196,7 @@ public final class Constants {
 	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_CAR = 100;
 	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_FINISH = 100;
 	public static final int AVOID_OBSTACLES_NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE = 20;
-	public static final float AVOID_HOLES_FAIL_VALUE = 0.5f;
+	public static final float AVOID_OBSTACLES_FAIL_VALUE = 0.5f;
 	
 	// Gear shift
 	public static final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "GearShiftMinigameBackground";

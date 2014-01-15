@@ -30,7 +30,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	private final float MINIMAL_DISTANCE_BETWEEN_FINISH = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_FINISH;
 	private final int NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE = Constants.AVOID_OBSTACLES_NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE;
 	
-	private final float FAIL_VALUE = Constants.AVOID_HOLES_FAIL_VALUE;
+	private final float FAIL_VALUE = Constants.AVOID_OBSTACLES_FAIL_VALUE;
 	
 	private ObstaclesType obstaclesType;
 	private ArrayList<GameObject> gameObjects;
