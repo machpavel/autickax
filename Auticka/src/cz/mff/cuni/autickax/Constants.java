@@ -49,7 +49,7 @@ public final class Constants {
 	public static final float OUT_OF_SURFACE_PENALIZATION_FACTOR = 1.8f;
 	
 	/** Global speed. It can be used for slowing or accelerating the phase two game.*/ 
-	public static final float GLOBAL_SPEED_REGULATOR = 0.5f;
+	public static final float GLOBAL_SPEED_REGULATOR = 0.75f;
 	
 	
 	
