@@ -2,7 +2,6 @@ import java.io.File;
 
 import com.badlogic.gdx.files.FileHandle;
 
-import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
 
 public class LevelPath {
