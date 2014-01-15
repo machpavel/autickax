@@ -22,7 +22,7 @@ public class DifficultySelectScreen extends BaseScreen {
 		super();
 
 		// Background
-		Image background = new Image(getGame().assets.getGraphics(Constants.BUTTON_MENU_BACKGROUND));
+		Image background = new Image(getGame().assets.getGraphics(Constants.DIFFICULTY_MENU_BACKGROUND));
 		background.setSize(stageWidth, stageHeight);
 		stage.addActor(background); // stage initialized in superclass
 									// constructor

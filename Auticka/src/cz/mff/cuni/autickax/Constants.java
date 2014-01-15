@@ -57,9 +57,11 @@ public final class Constants {
 	// Menu textures
 	//
 	
-	public static final String 	BUTTON_MENU_BACKGROUND = "menuBackground";
-	public static final String 	BUTTON_MENU_PLAY = "menuPlay";
-	public static final String 	BUTTON_MENU_PLAY_HOVER = "menuPlayHover";
+	public static final String 	MAIN_MENU_BACKGROUND = "mainMenuBackground";
+	public static final String 	DIFFICULTY_MENU_BACKGROUND = "difficultyMenuBackground";
+	public static final String 	LEVELS_MENU_BACKGROUND = "levelsMenuBackground";
+	public static final String 	BUTTON_MENU_PLAY = "menuStart";
+	public static final String 	BUTTON_MENU_PLAY_HOVER = "menuStartHover";
 	public static final String 	BUTTON_MENU_EXIT = "menuExit";
 	public static final String 	BUTTON_MENU_EXIT_HOVER = "menuExitHover";
 	public static final String 	BUTTON_MENU_LEVEL = "menuLevel";

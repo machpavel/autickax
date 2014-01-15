@@ -21,16 +21,13 @@ public class MainMenuScreen extends BaseScreen {
 
 	private Button buttonPlay;
 	private Button buttonExit;
-	
-	private final float buttonsXPositionStart = 10;
-	//private final float buttonsXPositionEnd = 100;
 
 	public MainMenuScreen() {
 		super();
 		initMenuMusic();
 
 		// Background
-		Image background = new Image(getGame().assets.getGraphics(Constants.BUTTON_MENU_BACKGROUND));
+		Image background = new Image(getGame().assets.getGraphics(Constants.MAIN_MENU_BACKGROUND));
 		background.setSize(stageWidth, stageHeight);
 		stage.addActor(background); // stage initialized in superclass
 									// constructor
@@ -51,7 +48,7 @@ public class MainMenuScreen extends BaseScreen {
 				getGame().setScreen(Autickax.difficultySelectScreen);
 			}
 		};
-		this.buttonPlay.setPosition(this.buttonsXPositionStart, 250);
+		this.buttonPlay.setPosition(170, 190);
 		stage.addActor(this.buttonPlay);
 		
 		// Exit Button-----------------------------------------------------
@@ -65,7 +62,7 @@ public class MainMenuScreen extends BaseScreen {
 				onBackKeyPressed();
 			}
 		};
-		this.buttonExit.setPosition(this.buttonsXPositionStart, 30);
+		this.buttonExit.setPosition(500, 30);
 		stage.addActor(this.buttonExit);
 
 		// Actions
