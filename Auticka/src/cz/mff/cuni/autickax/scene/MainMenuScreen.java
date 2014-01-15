@@ -145,7 +145,7 @@ public class MainMenuScreen extends BaseScreen {
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF),
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF_HOVER)
 					);
-					getGame().assets.soundAndMusicManager.playMenuMusic();
+					getGame().assets.soundAndMusicManager.stopAllMusic();
 				}
 			}
 		};

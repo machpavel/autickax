@@ -67,4 +67,10 @@ public class SoundAndMusicManager {
 			sound.play(volume);
 		}
 	}
+	
+	public void stopAllMusic()
+	{
+		this.raceMusic.stop();
+		this.menuMusic.stop();
+	}
 }
