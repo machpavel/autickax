@@ -63,8 +63,10 @@ public class SubLevel1 extends SubLevel {
 	
 	private void playStartEngineSound()
 	{
-		Sound engine = this.level.getGame().assets.getSound(Constants.SOUND_ENGINE_START);
-		engine.play(Constants.SOUND_ENGINE_VOLUME);
+		if (Autickax.settings.playSounds) {
+			Sound engine = this.level.getGame().assets.getSound(Constants.SOUND_ENGINE_START);
+			engine.play(Constants.SOUND_ENGINE_VOLUME);
+		}
 	}
 	
 	public void onDialogEnded() {
@@ -243,7 +245,7 @@ public class SubLevel1 extends SubLevel {
 	 */
 	public void reset() {
 		this.miniGame = null;
-		if (Autickax.showTooltips)
+		if (Autickax.settings.showTooltips)
 			this.dialog = new MessageDialog(this.level, this, 
 					Constants.TOOLTIP_PHASE_1_WHAT_TO_DO);
 		state = SubLevel1States.BEGINNING_STATE;

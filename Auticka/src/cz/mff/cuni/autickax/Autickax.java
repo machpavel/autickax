@@ -19,7 +19,7 @@ public class Autickax extends Game {
 	public static DifficultySelectScreen difficultySelectScreen;
 	public static LevelSelectScreen levelSelectScreen;
 	public static GameScreen gameScreen;	
-	public static boolean showTooltips = false;
+	public static Settings settings;
 	
 	static public Font font;
 
@@ -34,6 +34,8 @@ public class Autickax extends Game {
 	@Override
 	public void create() {		
 		Autickax.loadingScreen = new LoadingScreen();
+		
+		settings = new Settings();
 		
 		setScreen(Autickax.loadingScreen);
 		Input.InitDimensions();

@@ -37,7 +37,7 @@ public final class GearShiftMinigame extends Minigame implements ISpeedRegulator
 		setDifficulty(this.level.getDifficulty());		
 		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
 				
-		if(Autickax.showTooltips)
+		if(Autickax.settings.showTooltips)
 			this.parent.setDialog(new MessageDialog(screen, parent, Constants.TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO));
 		
 		randomizeStartAndFinish(screen);

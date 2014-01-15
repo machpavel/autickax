@@ -59,17 +59,37 @@ public final class Constants {
 	
 	public static final String 	MAIN_MENU_BACKGROUND = "mainMenuBackground";
 	public static final String 	DIFFICULTY_MENU_BACKGROUND = "difficultyMenuBackground";
+	
 	public static final float 	LEVELS_MENU_RED = (float)169 / 255;
 	public static final float 	LEVELS_MENU_GREEN = (float)207 / 255;
 	public static final float 	LEVELS_MENU_BLUE = (float)56 / 255;
+	
 	public static final String 	BUTTON_MENU_PLAY = "menuStart";
 	public static final String 	BUTTON_MENU_PLAY_HOVER = "menuStartHover";
+	
 	public static final String 	BUTTON_MENU_EXIT = "menuExit";
 	public static final String 	BUTTON_MENU_EXIT_HOVER = "menuExitHover";
+	
 	public static final String 	BUTTON_MENU_LEVEL = "menuLevel";
 	public static final String 	BUTTON_MENU_LEVEL_HOVER = "menuLevelHover";
+	
 	public static final String 	BUTTON_MENU_DIFFICULTY = "menuDifficulty";
 	public static final String 	BUTTON_MENU_DIFFICULTY_HOVER = "menuDifficultyHover";
+	
+	public static final String 	BUTTON_MENU_TOOLTIPS_ON = "menuTipsOn";
+	public static final String 	BUTTON_MENU_TOOLTIPS_ON_HOVER = "menuTipsOnHover";
+	public static final String 	BUTTON_MENU_TOOLTIPS_OFF = "menuTipsOff";
+	public static final String 	BUTTON_MENU_TOOLTIPS_OFF_HOVER = "menuTipsOffHover";
+	
+	public static final String 	BUTTON_MENU_SOUNDS_ON = "menuSoundsOn";
+	public static final String 	BUTTON_MENU_SOUNDS_ON_HOVER = "menuSoundsOnHover";
+	public static final String 	BUTTON_MENU_SOUNDS_OFF = "menuSoundsOff";
+	public static final String 	BUTTON_MENU_SOUNDS_OFF_HOVER = "menuSoundsOffHover";
+	
+	public static final String 	BUTTON_MENU_MUSIC_ON = "menuMusicOn";
+	public static final String 	BUTTON_MENU_MUSIC_ON_HOVER = "menuMusicOnHover";
+	public static final String 	BUTTON_MENU_MUSIC_OFF = "menuMusicOff";
+	public static final String 	BUTTON_MENU_MUSIC_OFF_HOVER = "menuMusicOffHover";
 	
 	
 	/** Pathway texture */

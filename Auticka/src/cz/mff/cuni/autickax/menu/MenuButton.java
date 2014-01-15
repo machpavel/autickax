@@ -25,6 +25,10 @@ public abstract class MenuButton extends Button {
 		});
 	}
 	
+	public void setStyle(TextureRegion image, TextureRegion imageHover) {
+		this.setStyle(new MenuButtonStyle(image, imageHover));
+	}
+	
 	@Override
 	public float getPrefHeight() {
 		return super.getPrefHeight() * Input.yStretchFactorInv;

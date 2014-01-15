@@ -97,10 +97,13 @@ public class GameScreen extends BaseScreen {
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 		
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
+		
 		// Start Music!
-		getGame().assets.raceMusic.setLooping(true);
-		getGame().assets.raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-		getGame().assets.raceMusic.play();
+		if (Autickax.settings.playMusic) {
+			getGame().assets.raceMusic.setLooping(true);
+			getGame().assets.raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
+			getGame().assets.raceMusic.play();
+		}
 	}
 	
 	public Start getStart(){

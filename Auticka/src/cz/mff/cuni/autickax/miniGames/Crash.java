@@ -12,7 +12,7 @@ public class Crash extends Minigame {
 
 	public Crash(GameScreen gameScreen, SubLevel parent) {
 		super(gameScreen, parent);
-		if(Autickax.showTooltips)
+		if(Autickax.settings.showTooltips)
 			this.parent.setDialog(new MessageDialog(gameScreen, parent, Constants.TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO));
 	}
 

@@ -19,8 +19,11 @@ import cz.mff.cuni.autickax.menu.MenuButton;
  */
 public class MainMenuScreen extends BaseScreen {
 
-	private Button buttonPlay;
-	private Button buttonExit;
+	private MenuButton buttonPlay;
+	private MenuButton buttonExit;
+	private MenuButton buttonTooltips;
+	private MenuButton buttonSounds;
+	private MenuButton buttonMusic;
 
 	public MainMenuScreen() {
 		super();
@@ -62,8 +65,94 @@ public class MainMenuScreen extends BaseScreen {
 				onBackKeyPressed();
 			}
 		};
-		this.buttonExit.setPosition(500, 30);
+		this.buttonExit.setPosition(680, 60);
 		stage.addActor(this.buttonExit);
+		
+		// Tooltips Button------------------------------------------------
+		this.buttonTooltips = new MenuButton (
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_ON),
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_ON_HOVER)
+		)
+		{
+			@Override
+			public void action() {
+				
+				Autickax.settings.showTooltips = !Autickax.settings.showTooltips; 
+				
+				if (Autickax.settings.showTooltips) {
+					buttonTooltips.setStyle(
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_ON),
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_ON_HOVER)
+					);
+				}
+				else {
+					buttonTooltips.setStyle(
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_OFF),
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_OFF_HOVER)
+					);
+				}
+			}
+		};
+		this.buttonTooltips.setPosition(-10, 340);
+		stage.addActor(this.buttonTooltips);
+		
+		// Sounds Button------------------------------------------------
+		this.buttonSounds = new MenuButton (
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_ON),
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_ON_HOVER)
+		)
+		{
+			@Override
+			public void action() {
+				
+				Autickax.settings.playSounds = !Autickax.settings.playSounds; 
+				
+				if (Autickax.settings.playSounds) {
+					buttonSounds.setStyle(
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_ON),
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_ON_HOVER)
+					);
+				}
+				else {
+					buttonSounds.setStyle(
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_OFF),
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_OFF_HOVER)
+					);
+				}
+			}
+		};
+		this.buttonSounds.setPosition(260, 365);
+		stage.addActor(this.buttonSounds);
+		
+		// Music Button------------------------------------------------
+		this.buttonMusic = new MenuButton (
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON),
+			getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON_HOVER)
+		)
+		{
+			@Override
+			public void action() {
+				
+				Autickax.settings.playMusic = !Autickax.settings.playMusic; 
+				
+				if (Autickax.settings.playMusic) {
+					buttonMusic.setStyle(
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON),
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON_HOVER)
+					);
+					getGame().assets.menuMusic.play();
+				}
+				else {
+					buttonMusic.setStyle(
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF),
+							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF_HOVER)
+					);
+					getGame().assets.menuMusic.pause();
+				}
+			}
+		};
+		this.buttonMusic.setPosition(660, 365);
+		stage.addActor(this.buttonMusic);
 
 		// Actions
 		/*buttonPlay.addAction(MenuAnimator.moveTo(this.buttonsXPositionEnd, 250, 3,
@@ -75,7 +164,10 @@ public class MainMenuScreen extends BaseScreen {
 		Music menuMusic = getGame().assets.menuMusic;
 		menuMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
 		menuMusic.setLooping(true);
-		menuMusic.play();
+		
+		if (Autickax.settings.playMusic) {
+			menuMusic.play();
+		}
 	}
 
 	@Override

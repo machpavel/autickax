@@ -47,7 +47,7 @@ public final class AvoidObstaclesMinigame extends Minigame implements ISpeedRegu
 				
 		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
 
-		if (Autickax.showTooltips)
+		if (Autickax.settings.showTooltips)
 			this.parent.setDialog(new MessageDialog(gameScreen, parent, Constants.TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO));
 
 		this.gameObjects = new ArrayList<GameObject>();
