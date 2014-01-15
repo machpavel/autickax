@@ -126,10 +126,12 @@ public class SubLevel2 extends SubLevel {
 
 	@Override
 	public void update(float delta) {
+		timeStatusBar.update(timeElapsed);
 		if (this.dialog != null) {
 			this.dialog.update(delta);
 		} else if (this.miniGame != null) {
-			this.miniGame.update(delta);			
+			this.miniGame.update(delta);
+			timeElapsed += delta;
 		}		
 		else{
 			for (GameObject gameObject : this.level.getGameObjects()) {
@@ -155,8 +157,7 @@ public class SubLevel2 extends SubLevel {
 			default:
 				// TODO implementation of exception
 				break;
-			}
-			timeStatusBar.update(timeElapsed);
+			}			
 		}
 	}
 
@@ -180,7 +181,6 @@ public class SubLevel2 extends SubLevel {
 	
 	private void updateInDrivingState(float delta) {
 		timeElapsed += delta;
-
 		// finish reached
 		if (checkpoints.isEmpty()) {
 			state = SubLevel2States.FINISH_STATE;
