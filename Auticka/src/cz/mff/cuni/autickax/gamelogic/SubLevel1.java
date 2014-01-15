@@ -160,13 +160,19 @@ public class SubLevel1 extends SubLevel {
 		if (carPosition.x >= 0 && carPosition.x < map.getWidth()
 				&& carPosition.y >= 0 && carPosition.y < map.getHeight()) {
 
-			if (wayPoints.isEmpty()
-					&& this.level.getCar().positionCollides(
-							this.level.getFinish())) {
-				state = SubLevel1States.FINISH_STATE;
-				dialog = new DecisionDialog(this.level, this, Constants.PHASE_1_FINISH_REACHED, true);
-				timeMeasured = false;
+			if(this.level.getCar().positionCollides(this.level.getFinish())){
+				
+				if (wayPoints.isEmpty()){
+					state = SubLevel1States.FINISH_STATE;
+					dialog = new DecisionDialog(this.level, this, Constants.PHASE_1_FINISH_REACHED, true);
+					timeMeasured = false;
+					this.level.getCar().setDragged(false);
+				}
+				else{
+					switchToMistakeState(Constants.PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS);
+				}
 			}
+
 
 			// not on track OR all checkpoint not yet reached (if reached, we
 			// may have reached the finish line)
