@@ -216,6 +216,9 @@ public final class AvoidObstaclesMinigame extends Minigame {
 
 	private void setDifficulty(Difficulty difficulty) {
 		switch (this.level.getDifficulty()) {
+		case Kiddie:
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_KIDDIE;
+			break;
 		case Beginner:
 			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_BEGINNER;
 			break;
@@ -224,6 +227,9 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			break;
 		case Hard:
 			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_HARD;
+			break;
+		case Extreme:
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_EXTREME;
 			break;
 		default:
 			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_DEFAULT;
