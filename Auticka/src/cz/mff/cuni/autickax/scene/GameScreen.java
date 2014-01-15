@@ -57,7 +57,10 @@ public class GameScreen extends BaseScreen {
 	
 	private final Difficulty difficulty;
 	
-	
+	public GameScreen(){
+		this.difficulty = null;
+		//this is constructor just for designer
+	}
 	
 	// Creates instance according to a given xml file
 	public GameScreen(LevelLoading level, Difficulty difficulty) {
