@@ -80,6 +80,8 @@ public final class EditorScreen extends BaseScreenEditor {
 	ArrayList<Button> backgroundButtons = new ArrayList<Button>();
 	private boolean anyButtonTouched = false;
 	ArrayList<Button> gameObjectsButtons = new ArrayList<Button>();
+	
+	public Difficulty difficulty = Difficulty.Normal;  
 
 	// Texture region for buttons
 	TextureRegionDrawable trbGreenPixel;
@@ -91,7 +93,6 @@ public final class EditorScreen extends BaseScreenEditor {
 	public Button draggedButton = null;
 
 	public void SetAnyButtonTouched(boolean value) {
-		System.out.println("set: " + value);
 		this.anyButtonTouched = value;
 	}
 
@@ -118,6 +119,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		createSaveButton();
 		createBackgroundButtons();
 		createGameObjectsButtons();
+		createDifficultyButtons();
 
 		restart();
 	}
@@ -220,20 +222,22 @@ public final class EditorScreen extends BaseScreenEditor {
 			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 			Gdx.gl10.glPointSize(1);
 			shapeRenderer.begin(ShapeType.Point);
+			
+        
+			
 			for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
-				for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
-					// distance map is flipped to the bitmap
+				for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {												
 					float distance = pathway.getDistanceMap().At(column, row);
 	
-					if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT) {
+					if (distance < difficulty.getMaxDistanceFromSurface()) {
 						shapeRenderer.setColor(196.f / 255, 154.f / 255,
 								108.f / 255, 1);
 						shapeRenderer.point(column, row, 0);
-					} else if (distance < Constants.MAX_DISTANCE_FROM_PATHWAY) {
+					} else if (distance < difficulty.getMaxDistanceFromSurface()) {
 						// cause this is where the transparency begin
 						distance -= Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
-						float alpha = (Constants.MAX_DISTANCE_FROM_PATHWAY - distance)
-								/ Constants.MAX_DISTANCE_FROM_PATHWAY;
+						float alpha = (difficulty.getMaxDistanceFromSurface() - distance)
+								/ difficulty.getMaxDistanceFromSurface();
 						shapeRenderer.setColor(196.f / 255, 154.f / 255,
 								108.f / 255, alpha);
 						shapeRenderer.point(column, row, 0);
@@ -340,19 +344,28 @@ public final class EditorScreen extends BaseScreenEditor {
 					JOptionPane.showMessageDialog(null, "You have to set at least 4 points to generate the pathway.", "Warning: ", JOptionPane.INFORMATION_MESSAGE );
 					return;
 				}
-					
+				float delta = 0.01f;	
 				pathway.CreateDistances();
 				start = new Start(
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x,
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).y,
 						null, START_TYPE);
 				start.setTexture();
+				Vector2 startTo = pathway.GetPosition(delta);
+				Vector2 startFrom = pathway.GetPosition(0);
+				float startAngle = startTo.sub(startFrom).angle();
+				start.setRotation((startAngle + 270) % 360);
+				
 				
 				finish = new Finish(
 						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x,
 						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).y,
 						null, FINISH_TYPE);
 				finish.setTexture();
+				Vector2 finishTo = pathway.GetPosition(1 - delta);
+				Vector2 finishFrom = pathway.GetPosition(1);
+				float finishAngle = finishTo.sub(finishFrom).angle();
+				finish.setRotation((finishAngle + 90) % 360);				
 			}
 		});
 	}
@@ -513,4 +526,78 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		offsetOnScreen.x += objectWidth;
 	}
+	
+	
+
+	public void createDifficultyButtons() {
+		int BUTTONS_OFFSET = 10;		
+		Button buttonDif1 = new TextButton("1", new TextButtonStyle(
+				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		buttonDif1.setPosition(Constants.WORLD_WIDTH + BUTTONS_OFFSET,
+				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
+		stage.addActor(buttonDif1);
+
+		// Creates listener
+		buttonDif1.addListener(new MyInputListener(this) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				difficulty = Difficulty.Kiddie;
+			}
+		});
+		Button buttonDif2 = new TextButton("2", new TextButtonStyle(
+				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		buttonDif2.setPosition(buttonDif1.getX() + buttonDif1.getWidth() + BUTTONS_OFFSET,
+				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
+		stage.addActor(buttonDif2);
+
+		// Creates listener
+		buttonDif2.addListener(new MyInputListener(this) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				difficulty = Difficulty.Beginner;
+			}
+		});
+		Button buttonDif3 = new TextButton("3", new TextButtonStyle(
+				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		buttonDif3.setPosition(buttonDif2.getX() + buttonDif2.getWidth() + BUTTONS_OFFSET,
+				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
+		stage.addActor(buttonDif3);
+
+		// Creates listener
+		buttonDif3.addListener(new MyInputListener(this) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				difficulty = Difficulty.Normal;
+			}
+		});
+
+		Button buttonDif4 = new TextButton("4", new TextButtonStyle(
+				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		buttonDif4.setPosition(buttonDif3.getX() + buttonDif3.getWidth() + BUTTONS_OFFSET,
+				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
+		stage.addActor(buttonDif4);
+
+		// Creates listener
+		buttonDif4.addListener(new MyInputListener(this) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				difficulty = Difficulty.Hard;
+			}
+		});
+
+		Button buttonDif5 = new TextButton("5", new TextButtonStyle(
+				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		buttonDif5.setPosition(buttonDif4.getX() + buttonDif4.getWidth() + BUTTONS_OFFSET,
+				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
+		stage.addActor(buttonDif5);
+
+		// Creates listener
+		buttonDif5.addListener(new MyInputListener(this) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				difficulty = Difficulty.Extreme;
+			}
+		});
+	}
+
 }

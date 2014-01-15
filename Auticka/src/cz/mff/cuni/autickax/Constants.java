@@ -274,7 +274,7 @@ public final class Constants {
 	public static final String 	AVOID_STONE_TEXTURE_NAME_PREFIX = "avoidstone";
 	
 	
-	public static final int AVOID_HOLES_TYPES_COUNT = 2;
+	public static final int AVOID_HOLES_TYPES_COUNT = 9;
 	public static final String 	AVOID_HOLES_TEXTURE_NAME_PREFIX = "avoidhole";
 	public static final float AVOID_HOLES_SPEED_PENALIZATION = 0.8f;
 	
