@@ -9,6 +9,7 @@ import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame;
 import cz.mff.cuni.autickax.miniGames.Minigame;
+import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame.ObstaclesType;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Stone extends GameObject implements Serializable {
@@ -59,7 +60,7 @@ public final class Stone extends GameObject implements Serializable {
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new AvoidObstaclesMinigame(gameScreen, parent);
+		return new AvoidObstaclesMinigame(gameScreen, parent, ObstaclesType.STONES);
 	}
 	
 	@Override

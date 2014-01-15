@@ -149,9 +149,7 @@ public final class Constants {
 	// DIALOG POSITIONING AND TEXTURES
 	//
 	
-	public static final String DIALOG_BACKGROUND_TEXTURE = "DialogBackground";
-	public static final String AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE = "AvoidObstaclesMinigameBackground";
-	public static final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "GearShiftMinigameBackground";
+	public static final String DIALOG_BACKGROUND_TEXTURE = "DialogBackground";	
 	
 	
 	public static final float DIALOG_MESSAGE_POSITION_X = 400;
@@ -177,6 +175,45 @@ public final class Constants {
 	public static final float DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_X = 200;
 	public static final float DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_Y = 120;
 	
+	
+	//
+	// MINIGAMES
+	//
+	
+	// Avoid obstacles
+	public static final String AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE = "AvoidObstaclesMinigameBackground";	
+	public static final float AVOID_OBSTACLES_CAR_START_POSITION_X = DIALOG_WORLD_X_OFFSET + 30;
+	public static final float AVOID_OBSTACLES_FINISH_START_POSITION_X = WORLD_WIDTH - DIALOG_WORLD_X_OFFSET - 20;
+	public static final int AVOID_OBSTACLES_FINISH_TYPE = 1;
+	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_KIDDIE = 150;
+	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_BEGINNER = 120;
+	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_NORMAL = 90;
+	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_HARD = 60;
+	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_EXTREME = 50;
+	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_DEFAULT = 20;
+	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_CAR = 100;
+	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_FINISH = 100;
+	public static final int AVOID_OBSTACLES_NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE = 20;
+	public static final float AVOID_HOLES_FAIL_VALUE = 0.5f;
+	
+	// Gear shift
+	public static final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "GearShiftMinigameBackground";
+	public static final String GEAR_SHIFTER_TEXTURE = "gearShifter";
+	public static final float GEAR_SHIFT_FAIL_VALUE = 0.5f;
+	public static final String GEAR_SHIFT_MINIGAME_FINISH_TEXTURE = "gearShiftMinigameFinish";
+	public static final float GEAR_SHIFT_MINIGAME_FINISH_RADIUS = 30;
+	public static final float GEAR_SHIFT_MINIGAME_ROW_1 = 180;
+	public static final float GEAR_SHIFT_MINIGAME_ROW_2 = 245;
+	public static final float GEAR_SHIFT_MINIGAME_ROW_3 = 310;
+	public static final float GEAR_SHIFT_MINIGAME_COLUMN_1 = 320;
+	public static final float GEAR_SHIFT_MINIGAME_COLUMN_2 = 400;
+	public static final float GEAR_SHIFT_MINIGAME_COLUMN_3 = 480;	
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_KIDDIE = 40;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_BEGINNER = 30;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_NORMAL = 20;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD = 10;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME = 5;
+	
 	//
 	// STRINGS
 	//
@@ -192,18 +229,13 @@ public final class Constants {
 	public static final String PHASE_2_MINIGAME_FAILED = "You failed.";
 	public static final String PHASE_2_FINISH_REACHED = "Finish reached\nin time: ";
 	
+	
+	
 	//
 	// GAME OBJECTS
 	//
+	
 	public static final int CAR_TYPES_COUNT = 1;
-	public static final int FINISH_TYPES_COUNT = 1;
-	public static final int MUD_TYPES_COUNT = 3;
-	public static final int START_TYPES_COUNT = 3;
-	public static final int STONE_TYPES_COUNT = 5;
-	public static final int TREE_TYPES_COUNT = 5;
-	public static final int HOLE_TYPES_COUNT = 2;
-	
-	
 	public static final String 	CAR_TYPE_1_POSITION_0_TEXTURE_NAME = "car0";
 	public static final String 	CAR_TYPE_1_POSITION_1_TEXTURE_NAME = "car1";
 	public static final String 	CAR_TYPE_1_POSITION_2_TEXTURE_NAME = "car2";
@@ -213,18 +245,28 @@ public final class Constants {
 	public static final String 	CAR_TYPE_1_POSITION_6_TEXTURE_NAME = "car6";
 	public static final String 	CAR_TYPE_1_POSITION_7_TEXTURE_NAME = "car7";
 	
+	public static final int FINISH_TYPES_COUNT = 2;
 	public static final String 	FINISH_TEXTURE_PREFIX = "finish";
-	public static final int FINISH_BOUNDING_RADIUS = 50;
+	public static final float FINISH_BOUNDING_RADIUS = 50;
 	
+	public static final int MUD_TYPES_COUNT = 3;
 	public static final String 	MUD_TEXTURE_PREFIX = "mud";
 	
+	public static final int START_TYPES_COUNT = 3;
 	public static final String 	START_TEXTURE_PREFIX = "start";
 	
+	public static final int STONE_TYPES_COUNT = 5;
 	public static final String 	STONE_TEXTURE_PREFIX = "stone";
 	
+	public static final int TREE_TYPES_COUNT = 5;
 	public static final String 	TREE_TEXTURE_PREFIX = "tree";
 	
+	public static final int HOLE_TYPES_COUNT = 2;
 	public static final String 	HOLE_TEXTURE_NAME_PREFIX = "hole";
 	
+	public static final int AVOID_STONE_TYPES_COUNT = 15;
 	public static final String 	AVOID_STONE_TEXTURE_NAME_PREFIX = "avoidstone";
+	
+	public static final int AVOID_HOLES_TYPES_COUNT = 2;
+	public static final String 	AVOID_HOLES_TEXTURE_NAME_PREFIX = "avoidhole";
 }

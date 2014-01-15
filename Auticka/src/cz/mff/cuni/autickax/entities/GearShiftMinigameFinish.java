@@ -7,65 +7,58 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.miniGames.GearShiftMinigame;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Mud extends GameObject implements Serializable {
+public class GearShiftMinigameFinish extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 
-	public Mud(float x, float y, GameScreen gameScreen, int type) {	
+	public GearShiftMinigameFinish(float x, float y, GameScreen gameScreen) {	
 		super(x,y,gameScreen);
-		super.type = type;		
+		super.type = type;
 		this.setTexture();
+		this.boundingCircleRadius = Constants.GEAR_SHIFT_MINIGAME_FINISH_RADIUS;
 	}
-	
-	public Mud(GameObject object){
-		super(object);		
-	}
-	
 
 	@Override
 	public void update(float delta) {
 		// TODO Auto-generated method stub
-		
+	
 	}
 
 	@Override
-	public String getName() { 
-		return "mud";
+	public String getName() {
+		// TODO Auto-generated method stub
+		return "gearShiftMinigameFinish";
 	}
 
 	@Override
 	void aditionalsToXml(XmlWriter writer) throws IOException {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 		
-	/** Gets the texture name according to a type*/
-	public static  String GetTextureName(int type){
-		return Constants.MUD_TEXTURE_PREFIX + type;			
-		
-	}
 	
 	@Override
 	public GameObject copy() {
-		return new Mud(this);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void setTexture() {
-		super.setTexture(Mud.GetTextureName(type));		
+		super.setTexture(Constants.GEAR_SHIFT_MINIGAME_FINISH_TEXTURE);		
 	}
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new GearShiftMinigame(gameScreen, parent);
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_MUD;
+		return Constants.SOUND_NO_SOUND;
 	}
 
 }

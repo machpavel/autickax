@@ -7,20 +7,19 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.miniGames.GearShiftMinigame;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Mud extends GameObject implements Serializable {
+public final class AvoidHole extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public Mud(float x, float y, GameScreen gameScreen, int type) {	
+	public AvoidHole(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen);
 		super.type = type;		
 		this.setTexture();
 	}
 	
-	public Mud(GameObject object){
+	public AvoidHole(GameObject object){
 		super(object);		
 	}
 	
@@ -32,8 +31,8 @@ public final class Mud extends GameObject implements Serializable {
 	}
 
 	@Override
-	public String getName() { 
-		return "mud";
+	public String getName() {		
+		return "avoidhole";
 	}
 
 	@Override
@@ -41,31 +40,32 @@ public final class Mud extends GameObject implements Serializable {
 		// TODO Auto-generated method stub
 		
 	}
-		
+	
+	
 	/** Gets the texture name according to a type*/
 	public static  String GetTextureName(int type){
-		return Constants.MUD_TEXTURE_PREFIX + type;			
+		return Constants.AVOID_HOLES_TEXTURE_NAME_PREFIX + type;
 		
 	}
 	
 	@Override
 	public GameObject copy() {
-		return new Mud(this);
+		return new AvoidHole(this);
 	}
 
 	@Override
 	public void setTexture() {
-		super.setTexture(Mud.GetTextureName(type));		
+		super.setTexture(AvoidHole.GetTextureName(type));		
 	}
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new GearShiftMinigame(gameScreen, parent);
+		return null;
 	}
 	
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_MUD;
+		return Constants.SOUND_HOLE;
 	}
 
 }

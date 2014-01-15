@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
@@ -94,6 +92,7 @@ public class SubLevel2 extends SubLevel {
 		case PROCEEDED_WITH_VALUE:
 			float result = this.miniGame.getResultValue();
 			// TODO: implementation of speed regulation or something like this
+			break;
 		default:
 			// TODO assert state
 			break;
@@ -167,9 +166,9 @@ public class SubLevel2 extends SubLevel {
 			Vector2 newPos = moveCarToNewPosition(delta);
 			points.add(new Vector2(newPos));
 			for (GameObject gameObject : this.level.getGameObjects()) {
-				if (this.level.getCar().collides(gameObject)) {
-
+				if (gameObject.isActive() && this.level.getCar().collides(gameObject)) {
 					playSound(gameObject);
+					gameObject.deactivate();
 					this.miniGame = gameObject.getMinigame(this.level, this);
 				}
 			}

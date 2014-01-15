@@ -260,6 +260,9 @@ public class SubLevel1 extends SubLevel {
 		initWayPoints(Constants.START_POSITION_IN_CURVE,
 				Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
 		
+		for (GameObject gameObject : this.level.getGameObjects()) {
+			gameObject.reset();
+		}
 		
 		// Car positioning
 		Vector2 carStartDirection = new Vector2(wayPoints.get(1)).sub(wayPoints.get(0)).nor(); 

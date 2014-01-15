@@ -28,13 +28,14 @@ abstract public class GameObject implements Serializable {
 	protected int height;
 	protected float rotation;
 	protected Vector2 scale = new Vector2(1, 1);
-	protected int boundingCircleRadius;
+	protected float boundingCircleRadius;
 
 	private boolean toDispose;
 	protected transient TextureRegion texture;
 
 	protected GameScreen gameScreen;
 	protected int type;
+	protected boolean isActive = true;
 
 	public GameObject(float startX, float startY, GameScreen gameScreen) {
 		this.position = new Vector2(startX, startY);
@@ -53,6 +54,12 @@ abstract public class GameObject implements Serializable {
 		this.texture = object.texture;
 		this.gameScreen = object.gameScreen;
 		this.type = object.type;
+	}
+	
+	public void reset(){
+		this.isActive = true;
+		this.rotation = 0;
+		this.scale = new Vector2(1, 1);
 	}
 
 	/** Returns position of the objects center. */
@@ -208,4 +215,11 @@ abstract public class GameObject implements Serializable {
 	public abstract Minigame getMinigame(GameScreen gameScreen, SubLevel parent);
 	
 	public abstract String getSoundName();
+	
+	public boolean isActive(){
+		return this.isActive;
+	}
+	public void deactivate(){
+		this.isActive = false;
+	}
 }
