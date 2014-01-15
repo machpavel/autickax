@@ -258,10 +258,12 @@ public final class EditorScreen extends BaseScreenEditor {
 //
 //		}
 		// car.draw(batch);
-		if (start != null)
+		if (start != null) {
 			start.draw(batch);
-		if (finish != null)
+		}
+		if (finish != null) {
 			finish.draw(batch);
+		}
 		batch.end();
 	}
 
@@ -341,10 +343,13 @@ public final class EditorScreen extends BaseScreenEditor {
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x,
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).y,
 						null, START_TYPE);
+				start.setTexture();
+				
 				finish = new Finish(
 						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x,
 						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).y,
 						null, FINISH_TYPE);
+				finish.setTexture();
 			}
 		});
 	}
