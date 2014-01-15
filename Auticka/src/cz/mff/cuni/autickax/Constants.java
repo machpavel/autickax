@@ -46,7 +46,7 @@ public final class Constants {
 	//
 	
 	/** The speed is effected by this constant when the car is out of proper surface of the pathway */
-	public static final float OUT_OF_SURFACE_PENALIZATION_FACTOR = 2.5f;
+	public static final float OUT_OF_SURFACE_PENALIZATION_FACTOR = 1.8f;
 	
 	/** Global speed. It can be used for slowing or accelerating the phase two game.*/ 
 	public static final float GLOBAL_SPEED_REGULATOR = 0.75f;

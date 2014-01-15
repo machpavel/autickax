@@ -141,7 +141,6 @@ public class SubLevel1 extends SubLevel {
 	private void updateInDrivingState(float delta) {
 		// stopped dragging
 		if (!this.level.getCar().isDragged()) {
-			if (!wayPoints.isEmpty())
 			switchToMistakeState(Constants.PHASE_1_FINISH_NOT_REACHED);
 			return;
 		} else if (timeElapsed >= timeLimit) {

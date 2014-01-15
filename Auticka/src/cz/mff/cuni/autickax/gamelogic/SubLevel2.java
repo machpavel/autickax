@@ -294,7 +294,7 @@ public class SubLevel2 extends SubLevel {
 		float distanceFromCurveCenter = distMap.At(this.level.getCar()
 				.getPosition());
 		if (distanceFromCurveCenter > difficulty.getMaxDistanceFromSurface()) {
-			penalizationFactor = Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR
+			this.penalizationFactor = Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR
 					/ (float) Math.log(distanceFromCurveCenter + 2);
 		}
 		else
