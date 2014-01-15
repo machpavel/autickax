@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 import cz.mff.cuni.autickax.input.Input;
 
@@ -23,6 +24,8 @@ public abstract class MenuTextButton extends TextButton {
 				action();
 			}
 		});
+
+		this.align(Align.top);
 	}
 	
 	@Override
