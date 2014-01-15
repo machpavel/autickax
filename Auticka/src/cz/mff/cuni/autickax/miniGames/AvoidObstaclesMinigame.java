@@ -22,7 +22,7 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidObstaclesMinigame extends Minigame {
-	private static final float MINIMAL_DISTANCE_TO_SHOW_ROTATION = 2;
+	private static final float MINIMAL_DISTANCE_TO_SHOW_ROTATION = 3;
 	private final float CAR_START_POSITION_X = Constants.AVOID_OBSTACLES_CAR_START_POSITION_X;
 	private final float FINISH_START_POSITION_X = Constants.AVOID_OBSTACLES_FINISH_START_POSITION_X;
 	private final int FINISH_TYPE = Constants.AVOID_OBSTACLES_FINISH_TYPE;	

@@ -9,6 +9,7 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -74,6 +75,7 @@ public class Assets {
 					+ " not found it atlas");
 		}
 
+		tr.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		graphicsCacheMap.put(name, tr); // cache the result
 		return tr;
 	}
