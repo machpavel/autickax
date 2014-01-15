@@ -98,10 +98,10 @@ public final class Car extends GameObject implements Serializable {
 			// TODO: throw Exception
 		}
 		
-		Color c = batch.getColor();
-        batch.setColor(c.r, c.g, c.b, .3f);
+		//Color c = batch.getColor();
+        //batch.setColor(c.r, c.g, c.b, 1f);
 		super.draw(batch);		 		
-        batch.setColor(c.r, c.g, c.b, 1f);
+        //batch.setColor(c.r, c.g, c.b, 1f);
 	}
 	
 	@Override

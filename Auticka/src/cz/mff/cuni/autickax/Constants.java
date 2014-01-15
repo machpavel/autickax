@@ -237,7 +237,7 @@ public final class Constants {
 	// GAME OBJECTS
 	//
 	
-	public static final float CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION = 10;
+	public static final float CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION = 30;
 	public static final int CAR_TYPES_COUNT = 1;
 	public static final String 	CAR_TYPE_1_POSITION_0_TEXTURE_NAME = "car0";
 	public static final String 	CAR_TYPE_1_POSITION_1_TEXTURE_NAME = "car1";
