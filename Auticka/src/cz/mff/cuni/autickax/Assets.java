@@ -107,7 +107,7 @@ public class Assets {
 		raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_RACE_PATH));
 	}
 
-	private Sound getSound(String name) {
+	Sound getSound(String name) {
 		if (soundsMap.containsKey(name)) { // Reuse cached result
 			return soundsMap.get(name);
 		}

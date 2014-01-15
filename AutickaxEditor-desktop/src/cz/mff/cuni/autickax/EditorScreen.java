@@ -41,7 +41,6 @@ import cz.mff.cuni.autickax.myInputListener.PlacedObjectsInputListener;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
 import cz.mff.cuni.autickax.pathway.Vector2i;
-import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class EditorScreen extends BaseScreenEditor {
 	// Constants
