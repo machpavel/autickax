@@ -16,6 +16,7 @@ import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.ISpeedRegulator;
+import cz.mff.cuni.autickax.miniGames.MiniGameStatistics;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -43,6 +44,7 @@ public class SubLevel2 extends SubLevel {
 	private Difficulty difficulty;
 	
 	private TimeStatusBar timeStatusBar;
+	private MiniGameStatistics miniGameStats;
 
 	public enum SubLevel2States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
@@ -65,6 +67,7 @@ public class SubLevel2 extends SubLevel {
 		speedModifiers.add(Constants.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
+		miniGameStats = new MiniGameStatistics();
 	}
 
 	@Override
@@ -94,11 +97,14 @@ public class SubLevel2 extends SubLevel {
 		switch (this.miniGame.getResult()) {
 		case FAILED:
 			this.dialog = new DecisionDialog(this.level, this, Constants.PHASE_2_MINIGAME_FAILED, false);
+			miniGameStats.increaseFailed();
 			break;
 		case PROCEEDED:
 			// Just continue normally.
+			miniGameStats.increaseSucceeded();
 			break;
 		case PROCEEDED_WITH_VALUE:
+			miniGameStats.increaseFailed();
 			float result = this.miniGame.getResultValue();
 			if (miniGame instanceof ISpeedRegulator)
 			{
@@ -186,6 +192,7 @@ public class SubLevel2 extends SubLevel {
 			for (GameObject gameObject : this.level.getGameObjects()) {
 				if (gameObject.isActive() && this.level.getCar().collides(gameObject)) {
 					playSound(gameObject);
+					miniGameStats.increaseCollisions();
 					gameObject.deactivate();
 					this.miniGame = gameObject.getMinigame(this.level, this);
 				}
