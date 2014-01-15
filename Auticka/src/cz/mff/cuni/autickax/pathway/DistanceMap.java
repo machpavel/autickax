@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import java.util.Queue;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
@@ -139,10 +140,10 @@ public class DistanceMap implements java.io.Serializable {
                         currentPoint = nodesToSearch.poll();                        
                 }                                                                        
         }
-        
+        float PATHWAY_BORDER_DISTANCE = 10;
         public TextureRegion generateTexture(Difficulty difficulty) {
                 Pixmap pixmap = new Pixmap(1024, 512, Format.RGBA8888);
-                pixmap.setColor( 0.75f, 0.7f, 0.6f, 0.9f );
+                
                 for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
                         for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
 
@@ -151,7 +152,14 @@ public class DistanceMap implements java.io.Serializable {
                                                 - row - 1);
 
                                 if (distance < difficulty.getMaxDistanceFromSurface()) {
+                                		pixmap.setColor(Constants.PATHWAY_COLOR);
                                         pixmap.drawPixel(column, row);
+                                }
+                                if (distance < difficulty.getMaxDistanceFromSurface() + PATHWAY_BORDER_DISTANCE){                                	
+                                	float alpha = 1 - (distance - difficulty.getMaxDistanceFromSurface()) / PATHWAY_BORDER_DISTANCE;
+                                	Color color = new Color (Constants.PATHWAY_COLOR.r, Constants.PATHWAY_COLOR.g, Constants.PATHWAY_COLOR.b, alpha);
+                                	pixmap.setColor(color);
+                                	pixmap.drawPixel(column, row);
                                 }
                         }
                 }

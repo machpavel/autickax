@@ -1,11 +1,15 @@
 package cz.mff.cuni.autickax;
 
+import com.badlogic.gdx.graphics.Color;
+
 public final class Constants {
 
 	
 	//
 	// PATHWAY
 	//
+	
+	public static final Color PATHWAY_COLOR = new Color( 0.75f, 0.7f, 0.6f, 0.9f );
 	
 	/** Determines where is located start on the curve in percents*/
 	public static final float START_POSITION_IN_CURVE = 0;
