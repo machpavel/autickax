@@ -1,11 +1,9 @@
 package cz.mff.cuni.autickax.scene;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 /*import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;*/
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cz.mff.cuni.autickax.Autickax;
@@ -26,7 +24,8 @@ public class MainMenuScreen extends BaseScreen {
 
 	public MainMenuScreen() {
 		super();
-		getGame().assets.playMenuMusic();
+		
+		this.playMenuMusic();
 
 		// Background
 		Image background = new Image(getGame().assets.getGraphics(Constants.MAIN_MENU_BACKGROUND));
@@ -158,7 +157,7 @@ public class MainMenuScreen extends BaseScreen {
 				Interpolation.elasticOut));*/
 	}
 	
-	private void initMenuMusic()
+	private void playMenuMusic()
 	{
 		Music menuMusic = getGame().assets.menuMusic;
 		menuMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
