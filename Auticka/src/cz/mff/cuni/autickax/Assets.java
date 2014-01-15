@@ -33,8 +33,8 @@ public class Assets {
 
 	private Map<String, Sound> soundsMap;
 	
-	public Music raceMusic;
-	public Music menuMusic;
+	private Music raceMusic;
+	private Music menuMusic;
 
 	public Assets() {
 		assetManager = new AssetManager();
@@ -107,7 +107,7 @@ public class Assets {
 		raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_RACE_PATH));
 	}
 
-	public Sound getSound(String name) {
+	Sound getSound(String name) {
 		if (soundsMap.containsKey(name)) { // Reuse cached result
 			return soundsMap.get(name);
 		}
@@ -155,5 +155,44 @@ public class Assets {
 	public BitmapFont getTimeIntFont()
 	{
 		return assetManager.get(TIME_INT_FONT, BitmapFont.class);
+	}
+	
+	public void playSound(String soundName ,float volume)
+	{
+		if (Autickax.soundEnabled)
+		{
+			Sound sound = getSound(soundName);
+			sound.play(volume);
+		}
+	}
+	
+	public void playRaceMusic()
+	{
+		if (Autickax.musicEnabled)
+		{
+			raceMusic.setLooping(true);
+			raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
+			raceMusic.play();
+		}
+	}
+	
+	public void playMenuMusic()
+	{
+		if (Autickax.musicEnabled)
+		{
+			menuMusic.setLooping(true);
+			menuMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
+			menuMusic.play();
+		}
+	}
+	
+	public void pauseMenuMusic()
+	{
+		menuMusic.pause();
+	}
+	
+	public void stopRaceMusic()
+	{
+		raceMusic.stop();
 	}
 }

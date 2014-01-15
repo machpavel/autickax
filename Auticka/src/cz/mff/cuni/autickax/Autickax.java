@@ -1,6 +1,7 @@
 package cz.mff.cuni.autickax;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.audio.Sound;
 
 import cz.mff.cuni.autickax.scene.DifficultySelectScreen;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -29,6 +30,8 @@ public class Autickax extends Game {
 		_instance = this;
 		assets = new Assets();
 	}
+	
+
 	
 
 	@Override

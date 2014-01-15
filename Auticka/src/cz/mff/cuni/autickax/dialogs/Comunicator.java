@@ -50,6 +50,9 @@ public abstract class Comunicator extends SubLevel{
 		return this.status;
 	}
 		
+	protected void endCommunication(){
+		this.stage.dispose();
+	}
 	
 	public boolean isInProgress(){
 		return getStatus() == DialogAbstractStatus.IN_PROGRESS;

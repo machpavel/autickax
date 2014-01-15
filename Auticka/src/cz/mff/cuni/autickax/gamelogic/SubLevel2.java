@@ -2,14 +2,11 @@ package cz.mff.cuni.autickax.gamelogic;
 
 import java.util.LinkedList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
-import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
@@ -17,7 +14,6 @@ import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.ISpeedRegulator;
-import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
 

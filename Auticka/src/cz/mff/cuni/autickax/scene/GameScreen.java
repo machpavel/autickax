@@ -57,11 +57,6 @@ public class GameScreen extends BaseScreen {
 	
 	private final Difficulty difficulty;
 	
-	public GameScreen(){
-		this.difficulty = null;
-		//this is constructor just for designer
-	}
-	
 	// Creates instance according to a given xml file
 	public GameScreen(LevelLoading level, Difficulty difficulty) {
 		super();
@@ -170,8 +165,8 @@ public class GameScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
-		this.getGame().assets.raceMusic.stop();
-		this.getGame().assets.menuMusic.play();
+		this.getGame().assets.stopRaceMusic();
+		this.getGame().assets.playMenuMusic();
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
 		this.getGame().setScreen(Autickax.levelSelectScreen);
