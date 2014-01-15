@@ -32,8 +32,9 @@ public class DecisionDialog extends Dialog {
 			@Override
 			public void action() {
 				status = DialogAbstractStatus.FINISHED;
-				decision = DecisionType.CONTINUE;
+				decision = DecisionType.CONTINUE;				
 				parent.onDialogEnded();
+				endCommunication();
 			}
 		};
 		buttonContinue.setPosition(
@@ -54,8 +55,9 @@ public class DecisionDialog extends Dialog {
 			@Override
 			public void action() {
 				status = DialogAbstractStatus.FINISHED;
-				decision = DecisionType.RESTART;
+				decision = DecisionType.RESTART;				
 				parent.onDialogEnded();
+				endCommunication();
 			}
 		};
 		buttonRestart.setPosition(
@@ -77,6 +79,7 @@ public class DecisionDialog extends Dialog {
 				status = DialogAbstractStatus.FINISHED;
 				decision = DecisionType.GO_TO_MAIN_MENU;
 				parent.onDialogEnded();
+				endCommunication();
 			}
 		};
 		buttonGoToMainMenu.setPosition(
