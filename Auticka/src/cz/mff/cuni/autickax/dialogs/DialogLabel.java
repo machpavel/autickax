@@ -13,15 +13,15 @@ public class DialogLabel extends Label {
 	
 	@Override
 	public float getPrefHeight() {
-		return super.getPrefHeight() * Input.yStretchFactorInv;
+		return super.getPrefHeight();
 	}
 	@Override
 	public float getPrefWidth() {
-		return super.getPrefWidth() * Input.xStretchFactorInv;
+		return super.getPrefWidth();
 	}
 	
 	@Override
 	public void setPosition(float x, float y) {
-		super.setPosition(x * Input.xStretchFactorInv, y * Input.yStretchFactorInv);
+		super.setPosition(x, y);
 	}
 }
