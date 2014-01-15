@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
@@ -15,6 +16,8 @@ import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
+import cz.mff.cuni.autickax.miniGames.ISpeedRegulator;
+import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -31,6 +34,8 @@ public class SubLevel2 extends SubLevel {
 	private Vector2 velocity;
 	private float velocityMagnitude;
 	private float penalizationFactor = 1f;
+	private LinkedList<Float> speedModifiers = new LinkedList<Float>();
+	private float speedModifierValue = 1f;
 
 	private float timeElapsed = 0;
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
@@ -55,6 +60,8 @@ public class SubLevel2 extends SubLevel {
 		this.from = this.checkpoints.removeFirst();
 		this.to = this.checkpoints.removeFirst();
 		this.level.getCar().move(this.from.position);
+		speedModifiers.add(Constants.GLOBAL_SPEED_REGULATOR);
+		computeSpeedModifierValue();
 		computeVelocity();
 	}
 
@@ -91,7 +98,12 @@ public class SubLevel2 extends SubLevel {
 			break;
 		case PROCEEDED_WITH_VALUE:
 			float result = this.miniGame.getResultValue();
-			// TODO: implementation of speed regulation or something like this
+			if (miniGame instanceof ISpeedRegulator)
+			{
+				ISpeedRegulator speedMiniGame = (ISpeedRegulator)miniGame;
+				speedMiniGame.addSpeedModifier(speedModifiers);
+				computeSpeedModifierValue();
+			}
 			break;
 		default:
 			// TODO assert state
@@ -99,6 +111,8 @@ public class SubLevel2 extends SubLevel {
 		}
 		this.miniGame = null;
 	}
+	
+
 	
 	
 
@@ -199,9 +213,6 @@ public class SubLevel2 extends SubLevel {
 		this.level.getFinish().draw(batch);
 		this.level.getCar().draw(batch);
 		
-		Autickax.font.draw(batch,
-				"TOHLE SMAZAT: " + String.format("%1$,.1f", timeElapsed), 10,
-				(int) Gdx.graphics.getHeight() - 32);
 		batch.end();
 
 		if (dialog != null) {
@@ -244,12 +255,12 @@ public class SubLevel2 extends SubLevel {
 			float distToTo = new Vector2(carPosition).sub(this.to.position)
 					.len();
 			float timeNecessaire = distToTo
-					/ (this.velocityMagnitude * this.penalizationFactor);
+					/ (this.velocityMagnitude * this.penalizationFactor * this.speedModifierValue);
 
 			// move only as much as you can
 			if (timeNecessaire > timeAvailable) {
 				float dist = this.velocityMagnitude * timeAvailable
-						* penalizationFactor;
+						* this.penalizationFactor * this.speedModifierValue;
 				Vector2 traslationVec = new Vector2(this.velocity).nor().scl(
 						dist);
 				newPosition = new Vector2(carPosition);
@@ -285,9 +296,21 @@ public class SubLevel2 extends SubLevel {
 		if (distanceFromCurveCenter > difficulty.getMaxDistanceFromSurface()) {
 			penalizationFactor = Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR
 					/ (float) Math.log(distanceFromCurveCenter + 2);
-		} else
-			penalizationFactor = 1;
-		penalizationFactor *= Constants.GLOBAL_SPEED_REGULATOR;
+		}
+		else
+			this.penalizationFactor = 1f;
+			
+	}
+	
+	/**
+	 * Combine all speed modifiers into a single value - penalizationFactor
+	 */
+	private void computeSpeedModifierValue()
+	{
+		float mod = 1.0f;
+		for (Float fl: speedModifiers)
+			mod *= fl;
+		this.speedModifierValue = mod;
 	}
 
 }

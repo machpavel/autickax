@@ -46,7 +46,7 @@ public final class Constants {
 	//
 	
 	/** The speed is effected by this constant when the car is out of proper surface of the pathway */
-	public static final float OUT_OF_SURFACE_PENALIZATION_FACTOR = 1.8f;
+	public static final float OUT_OF_SURFACE_PENALIZATION_FACTOR = 2.5f;
 	
 	/** Global speed. It can be used for slowing or accelerating the phase two game.*/ 
 	public static final float GLOBAL_SPEED_REGULATOR = 0.75f;
@@ -227,6 +227,7 @@ public final class Constants {
 	public static final String PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS = "You have to drive\nalong whole\nthe pathway.";
 	public static final String PHASE_1_OUT_OF_LINE = "You have gone\nout of the\npathway.";
 	public static final String PHASE_1_FINISH_NOT_REACHED = "You have not\nreached the\nfinish";
+	public static final String PHASE_1_NOT_ALL_CHECKPOINTS = "You have not gone through all checkpoints";
 	public static final String PHASE_1_TIME_EXPIRED = "Time limit\nexceeded.";
 	
 	public static final String PHASE_2_MINIGAME_FAILED = "You failed.";
@@ -255,6 +256,7 @@ public final class Constants {
 	
 	public static final int MUD_TYPES_COUNT = 3;
 	public static final String 	MUD_TEXTURE_PREFIX = "mud";
+	public static final float MUD_SPEED_PENALIZATION = 0.9f;
 	
 	public static final int START_TYPES_COUNT = 3;
 	public static final String 	START_TEXTURE_PREFIX = "start";
@@ -271,6 +273,9 @@ public final class Constants {
 	public static final int AVOID_STONE_TYPES_COUNT = 15;
 	public static final String 	AVOID_STONE_TEXTURE_NAME_PREFIX = "avoidstone";
 	
+	
 	public static final int AVOID_HOLES_TYPES_COUNT = 2;
 	public static final String 	AVOID_HOLES_TEXTURE_NAME_PREFIX = "avoidhole";
+	public static final float AVOID_HOLES_SPEED_PENALIZATION = 0.8f;
+	
 }

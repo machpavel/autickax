@@ -41,6 +41,7 @@ import cz.mff.cuni.autickax.myInputListener.PlacedObjectsInputListener;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
 import cz.mff.cuni.autickax.pathway.Vector2i;
+import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class EditorScreen extends BaseScreenEditor {
 	// Constants
@@ -91,6 +92,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	public Button draggedButton = null;
 
 	public void SetAnyButtonTouched(boolean value) {
+		System.out.println("set: " + value);
 		this.anyButtonTouched = value;
 	}
 
@@ -146,57 +148,58 @@ public final class EditorScreen extends BaseScreenEditor {
 	public void render(float delta) {
 		stage.act(delta); // don't forget to advance the stage ( input + actions
 
-		if (anyButtonTouched)
-			anyButtonTouched = false;
+		if (anyButtonTouched){
+			SetAnyButtonTouched(false);
+		}			
 		else
 			update(delta);
 
 		renderScene();
-
-		if (objectIsDragging) {
-			if (Gdx.input.isTouched()) {
-				if (this.draggedObject != null) {
-					// dragging new object
-					draggedObject.setPosition(new Vector2(Gdx.input.getX(),
-							Constants.WORLD_HEIGHT - Gdx.input.getY()));
-					batch.begin();
-					draggedObject.draw(batch);
-					batch.end();
-				} else {
-					// dragging placed object
-					this.draggedButton.setPosition (
-							Gdx.input.getX() - this.draggedButton.getWidth() / 2,
-							Constants.WORLD_HEIGHT - Gdx.input.getY() - this.draggedButton.getHeight() / 2
-						);
-				}
-			} else {
-				float x = Gdx.input.getX();
-				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
-
-				if (this.newObjectIsDragging &&
-						x > 0 && x < Constants.WORLD_WIDTH &&
-						y > 0 && y < Constants.WORLD_HEIGHT) {
-					
-							Button button = new ImageButton (
-									new TextureRegionDrawable(this.draggedObject.getTexture()),
-									new TextureRegionDrawable(this.draggedObject.getTexture())
-								);
-							
-							button.setPosition (
-									this.draggedObject.getPosition().x - this.draggedObject.getWidth() / 2,
-									this.draggedObject.getPosition().y - this.draggedObject.getHeight() / 2);
-							
-							this.gameObjects.add(this.draggedObject.copy());
-							
-							button.addListener(new PlacedObjectsInputListener(draggedObject, button, this));
-							stage.addActor(button);
-				}
-
-				objectIsDragging = false;
-				draggedObject = null;
-			}
-
-		}
+//
+//		if (objectIsDragging) {
+//			if (Gdx.input.isTouched()) {
+//				if (this.draggedObject != null) {
+//					// dragging new object
+//					draggedObject.setPosition(new Vector2(Gdx.input.getX(),
+//							Constants.WORLD_HEIGHT - Gdx.input.getY()));
+//					batch.begin();
+//					draggedObject.draw(batch);
+//					batch.end();
+//				} else {
+//					// dragging placed object
+//					this.draggedButton.setPosition (
+//							Gdx.input.getX() - this.draggedButton.getWidth() / 2,
+//							Constants.WORLD_HEIGHT - Gdx.input.getY() - this.draggedButton.getHeight() / 2
+//						);
+//				}
+//			} else {
+//				float x = Gdx.input.getX();
+//				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
+//
+//				if (this.newObjectIsDragging &&
+//						x > 0 && x < Constants.WORLD_WIDTH &&
+//						y > 0 && y < Constants.WORLD_HEIGHT) {
+//					
+//							Button button = new ImageButton (
+//									new TextureRegionDrawable(this.draggedObject.getTexture()),
+//									new TextureRegionDrawable(this.draggedObject.getTexture())
+//								);
+//							
+//							button.setPosition (
+//									this.draggedObject.getPosition().x - this.draggedObject.getWidth() / 2,
+//									this.draggedObject.getPosition().y - this.draggedObject.getHeight() / 2);
+//							
+//							this.gameObjects.add(this.draggedObject.copy());
+//							
+//							button.addListener(new PlacedObjectsInputListener(draggedObject, button, this));
+//							stage.addActor(button);
+//				}
+//
+//				objectIsDragging = false;
+//				draggedObject = null;
+//			}
+//
+//		}
 
 	}
 
@@ -211,35 +214,36 @@ public final class EditorScreen extends BaseScreenEditor {
 				Constants.WORLD_HEIGHT);
 		batch.end();
 
-		// Renders the distance map
-		// See LevelPath.createBitmap()
-		Gdx.gl.glEnable(GL10.GL_BLEND);
-		Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-		Gdx.gl10.glPointSize(1);
-		shapeRenderer.begin(ShapeType.Point);
-		pathway.CreateDistances();
-		for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
-			for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
-				// distance map is flipped to the bitmap
-				float distance = pathway.getDistanceMap().At(column, row);
-
-				if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT) {
-					shapeRenderer.setColor(196.f / 255, 154.f / 255,
-							108.f / 255, 1);
-					shapeRenderer.point(column, row, 0);
-				} else if (distance < Constants.MAX_DISTANCE_FROM_PATHWAY) {
-					// cause this is where the transparency begin
-					distance -= Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
-					float alpha = (Constants.MAX_DISTANCE_FROM_PATHWAY - distance)
-							/ Constants.MAX_DISTANCE_FROM_PATHWAY;
-					shapeRenderer.setColor(196.f / 255, 154.f / 255,
-							108.f / 255, alpha);
-					shapeRenderer.point(column, row, 0);
+		if(pathway != null && pathway.getDistanceMap() != null){
+			// Renders the distance map
+			// See LevelPath.createBitmap()
+			Gdx.gl.glEnable(GL10.GL_BLEND);
+			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+			Gdx.gl10.glPointSize(1);
+			shapeRenderer.begin(ShapeType.Point);
+			for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
+				for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
+					// distance map is flipped to the bitmap
+					float distance = pathway.getDistanceMap().At(column, row);
+	
+					if (distance < Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT) {
+						shapeRenderer.setColor(196.f / 255, 154.f / 255,
+								108.f / 255, 1);
+						shapeRenderer.point(column, row, 0);
+					} else if (distance < Constants.MAX_DISTANCE_FROM_PATHWAY) {
+						// cause this is where the transparency begin
+						distance -= Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
+						float alpha = (Constants.MAX_DISTANCE_FROM_PATHWAY - distance)
+								/ Constants.MAX_DISTANCE_FROM_PATHWAY;
+						shapeRenderer.setColor(196.f / 255, 154.f / 255,
+								108.f / 255, alpha);
+						shapeRenderer.point(column, row, 0);
+					}
 				}
 			}
+			shapeRenderer.end();
+			Gdx.gl.glDisable(GL10.GL_BLEND);
 		}
-		shapeRenderer.end();
-		Gdx.gl.glDisable(GL10.GL_BLEND);
 
 		// Renders control points
 		Gdx.gl10.glPointSize(4);
@@ -342,6 +346,7 @@ public final class EditorScreen extends BaseScreenEditor {
 				start = new Start(
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x,
 						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).y,
+<<<<<<< HEAD
 						null, START_TYPE);
 				start.setTexture();
 				
@@ -350,6 +355,13 @@ public final class EditorScreen extends BaseScreenEditor {
 						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).y,
 						null, FINISH_TYPE);
 				finish.setTexture();
+=======
+						new GameScreen() , START_TYPE);
+				finish = new Finish(
+						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x,
+						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).y,
+						new GameScreen(), FINISH_TYPE);
+>>>>>>> 461b24f64d0d36e5b67ac8a939f25dac6fb34673
 			}
 		});
 	}
