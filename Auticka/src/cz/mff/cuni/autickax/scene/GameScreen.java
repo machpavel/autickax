@@ -95,9 +95,7 @@ public class GameScreen extends BaseScreen {
 		
 		// Start Music!
 		if (Autickax.settings.playMusic) {
-			getGame().assets.raceMusic.setLooping(true);
-			getGame().assets.raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-			getGame().assets.raceMusic.play();
+			getGame().assets.playRaceMusic();
 		}
 	}
 	

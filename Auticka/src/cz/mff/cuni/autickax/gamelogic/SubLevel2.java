@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
+import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
@@ -159,8 +160,7 @@ public class SubLevel2 extends SubLevel {
 			String soundName = collisionOrigin.getSoundName();
 			if (!soundName.equals(Constants.SOUND_NO_SOUND))
 			{
-				Sound sound = this.level.getGame().assets.getSound(soundName);
-				sound.play(Constants.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
+				this.level.getGame().assets.playSound(soundName, Constants.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
 			}
 		}
 			

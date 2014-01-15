@@ -138,14 +138,14 @@ public class MainMenuScreen extends BaseScreen {
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON),
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON_HOVER)
 					);
-					getGame().assets.menuMusic.play();
+					getGame().assets.playMenuMusic();
 				}
 				else {
 					buttonMusic.setStyle(
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF),
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF_HOVER)
 					);
-					getGame().assets.menuMusic.pause();
+					getGame().assets.playMenuMusic();
 				}
 			}
 		};
@@ -159,13 +159,7 @@ public class MainMenuScreen extends BaseScreen {
 	
 	private void playMenuMusic()
 	{
-		Music menuMusic = getGame().assets.menuMusic;
-		menuMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-		menuMusic.setLooping(true);
-		
-		if (Autickax.settings.playMusic) {
-			menuMusic.play();
-		}
+		getGame().assets.playMenuMusic();
 	}
 
 

@@ -159,7 +159,7 @@ public class Assets {
 	
 	public void playSound(String soundName ,float volume)
 	{
-		if (Autickax.soundEnabled)
+		if (Autickax.settings.playSounds)
 		{
 			Sound sound = getSound(soundName);
 			sound.play(volume);
@@ -168,7 +168,7 @@ public class Assets {
 	
 	public void playRaceMusic()
 	{
-		if (Autickax.musicEnabled)
+		if (Autickax.settings.playMusic)
 		{
 			raceMusic.setLooping(true);
 			raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
@@ -178,7 +178,7 @@ public class Assets {
 	
 	public void playMenuMusic()
 	{
-		if (Autickax.musicEnabled)
+		if (Autickax.settings.playMusic)
 		{
 			menuMusic.setLooping(true);
 			menuMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);

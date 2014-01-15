@@ -63,8 +63,7 @@ public class SubLevel1 extends SubLevel {
 	private void playStartEngineSound()
 	{
 		if (Autickax.settings.playSounds) {
-			Sound engine = this.level.getGame().assets.getSound(Constants.SOUND_ENGINE_START);
-			engine.play(Constants.SOUND_ENGINE_VOLUME);
+			this.level.getGame().assets.playSound(Constants.SOUND_ENGINE_START, Constants.SOUND_ENGINE_VOLUME);
 		}
 	}
 	
