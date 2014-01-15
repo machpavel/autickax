@@ -14,8 +14,7 @@ public final class AvoidHole extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public AvoidHole(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen);
-		super.type = type;
+		super(x,y,gameScreen, type);
 	}
 	
 	public AvoidHole(GameObject object){
@@ -53,9 +52,11 @@ public final class AvoidHole extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
 		super.setTexture(AvoidHole.GetTextureName(type));		
 	}
+	
+	
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {

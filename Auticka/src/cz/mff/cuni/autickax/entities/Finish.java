@@ -15,7 +15,7 @@ public class Finish extends GameObject implements Serializable {
 	
 
 	public Finish(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen);
+		super(x,y,gameScreen, type);
 		super.type = type;
 		this.boundingCircleRadius = Constants.FINISH_BOUNDING_RADIUS;
 	}
@@ -49,7 +49,7 @@ public class Finish extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
 		super.setTexture(Finish.GetTextureName(type));		
 	}
 

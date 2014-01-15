@@ -224,6 +224,7 @@ public final class Constants {
 	public static final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and\nreach finish";
 	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever\nto the right position";
 	public static final String PHASE_1_FINISH_REACHED = "Finish\nreached";
+	public static final String PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS = "You have to drive\nalong whole\nthe pathway.";
 	public static final String PHASE_1_OUT_OF_LINE = "You have gone\nout of the\npathway.";
 	public static final String PHASE_1_FINISH_NOT_REACHED = "You have not\nreached the\nfinish";
 	public static final String PHASE_1_TIME_EXPIRED = "Time limit\nexceeded.";
@@ -237,6 +238,7 @@ public final class Constants {
 	// GAME OBJECTS
 	//
 	
+	public static final float CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION = 30;
 	public static final int CAR_TYPES_COUNT = 1;
 	public static final String 	CAR_TYPE_1_POSITION_0_TEXTURE_NAME = "car0";
 	public static final String 	CAR_TYPE_1_POSITION_1_TEXTURE_NAME = "car1";

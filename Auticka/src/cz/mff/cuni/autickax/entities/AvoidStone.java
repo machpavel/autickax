@@ -14,8 +14,7 @@ public final class AvoidStone extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public AvoidStone(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen);
-		super.type = type;
+		super(x,y,gameScreen, type);
 	}
 	
 	public AvoidStone(GameObject object){
@@ -53,9 +52,10 @@ public final class AvoidStone extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
 		super.setTexture(AvoidStone.GetTextureName(type));		
 	}
+		
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {

@@ -14,8 +14,7 @@ public final class Tree extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Tree(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen);
-		super.type = type;
+		super(x,y,gameScreen, type);
 	}
 	
 	public Tree(GameObject object){
@@ -50,7 +49,7 @@ public final class Tree extends GameObject implements Serializable {
 	}
 
 	@Override
-	public void setTexture() {
+	public void setTexture(int type) {
 		super.setTexture(Tree.GetTextureName(type));		
 	}
 

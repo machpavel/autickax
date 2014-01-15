@@ -267,10 +267,7 @@ public class SubLevel2 extends SubLevel {
 				timeAvailable -= timeNecessaire;
 			}
 		}
-		this.level.getCar().move(newPosition);
-		this.level.getCar().setRotation(
-				new Vector2(this.to.position).sub(this.from.position).angle());
-
+		this.level.getCar().move(newPosition);		
 		return newPosition;
 	}
 

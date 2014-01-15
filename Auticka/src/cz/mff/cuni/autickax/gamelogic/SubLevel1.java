@@ -2,18 +2,12 @@ package cz.mff.cuni.autickax.gamelogic;
 
 import java.util.LinkedList;
 
-import javax.swing.plaf.LabelUI;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
@@ -59,9 +53,7 @@ public class SubLevel1 extends SubLevel {
 		initWayPoints(Constants.START_POSITION_IN_CURVE,
 				Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
 
-		checkPoints = new LinkedList<CheckPoint>();
-		this.level.getCar().move(this.level.getStart().getPosition());
-
+		checkPoints = new LinkedList<CheckPoint>();	
 		state = SubLevel1States.BEGINNING_STATE;
 		timeLimit = tLimit;
 		
@@ -168,26 +160,26 @@ public class SubLevel1 extends SubLevel {
 		if (carPosition.x >= 0 && carPosition.x < map.getWidth()
 				&& carPosition.y >= 0 && carPosition.y < map.getHeight()) {
 
-			if (wayPoints.isEmpty()
-					&& this.level.getCar().positionCollides(
-							this.level.getFinish())) {
-				state = SubLevel1States.FINISH_STATE;
-				dialog = new DecisionDialog(this.level, this, Constants.PHASE_1_FINISH_REACHED, true);
-				timeMeasured = false;
+			if(this.level.getCar().positionCollides(this.level.getFinish())){
+				
+				if (wayPoints.isEmpty()){
+					state = SubLevel1States.FINISH_STATE;
+					dialog = new DecisionDialog(this.level, this, Constants.PHASE_1_FINISH_REACHED, true);
+					timeMeasured = false;
+					this.level.getCar().setDragged(false);
+				}
+				else{
+					switchToMistakeState(Constants.PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS);
+				}
 			}
+
 
 			// not on track OR all checkpoint not yet reached (if reached, we
 			// may have reached the finish line)
 			if (map.At(carPosition) > Constants.MAX_DISTANCE_FROM_PATHWAY) {
 				switchToMistakeState(Constants.PHASE_1_OUT_OF_LINE);
 
-			} else {
-				if (!checkPoints.isEmpty()) {
-					Vector2 lastCarPosition = checkPoints.peekLast().position;
-					this.level.getCar().setRotation(
-							new Vector2(carPosition).sub(lastCarPosition)
-									.angle());
-				}
+			} else {				
 				checkPoints.add(new CheckPoint(timeElapsed, carPosition));
 
 				if (!wayPoints.isEmpty()) {
@@ -265,11 +257,11 @@ public class SubLevel1 extends SubLevel {
 		}
 		
 		// Car positioning
-		Vector2 carStartDirection = new Vector2(wayPoints.get(1)).sub(wayPoints.get(0)).nor(); 
-		float newCarAngle = carStartDirection.angle();
-		this.level.getCar().setRotation(newCarAngle);
-		Vector2 startPosition = this.level.getStart().getPosition();
-		Vector2 newCarPosition = new Vector2(this.level.getStart().getPosition()).sub(carStartDirection.scl(Constants.CAR_DISTANCE_FROM_START));
+		Vector2 carStartDirection = new Vector2(wayPoints.get(1)).sub(wayPoints.get(0)).nor();
+		Vector2 oldPosition = this.level.getStart().getPosition();
+		Vector2 newCarPositionFarther = new Vector2(oldPosition).sub(carStartDirection.scl(Constants.CAR_DISTANCE_FROM_START*2));
+		this.level.getCar().move(newCarPositionFarther);
+		Vector2 newCarPosition = new Vector2(oldPosition).sub(carStartDirection.scl(1/2));
 		this.level.getCar().move(newCarPosition);
 		
 		
