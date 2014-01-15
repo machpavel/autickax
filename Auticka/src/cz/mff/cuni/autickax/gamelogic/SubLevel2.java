@@ -160,7 +160,7 @@ public class SubLevel2 extends SubLevel {
 			String soundName = collisionOrigin.getSoundName();
 			if (!soundName.equals(Constants.SOUND_NO_SOUND))
 			{
-				this.level.getGame().assets.playSound(soundName, Constants.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
+				this.level.getGame().assets.soundAndMusicManager.playSound(soundName, Constants.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
 			}
 		}
 			

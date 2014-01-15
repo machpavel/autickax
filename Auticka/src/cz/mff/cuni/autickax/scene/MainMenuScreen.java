@@ -138,14 +138,14 @@ public class MainMenuScreen extends BaseScreen {
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON),
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON_HOVER)
 					);
-					getGame().assets.playMenuMusic();
+					getGame().assets.soundAndMusicManager.playMenuMusic();
 				}
 				else {
 					buttonMusic.setStyle(
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF),
 							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF_HOVER)
 					);
-					getGame().assets.playMenuMusic();
+					getGame().assets.soundAndMusicManager.playMenuMusic();
 				}
 			}
 		};
@@ -159,7 +159,7 @@ public class MainMenuScreen extends BaseScreen {
 	
 	private void playMenuMusic()
 	{
-		getGame().assets.playMenuMusic();
+		getGame().assets.soundAndMusicManager.playMenuMusic();
 	}
 
 

@@ -31,10 +31,7 @@ public class Assets {
 
 	private TextureAtlas atlas;
 
-	private Map<String, Sound> soundsMap;
-	
-	private Music raceMusic;
-	private Music menuMusic;
+	public SoundAndMusicManager soundAndMusicManager;
 
 	public Assets() {
 		assetManager = new AssetManager();
@@ -95,24 +92,7 @@ public class Assets {
 		assetManager.load(GRAPHICS_FILE , TextureAtlas.class);
 	}
 
-	private void loadSounds() {
-		soundsMap = new HashMap<String, Sound>();
-		soundsMap.put(Constants.SOUND_EDITOR, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_EDITOR_PATH)));
-		soundsMap.put(Constants.SOUND_MUD, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_MUD_PATH)));
-		soundsMap.put(Constants.SOUND_TREE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_TREE_PATH)));
-		soundsMap.put(Constants.SOUND_HOLE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_HOLE_PATH)));
-		soundsMap.put(Constants.SOUND_STONE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_STONE_PATH)));
-		soundsMap.put(Constants.SOUND_ENGINE_START, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_ENGINE_START_PATH)));
-		menuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_MENU_PATH));
-		raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_RACE_PATH));
-	}
 
-	Sound getSound(String name) {
-		if (soundsMap.containsKey(name)) { // Reuse cached result
-			return soundsMap.get(name);
-		}
-		throw new RuntimeException("Sound " + name + " not loaded");
-	}
 
 	private void loadFont() {
 		assetManager.load(FONT_FILE, BitmapFont.class);
@@ -157,42 +137,20 @@ public class Assets {
 		return assetManager.get(TIME_INT_FONT, BitmapFont.class);
 	}
 	
-	public void playSound(String soundName ,float volume)
-	{
-		if (Autickax.settings.playSounds)
-		{
-			Sound sound = getSound(soundName);
-			sound.play(volume);
-		}
+	private void loadSounds() {
+		Map<String, Sound> soundsMap = new HashMap<String, Sound>();
+		soundsMap.put(Constants.SOUND_EDITOR, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_EDITOR_PATH)));
+		soundsMap.put(Constants.SOUND_MUD, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_MUD_PATH)));
+		soundsMap.put(Constants.SOUND_TREE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_TREE_PATH)));
+		soundsMap.put(Constants.SOUND_HOLE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_HOLE_PATH)));
+		soundsMap.put(Constants.SOUND_STONE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_STONE_PATH)));
+		soundsMap.put(Constants.SOUND_ENGINE_START, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_ENGINE_START_PATH)));
+		Music menuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_MENU_PATH));
+		Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_RACE_PATH));
+		this.soundAndMusicManager = new SoundAndMusicManager(soundsMap, raceMusic, menuMusic);
 	}
 	
-	public void playRaceMusic()
-	{
-		if (Autickax.settings.playMusic)
-		{
-			raceMusic.setLooping(true);
-			raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-			raceMusic.play();
-		}
-	}
+
 	
-	public void playMenuMusic()
-	{
-		if (Autickax.settings.playMusic)
-		{
-			menuMusic.setLooping(true);
-			menuMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
-			menuMusic.play();
-		}
-	}
-	
-	public void pauseMenuMusic()
-	{
-		menuMusic.pause();
-	}
-	
-	public void stopRaceMusic()
-	{
-		raceMusic.stop();
-	}
+
 }
