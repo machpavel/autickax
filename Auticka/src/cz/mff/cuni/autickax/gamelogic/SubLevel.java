@@ -23,14 +23,19 @@ public abstract class SubLevel {
 		this.dialog = dialog;
 	}
 	
+	public void takeFocus(){
+		Gdx.input.setInputProcessor(this.level.getStage());
+		Gdx.input.setCatchBackKey(true);
+	}
+	
 	protected void eraseDialog(){
 		this.dialog = null;
-		Gdx.input.setInputProcessor(this.level.getStage());
+		takeFocus();
 	}
 	
 	protected void eraseMinigame(){
 		this.miniGame= null;
-		Gdx.input.setInputProcessor(this.level.getStage());
+		takeFocus();
 	}
 	
 	public abstract void update(float delta);
