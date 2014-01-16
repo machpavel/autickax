@@ -116,6 +116,12 @@ public final class Constants {
 	// SERIALIZATION
 	//
 	public static final String PREFERENCES_FILENAME = "cz.cuni.mff.autickax.preferences";
+	public static final String PLAYED_LEVELS_FILENAME = "cz.cuni.mff.autickax.playedLevels";
+	public static final String PLAYED_LEVELS_KIDDIE_NAME = "kiddieLevels";
+	public static final String PLAYED_LEVELS_BEGINNER_NAME = "beginnerLevels";
+	public static final String PLAYED_LEVELS_NORMAL_NAME = "normalLevels";
+	public static final String PLAYED_LEVELS_HARD_NAME = "hardLevels";
+	public static final String PLAYED_LEVELS_EXTREME_NAME = "extremeLevels";
 	
 	
 	
