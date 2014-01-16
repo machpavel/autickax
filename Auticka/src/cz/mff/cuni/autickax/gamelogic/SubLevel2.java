@@ -262,13 +262,14 @@ public class SubLevel2 extends SubLevel {
 		
 		batch.end();
 
+		timeStatusBar.draw(batch);
+		
 		if (dialog != null) {
 			dialog.draw(batch);
 		}
 		else if (miniGame != null) {
 			miniGame.draw(batch);
 		}
-		timeStatusBar.draw(batch);
 	}
 
 	public void render() {
@@ -399,7 +400,7 @@ public class SubLevel2 extends SubLevel {
 	
 	//TODO implement this piece of shit!!!!!!
 	private boolean isNextLevelAvaible(){
-		return false;
+		return true;
 	}
 
 }

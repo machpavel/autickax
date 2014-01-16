@@ -23,6 +23,7 @@ public class Assets {
 	private static final String FONT_FILE = "fonts/font.fnt";
 	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
 	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
+	private static final String FINISH_DIALOG_FONT_FILE = "fonts/finishDialog.fnt";
 	private static final String TIME_STRINGS_FONT = "fonts/timeString.fnt";
 	private static final String TIME_INT_FONT = "fonts/timeInt.fnt";
 	private static final String LEVEL_NUMBER_FONT = "fonts/levels.fnt";
@@ -99,6 +100,7 @@ public class Assets {
 		assetManager.load(FONT_FILE, BitmapFont.class);
 		assetManager.load(MENU_FONT_FILE, BitmapFont.class);
 		assetManager.load(DIALOG_FONT_FILE, BitmapFont.class);
+		assetManager.load(FINISH_DIALOG_FONT_FILE, BitmapFont.class);
 		assetManager.load(TIME_INT_FONT, BitmapFont.class);
 		assetManager.load(TIME_STRINGS_FONT, BitmapFont.class);
 		assetManager.load(LEVEL_NUMBER_FONT, BitmapFont.class);
@@ -119,6 +121,10 @@ public class Assets {
 
 	public BitmapFont getDialogFont() {
 		return assetManager.get(DIALOG_FONT_FILE, BitmapFont.class);
+	}
+	
+	public BitmapFont getFinishDialogFont() {
+		return assetManager.get(FINISH_DIALOG_FONT_FILE, BitmapFont.class);
 	}
 		
 	public AvailableLevels getAvailableLevels() {
