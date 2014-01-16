@@ -89,7 +89,7 @@ public class SubLevel2 extends SubLevel {
 			// TODO assert for type
 			break;
 		}
-		this.dialog = null;
+		eraseDialog();
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class SubLevel2 extends SubLevel {
 			// TODO assert state
 			break;
 		}
-		this.miniGame = null;
+		eraseMinigame();
 	}
 	
 
@@ -227,7 +227,7 @@ public class SubLevel2 extends SubLevel {
 			// TODO assert for type
 			break;
 		}
-		this.dialog = null;
+		eraseDialog();
 	}
 	
 	private void updateInFinishState(float delta) {

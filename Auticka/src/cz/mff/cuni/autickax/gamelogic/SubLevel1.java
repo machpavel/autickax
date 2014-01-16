@@ -75,12 +75,12 @@ public class SubLevel1 extends SubLevel {
 			// TODO assert for type
 			break;
 		}
-		this.dialog = null;
+		eraseDialog();
 	}
 
 	@Override
 	public void onMinigameEnded() {
-		// TODO Auto-generated method stub
+		eraseMinigame();
 		
 	}
 
@@ -238,7 +238,9 @@ public class SubLevel1 extends SubLevel {
 	 * or makes a discontinuous move
 	 */
 	public void reset() {
-		this.miniGame = null;
+		eraseDialog();
+		eraseMinigame();
+		
 		if (Autickax.settings.showTooltips)
 			this.dialog = new MessageDialog(this.level, this, 
 					Constants.TOOLTIP_PHASE_1_WHAT_TO_DO);

@@ -1,5 +1,6 @@
 package cz.mff.cuni.autickax.gamelogic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -20,6 +21,16 @@ public abstract class SubLevel {
 	
 	public void setDialog(Dialog dialog){
 		this.dialog = dialog;
+	}
+	
+	protected void eraseDialog(){
+		this.dialog = null;
+		Gdx.input.setInputProcessor(this.level.getStage());
+	}
+	
+	protected void eraseMinigame(){
+		this.miniGame= null;
+		Gdx.input.setInputProcessor(this.level.getStage());
 	}
 	
 	public abstract void update(float delta);

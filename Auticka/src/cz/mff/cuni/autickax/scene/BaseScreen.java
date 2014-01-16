@@ -31,6 +31,10 @@ public abstract class BaseScreen implements Screen {
 	protected void clearScreenWithColor() {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	}
+	public Stage getStage(){
+		return this.stage;
+	}
+	
 
 	@Override
 	public void render(float delta) {
