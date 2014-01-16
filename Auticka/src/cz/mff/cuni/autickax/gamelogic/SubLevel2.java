@@ -15,7 +15,6 @@ import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
-import cz.mff.cuni.autickax.miniGames.ISpeedRegulator;
 import cz.mff.cuni.autickax.miniGames.MiniGameStatistics;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -111,12 +110,8 @@ public class SubLevel2 extends SubLevel {
 			miniGameStats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
 			float result = this.miniGame.getResultValue();
-			if (miniGame instanceof ISpeedRegulator)
-			{
-				ISpeedRegulator speedMiniGame = (ISpeedRegulator)miniGame;
-				speedMiniGame.addSpeedModifier(speedModifiers);
-				computeSpeedModifierValue();
-			}
+			speedModifiers.add(result);
+			computeSpeedModifierValue();
 			break;
 		default:
 			// TODO assert state

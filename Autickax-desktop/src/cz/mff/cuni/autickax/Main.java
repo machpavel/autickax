@@ -11,8 +11,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "AutickaX";
 		cfg.useGL20 = false;
-		cfg.width =1100;
-		cfg.height = 600;
+		cfg.width =800;
+		cfg.height = 480;
 		
 		
 		new LwjglApplication(new Autickax(), cfg);
