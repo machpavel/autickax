@@ -96,7 +96,7 @@ public class SubLevel2 extends SubLevel {
 	public void onMinigameEnded() {
 		switch (this.miniGame.getResult()) {
 		case FAILED:
-			this.dialog = new DecisionDialog(this.level, this, Constants.PHASE_2_MINIGAME_FAILED, false);
+			this.dialog = new DecisionDialog(this.level, this, this.miniGame.getResultFailMessage(), false);
 			miniGameStats.increaseFailed();
 			break;
 		case PROCEEDED:
@@ -104,6 +104,8 @@ public class SubLevel2 extends SubLevel {
 			miniGameStats.increaseSucceeded();
 			break;
 		case PROCEEDED_WITH_VALUE:
+			if (Autickax.settings.showTooltips)
+				this.dialog = new MessageDialog(this.level, this, this.miniGame.getResultFailMessage());
 			miniGameStats.increaseFailed();
 			float result = this.miniGame.getResultValue();
 			if (miniGame instanceof ISpeedRegulator)

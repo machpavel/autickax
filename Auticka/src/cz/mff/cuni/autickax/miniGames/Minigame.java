@@ -8,6 +8,7 @@ public abstract class Minigame extends Comunicator {
 
 	protected ResultType result;
 	protected float resultValue;
+	protected String resultFailMessage;
 	
 	public Minigame(GameScreen gameScreen, SubLevel parent) {
 		super(gameScreen, parent);
@@ -19,6 +20,10 @@ public abstract class Minigame extends Comunicator {
 	}
 	public float getResultValue(){
 		return this.resultValue;
+	}
+	
+	public String getResultFailMessage(){
+		return resultFailMessage;
 	}
 	
 	public enum ResultType{

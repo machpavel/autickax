@@ -11,17 +11,22 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public class Crash extends Minigame {
 
 	public Crash(GameScreen gameScreen, SubLevel parent) {
-		super(gameScreen, parent);
-		if(Autickax.settings.showTooltips)
+		super(gameScreen, parent);		
+		this.resultFailMessage = Constants.TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO;	
+		if (Autickax.settings.showTooltips)
 			this.parent.setDialog(new MessageDialog(gameScreen, parent, Constants.TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO));
 	}
 
-	@Override
-	public void update(float delta) {
+	private void fail(){
 		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.FAILED;
 		this.resultValue = 0;
-		parent.onMinigameEnded();		
+		this.resultFailMessage = Constants.PHASE_2_MINIGAME_FAILED;
+		parent.onMinigameEnded();	
+	}
+	@Override
+	public void update(float delta) {
+		fail();
 	}
 
 	@Override
