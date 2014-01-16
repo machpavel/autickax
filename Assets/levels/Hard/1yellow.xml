@@ -1,0 +1,75 @@
+<AutickaX>
+	<pathway pathwayType="OPENED" typeOfInterpolation="CUBIC_B_SPLINE" textureType="0">
+		<controlPoints>
+			<point X="715.0" Y="72.0"/>
+			<point X="676.0" Y="65.0"/>
+			<point X="621.0" Y="72.0"/>
+			<point X="542.0" Y="94.0"/>
+			<point X="538.0" Y="156.0"/>
+			<point X="575.0" Y="192.0"/>
+			<point X="625.0" Y="192.0"/>
+			<point X="689.0" Y="194.0"/>
+			<point X="712.0" Y="235.0"/>
+			<point X="700.0" Y="317.0"/>
+			<point X="622.0" Y="327.0"/>
+			<point X="549.0" Y="320.0"/>
+			<point X="487.0" Y="387.0"/>
+			<point X="524.0" Y="437.0"/>
+			<point X="595.0" Y="437.0"/>
+			<point X="607.0" Y="382.0"/>
+			<point X="555.0" Y="303.0"/>
+			<point X="484.0" Y="272.0"/>
+			<point X="390.0" Y="310.0"/>
+			<point X="378.0" Y="375.0"/>
+			<point X="307.0" Y="415.0"/>
+			<point X="259.0" Y="397.0"/>
+			<point X="259.0" Y="349.0"/>
+			<point X="240.0" Y="319.0"/>
+			<point X="168.0" Y="307.0"/>
+			<point X="98.0" Y="323.0"/>
+			<point X="49.0" Y="410.0"/>
+			<point X="114.0" Y="456.0"/>
+			<point X="143.0" Y="430.0"/>
+			<point X="146.0" Y="383.0"/>
+			<point X="99.0" Y="316.0"/>
+			<point X="69.0" Y="256.0"/>
+			<point X="89.0" Y="194.0"/>
+			<point X="166.0" Y="183.0"/>
+			<point X="243.0" Y="230.0"/>
+			<point X="322.0" Y="241.0"/>
+			<point X="396.0" Y="217.0"/>
+			<point X="368.0" Y="159.0"/>
+			<point X="238.0" Y="143.0"/>
+			<point X="128.0" Y="138.0"/>
+			<point X="51.0" Y="95.0"/>
+			<point X="122.0" Y="60.0"/>
+			<point X="246.0" Y="58.0"/>
+			<point X="334.0" Y="88.0"/>
+			<point X="411.0" Y="95.0"/>
+			<point X="446.0" Y="70.0"/>
+			<point X="507.0" Y="49.0"/>
+		</controlPoints>
+	</pathway>
+	<entities>
+		<mud X="754.0" Y="349.0" type="17"/>
+		<mud X="582.0" Y="256.0" type="17"/>
+		<mud X="153.0" Y="439.0" type="17"/>
+		<mud X="675.0" Y="175.0" type="11"/>
+		<mud X="523.0" Y="374.0" type="2"/>
+		<mud X="212.0" Y="299.0" type="1"/>
+		<tree X="91.0" Y="260.0" type="9"/>
+		<tree X="694.0" Y="303.0" type="7"/>
+		<tree X="109.0" Y="105.0" type="7"/>
+		<stone X="321.0" Y="77.0" type="4"/>
+		<stone X="277.0" Y="85.0" type="4"/>
+		<stone X="240.0" Y="55.0" type="4"/>
+		<stone X="146.0" Y="76.0" type="4"/>
+		<tree X="344.0" Y="201.0" type="17"/>
+		<mud X="183.0" Y="172.0" type="17"/>
+	</entities>
+	<car X="0.0" Y="0.0" type="1"/>
+	<start X="673.3334" Y="67.333336" type="4"/>
+	<finish X="450.33334" Y="70.666664" type="2"/>
+	<levelBackgroundType>19</levelBackgroundType>
+	<timeLimit>10.0</timeLimit>
+</AutickaX>

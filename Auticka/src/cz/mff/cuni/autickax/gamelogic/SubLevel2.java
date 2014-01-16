@@ -122,6 +122,10 @@ public class SubLevel2 extends SubLevel {
 			break;
 		}
 		eraseMinigame();
+				
+		if(dialog != null){
+			dialog.takeFocus();
+		}
 	}
 	
 
@@ -216,7 +220,7 @@ public class SubLevel2 extends SubLevel {
 		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
 		
 		switch (this.dialog.getDecision()) {
-			case CONTINUE:
+			case CONTINUE:				
 				this.level.playNextLevel(this);
 				break;
 			case RESTART:
