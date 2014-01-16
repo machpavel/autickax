@@ -69,6 +69,8 @@ public class PlayedLevels {
 				
 				levels.add(new PlayedLevel(score, stars));
 			}
+		} else { // initial level must be playable
+			levels.add(new PlayedLevel(0, (byte)0));
 		}
 	}
 }
