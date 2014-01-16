@@ -45,7 +45,8 @@ public class LevelSelectScreen extends BaseScreen {
 				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL),
 				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL_HOVER),
 				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL_DISABLED),
-				this.getGame().assets.getLevelNumberFont()
+				this.getGame().assets.getLevelNumberFont(),
+				i < playedLevels.size()
 			)
 			{
 				@Override
