@@ -3,7 +3,6 @@ package cz.mff.cuni.autickax.gamelogic;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -24,6 +23,7 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
+import cz.mff.cuni.autickax.scene.LevelLoadingScreen;
 
 public class SubLevel2 extends SubLevel {
 
@@ -368,17 +368,15 @@ public class SubLevel2 extends SubLevel {
 		eraseDialog();
 		
 		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
-		Vector<LevelLoading> availableLevels = this.level.getDifficulty().getAvailableLevels();
-		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
+		this.level.getPlayedLevel().score = this.stats.getScoreFromTime();
 		
-		if (this.level.getLevelIndex() == playedLevels.size() - 1 &&
-				this.level.getLevelIndex() < availableLevels.size()) {
-			playedLevels.add(new PlayedLevel(0, (byte)0));
+		if (this.isNextLevelAvaible()) {
+			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte)0));
 		}
 		
 		switch (dialogLocal.getDecision()) {
 			case CONTINUE:				
-				this.playNextLevel(this);
+				this.playNextLevel();
 				break;
 			case RESTART:
 				this.level.switchToPhase(this.phase1);				
@@ -394,13 +392,23 @@ public class SubLevel2 extends SubLevel {
 	
 	
 	
-	public void playNextLevel(SubLevel2 caller){
-		// TODO implementation of this crap
+	public void playNextLevel(){
+		if (Autickax.levelLoadingScreen != null) {
+			Autickax.levelLoadingScreen.dispose();
+			Autickax.levelLoadingScreen = null;
+		}
+
+		Autickax.levelLoadingScreen = new LevelLoadingScreen(this.level.getLevelIndex() + 1, difficulty);
+
+		this.level.getGame().setScreen(Autickax.levelLoadingScreen);
 	}
 	
-	//TODO implement this piece of shit!!!!!!
 	private boolean isNextLevelAvaible(){
-		return true;
+		Vector<LevelLoading> availableLevels = this.level.getDifficulty().getAvailableLevels();
+		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
+		
+		return this.level.getLevelIndex() == playedLevels.size() - 1 &&
+				this.level.getLevelIndex() < availableLevels.size();
 	}
 
 }

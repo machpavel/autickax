@@ -1,7 +1,6 @@
 package cz.mff.cuni.autickax.scene;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cz.mff.cuni.autickax.Autickax;
