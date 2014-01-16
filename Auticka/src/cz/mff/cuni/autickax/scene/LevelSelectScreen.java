@@ -10,7 +10,6 @@ import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.PlayedLevel;
-import cz.mff.cuni.autickax.menu.MenuImage;
 import cz.mff.cuni.autickax.menu.MenuTextButton;
 
 public class LevelSelectScreen extends BaseScreen {
@@ -22,10 +21,6 @@ public class LevelSelectScreen extends BaseScreen {
 	private static final int buttonsMaxXPosition = 750;
 	private static final int buttonsXShift = 150;
 	private static final int buttonsYShift = 150;
-	
-	private static final int starsXStart = 32;
-	private static final int starsXShift = 30;
-	private static final int starsY = 30;
 	
 	public LevelSelectScreen(final Difficulty difficulty) {
 		
