@@ -9,39 +9,30 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
-import cz.mff.cuni.autickax.menu.MenuLabel;
+import cz.mff.cuni.autickax.menu.MenuImage;
 import cz.mff.cuni.autickax.menu.MenuTextButton;
 
 public class LevelSelectScreen extends BaseScreen {
 	
 	private final Difficulty difficulty;
 	
-	private static final int buttonsStartXPosition = 10;
-	private static final int buttonsStartYPosition = 200;
+	private static final int buttonsStartXPosition = 20;
+	private static final int buttonsStartYPosition = 310;
 	private static final int buttonsMaxXPosition = 750;
 	private static final int buttonsXShift = 150;
 	private static final int buttonsYShift = 150;
+	
+	private static final int starsXStart = 32;
+	private static final int starsXShift = 30;
+	private static final int starsY = 30;
 	
 	public LevelSelectScreen(final Difficulty difficulty) {
 		
 		this.difficulty = difficulty;
 		
-		String difficultyDescription;
-		switch (this.difficulty) {
-			case Kiddie: difficultyDescription = "obtížnost: dìcko"; break;
-			case Beginner: difficultyDescription = "obtížnost: lehká"; break;
-			case Normal: difficultyDescription = "obtížnost: normální"; break;
-			case Hard: difficultyDescription = "obtížnost: tìžká"; break;
-			case Extreme: difficultyDescription = "obtížnost: extrémní"; break;
-			default: difficultyDescription = "obtížnost: CHYBA!!"; break;
-		}
-		
-		MenuLabel label = new MenuLabel(difficultyDescription);
-		label.setPosition(LevelSelectScreen.buttonsStartXPosition, 400);
-		this.stage.addActor(label);
 		
 		Vector<LevelLoading> levels;
-		
+				
 		switch (this.difficulty) {
 			case Kiddie: levels = this.getGame().assets.getAvailableLevels().kiddieLevels; break;
 			case Beginner: levels = this.getGame().assets.getAvailableLevels().beginnerLevels; break;
@@ -59,7 +50,9 @@ public class LevelSelectScreen extends BaseScreen {
 			MenuTextButton levelButton = new MenuTextButton (
 				Integer.toString(i),
 				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL),
-				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL_HOVER)
+				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL_HOVER),
+				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL_DISABLED),
+				this.getGame().assets.getLevelNumberFont()
 			)
 			{
 				@Override
@@ -74,8 +67,15 @@ public class LevelSelectScreen extends BaseScreen {
 					getGame().setScreen(Autickax.gameScreen);
 				}
 			};
+			
 			levelButton.setPosition(x, y);
 			stage.addActor(levelButton);
+			
+			if (i > 5) { // for testing
+				levelButton.setDisabled(true);
+			} else {
+				drawStars((byte)(i % 4), x, y);
+			}
 			
 			if (x + LevelSelectScreen.buttonsXShift < LevelSelectScreen.buttonsMaxXPosition) {
 				x += LevelSelectScreen.buttonsXShift;
@@ -85,6 +85,22 @@ public class LevelSelectScreen extends BaseScreen {
 				y -= LevelSelectScreen.buttonsYShift;
 			}
 		}
+	}
+
+	private void drawStars(byte stars, int x, int y) {
+		byte j = 0;
+		for (; j < stars; ++j) {
+			drawStar(x, y, j, Constants.BUTTON_MENU_LEVEL_STAR_GAINED);
+		}
+		for (; j < 3; ++j) {
+			drawStar(x, y, j, Constants.BUTTON_MENU_LEVEL_STAR_UNGAINED);
+		}
+	}
+
+	private void drawStar(int x, int y, byte j, String textureName) {
+		MenuImage gainedStar = new MenuImage(this.game.assets.getGraphics(textureName));
+		gainedStar.setPosition(x + starsXStart + j * starsXShift, y + starsY);
+		stage.addActor(gainedStar);
 	}
 
 	@Override

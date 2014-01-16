@@ -116,6 +116,7 @@ public final class GearShiftMinigame extends Minigame implements ISpeedRegulator
 	
 
 	private void fail(){
+		this.resultFailMessage = Constants.TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL;
 		this.result = ResultType.PROCEEDED_WITH_VALUE;
 		this.resultValue = FAIL_VALUE; 
 		parent.onMinigameEnded();
