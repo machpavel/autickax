@@ -2,6 +2,7 @@ package cz.mff.cuni.autickax.scene;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -66,24 +67,39 @@ public class GameScreen extends BaseScreen {
 		
 		switch (difficulty) {
 		case Kiddie:
-			this.level = this.game.assets.getAvailableLevels().kiddieLevels.get(levelIndex);
-			this.playedLevel = Autickax.playedLevels.kiddieLevels.get(levelIndex);
+			loadLevels (
+				levelIndex,
+				this.game.assets.getAvailableLevels().kiddieLevels,
+				Autickax.playedLevels.kiddieLevels
+			);
 			break;
 		case Beginner:
-			this.level = this.game.assets.getAvailableLevels().beginnerLevels.get(levelIndex);
-			this.playedLevel = Autickax.playedLevels.beginnerLevels.get(levelIndex);
+			loadLevels (
+					levelIndex,
+					this.game.assets.getAvailableLevels().beginnerLevels,
+					Autickax.playedLevels.beginnerLevels
+				);
 			break;
 		case Normal:
-			this.level = this.game.assets.getAvailableLevels().normalLevels.get(levelIndex);
-			this.playedLevel = Autickax.playedLevels.normalLevels.get(levelIndex);
+			loadLevels (
+					levelIndex,
+					this.game.assets.getAvailableLevels().normalLevels,
+					Autickax.playedLevels.normalLevels
+				);
 			break;
 		case Hard:
-			this.level = this.game.assets.getAvailableLevels().hardLevels.get(levelIndex);
-			this.playedLevel = Autickax.playedLevels.hardLevels.get(levelIndex);
+			loadLevels (
+					levelIndex,
+					this.game.assets.getAvailableLevels().hardLevels,
+					Autickax.playedLevels.hardLevels
+				);
 			break;
 		case Extreme:
-			this.level = this.game.assets.getAvailableLevels().extremeLevels.get(levelIndex);
-			this.playedLevel = Autickax.playedLevels.extremeLevels.get(levelIndex);
+			loadLevels (
+					levelIndex,
+					this.game.assets.getAvailableLevels().extremeLevels,
+					Autickax.playedLevels.extremeLevels
+				);
 			break;
 			
 		default:
@@ -129,6 +145,16 @@ public class GameScreen extends BaseScreen {
 		if (Autickax.settings.playMusic) {
 			getGame().assets.soundAndMusicManager.playRaceMusic();
 		}
+	}
+
+	/**
+	 * Load level information and playedLevel information.
+	 * If the playedLevel information is not preset, adds a blank one.
+	 * @param levelIndex
+	 */
+	private void loadLevels(int levelIndex, Vector<LevelLoading> levels, Vector<PlayedLevel> playedLevels) {
+		this.level = levels.get(levelIndex);		
+		this.playedLevel = playedLevels.get(levelIndex);
 	}
 	
 	public Start getStart(){
