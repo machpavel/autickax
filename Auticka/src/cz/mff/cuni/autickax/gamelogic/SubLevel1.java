@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
@@ -20,13 +21,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class SubLevel1 extends SubLevel {
 
-	// Time
-	private float timeElapsed = 0;
-
-	/** Time available for player to finish the race */
-	private float timeLimit;
-
-	/** Path representation */
+		/** Path representation */
 	private Pathway pathway;
 
 	/** state of the phase: beginning, driving, finish, mistake - must repeat */
@@ -42,6 +37,8 @@ public class SubLevel1 extends SubLevel {
 	
 	/** true if time is being measure, false otherwise */
 	private boolean timeMeasured = false;
+	
+	private GameStatistics stats;
 
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
@@ -54,7 +51,8 @@ public class SubLevel1 extends SubLevel {
 
 		checkPoints = new LinkedList<CheckPoint>();	
 		state = SubLevel1States.BEGINNING_STATE;
-		timeLimit = tLimit;
+		
+		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 
 		
 
 		reset();
@@ -95,7 +93,7 @@ public class SubLevel1 extends SubLevel {
 		} 		
 		else {
 			if (timeMeasured)
-				timeElapsed += delta;
+				this.stats.increasePhase1ElapsedTime(delta);
 	
 			for (GameObject gameObject : this.level.getGameObjects()) {
 				gameObject.update(delta);
@@ -122,7 +120,7 @@ public class SubLevel1 extends SubLevel {
 				break;
 			}
 		}
-		timeStatusBar.update(timeElapsed);
+		timeStatusBar.update(stats.getPhase1ElapsedTime());
 		
 	}
 
@@ -133,7 +131,7 @@ public class SubLevel1 extends SubLevel {
 	}
 
 	private void updateInFinishState(float delta) {
-		this.level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this);
+		this.level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this, this.stats);
 	}
 
 	private void updateInDrivingState(float delta) {
@@ -141,7 +139,7 @@ public class SubLevel1 extends SubLevel {
 		if (!this.level.getCar().isDragged()) {
 			switchToMistakeState(Constants.PHASE_1_FINISH_NOT_REACHED);
 			return;
-		} else if (timeElapsed >= timeLimit) {
+		} else if (stats.getPhase1ElapsedTime() >= stats.getPhase1TimeLimit()) {
 			switchToMistakeState(Constants.PHASE_1_TIME_EXPIRED);
 			return;
 		}
@@ -179,7 +177,7 @@ public class SubLevel1 extends SubLevel {
 				switchToMistakeState(Constants.PHASE_1_OUT_OF_LINE);
 
 			} else {				
-				checkPoints.add(new CheckPoint(timeElapsed, carPosition));
+				checkPoints.add(new CheckPoint(stats.getPhase1ElapsedTime(), carPosition));
 
 				if (!wayPoints.isEmpty()) {
 					boolean canRemove = true;
@@ -246,7 +244,8 @@ public class SubLevel1 extends SubLevel {
 			this.dialog = new MessageDialog(this.level, this, 
 					Constants.TOOLTIP_PHASE_1_WHAT_TO_DO);
 		state = SubLevel1States.BEGINNING_STATE;
-		this.timeElapsed = 0;
+		
+		this.stats.reset();		
 		checkPoints.clear();
 		initWayPoints(Constants.START_POSITION_IN_CURVE,
 				Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
