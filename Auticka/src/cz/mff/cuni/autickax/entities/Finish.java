@@ -85,5 +85,16 @@ public class Finish extends GameObject implements Serializable {
 	public String getSoundName() {
 		return Constants.SOUND_NO_SOUND;
 	}
+	
+	//TODO delete this method and fix the reason for the issue
+	public void resetBoundingRadius()
+	{
+		this.boundingCircleRadius = Constants.FINISH_BOUNDING_RADIUS;
+	}
+	
+	public float getBoundingRadius()
+	{
+		return this.boundingCircleRadius;
+	}
 
 }

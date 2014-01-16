@@ -335,7 +335,7 @@ public final class Constants {
 	
 	public static final int FINISH_TYPES_COUNT = 2;
 	public static final String 	FINISH_TEXTURE_PREFIX = "finish";
-	public static final float FINISH_BOUNDING_RADIUS = 50;
+	public static final float FINISH_BOUNDING_RADIUS = 30;
 	
 	public static final int MUD_TYPES_COUNT = 18;
 	public static final String 	MUD_TEXTURE_PREFIX = "mud";

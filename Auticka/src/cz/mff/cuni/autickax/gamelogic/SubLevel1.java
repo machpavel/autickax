@@ -52,7 +52,8 @@ public class SubLevel1 extends SubLevel {
 		checkPoints = new LinkedList<CheckPoint>();	
 		state = SubLevel1States.BEGINNING_STATE;
 		
-		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 		
+		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 
+		this.level.getFinish().resetBoundingRadius();
 		reset();
 	}
 	
@@ -289,13 +290,20 @@ public class SubLevel1 extends SubLevel {
 		wayPoints = new LinkedList<Vector2>();
 		float step = (finish - start) / nofWayPoints;
 		Vector2 lastAdded = null;
-		float skipTwo = 2*step;
-		for (float f = start+skipTwo; f < finish; f += step) {
-			lastAdded = pathway.GetPosition(f);
-			wayPoints.add(lastAdded);
+		float sumRadii = this.level.getFinish().getBoundingRadius() + Constants.MAX_DISTANCE_FROM_PATHWAY;
+		for (float f = start; f < finish; f += step) {
+			//TODO revise
+			//do not add waypoints too close to finish
+			Vector2 pathPosition = pathway.GetPosition(f);
+			if (new Vector2(pathPosition).sub(this.level.getFinish().getPosition()).len() >   sumRadii )
+			{
+				lastAdded = pathPosition;
+				wayPoints.add(lastAdded);
+			}
 		}
-
 	}
+	
+
 
 	@Override
 	public void render() {
