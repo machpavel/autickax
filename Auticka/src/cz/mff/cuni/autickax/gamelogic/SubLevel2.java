@@ -1,6 +1,7 @@
 package cz.mff.cuni.autickax.gamelogic;
 
 import java.util.LinkedList;
+import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -11,6 +12,8 @@ import com.badlogic.gdx.math.Vector2;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.LevelLoading;
+import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.dialogs.CompleteLevelDialog;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
@@ -247,6 +250,12 @@ public class SubLevel2 extends SubLevel {
 	
 	public void onLevelComplete(){
 		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
+		Vector<LevelLoading> availableLevels = this.level.getDifficulty().getAvailableLevels();
+		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
+		
+		if (this.level.getLevelIndex() == availableLevels.size() - 1) {
+			playedLevels.add(new PlayedLevel(0, (byte)0));
+		}
 		
 		switch (this.dialog.getDecision()) {
 			case CONTINUE:				
