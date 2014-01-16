@@ -66,9 +66,14 @@ public class MainMenuScreen extends BaseScreen {
 		stage.addActor(this.buttonExit);
 		
 		// Tooltips Button------------------------------------------------
+		String tooltipsTexture = Autickax.settings.showTooltips ?
+				Constants.BUTTON_MENU_TOOLTIPS_ON : Constants.BUTTON_MENU_TOOLTIPS_OFF;
+		String tooltipsHoverTexture = Autickax.settings.showTooltips ?
+				Constants.BUTTON_MENU_TOOLTIPS_ON_HOVER : Constants.BUTTON_MENU_TOOLTIPS_OFF_HOVER;
+		
 		this.buttonTooltips = new MenuButton (
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_ON),
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_ON_HOVER)
+			getGame().assets.getGraphics(tooltipsTexture),
+			getGame().assets.getGraphics(tooltipsHoverTexture)
 		)
 		{
 			@Override
@@ -94,9 +99,14 @@ public class MainMenuScreen extends BaseScreen {
 		stage.addActor(this.buttonTooltips);
 		
 		// Sounds Button------------------------------------------------
+		String soundsTexture = Autickax.settings.playSounds ?
+				Constants.BUTTON_MENU_SOUNDS_ON : Constants.BUTTON_MENU_SOUNDS_OFF;
+		String soundsHoverTexture = Autickax.settings.playSounds ?
+				Constants.BUTTON_MENU_SOUNDS_ON_HOVER : Constants.BUTTON_MENU_SOUNDS_OFF_HOVER;
+		
 		this.buttonSounds = new MenuButton (
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_ON),
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_ON_HOVER)
+			getGame().assets.getGraphics(soundsTexture),
+			getGame().assets.getGraphics(soundsHoverTexture)
 		)
 		{
 			@Override
@@ -122,9 +132,14 @@ public class MainMenuScreen extends BaseScreen {
 		stage.addActor(this.buttonSounds);
 		
 		// Music Button------------------------------------------------
+		String musicTexture = Autickax.settings.playMusic ?
+				Constants.BUTTON_MENU_MUSIC_ON : Constants.BUTTON_MENU_MUSIC_OFF;
+		String musicHoverTexture = Autickax.settings.playMusic ?
+				Constants.BUTTON_MENU_MUSIC_ON_HOVER : Constants.BUTTON_MENU_MUSIC_OFF_HOVER;
+		
 		this.buttonMusic = new MenuButton (
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON),
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON_HOVER)
+			getGame().assets.getGraphics(musicTexture),
+			getGame().assets.getGraphics(musicHoverTexture)
 		)
 		{
 			@Override
