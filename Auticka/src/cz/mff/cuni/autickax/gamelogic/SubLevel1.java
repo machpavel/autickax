@@ -52,9 +52,7 @@ public class SubLevel1 extends SubLevel {
 		checkPoints = new LinkedList<CheckPoint>();	
 		state = SubLevel1States.BEGINNING_STATE;
 		
-		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 
-		
-
+		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 		
 		reset();
 	}
 	
@@ -256,15 +254,12 @@ public class SubLevel1 extends SubLevel {
 		}
 		
 		// Car positioning
-		Vector2 carStartDirection = new Vector2(wayPoints.get(1)).sub(wayPoints.get(0)).nor();
-		Vector2 oldPosition = this.level.getStart().getPosition();
-		Vector2 newCarPositionFarther = new Vector2(oldPosition).sub(carStartDirection.scl(Constants.CAR_DISTANCE_FROM_START*2));
-		this.level.getCar().move(newCarPositionFarther);
-		Vector2 newCarPosition = new Vector2(oldPosition).sub(carStartDirection.scl(1/2));
-		this.level.getCar().move(newCarPosition);
-		
-		
-
+		float EPSILON_F = 0.01f;
+		Vector2 startPosition = this.level.getStart().getPosition();
+		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.START_POSITION_IN_CURVE + EPSILON_F)).sub(startPosition).nor().scl(2 * Constants.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION);
+		Vector2 preparePosition = new Vector2(startPosition).sub(startDirection);						
+		this.level.getCar().move(new Vector2(preparePosition));		
+		this.level.getCar().move(new Vector2(startPosition));
 	}
 
 	/**

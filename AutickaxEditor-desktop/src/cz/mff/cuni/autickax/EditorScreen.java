@@ -257,7 +257,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		Gdx.gl10.glPointSize(4);
 		shapeRenderer.begin(ShapeType.Point);
 		for (Vector2 point : pathway.getControlPoints()) {
-			shapeRenderer.setColor(0.5f, 1f, 0.5f, 1);
+			shapeRenderer.setColor(1f, 0f, 0f, 1);
 			shapeRenderer.point(point.x, point.y, 0);
 		}
 		shapeRenderer.end();
