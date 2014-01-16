@@ -80,12 +80,15 @@ public final class Constants {
 	public static final String 	BUTTON_MENU_EXIT = "menuExit";
 	public static final String 	BUTTON_MENU_EXIT_HOVER = "menuExitHover";
 	
-	public static final String 	BUTTON_MENU_LEVEL = "menuLevel";
-	public static final String 	BUTTON_MENU_LEVEL_HOVER = "menuLevelHover";
 	public static final String 	BUTTON_MENU_LEVEL_DISABLED = "menuLevelDisabled";
-	
-	public static final String 	BUTTON_MENU_LEVEL_STAR_GAINED = "menuLevelStarGained";
-	public static final String 	BUTTON_MENU_LEVEL_STAR_UNGAINED = "menuLevelStarUngained";
+	public static final String 	BUTTON_MENU_LEVEL_NO_STAR = "menuLevelNoStar";
+	public static final String 	BUTTON_MENU_LEVEL_NO_STAR_HOVER = "menuLevelNoStarHover";
+	public static final String 	BUTTON_MENU_LEVEL_ONE_STAR = "menuLevelOneStar";
+	public static final String 	BUTTON_MENU_LEVEL_ONE_STAR_HOVER = "menuLevelOneStarHover";
+	public static final String 	BUTTON_MENU_LEVEL_TWO_STARS = "menuLevelTwoStars";
+	public static final String 	BUTTON_MENU_LEVEL_TWO_STARS_HOVER = "menuLevelTwoStarsHover";
+	public static final String 	BUTTON_MENU_LEVEL_THREE_STARS = "menuLevelThreeStars";
+	public static final String 	BUTTON_MENU_LEVEL_THREE_STARS_HOVER = "menuLevelThreeStarsHover";
 	
 	public static final String 	BUTTON_MENU_DIFFICULTY = "menuDifficulty";
 	public static final String 	BUTTON_MENU_DIFFICULTY_HOVER = "menuDifficultyHover";

@@ -40,10 +40,42 @@ public class LevelSelectScreen extends BaseScreen {
 		
 		for (int i = 0; i < levels.size(); ++i) {		
 			final int levelIndex = i;
+			
+			String buttonTexture = Constants.BUTTON_MENU_LEVEL_NO_STAR;
+			String buttonTextureHover = Constants.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
+			
+			if (i < playedLevels.size()) {
+				switch (playedLevels.get(i).starsNumber) {
+				case 0:
+					buttonTexture = Constants.BUTTON_MENU_LEVEL_NO_STAR;
+					buttonTextureHover = Constants.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
+					break;
+	
+				case 1:
+					buttonTexture = Constants.BUTTON_MENU_LEVEL_ONE_STAR;
+					buttonTextureHover = Constants.BUTTON_MENU_LEVEL_ONE_STAR_HOVER;
+					break;
+	
+				case 2:
+					buttonTexture = Constants.BUTTON_MENU_LEVEL_TWO_STARS;
+					buttonTextureHover = Constants.BUTTON_MENU_LEVEL_TWO_STARS_HOVER;
+					break;
+	
+				case 3:
+					buttonTexture = Constants.BUTTON_MENU_LEVEL_THREE_STARS;
+					buttonTextureHover = Constants.BUTTON_MENU_LEVEL_THREE_STARS_HOVER;
+					break;
+					
+				default:
+					assert true;
+					// stars cannot be more than three
+				}
+			}
+			
 			MenuTextButton levelButton = new MenuTextButton (
 				Integer.toString(i),
-				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL),
-				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL_HOVER),
+				getGame().assets.getGraphics(buttonTexture),
+				getGame().assets.getGraphics(buttonTextureHover),
 				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL_DISABLED),
 				this.getGame().assets.getLevelNumberFont(),
 				i < playedLevels.size()
@@ -68,9 +100,7 @@ public class LevelSelectScreen extends BaseScreen {
 			levelButton.setPosition(x, y);
 			stage.addActor(levelButton);
 			
-			if (i < playedLevels.size()) {
-				drawStars(playedLevels.get(i).starsNumber, x, y);
-			} else {
+			if (i >= playedLevels.size()) {
 				levelButton.setDisabled(true);
 			}
 			
@@ -82,22 +112,6 @@ public class LevelSelectScreen extends BaseScreen {
 				y -= LevelSelectScreen.buttonsYShift;
 			}
 		}
-	}
-
-	private void drawStars(byte stars, int x, int y) {
-		byte j = 0;
-		for (; j < stars; ++j) {
-			drawStar(x, y, j, Constants.BUTTON_MENU_LEVEL_STAR_GAINED);
-		}
-		for (; j < 3; ++j) {
-			drawStar(x, y, j, Constants.BUTTON_MENU_LEVEL_STAR_UNGAINED);
-		}
-	}
-
-	private void drawStar(int x, int y, byte j, String textureName) {
-		MenuImage gainedStar = new MenuImage(this.game.assets.getGraphics(textureName));
-		gainedStar.setPosition(x + starsXStart + j * starsXShift, y + starsY);
-		stage.addActor(gainedStar);
 	}
 
 	@Override
