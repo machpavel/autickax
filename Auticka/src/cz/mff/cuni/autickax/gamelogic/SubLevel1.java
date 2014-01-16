@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
+import cz.mff.cuni.autickax.dialogs.Dialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -61,7 +62,9 @@ public class SubLevel1 extends SubLevel {
 	}
 	
 	public void onDialogEnded() {
-		switch (this.dialog.getDecision()) {
+		Dialog dialogLocal = this.dialog;
+		eraseDialog();
+		switch (dialogLocal.getDecision()) {
 		case CONTINUE:
 			break;
 		case RESTART:
@@ -74,13 +77,12 @@ public class SubLevel1 extends SubLevel {
 			// TODO assert for type
 			break;
 		}
-		eraseDialog();
+		
 	}
 
 	@Override
 	public void onMinigameEnded() {
-		eraseMinigame();
-		
+		eraseMinigame();		
 	}
 
 	@Override

@@ -233,6 +233,7 @@ public class GameScreen extends BaseScreen {
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty);
 		this.getGame().setScreen(Autickax.levelSelectScreen);
+		Gdx.input.setInputProcessor(Autickax.levelSelectScreen.getStage());
 	}
 	
 	public void goToMainScreen(){

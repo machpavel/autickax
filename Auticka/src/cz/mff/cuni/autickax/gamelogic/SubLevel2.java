@@ -16,10 +16,12 @@ import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.dialogs.CompleteLevelDialog;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
+import cz.mff.cuni.autickax.dialogs.Dialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
+import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -86,32 +88,30 @@ public class SubLevel2 extends SubLevel {
 
 	@Override
 	public void onDialogEnded() {
-		switch (this.dialog.getDecision()) {
+		Dialog dialogLocal = this.dialog;
+		eraseDialog();
+		switch (dialogLocal.getDecision()) {
 		case CONTINUE:
-			// TODO show some
 			break;
 		case RESTART:
 			this.level.switchToPhase(this.phase1);
 			this.phase1.reset();
-
 			break;
 		case GO_TO_MAIN_MENU:
 			this.level.goToMainScreen();
-
 			break;
 		default:
-			// TODO assert for type
 			break;
 		}
-		eraseDialog();
+
 	}
 
 	@Override
 	public void onMinigameEnded() {
-		switch (this.miniGame.getResult()) {
+		Minigame miniGameLocal = this.miniGame;
+		switch (miniGameLocal.getResult()) {
 		case FAILED:
-			this.dialog = new DecisionDialog(this.level, this, this.miniGame.getResultFailMessage(), false);
-
+			this.dialog = new DecisionDialog(this.level, this, miniGameLocal.getResultFailMessage(), false);
 			stats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
 			break;
@@ -123,22 +123,17 @@ public class SubLevel2 extends SubLevel {
 			break;
 		case PROCEEDED_WITH_VALUE:
 			if (Autickax.settings.showTooltips)
-				this.dialog = new MessageDialog(this.level, this, this.miniGame.getResultFailMessage());
+				this.dialog = new MessageDialog(this.level, this, miniGameLocal.getResultFailMessage());
 
 			stats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
-			float result = this.miniGame.getResultValue();
+			float result = miniGameLocal.getResultValue();
 				speedModifiers.add(result);
 				computeSpeedModifierValue();
 			break;
 		default:
 			// TODO assert state
 			break;
-		}
-		eraseMinigame();
-				
-		if(dialog != null){
-			dialog.takeFocus();
 		}
 	}
 	
@@ -243,6 +238,9 @@ public class SubLevel2 extends SubLevel {
 
 	
 	public void onLevelComplete(){
+		Dialog dialogLocal = this.dialog;
+		eraseDialog();
+		
 		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
 		Vector<LevelLoading> availableLevels = this.level.getDifficulty().getAvailableLevels();
 		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
@@ -252,20 +250,17 @@ public class SubLevel2 extends SubLevel {
 			playedLevels.add(new PlayedLevel(0, (byte)0));
 		}
 		
-		switch (this.dialog.getDecision()) {
+		switch (dialogLocal.getDecision()) {
 			case CONTINUE:				
 				this.level.playNextLevel(this);
-				eraseDialog();
 				break;
 			case RESTART:
 				this.level.switchToPhase(this.phase1);				
 				break;
 			case GO_TO_MAIN_MENU:
 				this.level.goToMainScreen();
-				eraseDialog();
 				break;
 			default:
-				eraseDialog();
 				break;
 		}
 		
