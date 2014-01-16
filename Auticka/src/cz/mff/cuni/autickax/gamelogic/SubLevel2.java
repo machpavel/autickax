@@ -16,7 +16,6 @@ import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.ISpeedRegulator;
-import cz.mff.cuni.autickax.miniGames.MiniGameStatistics;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -35,8 +34,7 @@ public class SubLevel2 extends SubLevel {
 	private float penalizationFactor = 1f;
 	private LinkedList<Float> speedModifiers = new LinkedList<Float>();
 	private float speedModifierValue = 1f;
-
-	private float timeElapsed = 0;
+	
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
 
 	private SubLevel2States state = SubLevel2States.BEGINNING_STATE;
@@ -44,14 +42,14 @@ public class SubLevel2 extends SubLevel {
 	private Difficulty difficulty;
 	
 	private TimeStatusBar timeStatusBar;
-	private MiniGameStatistics miniGameStats;
+	private GameStatistics stats;
 
 	public enum SubLevel2States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
 	}
 
 	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints,
-			DistanceMap map, SubLevel1 lastPhase) {
+			DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {
 		super(gameScreen);
 
 		this.timeStatusBar = new TimeStatusBar(gameScreen);
@@ -59,6 +57,7 @@ public class SubLevel2 extends SubLevel {
 		this.checkpoints = checkpoints;
 		this.phase1 = lastPhase;
 		this.distMap = map;
+		this.stats = stats;
 
 		this.difficulty = gameScreen.getDifficulty();
 		this.from = this.checkpoints.removeFirst();
@@ -67,7 +66,6 @@ public class SubLevel2 extends SubLevel {
 		speedModifiers.add(Constants.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
-		miniGameStats = new MiniGameStatistics();
 	}
 
 	@Override
@@ -97,18 +95,18 @@ public class SubLevel2 extends SubLevel {
 		switch (this.miniGame.getResult()) {
 		case FAILED:
 			this.dialog = new DecisionDialog(this.level, this, this.miniGame.getResultFailMessage(), false);
-			miniGameStats.increaseFailed();
+			stats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
 			break;
 		case PROCEEDED:
 			// Just continue normally.
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_SUCCESS, Constants.SOUND_DEFAULT_VOLUME);
-			miniGameStats.increaseSucceeded();
+			stats.increaseSucceeded();
 			break;
 		case PROCEEDED_WITH_VALUE:
 			if (Autickax.settings.showTooltips)
 				this.dialog = new MessageDialog(this.level, this, this.miniGame.getResultFailMessage());
-			miniGameStats.increaseFailed();
+			stats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
 			float result = this.miniGame.getResultValue();
 			if (miniGame instanceof ISpeedRegulator)
@@ -131,12 +129,12 @@ public class SubLevel2 extends SubLevel {
 
 	@Override
 	public void update(float delta) {
-		timeStatusBar.update(timeElapsed);
+		timeStatusBar.update(this.stats.getPhase2ElapsedTime());
 		if (this.dialog != null) {
 			this.dialog.update(delta);
 		} else if (this.miniGame != null) {
 			this.miniGame.update(delta);
-			timeElapsed += delta;
+			this.stats.increasePhase2ElapsedTime(delta);
 		}		
 		else{
 			for (GameObject gameObject : this.level.getGameObjects()) {
@@ -185,12 +183,12 @@ public class SubLevel2 extends SubLevel {
 	}
 	
 	private void updateInDrivingState(float delta) {
-		timeElapsed += delta;
+		this.stats.increasePhase2ElapsedTime(delta);
 		// finish reached
 		if (checkpoints.isEmpty()) {
 			state = SubLevel2States.FINISH_STATE;
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_BIG_CHEER_VOLUME);
-			dialog = new MessageDialog(this.level, this, Constants.PHASE_2_FINISH_REACHED + String.format("%1$,.2f", timeElapsed));
+			dialog = new MessageDialog(this.level, this, Constants.PHASE_2_FINISH_REACHED + String.format("%1$,.2f", this.stats.getPhase2ElapsedTime()));
 		}
 		else{
 			Vector2 newPos = moveCarToNewPosition(delta);
@@ -198,7 +196,7 @@ public class SubLevel2 extends SubLevel {
 			for (GameObject gameObject : this.level.getGameObjects()) {
 				if (gameObject.isActive() && this.level.getCar().collides(gameObject)) {
 					playSound(gameObject);
-					miniGameStats.increaseCollisions();
+					stats.increaseCollisions();
 					gameObject.deactivate();
 					this.miniGame = gameObject.getMinigame(this.level, this);
 				}

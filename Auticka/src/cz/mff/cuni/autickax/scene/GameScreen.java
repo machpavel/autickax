@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
@@ -19,6 +20,7 @@ import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.gamelogic.CheckPoint;
+import cz.mff.cuni.autickax.gamelogic.GameStatistics;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.gamelogic.SubLevel1;
 import cz.mff.cuni.autickax.gamelogic.SubLevel2;
@@ -115,8 +117,8 @@ public class GameScreen extends BaseScreen {
 	public void switchToPhase(SubLevel1 phase1) {
 		this.currentPhase = phase1;
 	}
-	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, SubLevel1 lastPhase) {
-		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase);
+	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {
+		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase, stats);
 	}
 	
 	public void reset() {
