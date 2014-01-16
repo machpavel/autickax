@@ -2,6 +2,7 @@ package cz.mff.cuni.autickax.gamelogic;
 
 import java.util.LinkedList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -65,7 +66,20 @@ public class SubLevel2 extends SubLevel {
 		this.difficulty = gameScreen.getDifficulty();
 		this.from = this.checkpoints.removeFirst();
 		this.to = this.checkpoints.removeFirst();
-		this.level.getCar().move(this.from.position);
+		
+		
+		// Car positioning		
+//		Vector2 startPosition = new Vector2(this.from.position);
+//		Vector2 startDirection = new Vector2(startPosition.sub(this.to.position)).nor().scl(2 * Constants.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION);
+//		Vector2 preparePosition = new Vector2(startPosition).sub(startDirection);						
+//		this.level.getCar().move(preparePosition);		
+//		this.level.getCar().move(startPosition);
+		
+		//this.level.getCar().move(new Vector2(from.position));
+		//this.level.getCar().move(new Vector2(to.position));
+		
+		phase1.setCarToStart();
+		
 		speedModifiers.add(Constants.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
@@ -237,19 +251,20 @@ public class SubLevel2 extends SubLevel {
 		switch (this.dialog.getDecision()) {
 			case CONTINUE:				
 				this.level.playNextLevel(this);
+				eraseDialog();
 				break;
 			case RESTART:
-				this.level.switchToPhase(this.phase1);
-				this.phase1.reset();
+				this.level.switchToPhase(this.phase1);				
 				break;
 			case GO_TO_MAIN_MENU:
 				this.level.goToMainScreen();
+				eraseDialog();
 				break;
 			default:
-				// TODO assert for type
+				eraseDialog();
 				break;
 		}
-		eraseDialog();
+		
 	}
 	
 	private void updateInFinishState(float delta) {
@@ -258,11 +273,7 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	private void updateInMistakeState(float delta) {
-		// TODO inform user that he has to try again - or fail menu or something
-//		if (Gdx.input.justTouched()) {
-//			this.level.switchToPhase1(this.phase1);
-//			this.phase1.reset();
-//		}
+		this.dialog = new MessageDialog(this.level, this, "MISTAKE");
 	}
 
 	@Override

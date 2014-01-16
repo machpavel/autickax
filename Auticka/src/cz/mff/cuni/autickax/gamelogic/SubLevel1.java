@@ -237,11 +237,11 @@ public class SubLevel1 extends SubLevel {
 	 * or makes a discontinuous move
 	 */
 	public void reset() {
+		takeFocus();
 		playStartEngineSound();
 		eraseDialog();
-		eraseMinigame();		if (Autickax.settings.showTooltips)
-			this.dialog = new MessageDialog(this.level, this, 
-					Constants.TOOLTIP_PHASE_1_WHAT_TO_DO);
+		eraseMinigame();		
+		
 		state = SubLevel1States.BEGINNING_STATE;
 		
 		this.stats.reset();		
@@ -254,6 +254,15 @@ public class SubLevel1 extends SubLevel {
 		}
 		
 		// Car positioning
+		setCarToStart();
+					
+		if (Autickax.settings.showTooltips)
+			this.dialog = new MessageDialog(this.level, this, 
+					Constants.TOOLTIP_PHASE_1_WHAT_TO_DO);
+	}
+
+	public void setCarToStart(){
+		// Car positioning
 		float EPSILON_F = 0.01f;
 		Vector2 startPosition = this.level.getStart().getPosition();
 		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.START_POSITION_IN_CURVE + EPSILON_F)).sub(startPosition).nor().scl(2 * Constants.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION);
@@ -261,7 +270,7 @@ public class SubLevel1 extends SubLevel {
 		this.level.getCar().move(new Vector2(preparePosition));		
 		this.level.getCar().move(new Vector2(startPosition));
 	}
-
+	
 	/**
 	 * Player failed to finish the track
 	 */

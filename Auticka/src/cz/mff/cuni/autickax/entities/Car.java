@@ -50,7 +50,7 @@ public final class Car extends GameObject implements Serializable {
 		lastRotationDistance += newPos.dst(lastCarPosition);
 		if(lastRotationDistance > Constants.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION){	
 			lastRotationDistance = 0;
-			this.setRotation(this.lastCarPosition.sub(newPos).scl(-1).angle());
+			this.setRotation(new Vector2(this.lastCarPosition).sub(newPos).scl(-1).angle());
 			this.lastCarPosition = newPos;
 		}
 	}
