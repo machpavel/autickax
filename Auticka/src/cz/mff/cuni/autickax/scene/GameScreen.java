@@ -142,9 +142,7 @@ public class GameScreen extends BaseScreen {
 		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase, stats);
 	}
 	
-	public void playNextLevel(SubLevel2 caller){
-		// TODO implementation
-	}
+
 	
 	public void reset() {
 		// TODO: reseting of all game objects

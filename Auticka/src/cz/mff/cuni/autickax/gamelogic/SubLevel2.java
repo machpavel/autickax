@@ -109,6 +109,7 @@ public class SubLevel2 extends SubLevel {
 	@Override
 	public void onMinigameEnded() {
 		Minigame miniGameLocal = this.miniGame;
+		eraseMinigame();
 		switch (miniGameLocal.getResult()) {
 		case FAILED:
 			this.dialog = new DecisionDialog(this.level, this, miniGameLocal.getResultFailMessage(), false);
@@ -218,7 +219,7 @@ public class SubLevel2 extends SubLevel {
 		if (checkpoints.isEmpty()) {
 			state = SubLevel2States.FINISH_STATE;
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_BIG_CHEER_VOLUME);
-			dialog = new CompleteLevelDialog(this.level, this, this.stats);
+			dialog = new CompleteLevelDialog(this.level, this, this.stats, this.isNextLevelAvaible());
 		}
 		else{
 			Vector2 newPos = moveCarToNewPosition(delta);
@@ -237,34 +238,7 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	
-	public void onLevelComplete(){
-		Dialog dialogLocal = this.dialog;
-		eraseDialog();
-		
-		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
-		Vector<LevelLoading> availableLevels = this.level.getDifficulty().getAvailableLevels();
-		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
-		
-		if (this.level.getLevelIndex() == playedLevels.size() - 1 &&
-				this.level.getLevelIndex() < availableLevels.size()) {
-			playedLevels.add(new PlayedLevel(0, (byte)0));
-		}
-		
-		switch (dialogLocal.getDecision()) {
-			case CONTINUE:				
-				this.level.playNextLevel(this);
-				break;
-			case RESTART:
-				this.level.switchToPhase(this.phase1);				
-				break;
-			case GO_TO_MAIN_MENU:
-				this.level.goToMainScreen();
-				break;
-			default:
-				break;
-		}
-		
-	}
+
 	
 	private void updateInFinishState(float delta) {
 		//TODO not to main screen
@@ -288,13 +262,14 @@ public class SubLevel2 extends SubLevel {
 		
 		batch.end();
 
+		timeStatusBar.draw(batch);
+		
 		if (dialog != null) {
 			dialog.draw(batch);
 		}
 		else if (miniGame != null) {
 			miniGame.draw(batch);
 		}
-		timeStatusBar.draw(batch);
 	}
 
 	public void render() {
@@ -385,6 +360,47 @@ public class SubLevel2 extends SubLevel {
 		for (Float fl: speedModifiers)
 			mod *= fl;
 		this.speedModifierValue = mod;
+	}
+	
+	
+	public void onLevelComplete(){
+		Dialog dialogLocal = this.dialog;
+		eraseDialog();
+		
+		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
+		Vector<LevelLoading> availableLevels = this.level.getDifficulty().getAvailableLevels();
+		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
+		
+		if (this.level.getLevelIndex() == playedLevels.size() - 1 &&
+				this.level.getLevelIndex() < availableLevels.size()) {
+			playedLevels.add(new PlayedLevel(0, (byte)0));
+		}
+		
+		switch (dialogLocal.getDecision()) {
+			case CONTINUE:				
+				this.playNextLevel(this);
+				break;
+			case RESTART:
+				this.level.switchToPhase(this.phase1);				
+				break;
+			case GO_TO_MAIN_MENU:
+				this.level.goToMainScreen();
+				break;
+			default:
+				break;
+		}
+		
+	}
+	
+	
+	
+	public void playNextLevel(SubLevel2 caller){
+		// TODO implementation of this crap
+	}
+	
+	//TODO implement this piece of shit!!!!!!
+	private boolean isNextLevelAvaible(){
+		return true;
 	}
 
 }
