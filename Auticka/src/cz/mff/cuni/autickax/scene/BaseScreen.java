@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import cz.mff.cuni.autickax.Autickax;
 
 public abstract class BaseScreen implements Screen {	
-	private Autickax game;
+	protected Autickax game;
 	protected float stageWidth;
 	protected float stageHeight;
 	protected final Stage stage;
