@@ -68,54 +68,16 @@ public class GameScreen extends BaseScreen {
 		
 		this.levelDifficulty = difficulty;
 		this.levelIndex = levelIndex;
-		
-		switch (difficulty) {
-		case Kiddie:
-			loadLevels (
-				levelIndex,
-				this.game.assets.getAvailableLevels().kiddieLevels,
-				Autickax.playedLevels.kiddieLevels
-			);
-			break;
-		case Beginner:
-			loadLevels (
-					levelIndex,
-					this.game.assets.getAvailableLevels().beginnerLevels,
-					Autickax.playedLevels.beginnerLevels
-				);
-			break;
-		case Normal:
-			loadLevels (
-					levelIndex,
-					this.game.assets.getAvailableLevels().normalLevels,
-					Autickax.playedLevels.normalLevels
-				);
-			break;
-		case Hard:
-			loadLevels (
-					levelIndex,
-					this.game.assets.getAvailableLevels().hardLevels,
-					Autickax.playedLevels.hardLevels
-				);
-			break;
-		case Extreme:
-			loadLevels (
-					levelIndex,
-					this.game.assets.getAvailableLevels().extremeLevels,
-					Autickax.playedLevels.extremeLevels
-				);
-			break;
-			
-		default:
-			assert true;
-			break;
-		
-		}
-		
+		this.loadLevels(levelIndex, this.levelDifficulty.getAvailableLevels(), this.levelDifficulty.getPlayedLevels());
+	}
+	
+	public void initializeDistanceMap() {
+		level.calculateDistanceMap();
+	}
+	
+	public void initializeGameScreen() {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, stageWidth, stageHeight);
-		
-
 		
 		
 		level.calculateDistanceMap();

@@ -53,14 +53,15 @@ public class LevelSelectScreen extends BaseScreen {
 				public void action() {
 					getGame().assets.soundAndMusicManager.pauseMenuMusic();
 					getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
-					if (Autickax.gameScreen != null) {
-						Autickax.gameScreen.dispose();
-						Autickax.gameScreen = null;
+					
+					if (Autickax.levelLoadingScreen != null) {
+						Autickax.levelLoadingScreen.dispose();
+						Autickax.levelLoadingScreen = null;
 					}
 
-					Autickax.gameScreen = new GameScreen(levelIndex, difficulty);
+					Autickax.levelLoadingScreen = new LevelLoadingScreen(levelIndex, difficulty);
 
-					getGame().setScreen(Autickax.gameScreen);
+					getGame().setScreen(Autickax.levelLoadingScreen);
 				}
 			};
 			
