@@ -31,35 +31,11 @@ public class LevelBackground {
 	
 	/** Gets the height according to a type*/
 	public static String GetTextureName(int type){
-		switch (type) {
-		case 1:
-			return Constants.LEVEL_BACKGROUND_TEXTURE_TYPE_1;
-		case 2:
-			return Constants.LEVEL_BACKGROUND_TEXTURE_TYPE_2;
-		case 3:
-			return Constants.LEVEL_BACKGROUND_TEXTURE_TYPE_3;
-		case 4:
-			return Constants.LEVEL_BACKGROUND_TEXTURE_TYPE_4;
-		default:
-			//TODO exception
-			return null;
-		}
+		return Constants.LEVEL_BACKGROUND_TEXTURE_PREFIX + type;
 	}	
 	/** Gets the height according to a type*/
 	public static String GetSmallTextureName(int type){
-		switch (type) {
-		case 1:
-			return Constants.LEVEL_BACKGROUND_TEXTURE_TYPE_1_SMALL;
-		case 2:
-			return Constants.LEVEL_BACKGROUND_TEXTURE_TYPE_2_SMALL;
-		case 3:
-			return Constants.LEVEL_BACKGROUND_TEXTURE_TYPE_3_SMALL;
-		case 4:
-			return Constants.LEVEL_BACKGROUND_TEXTURE_TYPE_4_SMALL;
-		default:
-			//TODO exception
-			return null;
-		}
+		return Constants.LEVEL_BACKGROUND_TEXTURE_PREFIX + type + Constants.LEVEL_SMALL_BACKGROUND_TEXTURE_POSTFIX;
 	}
 	
 }
