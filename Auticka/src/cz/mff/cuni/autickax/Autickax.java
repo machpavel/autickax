@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 
 import cz.mff.cuni.autickax.scene.DifficultySelectScreen;
 import cz.mff.cuni.autickax.scene.GameScreen;
+import cz.mff.cuni.autickax.scene.LevelLoadingScreen;
 import cz.mff.cuni.autickax.scene.LevelSelectScreen;
 import cz.mff.cuni.autickax.scene.MainMenuScreen;
 import cz.mff.cuni.autickax.drawing.Font;
@@ -19,7 +20,8 @@ public class Autickax extends Game {
 	public static MainMenuScreen mainMenuScreen;
 	public static DifficultySelectScreen difficultySelectScreen;
 	public static LevelSelectScreen levelSelectScreen;
-	public static GameScreen gameScreen;	
+	public static LevelLoadingScreen levelLoadingScreen;
+	public static GameScreen gameScreen;
 	public static Settings settings;
 	public static PlayedLevels playedLevels;
 	
