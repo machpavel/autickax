@@ -239,7 +239,7 @@ public class SubLevel2 extends SubLevel {
 		Vector<LevelLoading> availableLevels = this.level.getDifficulty().getAvailableLevels();
 		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
 		
-		if (this.level.getLevelIndex() < availableLevels.size() - 1) {
+		if (this.level.getLevelIndex() == availableLevels.size() - 1) {
 			playedLevels.add(new PlayedLevel(0, (byte)0));
 		}
 		
