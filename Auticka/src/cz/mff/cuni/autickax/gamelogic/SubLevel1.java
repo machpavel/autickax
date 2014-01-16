@@ -156,7 +156,8 @@ public class SubLevel1 extends SubLevel {
 		if (carPosition.x >= 0 && carPosition.x < map.getWidth()
 				&& carPosition.y >= 0 && carPosition.y < map.getHeight()) {
 
-			if(this.level.getCar().positionCollides(this.level.getFinish())){
+			//if(this.level.getCar().positionCollides(this.level.getFinish())){
+			if(this.level.getCar().collides(this.level.getFinish())){
 				
 				if (wayPoints.isEmpty()){
 					state = SubLevel1States.FINISH_STATE;
@@ -299,6 +300,15 @@ public class SubLevel1 extends SubLevel {
 					* Input.xStretchFactorInv, (float) ce.position.y
 					* Input.yStretchFactorInv, 2);
 		}
+		
+		/*shapeRenderer.setColor(new Color(0.1f, 0.1f, 0.9f, 0.5f));
+		shapeRenderer.circle(this.level.getFinish().getX(), this.level.getFinish().getY(), Constants.FINISH_BOUNDING_RADIUS);
+		
+		shapeRenderer.setColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
+		for(Vector2 waypoint: wayPoints)
+		{
+			shapeRenderer.circle(waypoint.x, waypoint.y, 20);
+		}*/
 		shapeRenderer.end();
 	}
 
