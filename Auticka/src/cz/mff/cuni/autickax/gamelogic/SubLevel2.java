@@ -37,7 +37,8 @@ public class SubLevel2 extends SubLevel {
 	
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
 
-	private SubLevel2States state = SubLevel2States.BEGINNING_STATE;
+	private SubLevel2States state = SubLevel2States.ENGINE_RAGING_STATE;
+	private float elapsedFromEngine = 0.0f;
 	
 	private Difficulty difficulty;
 	
@@ -45,6 +46,7 @@ public class SubLevel2 extends SubLevel {
 	private GameStatistics stats;
 
 	public enum SubLevel2States {
+		ENGINE_RAGING_STATE,
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
 	}
 
@@ -67,6 +69,7 @@ public class SubLevel2 extends SubLevel {
 		speedModifiers.add(Constants.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
+		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_START, 1);
 
 	}
 
@@ -134,8 +137,10 @@ public class SubLevel2 extends SubLevel {
 
 	@Override
 	public void update(float delta) {
-
-		timeStatusBar.update(this.stats.getPhase2ElapsedTime());
+		//do not count time in this state
+		if (state != SubLevel2States.ENGINE_RAGING_STATE)
+			timeStatusBar.update(this.stats.getPhase2ElapsedTime());
+		
 		if (this.dialog != null) {
 			this.dialog.update(delta);
 		} else if (this.miniGame != null) {
@@ -152,6 +157,9 @@ public class SubLevel2 extends SubLevel {
 			this.level.getFinish().update(delta);
 
 			switch (state) {
+			case ENGINE_RAGING_STATE:
+				updateInEngineRagingState(delta);
+				break;
 			case BEGINNING_STATE:
 				updateInBeginnigState(delta);
 				break;
@@ -170,10 +178,17 @@ public class SubLevel2 extends SubLevel {
 			}			
 		}
 	}
-
+	
+	private void updateInEngineRagingState(float delta)
+	{
+		elapsedFromEngine += delta;
+		if (elapsedFromEngine >= Constants.SOUNDS_ENGINE_DELAY)
+			state = SubLevel2States.BEGINNING_STATE;
+	}
+	
 	private void updateInBeginnigState(float delta) {
 		// TODO Maybe some delay and countdown animation
-		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_START, 1f);
+
 		state = SubLevel2States.DRIVING_STATE;
 
 	}

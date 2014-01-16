@@ -180,6 +180,8 @@ public final class Constants {
 	public static final String SOUND_ENGINE_START_PATH = "sfx/sublevels/car-ignition-1.mp3";
 	public static final float SOUND_ENGINE_VOLUME = 1;
 	
+	
+	
 	public static final String SOUND_SUB1_CHEER = "cheer_sub1_small";
 	public static final String SOUND_SUB1_CHEER_PATH = "sfx/sublevels/smallCheer.mp3";
 	
@@ -192,6 +194,7 @@ public final class Constants {
 	
 	public static final String SOUND_SUB2_START = "sub2_start";
 	public static final String SOUND_SUB2_START_PATH = "sfx/sublevels/auto_car_rev_up_squeal_away.mp3";
+	public static final float SOUNDS_ENGINE_DELAY = 1.8f;
 	
 	public static final String SOUND_BUTTON_DIALOG_SOUND = SOUND_MENU_CLOSE;
 	/** Default value of volume */
@@ -354,5 +357,8 @@ public final class Constants {
 	public static final float STARS_ONE_TIME_THRESHOLD = 1f;
 	public static final float STARS_TWO_TIME_THRESHOLD = 0.6f;
 	public static final float STARS_THREE_TIME_THRESHOLD = 0.3f;
+	
+	//SCORE CONSTANT
+	public static final int SCORE_MULTIPLIER = 1000000;
 	
 }
