@@ -44,6 +44,8 @@ public class GameScreen extends BaseScreen {
 	private SubLevel currentPhase;
 	private LevelLoading level;
 	private PlayedLevel playedLevel;
+	private final int levelIndex;
+	private final Difficulty levelDifficulty;
 
 	// Entities
 	private ArrayList<GameObject> gameObjects;
@@ -60,10 +62,12 @@ public class GameScreen extends BaseScreen {
 		return pathway;
 	}
 	
-	private final Difficulty difficulty;
 	
 	public GameScreen(int levelIndex, Difficulty difficulty) {
 		super();
+		
+		this.levelDifficulty = difficulty;
+		this.levelIndex = levelIndex;
 		
 		switch (difficulty) {
 		case Kiddie:
@@ -108,8 +112,6 @@ public class GameScreen extends BaseScreen {
 		
 		}
 		
-		this.difficulty = difficulty;
-		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, stageWidth, stageHeight);
 		
@@ -119,7 +121,7 @@ public class GameScreen extends BaseScreen {
 		level.calculateDistanceMap();
 		level.setGameScreen(this);
 								
-		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture(this.difficulty);
+		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture(this.levelDifficulty);
 		
 		this.pathway = level.getPathway();
 		this.gameObjects = level.getGameObjects();
@@ -229,7 +231,7 @@ public class GameScreen extends BaseScreen {
 		this.getGame().assets.soundAndMusicManager.stopRaceMusic();
 		this.getGame().assets.soundAndMusicManager.playMenuMusic();
 		Autickax.levelSelectScreen.dispose();
-		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
+		Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty);
 		this.getGame().setScreen(Autickax.levelSelectScreen);
 	}
 	
@@ -246,11 +248,16 @@ public class GameScreen extends BaseScreen {
 	
 	public Difficulty getDifficulty()
 	{
-		return this.difficulty;
+		return this.levelDifficulty;
 	}
 
 	public PlayedLevel getPlayedLevel() {
 		return this.playedLevel;
+	}
+
+
+	public int getLevelIndex() {
+		return this.levelIndex;
 	}
 
 }

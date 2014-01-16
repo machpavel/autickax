@@ -9,6 +9,7 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
+import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.menu.MenuImage;
 import cz.mff.cuni.autickax.menu.MenuTextButton;
 
@@ -31,16 +32,8 @@ public class LevelSelectScreen extends BaseScreen {
 		this.difficulty = difficulty;
 		
 		
-		Vector<LevelLoading> levels;
-				
-		switch (this.difficulty) {
-			case Kiddie: levels = this.getGame().assets.getAvailableLevels().kiddieLevels; break;
-			case Beginner: levels = this.getGame().assets.getAvailableLevels().beginnerLevels; break;
-			case Normal: levels = this.getGame().assets.getAvailableLevels().normalLevels; break;
-			case Hard: levels = this.getGame().assets.getAvailableLevels().hardLevels; break;
-			case Extreme: levels = this.getGame().assets.getAvailableLevels().extremeLevels; break;
-			default: levels = null;
-		}
+		Vector<LevelLoading> levels = this.difficulty.getAvailableLevels();
+		Vector<PlayedLevel> playedLevels = this.difficulty.getPlayedLevels();
 		
 		int x = buttonsStartXPosition;
 		int y = buttonsStartYPosition;
@@ -73,10 +66,10 @@ public class LevelSelectScreen extends BaseScreen {
 			levelButton.setPosition(x, y);
 			stage.addActor(levelButton);
 			
-			if (i > 5) { // for testing
-				levelButton.setDisabled(true);
+			if (i < playedLevels.size()) {
+				drawStars(playedLevels.get(i).starsNumber, x, y);
 			} else {
-				drawStars((byte)(i % 4), x, y);
+				levelButton.setDisabled(true);
 			}
 			
 			if (x + LevelSelectScreen.buttonsXShift < LevelSelectScreen.buttonsMaxXPosition) {
