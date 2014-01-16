@@ -1,9 +1,10 @@
 package cz.mff.cuni.autickax.scene;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 
 public class LevelLoadingScreen extends BaseScreen {
@@ -11,6 +12,7 @@ public class LevelLoadingScreen extends BaseScreen {
 	public LevelLoadingScreen(final int levelIndex, final Difficulty levelDifficulty) {
 		super();
 		
+		// setup a game screen
 		if (Autickax.gameScreen != null) {
 			Autickax.gameScreen.dispose();
 			Autickax.gameScreen = null;
@@ -34,16 +36,12 @@ public class LevelLoadingScreen extends BaseScreen {
 	      });
 		
 		distanceMapLoader.start();
-	}
-
-	@Override
-	public void render(float delta) {		
-		//TODO: loading animation
-		Gdx.gl.glClearColor(0f, 1f, 0f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
-		//trace("loading progress:" + game.assets.getProgress()); //TODO visualize
 
+		// now draw elements
+		Image background = new Image(getGame().assets.getGraphics(Constants.LOADING_LEVEL_MENU_BACKGROUND));
+		background.setSize(stageWidth, stageHeight);
+		stage.addActor(background);
 	}
 
 	@Override
