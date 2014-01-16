@@ -113,6 +113,14 @@ public final class EditorScreen extends BaseScreenEditor {
 		trbGreenPixel = new TextureRegionDrawable(
 				game.assets.getGraphics("greenpixel"));
 
+		restart();
+	}
+
+	public void restart() {
+		background.SetType(1);
+		
+		stage.clear();
+
 		// This order has to be kept.
 		createGenerateButton();
 		createRestartButton();
@@ -120,12 +128,6 @@ public final class EditorScreen extends BaseScreenEditor {
 		createBackgroundButtons();
 		createGameObjectsButtons();
 		createDifficultyButtons();
-
-		restart();
-	}
-
-	public void restart() {
-		background.SetType(1);
 
 		this.gameObjects = new ArrayList<GameObject>();
 
@@ -141,7 +143,6 @@ public final class EditorScreen extends BaseScreenEditor {
 			Vector2 point = new Vector2(Gdx.input.getX(), stageHeight
 					- Gdx.input.getY());
 			pathway.getControlPoints().add(point);
-			game.assets.soundAndMusicManager.playSound(Constants.SOUND_EDITOR, Constants.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
 		}
 	}
 
