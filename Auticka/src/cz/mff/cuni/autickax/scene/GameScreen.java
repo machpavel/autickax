@@ -172,7 +172,8 @@ public class GameScreen extends BaseScreen {
 		return this.car;
 	}
 	
-	public void switchToPhase(SubLevel1 phase1) {
+	public void switchToPhase(SubLevel1 phase1) {		
+		phase1.reset();
 		this.currentPhase = phase1;
 	}
 	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {

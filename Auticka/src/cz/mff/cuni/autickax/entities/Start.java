@@ -25,7 +25,9 @@ public class Start extends GameObject implements Serializable {
 	public void setShift(Vector2 shift){
 		this.shift = shift;
 	}
-	
+	public Vector2 getShift(){
+		return this.shift;
+	}
 	
 	@Override
 	public void draw(SpriteBatch batch) {

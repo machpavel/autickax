@@ -3,6 +3,7 @@ package cz.mff.cuni.autickax.gamelogic;
 import java.util.LinkedList;
 import java.util.Vector;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -68,11 +69,18 @@ public class SubLevel2 extends SubLevel {
 		this.difficulty = gameScreen.getDifficulty();
 		this.from = this.checkpoints.removeFirst();
 		this.to = this.checkpoints.removeFirst();
-		this.level.getCar().move(this.from.position);
+								
+
+
 		speedModifiers.add(Constants.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
 		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_START, 1);
+		
+		// Car positioning
+		this.level.getCar().move(this.from.position);
+		this.level.getCar().setNextPositionIsDirection();
+		this.level.getCar().move(this.to.position);
 
 	}
 
@@ -247,19 +255,20 @@ public class SubLevel2 extends SubLevel {
 		switch (this.dialog.getDecision()) {
 			case CONTINUE:				
 				this.level.playNextLevel(this);
+				eraseDialog();
 				break;
 			case RESTART:
-				this.level.switchToPhase(this.phase1);
-				this.phase1.reset();
+				this.level.switchToPhase(this.phase1);				
 				break;
 			case GO_TO_MAIN_MENU:
 				this.level.goToMainScreen();
+				eraseDialog();
 				break;
 			default:
-				assert true;
+				eraseDialog();
 				break;
 		}
-		eraseDialog();
+		
 	}
 	
 	private void updateInFinishState(float delta) {
@@ -268,11 +277,7 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	private void updateInMistakeState(float delta) {
-		// TODO inform user that he has to try again - or fail menu or something
-//		if (Gdx.input.justTouched()) {
-//			this.level.switchToPhase1(this.phase1);
-//			this.phase1.reset();
-//		}
+		this.dialog = new MessageDialog(this.level, this, "MISTAKE");
 	}
 
 	@Override
