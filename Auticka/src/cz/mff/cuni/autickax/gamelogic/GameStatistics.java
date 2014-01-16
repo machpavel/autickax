@@ -80,8 +80,7 @@ public class GameStatistics {
 	public void reset() {
 		succeeded = 0;
 		failed = 0;
-		collisions = 0;
-		phase1TimeLimit = 0;
+		collisions = 0;		
 		phase1ElapsedTime = 0;
 		phase2ElapsedTime = 0;		
 	}

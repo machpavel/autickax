@@ -22,7 +22,7 @@ import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class AvoidObstaclesMinigame extends Minigame implements ISpeedRegulator{	
+public final class AvoidObstaclesMinigame extends Minigame{	
 	private final float CAR_START_POSITION_X = Constants.AVOID_OBSTACLES_CAR_START_POSITION_X;
 	private final float FINISH_START_POSITION_X = Constants.AVOID_OBSTACLES_FINISH_START_POSITION_X;
 	private final int FINISH_TYPE = Constants.AVOID_OBSTACLES_FINISH_TYPE;	
@@ -261,11 +261,6 @@ public final class AvoidObstaclesMinigame extends Minigame implements ISpeedRegu
 			break;
 		}
 		return;
-	}
-
-	@Override
-	public void addSpeedModifier(LinkedList<Float> speedModifiers) {
-		speedModifiers.add(Constants.AVOID_HOLES_SPEED_PENALIZATION);
 	}
 
 }
