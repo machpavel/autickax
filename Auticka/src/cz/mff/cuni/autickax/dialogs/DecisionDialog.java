@@ -31,6 +31,7 @@ public class DecisionDialog extends Dialog {
 
 			@Override
 			public void action() {
+				playButtonSound();
 				status = DialogAbstractStatus.FINISHED;
 				decision = DecisionType.CONTINUE;				
 				parent.onDialogEnded();
@@ -54,6 +55,7 @@ public class DecisionDialog extends Dialog {
 
 			@Override
 			public void action() {
+				playButtonSound();
 				status = DialogAbstractStatus.FINISHED;
 				decision = DecisionType.RESTART;				
 				parent.onDialogEnded();
@@ -76,6 +78,7 @@ public class DecisionDialog extends Dialog {
 						.getGraphics(Constants.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_OVER_TEXTURE)) {
 			@Override
 			public void action() {
+				playButtonSound();
 				status = DialogAbstractStatus.FINISHED;
 				decision = DecisionType.GO_TO_MAIN_MENU;
 				parent.onDialogEnded();

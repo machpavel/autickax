@@ -14,6 +14,7 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
+import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.drawing.LevelBackground;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
@@ -41,6 +42,7 @@ public class GameScreen extends BaseScreen {
 	// Levels
 	private SubLevel currentPhase;
 	private LevelLoading level;
+	private PlayedLevel playedLevel;
 
 	// Entities
 	private ArrayList<GameObject> gameObjects;
@@ -65,18 +67,23 @@ public class GameScreen extends BaseScreen {
 		switch (difficulty) {
 		case Kiddie:
 			this.level = this.game.assets.getAvailableLevels().kiddieLevels.get(levelIndex);
+			this.playedLevel = Autickax.playedLevels.kiddieLevels.get(levelIndex);
 			break;
 		case Beginner:
 			this.level = this.game.assets.getAvailableLevels().beginnerLevels.get(levelIndex);
+			this.playedLevel = Autickax.playedLevels.beginnerLevels.get(levelIndex);
 			break;
 		case Normal:
 			this.level = this.game.assets.getAvailableLevels().normalLevels.get(levelIndex);
+			this.playedLevel = Autickax.playedLevels.normalLevels.get(levelIndex);
 			break;
 		case Hard:
 			this.level = this.game.assets.getAvailableLevels().hardLevels.get(levelIndex);
+			this.playedLevel = Autickax.playedLevels.hardLevels.get(levelIndex);
 			break;
 		case Extreme:
 			this.level = this.game.assets.getAvailableLevels().extremeLevels.get(levelIndex);
+			this.playedLevel = Autickax.playedLevels.extremeLevels.get(levelIndex);
 			break;
 			
 		default:
@@ -192,9 +199,9 @@ public class GameScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
+		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
 		this.getGame().assets.soundAndMusicManager.stopRaceMusic();
 		this.getGame().assets.soundAndMusicManager.playMenuMusic();
-		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
 		this.getGame().setScreen(Autickax.levelSelectScreen);
@@ -214,6 +221,10 @@ public class GameScreen extends BaseScreen {
 	public Difficulty getDifficulty()
 	{
 		return this.difficulty;
+	}
+
+	public PlayedLevel getPlayedLevel() {
+		return this.playedLevel;
 	}
 
 }

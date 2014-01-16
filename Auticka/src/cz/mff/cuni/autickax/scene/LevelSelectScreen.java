@@ -57,13 +57,15 @@ public class LevelSelectScreen extends BaseScreen {
 			{
 				@Override
 				public void action() {
+					getGame().assets.soundAndMusicManager.pauseMenuMusic();
+					getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
 					if (Autickax.gameScreen != null) {
 						Autickax.gameScreen.dispose();
 						Autickax.gameScreen = null;
 					}
+
 					Autickax.gameScreen = new GameScreen(levelIndex, difficulty);
-					getGame().assets.soundAndMusicManager.pauseMenuMusic();
-					getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
+
 					getGame().setScreen(Autickax.gameScreen);
 				}
 			};
@@ -105,9 +107,9 @@ public class LevelSelectScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
+		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
 		Autickax.difficultySelectScreen.dispose();
 		Autickax.difficultySelectScreen = new DifficultySelectScreen();
-		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
 		this.getGame().setScreen(Autickax.difficultySelectScreen);	
 	}
 	

@@ -55,19 +55,29 @@ public class GameStatistics {
 		return collisions;
 	}
 	
-	public int getNOfStars(float timeElapsed, float timeLimit)
+	private byte getNumberOfStars(float timeElapsed, float timeLimit)
 	{
 		float timeLimitAfterGlobalRegulation = timeLimit / Constants.GLOBAL_SPEED_REGULATOR;
-		float [] starsThresholds = {Constants.STARS_THREE_TIME_THRESHOLD, Constants.STARS_TWO_TIME_THRESHOLD, Constants.STARS_ONE_TIME_THRESHOLD};
-		int res = 0;
-		for (int i = 0; i < starsThresholds.length && res == 0; i++)
+		
+		float [] starsThresholds = {
+				Constants.STARS_THREE_TIME_THRESHOLD,
+				Constants.STARS_TWO_TIME_THRESHOLD,
+				Constants.STARS_ONE_TIME_THRESHOLD
+			};
+		
+		byte res = 0;
+		for (byte i = 0; i < starsThresholds.length && res == 0; i++)
 		{
 			if (timeElapsed <= timeLimitAfterGlobalRegulation *  starsThresholds[i])
 			{
-				res = Constants.STARS_MAX - i;
+				res = (byte)(Constants.STARS_MAX - i);
 			}
 		}
 		return res;
+	}
+	
+	public byte getNumberOfStars() {
+		return this.getNumberOfStars(this.phase2ElapsedTime, this.phase1TimeLimit);
 	}
 
 	public float getPhase1TimeLimit() {
