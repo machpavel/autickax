@@ -185,6 +185,8 @@ public class MainMenuScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
+		Autickax.settings.storeSettings();
+		Autickax.playedLevels.storeLevels();
 		Gdx.app.exit();		
 	}
 

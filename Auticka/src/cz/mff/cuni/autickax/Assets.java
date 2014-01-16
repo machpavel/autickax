@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import cz.mff.cuni.cz.serialization.AvailableLevelsLoader;
+import cz.mff.cuni.serialization.AvailableLevelsLoader;
 
 public class Assets {
 

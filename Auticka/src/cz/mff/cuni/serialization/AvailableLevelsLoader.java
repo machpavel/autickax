@@ -1,4 +1,4 @@
-package cz.mff.cuni.cz.serialization;
+package cz.mff.cuni.serialization;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -21,6 +21,7 @@ public class Autickax extends Game {
 	public static LevelSelectScreen levelSelectScreen;
 	public static GameScreen gameScreen;	
 	public static Settings settings;
+	public static PlayedLevels playedLevels;
 	
 	static public Font font;
 
@@ -39,6 +40,10 @@ public class Autickax extends Game {
 		Autickax.loadingScreen = new LoadingScreen();
 		
 		settings = new Settings();
+		settings.loadSettings();
+		
+		playedLevels = new PlayedLevels();
+		playedLevels.loadLevels();
 		
 		setScreen(Autickax.loadingScreen);
 		Input.InitDimensions();
