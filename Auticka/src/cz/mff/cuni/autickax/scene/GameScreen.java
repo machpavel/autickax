@@ -59,11 +59,32 @@ public class GameScreen extends BaseScreen {
 	
 	private final Difficulty difficulty;
 	
-	// Creates instance according to a given xml file
-	public GameScreen(LevelLoading level, Difficulty difficulty) {
+	public GameScreen(int levelIndex, Difficulty difficulty) {
 		super();
 		
-		this.level = level;
+		switch (difficulty) {
+		case Kiddie:
+			this.level = this.game.assets.getAvailableLevels().kiddieLevels.get(levelIndex);
+			break;
+		case Beginner:
+			this.level = this.game.assets.getAvailableLevels().beginnerLevels.get(levelIndex);
+			break;
+		case Normal:
+			this.level = this.game.assets.getAvailableLevels().normalLevels.get(levelIndex);
+			break;
+		case Hard:
+			this.level = this.game.assets.getAvailableLevels().hardLevels.get(levelIndex);
+			break;
+		case Extreme:
+			this.level = this.game.assets.getAvailableLevels().extremeLevels.get(levelIndex);
+			break;
+			
+		default:
+			assert true;
+			break;
+		
+		}
+		
 		this.difficulty = difficulty;
 		
 		camera = new OrthographicCamera();
