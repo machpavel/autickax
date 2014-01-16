@@ -62,9 +62,7 @@ public class SubLevel1 extends SubLevel {
 	
 	private void playStartEngineSound()
 	{
-		if (Autickax.settings.playSounds) {
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_ENGINE_START, Constants.SOUND_ENGINE_VOLUME);
-		}
+		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_ENGINE_START, Constants.SOUND_ENGINE_VOLUME);
 	}
 	
 	public void onDialogEnded() {
@@ -164,6 +162,7 @@ public class SubLevel1 extends SubLevel {
 				
 				if (wayPoints.isEmpty()){
 					state = SubLevel1States.FINISH_STATE;
+					this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB1_CHEER, Constants.SOUND_DEFAULT_VOLUME);
 					dialog = new DecisionDialog(this.level, this, Constants.PHASE_1_FINISH_REACHED, true);
 					timeMeasured = false;
 					this.level.getCar().setDragged(false);

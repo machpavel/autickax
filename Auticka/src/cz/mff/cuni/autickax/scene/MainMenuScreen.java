@@ -41,6 +41,7 @@ public class MainMenuScreen extends BaseScreen {
 		{
 			@Override
 			public void action() {
+				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
 				if (Autickax.difficultySelectScreen != null) {
 					Autickax.difficultySelectScreen.dispose();
 					Autickax.difficultySelectScreen = null;

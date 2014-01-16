@@ -116,6 +116,7 @@ public final class Constants {
 	//
 	// SOUNDS & MUSIC
 	//
+	public static final float SOUND_DEFAULT_VOLUME = 0.5f;
 	public static final float SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME = 0.5f;
 	
 	//OBJECTS WITH NO SOUND INTERACTION
@@ -133,22 +134,43 @@ public final class Constants {
 	public static final String SOUND_TREE = "tree";
 	public static final String SOUND_TREE_PATH = "sfx/collisions/vehicle_crash_large_tree.mp3";
 	
-	//CAR IGNITION SOUND
-	public static final String SOUND_ENGINE_START = "engine_start";
-	public static final String SOUND_ENGINE_START_PATH = "sfx/car-ignition-1.wav";
-	public static final float SOUND_ENGINE_VOLUME = 1;
+
 	
 	//EDITOR SOUND
 	public static final String SOUND_EDITOR = "editor";
 	public static final String SOUND_EDITOR_PATH = "sfx/editorItemAdded.mp3";
 	
-	//MUSIC
-	//MENU
+	//MUSIC MENU
 	public static final String MUSIC_MENU_PATH = "sfx/music/exciting_race_tune.mp3";
-	//RACE
+	
+	//SOUNDS MENU
+	public static final String SOUND_MENU_OPEN_PATH = "sfx/menu/car_door_open.mp3";
+	public static final String SOUND_MENU_OPEN = "menuOpen";
+	
+	public static final String SOUND_MENU_CLOSE_PATH = "sfx/menu/car_door_close_6.mp3";
+	public static final String SOUND_MENU_CLOSE = "menuClose";
+	
+	//MUSIC RACE
 	public static final String MUSIC_RACE_PATH = "sfx/music/sports_card.mp3";
 	
 	
+	//SOUNDS MINIGAME
+	public static final String SOUND_MINIGAME_SUCCESS_PATH = "sfx/minigame/small_crowd_says_yes.mp3";
+	public static final String SOUND_MINIGAME_SUCCESS = "minisucc";
+	
+	public static final String SOUND_MINIGAME_FAIL_PATH = "sfx/minigame/wizard_says_no.mp3";
+	public static final String SOUND_MINIGAME_FAIL = "minifail";
+	
+	//SOUNDS SUBLEVELS
+	public static final String SOUND_ENGINE_START = "engine_start";
+	public static final String SOUND_ENGINE_START_PATH = "sfx/sublevels/car-ignition-1.wav";
+	public static final float SOUND_ENGINE_VOLUME = 1;
+	
+	public static final String SOUND_SUB1_CHEER = "cheer_sub1_small";
+	public static final String SOUND_SUB1_CHEER_PATH = "sfx/sublevels/smallCheer.mp3";
+	
+	public static final String SOUND_SUB2_CHEER = "cheer_sub1_big";
+	public static final String SOUND_SUB2_CHEER_PATH = "sfx/sublevels/bigCheer.mp3";
 	/** Default value of volume */
 	public static final float 	MUSIC_DEFAULT_VOLUME = 0.5f;
 	

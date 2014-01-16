@@ -70,6 +70,7 @@ public class LevelSelectScreen extends BaseScreen {
 					}
 					Autickax.gameScreen = new GameScreen(level, difficulty);
 					getGame().assets.soundAndMusicManager.pauseMenuMusic();
+					getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
 					getGame().setScreen(Autickax.gameScreen);
 				}
 			};
@@ -90,6 +91,7 @@ public class LevelSelectScreen extends BaseScreen {
 	protected void onBackKeyPressed() {
 		Autickax.difficultySelectScreen.dispose();
 		Autickax.difficultySelectScreen = new DifficultySelectScreen();
+		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
 		this.getGame().setScreen(Autickax.difficultySelectScreen);	
 	}
 	

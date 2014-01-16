@@ -98,13 +98,16 @@ public class SubLevel2 extends SubLevel {
 		case FAILED:
 			this.dialog = new DecisionDialog(this.level, this, Constants.PHASE_2_MINIGAME_FAILED, false);
 			miniGameStats.increaseFailed();
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
 			break;
 		case PROCEEDED:
 			// Just continue normally.
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_SUCCESS, Constants.SOUND_DEFAULT_VOLUME);
 			miniGameStats.increaseSucceeded();
 			break;
 		case PROCEEDED_WITH_VALUE:
 			miniGameStats.increaseFailed();
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
 			float result = this.miniGame.getResultValue();
 			if (miniGame instanceof ISpeedRegulator)
 			{
@@ -184,6 +187,7 @@ public class SubLevel2 extends SubLevel {
 		// finish reached
 		if (checkpoints.isEmpty()) {
 			state = SubLevel2States.FINISH_STATE;
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_DEFAULT_VOLUME);
 			dialog = new MessageDialog(this.level, this, Constants.PHASE_2_FINISH_REACHED + String.format("%1$,.2f", timeElapsed));
 		}
 		else{
