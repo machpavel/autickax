@@ -1,7 +1,6 @@
 package cz.mff.cuni.autickax.scene;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 /*import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;*/
 import com.badlogic.gdx.scenes.scene2d.ui.Image;

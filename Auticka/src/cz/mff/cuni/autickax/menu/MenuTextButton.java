@@ -1,17 +1,28 @@
 package cz.mff.cuni.autickax.menu;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
+import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.input.Input;
 
 public abstract class MenuTextButton extends TextButton {
 	
-	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover) {
-		super(text, new MenuTextButtonStyle(image, imageHover));
+	private final String text;
+	
+	public MenuTextButton (
+			String text,
+			TextureRegion image,
+			TextureRegion imageHover,
+			TextureRegion disabled,
+			BitmapFont font
+		) {
+		super(text, new MenuTextButtonStyle(image, imageHover, disabled, font));
+		
+		this.text = text;
 		
 		this.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -24,8 +35,18 @@ public abstract class MenuTextButton extends TextButton {
 				action();
 			}
 		});
-
-		this.align(Align.top);
+	}
+	
+	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover, TextureRegion disabled) {
+		this(text, image, imageHover, disabled, Autickax.getInstance().assets.getMenuFont());
+	}
+	
+	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover, BitmapFont font) {
+		this(text, image, imageHover, null, font);
+	}
+	
+	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover) {
+		this(text, image, imageHover, null, Autickax.getInstance().assets.getMenuFont());
 	}
 	
 	@Override
@@ -40,6 +61,17 @@ public abstract class MenuTextButton extends TextButton {
 	@Override
 	public void setPosition(float x, float y) {
 		super.setPosition(x * Input.xStretchFactorInv, y * Input.yStretchFactorInv);
+	}
+	
+	@Override
+	public void setDisabled(boolean isDisabled) {
+		super.setDisabled(isDisabled);
+		
+		if (isDisabled) {
+			this.setText("");
+		} else {
+			this.setText(this.text);
+		}
 	}
 	
 	public abstract void action();

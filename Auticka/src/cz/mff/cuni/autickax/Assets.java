@@ -25,6 +25,7 @@ public class Assets {
 	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
 	private static final String TIME_STRINGS_FONT = "fonts/timeString.fnt";
 	private static final String TIME_INT_FONT = "fonts/timeInt.fnt";
+	private static final String LEVEL_NUMBER_FONT = "fonts/levels.fnt";
 	private static final String AVAILABLE_LEVELS_FILE = "availableLevels.bin";	public AssetManager assetManager;
 
 	private Map<String, TextureRegion> graphicsCacheMap;
@@ -49,7 +50,7 @@ public class Assets {
 
 	public void load() {
 		this.loadGraphics();
-		this.loadFont();
+		this.loadFonts();
 		this.loadSounds();
 		this.loadAvailableLevels();
 		//loadLevels(); it has to be loaded manually after loading whole assets because levels uses these assets 
@@ -94,12 +95,13 @@ public class Assets {
 
 
 
-	private void loadFont() {
+	private void loadFonts() {
 		assetManager.load(FONT_FILE, BitmapFont.class);
 		assetManager.load(MENU_FONT_FILE, BitmapFont.class);
 		assetManager.load(DIALOG_FONT_FILE, BitmapFont.class);
 		assetManager.load(TIME_INT_FONT, BitmapFont.class);
 		assetManager.load(TIME_STRINGS_FONT, BitmapFont.class);
+		assetManager.load(LEVEL_NUMBER_FONT, BitmapFont.class);
 	}
 	
 	private void loadAvailableLevels() {
@@ -135,6 +137,11 @@ public class Assets {
 	public BitmapFont getTimeIntFont()
 	{
 		return assetManager.get(TIME_INT_FONT, BitmapFont.class);
+	}
+	
+	public BitmapFont getLevelNumberFont()
+	{
+		return assetManager.get(LEVEL_NUMBER_FONT, BitmapFont.class);
 	}
 	
 	private void loadSounds() {

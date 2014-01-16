@@ -76,6 +76,10 @@ public final class Constants {
 	
 	public static final String 	BUTTON_MENU_LEVEL = "menuLevel";
 	public static final String 	BUTTON_MENU_LEVEL_HOVER = "menuLevelHover";
+	public static final String 	BUTTON_MENU_LEVEL_DISABLED = "menuLevelDisabled";
+	
+	public static final String 	BUTTON_MENU_LEVEL_STAR_GAINED = "menuLevelStarGained";
+	public static final String 	BUTTON_MENU_LEVEL_STAR_UNGAINED = "menuLevelStarUngained";
 	
 	public static final String 	BUTTON_MENU_DIFFICULTY = "menuDifficulty";
 	public static final String 	BUTTON_MENU_DIFFICULTY_HOVER = "menuDifficultyHover";
