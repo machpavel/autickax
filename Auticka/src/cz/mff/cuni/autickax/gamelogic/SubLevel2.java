@@ -189,7 +189,7 @@ public class SubLevel2 extends SubLevel {
 		// finish reached
 		if (checkpoints.isEmpty()) {
 			state = SubLevel2States.FINISH_STATE;
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_DEFAULT_VOLUME);
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_BIG_CHEER_VOLUME);
 			dialog = new MessageDialog(this.level, this, Constants.PHASE_2_FINISH_REACHED + String.format("%1$,.2f", timeElapsed));
 		}
 		else{

@@ -178,6 +178,7 @@ public final class Constants {
 	
 	public static final String SOUND_SUB2_CHEER = "cheer_sub1_big";
 	public static final String SOUND_SUB2_CHEER_PATH = "sfx/sublevels/bigCheer.mp3";
+	public static final float SOUND_BIG_CHEER_VOLUME = 0.8f;
 	/** Default value of volume */
 	public static final float 	MUSIC_DEFAULT_VOLUME = 0.5f;
 	
