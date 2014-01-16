@@ -9,7 +9,7 @@ public class Settings {
 	public boolean playMusic = true;
 	
 	public void loadSettings() {
-		Preferences prefs = Gdx.app.getPreferences("cz.cuni.mff.autickax.preferences");
+		Preferences prefs = Gdx.app.getPreferences(Constants.PREFERENCES_FILENAME);
 		
 		this.showTooltips = prefs.getBoolean("showTooltips", true);
 		this.playSounds = prefs.getBoolean("playSounds", true);
@@ -17,7 +17,7 @@ public class Settings {
 	}
 	
 	public void storeSettings() {
-		Preferences prefs = Gdx.app.getPreferences("cz.cuni.mff.autickax.preferences");
+		Preferences prefs = Gdx.app.getPreferences(Constants.PREFERENCES_FILENAME);
 		
 		prefs.putBoolean("showTooltips", this.showTooltips);
 		prefs.putBoolean("playSounds", this.playSounds);

@@ -112,6 +112,10 @@ public final class Constants {
 	public static final String 	LEVEL_SMALL_BACKGROUND_TEXTURE_POSTFIX = "small";
 
 	
+	//
+	// SERIALIZATION
+	//
+	public static final String PREFERENCES_FILENAME = "cz.cuni.mff.autickax.preferences";
 	
 	
 	
