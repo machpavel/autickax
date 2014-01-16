@@ -9,7 +9,10 @@ public final class Constants {
 	// PATHWAY
 	//
 	
+	/** Determines the color of a pathway*/
 	public static final Color PATHWAY_COLOR = new Color( 0.75f, 0.7f, 0.6f, 0.9f );
+	/** How many pictures shoud be blended from the border of pathway*/
+	public static final float PATHWAY_BORDER_BLEND_DISTANCE = 7;
 	
 	/** Determines where is located start on the curve in percents*/
 	public static final float START_POSITION_IN_CURVE = 0;
@@ -251,6 +254,9 @@ public final class Constants {
 	public static final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid trees";
 	public static final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and\nreach finish";
 	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever\nto the right position";
+	public static final String TOOLTIP_MINIGAME_AVOID_HOLES_FAIL = "You felt into a hole.\nYou will be punised by\nspeed reduction";
+	public static final String TOOLTIP_MINIGAME_AVOID_STONES_FAIL = "You crashed into a Stone.\nLevel failed.";
+	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not accurate enough.\nYou will be punished by\nspeed reduction";
 	public static final String PHASE_1_FINISH_REACHED = "Finish\nreached";
 	public static final String PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS = "You have to drive\nalong whole\nthe pathway.";
 	public static final String PHASE_1_OUT_OF_LINE = "You have gone\nout of the\npathway.";

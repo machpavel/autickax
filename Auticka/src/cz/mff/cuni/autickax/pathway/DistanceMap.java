@@ -140,9 +140,10 @@ public class DistanceMap implements java.io.Serializable {
                         currentPoint = nodesToSearch.poll();                        
                 }                                                                        
         }
-        float PATHWAY_BORDER_DISTANCE = 10;
+        
         public TextureRegion generateTexture(Difficulty difficulty) {
-                Pixmap pixmap = new Pixmap(1024, 512, Format.RGBA8888);
+                Pixmap pixmap = new Pixmap(1024, 512, Pixmap.Format.RGBA8888);
+                Pixmap.setBlending(Pixmap.Blending.None);
                 
                 for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
                         for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
@@ -155,9 +156,10 @@ public class DistanceMap implements java.io.Serializable {
                                 		pixmap.setColor(Constants.PATHWAY_COLOR);
                                         pixmap.drawPixel(column, row);
                                 }
-                                if (distance < difficulty.getMaxDistanceFromSurface() + PATHWAY_BORDER_DISTANCE){                                	
-                                	float alpha = 1 - (distance - difficulty.getMaxDistanceFromSurface()) / PATHWAY_BORDER_DISTANCE;
+                                else if (distance < difficulty.getMaxDistanceFromSurface() + Constants.PATHWAY_BORDER_BLEND_DISTANCE){                                	
+                                	float alpha = 1 - (distance - difficulty.getMaxDistanceFromSurface()) / Constants.PATHWAY_BORDER_BLEND_DISTANCE;
                                 	Color color = new Color (Constants.PATHWAY_COLOR.r, Constants.PATHWAY_COLOR.g, Constants.PATHWAY_COLOR.b, alpha);
+                                	
                                 	pixmap.setColor(color);
                                 	pixmap.drawPixel(column, row);
                                 }
