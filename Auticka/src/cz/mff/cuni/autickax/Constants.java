@@ -276,12 +276,12 @@ public final class Constants {
 	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_CAR = 100;
 	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_FINISH = 100;
 	public static final int AVOID_OBSTACLES_NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE = 20;
-	public static final float AVOID_OBSTACLES_FAIL_VALUE = 0.7f;
+	public static final float AVOID_OBSTACLES_FAIL_VALUE = 0.6f;
 	
 	// Gear shift
 	public static final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "GearShiftMinigameBackground";
 	public static final String GEAR_SHIFTER_TEXTURE = "gearShifter";
-	public static final float GEAR_SHIFT_FAIL_VALUE = 0.8f;
+	public static final float GEAR_SHIFT_FAIL_VALUE = 0.7f;
 	public static final String GEAR_SHIFT_MINIGAME_FINISH_TEXTURE = "gearShiftMinigameFinish";
 	public static final float GEAR_SHIFT_MINIGAME_FINISH_RADIUS = 30;
 	public static final float GEAR_SHIFT_MINIGAME_ROW_1 = 180;
@@ -360,8 +360,8 @@ public final class Constants {
 	//GOLDEN STARS
 	//Defines the max multiply of time limit which a player must not cross in order to gain the stars
 	public static final byte STARS_MAX = 3;
-	public static final float STARS_ONE_TIME_THRESHOLD = 1f;
-	public static final float STARS_TWO_TIME_THRESHOLD = 0.6f;
+	public static final float STARS_ONE_TIME_THRESHOLD = 1.5f;
+	public static final float STARS_TWO_TIME_THRESHOLD = 0.7f;
 	public static final float STARS_THREE_TIME_THRESHOLD = 0.3f;
 	
 	//SCORE CONSTANT

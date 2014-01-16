@@ -369,6 +369,7 @@ public class SubLevel2 extends SubLevel {
 		
 		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
 		this.level.getPlayedLevel().score = this.stats.getScoreFromTime();
+		Autickax.playedLevels.storeLevels();
 		
 		if (this.isNextLevelAvaible()) {
 			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte)0));
