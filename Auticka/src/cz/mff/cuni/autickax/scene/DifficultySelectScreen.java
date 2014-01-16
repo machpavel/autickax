@@ -27,7 +27,7 @@ public class DifficultySelectScreen extends BaseScreen {
 		
 		// Beginner Button-----------------------------------------------------
 		this.buttonBeginner = new MenuTextButton (
-			"easy",
+			"EASY",
 			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY),
 			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY_HOVER)
 		)
@@ -48,7 +48,7 @@ public class DifficultySelectScreen extends BaseScreen {
 		
 		// Normal Button-----------------------------------------------------
 		this.buttonNormal = new MenuTextButton (
-			"medium",
+			"MEDIUM",
 			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY),
 			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY_HOVER)
 		)
@@ -69,7 +69,7 @@ public class DifficultySelectScreen extends BaseScreen {
 		
 		// Hard Button-----------------------------------------------------
 		this.buttonHard = new MenuTextButton (
-			"hard",
+			"HARD",
 			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY),
 			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY_HOVER)
 		)
