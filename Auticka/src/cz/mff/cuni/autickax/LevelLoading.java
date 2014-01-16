@@ -65,7 +65,6 @@ public class LevelLoading implements java.io.Serializable {
 		return this.pathwayTextureType;
 	}
 	
-	//TODO add TIMELIMIT to XML
 	public void parseLevel(GameScreen gameScreen, FileHandle file) throws Exception {
 	
 		System.out.println("Loading level...");

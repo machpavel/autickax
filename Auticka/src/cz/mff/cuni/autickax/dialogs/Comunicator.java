@@ -25,6 +25,10 @@ public abstract class Comunicator extends SubLevel{
 		this.status = DialogAbstractStatus.IN_PROGRESS;
 		stage = new Stage(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 		this.stage.addListener(new ScreenInputListener(this.level));
+		takeFocus();
+	}
+	
+	public void takeFocus(){
 		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCatchBackKey(false);
 	}

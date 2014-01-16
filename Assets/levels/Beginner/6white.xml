@@ -1,0 +1,47 @@
+<AutickaX>
+	<pathway pathwayType="OPENED" typeOfInterpolation="CUBIC_B_SPLINE" textureType="0">
+		<controlPoints>
+			<point X="30.0" Y="294.0"/>
+			<point X="45.0" Y="324.0"/>
+			<point X="76.0" Y="369.0"/>
+			<point X="125.0" Y="384.0"/>
+			<point X="176.0" Y="342.0"/>
+			<point X="179.0" Y="288.0"/>
+			<point X="159.0" Y="208.0"/>
+			<point X="154.0" Y="154.0"/>
+			<point X="167.0" Y="105.0"/>
+			<point X="228.0" Y="83.0"/>
+			<point X="363.0" Y="73.0"/>
+			<point X="396.0" Y="80.0"/>
+			<point X="409.0" Y="86.0"/>
+			<point X="405.0" Y="112.0"/>
+			<point X="400.0" Y="159.0"/>
+			<point X="399.0" Y="212.0"/>
+			<point X="396.0" Y="270.0"/>
+			<point X="396.0" Y="329.0"/>
+			<point X="406.0" Y="359.0"/>
+			<point X="470.0" Y="385.0"/>
+			<point X="575.0" Y="387.0"/>
+			<point X="631.0" Y="295.0"/>
+			<point X="645.0" Y="201.0"/>
+			<point X="667.0" Y="152.0"/>
+			<point X="704.0" Y="132.0"/>
+		</controlPoints>
+	</pathway>
+	<entities>
+		<mud X="495.0" Y="142.0" type="6"/>
+		<mud X="503.0" Y="345.0" type="5"/>
+		<mud X="550.0" Y="212.0" type="6"/>
+		<mud X="492.0" Y="264.0" type="7"/>
+		<mud X="698.0" Y="426.0" type="7"/>
+		<mud X="732.0" Y="357.0" type="7"/>
+		<mud X="745.0" Y="439.0" type="7"/>
+		<hole X="170.0" Y="257.0" type="1"/>
+		<mud X="688.0" Y="270.0" type="6"/>
+	</entities>
+	<car X="0.0" Y="0.0" type="1"/>
+	<start X="47.666668" Y="326.5" type="4"/>
+	<finish X="669.5" Y="156.83334" type="2"/>
+	<levelBackgroundType>2</levelBackgroundType>
+	<timeLimit>10.0</timeLimit>
+</AutickaX>
