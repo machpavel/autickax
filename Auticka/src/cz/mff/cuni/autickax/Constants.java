@@ -9,7 +9,10 @@ public final class Constants {
 	// PATHWAY
 	//
 	
+	/** Determines the color of a pathway*/
 	public static final Color PATHWAY_COLOR = new Color( 0.75f, 0.7f, 0.6f, 0.9f );
+	/** How many pictures shoud be blended from the border of pathway*/
+	public static final float PATHWAY_BORDER_BLEND_DISTANCE = 7;
 	
 	/** Determines where is located start on the curve in percents*/
 	public static final float START_POSITION_IN_CURVE = 0;
