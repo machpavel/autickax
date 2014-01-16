@@ -169,7 +169,7 @@ public final class Constants {
 	
 	//SOUNDS SUBLEVELS
 	public static final String SOUND_ENGINE_START = "engine_start";
-	public static final String SOUND_ENGINE_START_PATH = "sfx/sublevels/car-ignition-1.wav";
+	public static final String SOUND_ENGINE_START_PATH = "sfx/sublevels/car-ignition-1.mp3";
 	public static final float SOUND_ENGINE_VOLUME = 1;
 	
 	public static final String SOUND_SUB1_CHEER = "cheer_sub1_small";
@@ -178,6 +178,14 @@ public final class Constants {
 	public static final String SOUND_SUB2_CHEER = "cheer_sub1_big";
 	public static final String SOUND_SUB2_CHEER_PATH = "sfx/sublevels/bigCheer.mp3";
 	public static final float SOUND_BIG_CHEER_VOLUME = 0.8f;
+	
+	public static final String SOUND_SUB1_FAIL = "cheer_sub1_fail";
+	public static final String SOUND_SUB1_FAIL_PATH = "sfx/sublevels/sports_arena_oh.mp3";
+	
+	public static final String SOUND_SUB2_START = "sub2_start";
+	public static final String SOUND_SUB2_START_PATH = "sfx/sublevels/auto_car_rev_up_squeal_away.mp3";
+	
+	public static final String SOUND_BUTTON_DIALOG_SOUND = SOUND_MENU_CLOSE;
 	/** Default value of volume */
 	public static final float 	MUSIC_DEFAULT_VOLUME = 0.5f;
 	

@@ -34,11 +34,11 @@ public class DifficultySelectScreen extends BaseScreen {
 		{
 			@Override
 			public void action() {
+				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
 				if (Autickax.levelSelectScreen != null) {
 					Autickax.levelSelectScreen.dispose();
 					Autickax.levelSelectScreen = null;
 				}
-				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
 				Autickax.levelSelectScreen = new LevelSelectScreen(Difficulty.Beginner);
 				getGame().setScreen(Autickax.levelSelectScreen);
 			}
@@ -55,11 +55,11 @@ public class DifficultySelectScreen extends BaseScreen {
 		{
 			@Override
 			public void action() {
+				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
 				if (Autickax.levelSelectScreen != null) {
 					Autickax.levelSelectScreen.dispose();
 					Autickax.levelSelectScreen = null;
 				}
-				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
 				Autickax.levelSelectScreen = new LevelSelectScreen(Difficulty.Normal);
 				getGame().setScreen(Autickax.levelSelectScreen);
 			}
@@ -76,11 +76,11 @@ public class DifficultySelectScreen extends BaseScreen {
 		{
 			@Override
 			public void action() {
+				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
 				if (Autickax.levelSelectScreen != null) {
 					Autickax.levelSelectScreen.dispose();
 					Autickax.levelSelectScreen = null;
 				}
-				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
 				Autickax.levelSelectScreen = new LevelSelectScreen(Difficulty.Hard);
 				getGame().setScreen(Autickax.levelSelectScreen);
 			}
@@ -91,9 +91,9 @@ public class DifficultySelectScreen extends BaseScreen {
 	
 	@Override
 	protected void onBackKeyPressed() {
+		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
 		Autickax.mainMenuScreen.dispose();
 		Autickax.mainMenuScreen = new MainMenuScreen();
-		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
 		this.getGame().setScreen(Autickax.mainMenuScreen);		
 	}
 

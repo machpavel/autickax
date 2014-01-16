@@ -165,9 +165,9 @@ public class GameScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
+		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
 		this.getGame().assets.soundAndMusicManager.stopRaceMusic();
 		this.getGame().assets.soundAndMusicManager.playMenuMusic();
-		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.difficulty);
 		this.getGame().setScreen(Autickax.levelSelectScreen);

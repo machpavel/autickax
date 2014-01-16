@@ -43,7 +43,6 @@ public class SubLevel1 extends SubLevel {
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
 		timeStatusBar = new TimeStatusBar(gameScreen,tLimit, true);
-		playStartEngineSound();
 		pathway = gameScreen.getPathWay();
 
 		initWayPoints(Constants.START_POSITION_IN_CURVE,
@@ -240,6 +239,7 @@ public class SubLevel1 extends SubLevel {
 	 * or makes a discontinuous move
 	 */
 	public void reset() {
+		playStartEngineSound();
 		this.miniGame = null;
 		if (Autickax.settings.showTooltips)
 			this.dialog = new MessageDialog(this.level, this, 
@@ -271,6 +271,7 @@ public class SubLevel1 extends SubLevel {
 	 * Player failed to finish the track
 	 */
 	private void switchToMistakeState(String str) {
+		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB1_FAIL, Constants.SOUND_DEFAULT_VOLUME);
 		this.dialog = new DecisionDialog(this.level, this, str, false);
 		this.state = SubLevel1States.MISTAKE_STATE;
 		this.level.getCar().setDragged(false);
