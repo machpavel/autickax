@@ -221,7 +221,7 @@ public class SubLevel1 extends SubLevel {
 		this.level.getCar().draw(batch);
 		
 		batch.end();
-
+		timeStatusBar.draw(batch);
 		if (dialog != null) {
 			dialog.draw(batch);
 		}
@@ -230,7 +230,7 @@ public class SubLevel1 extends SubLevel {
 			dialog.draw(batch);
 		}
 		
-		timeStatusBar.draw(batch);
+
 		
 		
 	}

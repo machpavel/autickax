@@ -279,12 +279,12 @@ public final class Constants {
 	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_CAR = 100;
 	public static final float AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_FINISH = 100;
 	public static final int AVOID_OBSTACLES_NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE = 20;
-	public static final float AVOID_OBSTACLES_FAIL_VALUE = 0.7f;
+	public static final float AVOID_OBSTACLES_FAIL_VALUE = 0.6f;
 	
 	// Gear shift
 	public static final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "GearShiftMinigameBackground";
 	public static final String GEAR_SHIFTER_TEXTURE = "gearShifter";
-	public static final float GEAR_SHIFT_FAIL_VALUE = 0.8f;
+	public static final float GEAR_SHIFT_FAIL_VALUE = 0.7f;
 	public static final String GEAR_SHIFT_MINIGAME_FINISH_TEXTURE = "gearShiftMinigameFinish";
 	public static final float GEAR_SHIFT_MINIGAME_FINISH_RADIUS = 30;
 	public static final float GEAR_SHIFT_MINIGAME_ROW_1 = 180;
@@ -302,22 +302,20 @@ public final class Constants {
 	//
 	// STRINGS
 	//
-	public static final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway\nwith your finger,\nhurry to finish\nand avoid nasty \nobjects!";
+	public static final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway\n  with your finger,\n    hurry to finish\n   and avoid nasty \n          objects!";
 	public static final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid trees";
-	public static final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and\nreach finish";
-	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever\nto the right position";
-	public static final String TOOLTIP_MINIGAME_AVOID_HOLES_FAIL = "You felt into a hole.\nYou will be punised by\nspeed reduction";
-	public static final String TOOLTIP_MINIGAME_AVOID_STONES_FAIL = "You crashed into a Stone.\nLevel failed.";
-	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not accurate enough.\nYou will be punished by\nspeed reduction";
-	public static final String PHASE_1_FINISH_REACHED = "Finish\nreached";
-	public static final String PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS = "You have to drive\nalong whole\nthe pathway.";
-	public static final String PHASE_1_OUT_OF_LINE = "You have gone\nout of the\npathway.";
-	public static final String PHASE_1_FINISH_NOT_REACHED = "You have not\nreached the\nfinish";
-	public static final String PHASE_1_NOT_ALL_CHECKPOINTS = "You have not gone through all checkpoints";
-	public static final String PHASE_1_TIME_EXPIRED = "Time limit\nexceeded.";
+	public static final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and\n      reach finish";
+	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever\n   to the right position";
+	public static final String TOOLTIP_MINIGAME_AVOID_HOLES_FAIL = "  You felt into a hole.\nYou will be punised by\n     speed reduction";
+	public static final String TOOLTIP_MINIGAME_AVOID_STONES_FAIL = "You crashed into a stone.\n           Level failed.";
+	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not enough\naccurate. You will be\n punished by speed\n        reduction";
+	public static final String PHASE_1_FINISH_REACHED = "Finish reached";
+	public static final String PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS = "You have to drive\n     along whole\n    the pathway.";
+	public static final String PHASE_1_OUT_OF_LINE = "  You went out\nof the pathway.";
+	public static final String PHASE_1_FINISH_NOT_REACHED = "You have not\n reached the\n      finish";
+	public static final String PHASE_1_TIME_EXPIRED = "Time limit exceeded.";
 	
 	public static final String PHASE_2_MINIGAME_FAILED = "You failed.";
-	public static final String PHASE_2_FINISH_REACHED = "Finish reached\nin time: ";
 	
 	
 	
@@ -365,8 +363,8 @@ public final class Constants {
 	//GOLDEN STARS
 	//Defines the max multiply of time limit which a player must not cross in order to gain the stars
 	public static final byte STARS_MAX = 3;
-	public static final float STARS_ONE_TIME_THRESHOLD = 1f;
-	public static final float STARS_TWO_TIME_THRESHOLD = 0.6f;
+	public static final float STARS_ONE_TIME_THRESHOLD = 1.5f;
+	public static final float STARS_TWO_TIME_THRESHOLD = 0.7f;
 	public static final float STARS_THREE_TIME_THRESHOLD = 0.3f;
 	
 	//SCORE CONSTANT
