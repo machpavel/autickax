@@ -140,9 +140,13 @@ public final class EditorScreen extends BaseScreenEditor {
 	private void update(float delta) {
 		// Checks if user created a new point
 		if (Gdx.input.justTouched()) {
-			Vector2 point = new Vector2(Gdx.input.getX(), stageHeight
-					- Gdx.input.getY());
-			pathway.getControlPoints().add(point);
+			int x = Gdx.input.getX();
+			int y = Gdx.input.getY();
+			if(x > 0 && x < Constants.WORLD_WIDTH && y > 0 && y < Constants.WORLD_HEIGHT){
+				Vector2 point = new Vector2(Gdx.input.getX(), stageHeight
+						- Gdx.input.getY());
+				pathway.getControlPoints().add(point);
+			}
 		}
 	}
 
@@ -444,14 +448,22 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	private void createBackgroundButtons() {
-		for (int i = 1; i <= Constants.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {
-			TextureRegionDrawable trd = new TextureRegionDrawable(
-					game.assets.getGraphics(LevelBackground.GetSmallTextureName(i)));
-			Button button = new ImageButton(trd);
-			button.setPosition(Constants.WORLD_WIDTH + 5 + (i - 1) * 30,
-					Constants.WORLD_HEIGHT - 18);
+		int widthOffset = 0;
+		int heightOffset = 0;
+		int width = 30;
+		int height = 18;
+		for (int i = 1; i <= Constants.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {			
+			Button button = new EditorBackgroundButton(game.assets.getGraphics(LevelBackground.GetTextureName(i)), i , this);
+			button.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset,
+					Constants.WORLD_HEIGHT - heightOffset - height);
 			button.addListener(new MyInputListenerForBackground(i, this));
 			stage.addActor(button);
+			
+			widthOffset += width;
+			if(widthOffset > EditorConstants.CONTROL_PANEL_WIDTH - width){
+				widthOffset = 0;
+				heightOffset += height;
+			}
 		}
 	}
 
@@ -506,6 +518,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			Vector2i offsetOnScreen,
 			Vector2i maxValue) {
 
+		int HEIGHT_OFFSET = 50;
 		Button button = new ImageButton(trd);
 		float objectWidth = button.getWidth();
 		float objectHeight = button.getHeight();
@@ -520,7 +533,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 		
 		button.setPosition(Constants.WORLD_WIDTH + 5 + offsetOnScreen.x,
-				Constants.WORLD_HEIGHT - 30 - offsetOnScreen.y);
+				Constants.WORLD_HEIGHT - HEIGHT_OFFSET - offsetOnScreen.y);
 		button.addListener(new MyInputListenerForGameObjects(typeOfClass, type,
 				this));
 		stage.addActor(button);

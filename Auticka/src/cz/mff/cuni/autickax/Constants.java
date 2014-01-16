@@ -107,15 +107,10 @@ public final class Constants {
 	public static final String 	PATHWAY_TEXTURE_TYPE_1 = "pathway";
 	
 	/** Background texture in levels*/
-	public static final int LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT = 4;
-	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_1 = "levelBackground1";
-	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_2 = "levelBackground2";
-	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_3 = "levelBackground3";
-	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_4 = "levelBackground4";
-	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_1_SMALL = "levelBackground1small";
-	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_2_SMALL = "levelBackground2small";
-	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_3_SMALL = "levelBackground3small";
-	public static final String 	LEVEL_BACKGROUND_TEXTURE_TYPE_4_SMALL = "levelBackground4small";
+	public static final int LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT = 21;
+	public static final String 	LEVEL_BACKGROUND_TEXTURE_PREFIX = "textury";
+	public static final String 	LEVEL_SMALL_BACKGROUND_TEXTURE_POSTFIX = "small";
+
 	
 	
 	
@@ -310,20 +305,20 @@ public final class Constants {
 	public static final String 	FINISH_TEXTURE_PREFIX = "finish";
 	public static final float FINISH_BOUNDING_RADIUS = 50;
 	
-	public static final int MUD_TYPES_COUNT = 3;
+	public static final int MUD_TYPES_COUNT = 18;
 	public static final String 	MUD_TEXTURE_PREFIX = "mud";
 	public static final float MUD_SPEED_PENALIZATION = 0.9f;
 	
-	public static final int START_TYPES_COUNT = 3;
+	public static final int START_TYPES_COUNT = 4;
 	public static final String 	START_TEXTURE_PREFIX = "start";
 	
-	public static final int STONE_TYPES_COUNT = 5;
+	public static final int STONE_TYPES_COUNT = 6;
 	public static final String 	STONE_TEXTURE_PREFIX = "stone";
 	
-	public static final int TREE_TYPES_COUNT = 5;
+	public static final int TREE_TYPES_COUNT = 23;
 	public static final String 	TREE_TEXTURE_PREFIX = "tree";
 	
-	public static final int HOLE_TYPES_COUNT = 2;
+	public static final int HOLE_TYPES_COUNT = 3;
 	public static final String 	HOLE_TEXTURE_NAME_PREFIX = "hole";
 	
 	public static final int AVOID_STONE_TYPES_COUNT = 15;
