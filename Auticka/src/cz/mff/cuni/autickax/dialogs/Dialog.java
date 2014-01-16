@@ -18,6 +18,10 @@ public abstract class Dialog extends Comunicator{
 		this.messageLabel.setPosition( Constants.DIALOG_MESSAGE_POSITION_X  - messageLabel.getWidth() / 2, Constants.DIALOG_MESSAGE_POSITION_Y - messageLabel.getHeight() / 2);
 		this.stage.addActor(this.messageLabel);
 	}
+	protected void playButtonSound()
+	{
+		super.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_BUTTON_DIALOG_SOUND, Constants.SOUND_DEFAULT_VOLUME);
+	}
 	
 	public abstract DecisionType getDecision();
 	

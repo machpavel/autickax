@@ -169,6 +169,7 @@ public class SubLevel2 extends SubLevel {
 
 	private void updateInBeginnigState(float delta) {
 		// TODO Maybe some delay and countdown animation
+		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_START, 1f);
 		state = SubLevel2States.DRIVING_STATE;
 
 	}
