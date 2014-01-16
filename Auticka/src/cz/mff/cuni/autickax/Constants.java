@@ -12,7 +12,7 @@ public final class Constants {
 	/** Determines the color of a pathway*/
 	public static final Color PATHWAY_COLOR = new Color( 0.75f, 0.7f, 0.6f, 0.9f );
 	/** How many pictures shoud be blended from the border of pathway*/
-	public static final float PATHWAY_BORDER_BLEND_DISTANCE = 4;
+	public static final float PATHWAY_BORDER_BLEND_DISTANCE = 2;
 	/** How big should be the circle in front of start and behind finish in the picture of pathway*/ 
 	public static final int PATHWAY_START_AND_FINISH_CIRCLE_RADIUS = 20;
 	
