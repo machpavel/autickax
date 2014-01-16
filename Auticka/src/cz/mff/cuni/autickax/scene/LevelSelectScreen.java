@@ -46,7 +46,7 @@ public class LevelSelectScreen extends BaseScreen {
 		int y = buttonsStartYPosition;
 		
 		for (int i = 0; i < levels.size(); ++i) {		
-			final LevelLoading level = levels.get(i);
+			final int levelIndex = i;
 			MenuTextButton levelButton = new MenuTextButton (
 				Integer.toString(i),
 				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL),
@@ -63,7 +63,9 @@ public class LevelSelectScreen extends BaseScreen {
 						Autickax.gameScreen.dispose();
 						Autickax.gameScreen = null;
 					}
-					Autickax.gameScreen = new GameScreen(level, difficulty);
+
+					Autickax.gameScreen = new GameScreen(levelIndex, difficulty);
+
 					getGame().setScreen(Autickax.gameScreen);
 				}
 			};

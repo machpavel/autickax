@@ -10,7 +10,6 @@ import java.util.Queue;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -78,6 +77,9 @@ public class DistanceMap implements java.io.Serializable {
                 return height;
         }
         
+        private boolean isInWorld(int x, int y){
+        	return (x >= 0) && (x < width) && (y >= 0) && (y < height);
+        }
         
 
         // Creates the main distances structure for given control points.  
@@ -93,8 +95,34 @@ public class DistanceMap implements java.io.Serializable {
                 for (float i = 0; i <= totalLines; i++) {
                         point = Splines.GetPoint(controlPoints, i / totalLines, typeOfInterpolation, pathwayType);
                         if(point.x >=0 && point.y > 0 && point.x <= width && point.y <= height)
-                                this.map[(int)point.x][(int)point.y] = 0f;                                        
+                                this.map[(int)point.x][(int)point.y] = 0.f;                                        
                 }
+                                
+                //Start and finish circle positions to zero
+                int CIRCLE_RADIUS = Constants.PATHWAY_START_AND_FINISH_CIRCLE_RADIUS;
+                int CIRCLE_RADIUS_SQR = CIRCLE_RADIUS * CIRCLE_RADIUS;
+                Vector2 startF = Splines.GetPoint(controlPoints, 0, typeOfInterpolation, pathwayType);
+                Vector2 finishF = Splines.GetPoint(controlPoints, 1, typeOfInterpolation, pathwayType);
+                Vector2i start = new Vector2i((int)startF.x, (int)startF.y);
+                Vector2i finish = new Vector2i((int)finishF.x, (int)finishF.y);
+                float xSqr, ySqr;
+                for (int x = -CIRCLE_RADIUS; x < CIRCLE_RADIUS; x++) {
+					for (int y = -CIRCLE_RADIUS; y < CIRCLE_RADIUS; y++) {
+						xSqr = x * x;
+						ySqr = y * y;
+						
+						if(xSqr + ySqr < CIRCLE_RADIUS_SQR){
+							if(isInWorld(start.x + x , start.y + y)){
+								map[start.x + x][start.y + y] = 0.f;							
+							}
+							
+							if(isInWorld(finish.x + x, finish.y + y)){
+								map[finish.x + x][finish.y + y] = 0.f;								
+							}														
+						}
+					}
+				}
+                
                 
                 //Prepares for BFS by adding line positions
                 Queue<Vector2i> nodesToSearch = new LinkedList<Vector2i>();
@@ -106,19 +134,17 @@ public class DistanceMap implements java.io.Serializable {
                         }
                 }
                 
+                                
                 //Counting distances with BFS
                 Vector2i currentPoint = nodesToSearch.poll();
                 while (currentPoint!= null) {                        
                         for (int x = -1; x <= 1; x++) {
                                 for (int y = -1; y <= 1; y++) {
-                                        if((x==0 && y==0)||
-                                        (currentPoint.x + x < 0)||
-                                        (currentPoint.x + x >= width)||
-                                        (currentPoint.y + y < 0)||
-                                        (currentPoint.y + y >= height)||
-                                        map[currentPoint.x][currentPoint.y] >= Constants.MAX_DISTANCE_FROM_PATHWAY)
-                                                continue;
-                                        
+                                        if((x==0 && y==0) ||
+                                        		!isInWorld(currentPoint.x + x, currentPoint.y + y)||
+                                        		map[currentPoint.x][currentPoint.y] >= Constants.MAX_DISTANCE_FROM_PATHWAY){
+                                            continue;
+                                        }
                                         
                                         ///System.out.println(map[currentPoint.x][currentPoint.y] + " " + map[currentPoint.x + x][currentPoint.y + y]);
                                         if(Math.abs(x) == Math.abs(y)){

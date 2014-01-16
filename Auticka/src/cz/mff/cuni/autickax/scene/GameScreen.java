@@ -59,11 +59,32 @@ public class GameScreen extends BaseScreen {
 	
 	private final Difficulty difficulty;
 	
-	// Creates instance according to a given xml file
-	public GameScreen(LevelLoading level, Difficulty difficulty) {
+	public GameScreen(int levelIndex, Difficulty difficulty) {
 		super();
 		
-		this.level = level;
+		switch (difficulty) {
+		case Kiddie:
+			this.level = this.game.assets.getAvailableLevels().kiddieLevels.get(levelIndex);
+			break;
+		case Beginner:
+			this.level = this.game.assets.getAvailableLevels().beginnerLevels.get(levelIndex);
+			break;
+		case Normal:
+			this.level = this.game.assets.getAvailableLevels().normalLevels.get(levelIndex);
+			break;
+		case Hard:
+			this.level = this.game.assets.getAvailableLevels().hardLevels.get(levelIndex);
+			break;
+		case Extreme:
+			this.level = this.game.assets.getAvailableLevels().extremeLevels.get(levelIndex);
+			break;
+			
+		default:
+			assert true;
+			break;
+		
+		}
+		
 		this.difficulty = difficulty;
 		
 		camera = new OrthographicCamera();
@@ -87,10 +108,12 @@ public class GameScreen extends BaseScreen {
 		
 		this.start = level.getStart();
 		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.START_POSITION_IN_CURVE + EPSILON_F)).sub(this.start.getPosition()).nor();
+		this.start.setShift(startDirection.scl(Constants.CAR_DISTANCE_FROM_START));
 		this.start.setRotation((startDirection.angle() + 270) % 360);
 		
 		this.finish = level.getFinish();
 		Vector2 finishDirection = new Vector2(this.pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE - EPSILON_F)).sub(this.finish.getPosition()).nor();
+		this.finish.setShift(finishDirection.scl(Constants.CAR_DISTANCE_FROM_START));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 		
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
@@ -119,6 +142,10 @@ public class GameScreen extends BaseScreen {
 	}
 	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {
 		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase, stats);
+	}
+	
+	public void playNextLevel(SubLevel2 caller){
+		// TODO implementation
 	}
 	
 	public void reset() {

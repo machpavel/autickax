@@ -12,7 +12,9 @@ public final class Constants {
 	/** Determines the color of a pathway*/
 	public static final Color PATHWAY_COLOR = new Color( 0.75f, 0.7f, 0.6f, 0.9f );
 	/** How many pictures shoud be blended from the border of pathway*/
-	public static final float PATHWAY_BORDER_BLEND_DISTANCE = 7;
+	public static final float PATHWAY_BORDER_BLEND_DISTANCE = 2;
+	/** How big should be the circle in front of start and behind finish in the picture of pathway*/ 
+	public static final int PATHWAY_START_AND_FINISH_CIRCLE_RADIUS = 20;
 	
 	/** Determines where is located start on the curve in percents*/
 	public static final float START_POSITION_IN_CURVE = 0;
@@ -116,6 +118,12 @@ public final class Constants {
 	// SERIALIZATION
 	//
 	public static final String PREFERENCES_FILENAME = "cz.cuni.mff.autickax.preferences";
+	public static final String PLAYED_LEVELS_FILENAME = "cz.cuni.mff.autickax.playedLevels";
+	public static final String PLAYED_LEVELS_KIDDIE_NAME = "kiddieLevels";
+	public static final String PLAYED_LEVELS_BEGINNER_NAME = "beginnerLevels";
+	public static final String PLAYED_LEVELS_NORMAL_NAME = "normalLevels";
+	public static final String PLAYED_LEVELS_HARD_NAME = "hardLevels";
+	public static final String PLAYED_LEVELS_EXTREME_NAME = "extremeLevels";
 	
 	
 	

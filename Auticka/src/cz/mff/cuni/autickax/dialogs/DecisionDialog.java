@@ -8,10 +8,10 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class DecisionDialog extends Dialog {
 
-	private Button buttonContinue;
-	private Button buttonRestart;
-	private DialogButton buttonGoToMainMenu;
-	private DecisionType decision;
+	protected Button buttonContinue;
+	protected Button buttonRestart;
+	protected DialogButton buttonGoToMainMenu;
+	protected DecisionType decision;
 
 	public DecisionDialog(GameScreen gameScreen, SubLevel subLevel,
 			String message, boolean enableContinueButton) {
@@ -22,7 +22,7 @@ public class DecisionDialog extends Dialog {
 		CreateCuttonGoToMainMenu();
 	}
 
-	private void CreateButtonContinue() {
+	protected void CreateButtonContinue() {
 		buttonContinue = new DialogButton(
 				Autickax.getInstance().assets
 						.getGraphics(Constants.DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE),
@@ -115,4 +115,5 @@ public class DecisionDialog extends Dialog {
 		// TODO Auto-generated method stub
 
 	}
+
 }

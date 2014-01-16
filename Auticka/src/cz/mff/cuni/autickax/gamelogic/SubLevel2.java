@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.dialogs.CompleteLevelDialog;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.drawing.TimeStatusBar;
@@ -192,8 +193,7 @@ public class SubLevel2 extends SubLevel {
 		if (checkpoints.isEmpty()) {
 			state = SubLevel2States.FINISH_STATE;
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_BIG_CHEER_VOLUME);
-
-			dialog = new MessageDialog(this.level, this, Constants.PHASE_2_FINISH_REACHED + String.format("%1$,.2f", this.stats.getPhase2ElapsedTime()));
+			dialog = new CompleteLevelDialog(this.level, this, this.stats);
 		}
 		else{
 			Vector2 newPos = moveCarToNewPosition(delta);
@@ -211,7 +211,28 @@ public class SubLevel2 extends SubLevel {
 		
 	}
 
+	
+	public void onLevelComplete(){
+		switch (this.dialog.getDecision()) {
+		case CONTINUE:
+			this.level.playNextLevel(this);
+			break;
+		case RESTART:
+			this.level.switchToPhase(this.phase1);
+			this.phase1.reset();
+			break;
+		case GO_TO_MAIN_MENU:
+			this.level.goToMainScreen();
+			break;
+		default:
+			// TODO assert for type
+			break;
+		}
+		this.dialog = null;
+	}
+	
 	private void updateInFinishState(float delta) {
+		//TODO not to main screen
 		this.level.goToMainScreen();
 	}
 
