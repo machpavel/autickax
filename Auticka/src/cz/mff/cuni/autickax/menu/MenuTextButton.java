@@ -18,35 +18,48 @@ public abstract class MenuTextButton extends TextButton {
 			TextureRegion image,
 			TextureRegion imageHover,
 			TextureRegion disabled,
-			BitmapFont font
+			BitmapFont font,
+			boolean hasListener
 		) {
 		super(text, new MenuTextButtonStyle(image, imageHover, disabled, font));
 		
 		this.text = text;
 		
-		this.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				return true;
-			}
-
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				action();
-			}
-		});
+		if (hasListener) {
+			this.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event, float x, float y,
+						int pointer, int button) {
+					return true;
+				}
+	
+				public void touchUp(InputEvent event, float x, float y,
+						int pointer, int button) {
+					action();
+				}
+			});
+		}
+	}
+	
+	public MenuTextButton (
+			String text,
+			TextureRegion image,
+			TextureRegion imageHover,
+			BitmapFont font,
+			TextureRegion disabled
+		) {
+		this(text, image, imageHover, disabled, font, true);
 	}
 	
 	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover, TextureRegion disabled) {
-		this(text, image, imageHover, disabled, Autickax.getInstance().assets.getMenuFont());
+		this(text, image, imageHover, disabled, Autickax.getInstance().assets.getMenuFont(), true);
 	}
 	
 	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover, BitmapFont font) {
-		this(text, image, imageHover, null, font);
+		this(text, image, imageHover, null, font, true);
 	}
 	
 	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover) {
-		this(text, image, imageHover, null, Autickax.getInstance().assets.getMenuFont());
+		this(text, image, imageHover, null, Autickax.getInstance().assets.getMenuFont(), true);
 	}
 	
 	@Override
