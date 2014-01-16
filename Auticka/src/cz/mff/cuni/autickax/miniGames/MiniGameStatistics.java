@@ -35,5 +35,12 @@ public class MiniGameStatistics {
 		return collisions;
 	}
 	
+	public int getNOfStars(float timeElapsed, float timeLimit)
+	{
+		int res = 1;
+		
+		return res;
+	}
+	
 	
 }
