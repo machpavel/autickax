@@ -87,10 +87,12 @@ public class GameScreen extends BaseScreen {
 		
 		this.start = level.getStart();
 		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.START_POSITION_IN_CURVE + EPSILON_F)).sub(this.start.getPosition()).nor();
+		this.start.setShift(startDirection.scl(Constants.CAR_DISTANCE_FROM_START));
 		this.start.setRotation((startDirection.angle() + 270) % 360);
 		
 		this.finish = level.getFinish();
 		Vector2 finishDirection = new Vector2(this.pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE - EPSILON_F)).sub(this.finish.getPosition()).nor();
+		this.finish.setShift(finishDirection.scl(Constants.CAR_DISTANCE_FROM_START));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 		
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());

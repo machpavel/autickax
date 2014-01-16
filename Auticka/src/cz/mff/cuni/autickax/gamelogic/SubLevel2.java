@@ -12,7 +12,6 @@ import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.dialogs.CompleteLevelDialog;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
-import cz.mff.cuni.autickax.dialogs.Dialog.DecisionType;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
