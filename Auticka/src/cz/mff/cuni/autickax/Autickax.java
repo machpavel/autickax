@@ -39,6 +39,7 @@ public class Autickax extends Game {
 		Autickax.loadingScreen = new LoadingScreen();
 		
 		settings = new Settings();
+		settings.loadSettings();
 		
 		setScreen(Autickax.loadingScreen);
 		Input.InitDimensions();
