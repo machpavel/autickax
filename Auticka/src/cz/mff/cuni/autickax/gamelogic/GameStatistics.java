@@ -79,6 +79,20 @@ public class GameStatistics {
 	public byte getNumberOfStars() {
 		return this.getNumberOfStars(this.phase2ElapsedTime, this.phase1TimeLimit);
 	}
+	
+	public int getScoreFromTime()
+	{
+		float normalizedElapsed = phase2ElapsedTime / Constants.GLOBAL_SPEED_REGULATOR;
+		int score = (int)(Constants.SCORE_MULTIPLIER / normalizedElapsed);
+		return score;
+	}
+	
+	public float getTimeFromScore(int score)
+	{
+		float normalizedTime = (Constants.SCORE_MULTIPLIER / (float)score);
+		float resultTime = normalizedTime * Constants.GLOBAL_SPEED_REGULATOR;
+		return resultTime;
+	}
 
 	public float getPhase1TimeLimit() {
 		return phase1TimeLimit;
@@ -103,5 +117,7 @@ public class GameStatistics {
 		phase1ElapsedTime = 0;
 		phase2ElapsedTime = 0;		
 	}
+	
+	
 	
 }

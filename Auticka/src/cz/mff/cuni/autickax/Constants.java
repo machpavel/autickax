@@ -355,4 +355,7 @@ public final class Constants {
 	public static final float STARS_TWO_TIME_THRESHOLD = 0.6f;
 	public static final float STARS_THREE_TIME_THRESHOLD = 0.3f;
 	
+	//SCORE CONSTANT
+	public static final int SCORE_MULTIPLIER = 1000000;
+	
 }
