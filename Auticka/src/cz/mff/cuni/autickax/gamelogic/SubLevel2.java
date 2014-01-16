@@ -69,24 +69,18 @@ public class SubLevel2 extends SubLevel {
 		this.difficulty = gameScreen.getDifficulty();
 		this.from = this.checkpoints.removeFirst();
 		this.to = this.checkpoints.removeFirst();
-		
-		
-		// Car positioning		
-//		Vector2 startPosition = new Vector2(this.from.position);
-//		Vector2 startDirection = new Vector2(startPosition.sub(this.to.position)).nor().scl(2 * Constants.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION);
-//		Vector2 preparePosition = new Vector2(startPosition).sub(startDirection);						
-//		this.level.getCar().move(preparePosition);		
-//		this.level.getCar().move(startPosition);
-		
-		//this.level.getCar().move(new Vector2(from.position));
-		//this.level.getCar().move(new Vector2(to.position));
-		
-		phase1.setCarToStart();
-		
+								
+
+
 		speedModifiers.add(Constants.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
 		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_START, 1);
+		
+		// Car positioning
+		this.level.getCar().move(this.from.position);
+		this.level.getCar().setNextPositionIsDirection();
+		this.level.getCar().move(this.to.position);
 
 	}
 
