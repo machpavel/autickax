@@ -1,5 +1,6 @@
 package cz.mff.cuni.autickax.gamelogic;
 
+import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 
 public class GameStatistics {
@@ -56,8 +57,16 @@ public class GameStatistics {
 	
 	public int getNOfStars(float timeElapsed, float timeLimit)
 	{
-		int res = 1;
-		
+		float timeLimitAfterGlobalRegulation = timeLimit / Constants.GLOBAL_SPEED_REGULATOR;
+		float [] starsThresholds = {Constants.STARS_THREE_TIME_THRESHOLD, Constants.STARS_TWO_TIME_THRESHOLD, Constants.STARS_ONE_TIME_THRESHOLD};
+		int res = 0;
+		for (int i = 0; i < starsThresholds.length && res == 0; i++)
+		{
+			if (timeElapsed <= timeLimitAfterGlobalRegulation *  starsThresholds[i])
+			{
+				res = Constants.STARS_MAX - i;
+			}
+		}
 		return res;
 	}
 
