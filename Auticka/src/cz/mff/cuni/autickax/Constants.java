@@ -342,7 +342,7 @@ public final class Constants {
 	
 	//GOLDEN STARS
 	//Defines the max multiply of time limit which a player must not cross in order to gain the stars
-	public static final int STARS_MAX = 3;
+	public static final byte STARS_MAX = 3;
 	public static final float STARS_ONE_TIME_THRESHOLD = 1f;
 	public static final float STARS_TWO_TIME_THRESHOLD = 0.6f;
 	public static final float STARS_THREE_TIME_THRESHOLD = 0.3f;

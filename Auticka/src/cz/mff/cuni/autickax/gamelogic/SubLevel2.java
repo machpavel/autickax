@@ -49,8 +49,8 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints,
-
 			DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {
+		
 		super(gameScreen);
 
 		this.timeStatusBar = new TimeStatusBar(gameScreen);
@@ -212,20 +212,22 @@ public class SubLevel2 extends SubLevel {
 
 	
 	public void onLevelComplete(){
+		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
+		
 		switch (this.dialog.getDecision()) {
-		case CONTINUE:
-			this.level.playNextLevel(this);
-			break;
-		case RESTART:
-			this.level.switchToPhase(this.phase1);
-			this.phase1.reset();
-			break;
-		case GO_TO_MAIN_MENU:
-			this.level.goToMainScreen();
-			break;
-		default:
-			// TODO assert for type
-			break;
+			case CONTINUE:
+				this.level.playNextLevel(this);
+				break;
+			case RESTART:
+				this.level.switchToPhase(this.phase1);
+				this.phase1.reset();
+				break;
+			case GO_TO_MAIN_MENU:
+				this.level.goToMainScreen();
+				break;
+			default:
+				// TODO assert for type
+				break;
 		}
 		this.dialog = null;
 	}
