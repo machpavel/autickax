@@ -20,6 +20,7 @@ public class Assets {
 
 	private static final String GRAPHICS_DIR = "images";
 	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images";
+	private static final String LOADING_SCREEN_GRAPHICS_FILE = "loadingScreen/images";
 	private static final String FONT_FILE = "fonts/font.fnt";
 	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
 	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
@@ -56,6 +57,10 @@ public class Assets {
 		this.loadAvailableLevels();
 		//loadLevels(); it has to be loaded manually after loading whole assets because levels uses these assets 
 	}
+	
+	public void loadLoadingScreenGraphics() {
+		assetManager.load(LOADING_SCREEN_GRAPHICS_FILE, TextureAtlas.class);
+	}
 
 	public TextureRegion getGraphics(String name) {
 		if (graphicsCacheMap.containsKey(name)) { // We have called this
@@ -77,6 +82,34 @@ public class Assets {
 		tr.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		graphicsCacheMap.put(name, tr); // cache the result
 		return tr;
+	}
+
+	public TextureRegion getLoadingScreenGraphics(String name) {
+		if (graphicsCacheMap.containsKey(name)) { // We have called this
+													// already, so we can reuse
+													// the cached result from
+													// last time
+			return graphicsCacheMap.get(name);
+		}
+		if (atlas == null) {
+			atlas = assetManager.get(LOADING_SCREEN_GRAPHICS_FILE, TextureAtlas.class);
+		}
+		TextureRegion tr = atlas.findRegion(name);
+
+		if (tr == null) {
+			throw new RuntimeException("Graphic " + name
+					+ " not found it atlas");
+		}
+
+		tr.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		graphicsCacheMap.put(name, tr); // cache the result
+		return tr;
+	}
+	
+	public void disposeLoadingScreenGraphics() {
+		this.atlas.dispose();
+		this.atlas = null;
+		this.graphicsCacheMap = new HashMap<String, TextureRegion>();
 	}
 
 	private void loadGraphics() {

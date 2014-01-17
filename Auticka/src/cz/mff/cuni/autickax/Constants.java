@@ -70,6 +70,10 @@ public final class Constants {
 	public static final String 	DIFFICULTY_MENU_BACKGROUND = "difficultyMenuBackground";
 	public static final String 	LOADING_LEVEL_MENU_BACKGROUND = "menuLoadingLevelBackground";
 	
+	public static final String 	LOADING_SCREEN_BACKGROUND = "loadingScreenBackground";
+	public static final String 	LOADING_SCREEN_CAR = "loadingScreenCar";
+	public static final String 	LOADING_SCREEN_FUME = "loadingScreenFume";
+	
 	public static final float 	LEVELS_MENU_RED = (float)169 / 255;
 	public static final float 	LEVELS_MENU_GREEN = (float)207 / 255;
 	public static final float 	LEVELS_MENU_BLUE = (float)56 / 255;

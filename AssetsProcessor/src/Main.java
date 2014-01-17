@@ -16,12 +16,14 @@ public class Main {
 
 	private static final String ASSETS_PATH = "../Assets/";
 	private static final String ASSETS_IMAGES_PATH = ASSETS_PATH + "images";
+	private static final String ASSETS_LOADING_SCREEN_IMAGES_PATH = ASSETS_PATH + "loadingScreen";
 	private static final Path ASSETS_FONTS_PATH = Paths.get(ASSETS_PATH + "fonts");
 	private static final Path ASSETS_SFX_PATH = Paths.get(ASSETS_PATH + "sfx");
 	private static final Path ASSETS_LEVELS_PATH = Paths.get(ASSETS_PATH + "levels");
 	
 	private static final String ANDROID_PATH = "../Autickax-android/assets/";
 	private static final Path ANDROID_IMAGES_PATH = Paths.get(ANDROID_PATH + "images");
+	private static final Path ANDROID_LOADING_SCREEN_IMAGES_PATH = Paths.get(ANDROID_PATH + "loadingScreen");
 	private static final Path ANDROID_FONTS_PATH = Paths.get(ANDROID_PATH + "fonts");
 	private static final Path ANDROID_SFX_PATH = Paths.get(ANDROID_PATH + "sfx");
 	
@@ -116,6 +118,14 @@ public class Main {
     
     private static void compressImages() {
     	Settings settings = new Settings();
+    	
+    	TexturePacker.process(
+			settings,
+			ASSETS_LOADING_SCREEN_IMAGES_PATH,
+			ANDROID_LOADING_SCREEN_IMAGES_PATH.toString(),
+			"images"
+		);
+    	
     	TexturePacker.process(
 			settings,
 			ASSETS_IMAGES_PATH,

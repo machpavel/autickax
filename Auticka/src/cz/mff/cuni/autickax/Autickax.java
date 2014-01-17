@@ -1,8 +1,6 @@
 package cz.mff.cuni.autickax;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.audio.Sound;
-
 import cz.mff.cuni.autickax.scene.DifficultySelectScreen;
 import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.scene.LevelLoadingScreen;
@@ -27,7 +25,7 @@ public class Autickax extends Game {
 	
 	static public Font font;
 
-	public Assets assets;
+	public final Assets assets;
 
 	public Autickax() {
 		_instance = this;
@@ -38,7 +36,9 @@ public class Autickax extends Game {
 	
 
 	@Override
-	public void create() {		
+	public void create() {
+		Input.InitDimensions();
+		
 		Autickax.loadingScreen = new LoadingScreen();
 		
 		settings = new Settings();
@@ -48,7 +48,6 @@ public class Autickax extends Game {
 		playedLevels.loadLevels();
 		
 		setScreen(Autickax.loadingScreen);
-		Input.InitDimensions();
 	}
 
 	public static Autickax getInstance() {
