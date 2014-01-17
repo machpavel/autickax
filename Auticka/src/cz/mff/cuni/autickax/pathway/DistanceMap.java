@@ -31,7 +31,7 @@ public class DistanceMap implements java.io.Serializable {
         private int height;
         private int width;
         
-        
+        private float progress = 0;
          
         /**
          * Get a distance according to xy pixel. 0 means that the curve was hit. >0 means that we are "value" pixels far from the curve.
@@ -88,6 +88,7 @@ public class DistanceMap implements java.io.Serializable {
                 
                 ClearMap();
 
+                progress = 0;
                 
                 //Set line position to zero
                 int totalLines = controlPoints.size() * Constants.LINE_SEGMENTATION;                                
@@ -97,7 +98,9 @@ public class DistanceMap implements java.io.Serializable {
                         if(point.x >=0 && point.y > 0 && point.x <= width && point.y <= height)
                                 this.map[(int)point.x][(int)point.y] = 0.f;                                        
                 }
-                                
+                    
+                progress = 10;
+                
                 //Start and finish circle positions to zero
                 int CIRCLE_RADIUS = Constants.PATHWAY_START_AND_FINISH_CIRCLE_RADIUS;
                 int CIRCLE_RADIUS_SQR = CIRCLE_RADIUS * CIRCLE_RADIUS;
@@ -123,6 +126,7 @@ public class DistanceMap implements java.io.Serializable {
 					}
 				}
                 
+                progress = 30;
                 
                 //Prepares for BFS by adding line positions
                 Queue<Vector2i> nodesToSearch = new LinkedList<Vector2i>();
@@ -134,10 +138,19 @@ public class DistanceMap implements java.io.Serializable {
                         }
                 }
                 
-                                
+                progress = 35;  
+                
+                
+                float estimatedSurface = 1;//3.f / 4;
+                float offset = progress;
+                float range = 100 - offset;                
+                float maxNodesCount = width * height / estimatedSurface;                
+                float nodeNumber = 0;
                 //Counting distances with BFS
                 Vector2i currentPoint = nodesToSearch.poll();
-                while (currentPoint!= null) {                        
+                while (currentPoint!= null) { 
+                	progress = offset + (nodeNumber / maxNodesCount) * range;
+                	System.out.println(progress);
                         for (int x = -1; x <= 1; x++) {
                                 for (int y = -1; y <= 1; y++) {
                                         if((x==0 && y==0) ||
@@ -163,8 +176,10 @@ public class DistanceMap implements java.io.Serializable {
                                         }                                                                                                                        
                                 }
                         }
-                        currentPoint = nodesToSearch.poll();                        
-                }                                                                        
+                        currentPoint = nodesToSearch.poll();
+                        nodeNumber++;
+                }    
+                progress = 100;  
         }
         
         public TextureRegion generateTexture(Difficulty difficulty) {
@@ -198,4 +213,10 @@ public class DistanceMap implements java.io.Serializable {
                 
                 return region;
         }
+        
+        
+        public float getProgress(){
+        	return this.progress / 100;
+        }
+        
 }
