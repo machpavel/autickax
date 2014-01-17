@@ -1,0 +1,71 @@
+body
+{
+	background: rgb(168, 206, 56);
+	font-size: 1em;
+	line-height: 1.5em;
+	font-family: Verdana, sanf-serif;
+	padding: 0;
+	margin: 0;
+}
+h1, h2, h3, h4, h5, nav a
+{
+	color: #fff;
+}
+ul
+{
+	padding-left: 20px;
+}
+nav a
+{
+	margin-right: 20px;
+}
+h3
+{
+	margin: 5px;
+}
+img
+{
+	border: none;
+}
+
+a, a:visited
+{
+	color: #fff;
+	text-decoration: underline;
+}
+
+a:hover
+{
+	text-decoration: none;
+}
+
+.header
+{
+	margin: 0 auto;
+	width: 854px;
+	clear: both;
+}
+
+.footer
+{
+	margin: 50px 0 0;
+	clear: both;
+	min-height: 150px;
+	text-align: center;
+	font-size: small;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.carImage
+{
+	float: right;
+}
+
+.content
+{
+	min-height: 500px;
+	padding-top: 60px;
+	margin: 0 auto;
+	width: 854px;
+	clear: both;
+}
