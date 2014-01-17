@@ -390,7 +390,8 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	private void unlockNewLevel() {
-		if (this.isNextLevelAvaible()) {
+		if (this.isNextLevelAvaible() &&
+				this.level.getLevelIndex() == this.level.getDifficulty().getPlayedLevels().size() - 1) {
 			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte)0));
 		}
 	}
