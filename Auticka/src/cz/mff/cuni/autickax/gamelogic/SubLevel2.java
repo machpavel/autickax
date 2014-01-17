@@ -219,6 +219,7 @@ public class SubLevel2 extends SubLevel {
 		if (checkpoints.isEmpty()) {
 			state = SubLevel2States.FINISH_STATE;
 			this.updateScore();
+			this.unlockNewLevel();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_BIG_CHEER_VOLUME);
 			dialog = new CompleteLevelDialog(this.level, this, this.stats, this.isNextLevelAvaible());
 		}
@@ -370,9 +371,7 @@ public class SubLevel2 extends SubLevel {
 		
 		updateScore();
 		
-		if (this.isNextLevelAvaible()) {
-			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte)0));
-		}
+		unlockNewLevel();
 		
 		switch (dialogLocal.getDecision()) {
 			case CONTINUE:				
@@ -390,9 +389,20 @@ public class SubLevel2 extends SubLevel {
 		
 	}
 
+	private void unlockNewLevel() {
+		if (this.isNextLevelAvaible()) {
+			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte)0));
+		}
+	}
+
 	private void updateScore() {
-		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
-		this.level.getPlayedLevel().score = this.stats.getScoreFromTime();
+		byte numberOfStars = this.stats.getNumberOfStars();
+		if (numberOfStars > this.level.getPlayedLevel().starsNumber)
+		this.level.getPlayedLevel().starsNumber = numberOfStars;
+		
+		float score = this.stats.getScoreFromTime();
+		if (score > this.level.getPlayedLevel().score)
+		this.level.getPlayedLevel().score = score;
 		Autickax.playedLevels.storeLevels();
 	}
 	
@@ -413,8 +423,8 @@ public class SubLevel2 extends SubLevel {
 		Vector<LevelLoading> availableLevels = this.level.getDifficulty().getAvailableLevels();
 		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
 		
-		return this.level.getLevelIndex() == playedLevels.size() - 1 &&
-				this.level.getLevelIndex() < availableLevels.size();
+		return this.level.getLevelIndex() < playedLevels.size() &&
+				this.level.getLevelIndex() < availableLevels.size() - 1;
 	}
 
 }
