@@ -218,6 +218,7 @@ public class SubLevel2 extends SubLevel {
 		// finish reached
 		if (checkpoints.isEmpty()) {
 			state = SubLevel2States.FINISH_STATE;
+			this.updateScore();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_BIG_CHEER_VOLUME);
 			dialog = new CompleteLevelDialog(this.level, this, this.stats, this.isNextLevelAvaible());
 		}
@@ -367,9 +368,7 @@ public class SubLevel2 extends SubLevel {
 		Dialog dialogLocal = this.dialog;
 		eraseDialog();
 		
-		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
-		this.level.getPlayedLevel().score = this.stats.getScoreFromTime();
-		Autickax.playedLevels.storeLevels();
+		updateScore();
 		
 		if (this.isNextLevelAvaible()) {
 			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte)0));
@@ -389,6 +388,12 @@ public class SubLevel2 extends SubLevel {
 				break;
 		}
 		
+	}
+
+	private void updateScore() {
+		this.level.getPlayedLevel().starsNumber = this.stats.getNumberOfStars();
+		this.level.getPlayedLevel().score = this.stats.getScoreFromTime();
+		Autickax.playedLevels.storeLevels();
 	}
 	
 	
