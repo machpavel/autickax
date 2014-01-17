@@ -149,8 +149,7 @@ public class DistanceMap implements java.io.Serializable {
                 //Counting distances with BFS
                 Vector2i currentPoint = nodesToSearch.poll();
                 while (currentPoint!= null) { 
-                	progress = offset + (nodeNumber / maxNodesCount) * range;
-                	System.out.println(progress);
+                	progress = offset + (nodeNumber / maxNodesCount) * range;                	
                         for (int x = -1; x <= 1; x++) {
                                 for (int y = -1; y <= 1; y++) {
                                         if((x==0 && y==0) ||
