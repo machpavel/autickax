@@ -1,6 +1,9 @@
 package cz.mff.cuni.autickax;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
 import cz.mff.cuni.autickax.scene.DifficultySelectScreen;
 import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.scene.LevelLoadingScreen;
@@ -23,8 +26,6 @@ public class Autickax extends Game {
 	public static Settings settings;
 	public static PlayedLevels playedLevels;
 	
-	static public Font font;
-
 	public final Assets assets;
 
 	public Autickax() {
@@ -54,7 +55,7 @@ public class Autickax extends Game {
 	@Override
 	public void resume() {
 		if(gameScreen != null){
-			gameScreen.initializeUnmanagedGraphics();
+			gameScreen.onApplicationResume();
 		}
 		super.resume();
 	}
@@ -64,4 +65,24 @@ public class Autickax extends Game {
 	}
 	
 	
+	@Override
+	public void dispose() {
+		assets.disposeGameScreenGraphic();
+		
+		FileHandle textureFile = null;
+    	if(Gdx.files.isLocalStorageAvailable())
+    		textureFile = Gdx.files.local(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
+    	else
+    		textureFile = Gdx.files.internal(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");    	
+		if(textureFile.exists())
+			textureFile.delete();
+		super.dispose();
+	}
+
+	@Override
+	public void pause() {
+		// maybe here should me code from dispose method
+		// TODO Auto-generated method stub			
+		super.pause();
+	}
 }

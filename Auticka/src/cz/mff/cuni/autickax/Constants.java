@@ -115,6 +115,7 @@ public final class Constants {
 	
 	/** Pathway texture */
 	public static final String 	PATHWAY_TEXTURE_TYPE_1 = "pathway";
+	public static final String 	TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME = "pathwayTexture";
 	
 	/** Background texture in levels*/
 	public static final int LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT = 21;

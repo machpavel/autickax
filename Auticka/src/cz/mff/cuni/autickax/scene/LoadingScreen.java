@@ -51,7 +51,6 @@ public class LoadingScreen extends BaseScreen {
 		if (this.getGame().assets.update()) {
 			this.getGame().assets.disposeLoadingScreenGraphics();
 			
-			Autickax.font = new Font(getGame().assets.getFont());
 			Autickax.mainMenuScreen = new MainMenuScreen(); // we know that it is null, no need for check
 			getGame().setScreen(Autickax.mainMenuScreen);
 		} else {

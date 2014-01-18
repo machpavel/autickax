@@ -5,8 +5,12 @@ import java.util.LinkedList;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.PixmapIO;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -33,7 +37,7 @@ public class GameScreen extends BaseScreen {
 	public static final float EPSILON_F = 0.01f;
 	
 	// Textures
-	private LevelBackground levelBackground;
+	private LevelBackground levelBackground;	
 	private TextureRegion pathwayTexture;
 
 
@@ -75,9 +79,7 @@ public class GameScreen extends BaseScreen {
 		level.calculateDistanceMap();
 	}
 	
-	public void initializeUnmanagedGraphics(){
-		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture(this.levelDifficulty);
-	}
+
 	
 	public void initializeGameScreen() {
 		camera = new OrthographicCamera();
@@ -87,9 +89,8 @@ public class GameScreen extends BaseScreen {
 		level.calculateDistanceMap();
 		level.setGameScreen(this);
 		
-		initializeUnmanagedGraphics(); // creates the pathway texture
-		
-		
+		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture(this.levelDifficulty);				
+				
 		this.pathway = level.getPathway();
 		this.gameObjects = level.getGameObjects();
 		
@@ -189,6 +190,10 @@ public class GameScreen extends BaseScreen {
 	public ArrayList<GameObject> getGameObjects() {
 		return gameObjects;
 	}
+	
+	public void goToMainScreen(){
+		this.onBackKeyPressed();
+	}
 
 	@Override
 	protected void onBackKeyPressed() {
@@ -201,9 +206,7 @@ public class GameScreen extends BaseScreen {
 		Gdx.input.setInputProcessor(Autickax.levelSelectScreen.getStage());
 	}
 	
-	public void goToMainScreen(){
-		this.onBackKeyPressed();
-	}
+	
 
 	@Override
 	public void dispose() {
@@ -224,6 +227,21 @@ public class GameScreen extends BaseScreen {
 
 	public int getLevelIndex() {
 		return this.levelIndex;
+	}
+	
+	
+	public void onApplicationResume(){
+		FileHandle textureFile = null;
+    	if(Gdx.files.isLocalStorageAvailable())
+    		textureFile = Gdx.files.local(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
+    	else
+    		textureFile = Gdx.files.internal(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
+    	
+		if(textureFile.exists()){
+			Pixmap pixmap = PixmapIO.readCIM(textureFile);
+			this.pathwayTexture = new TextureRegion(new Texture(pixmap), Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+			pixmap.dispose();
+		}
 	}
 
 }
