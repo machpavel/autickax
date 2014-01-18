@@ -49,6 +49,15 @@ public class Autickax extends Game {
 		
 		setScreen(Autickax.loadingScreen);
 	}
+	
+	
+	@Override
+	public void resume() {
+		if(gameScreen != null){
+			gameScreen.initializeUnmanagedGraphics();
+		}
+		super.resume();
+	}
 
 	public static Autickax getInstance() {
 		return _instance; // will get created when app starts

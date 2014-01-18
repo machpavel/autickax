@@ -75,6 +75,10 @@ public class GameScreen extends BaseScreen {
 		level.calculateDistanceMap();
 	}
 	
+	public void initializeUnmanagedGraphics(){
+		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture(this.levelDifficulty);
+	}
+	
 	public void initializeGameScreen() {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, stageWidth, stageHeight);
@@ -82,8 +86,9 @@ public class GameScreen extends BaseScreen {
 		
 		level.calculateDistanceMap();
 		level.setGameScreen(this);
-								
-		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture(this.levelDifficulty);
+		
+		initializeUnmanagedGraphics(); // creates the pathway texture
+		
 		
 		this.pathway = level.getPathway();
 		this.gameObjects = level.getGameObjects();

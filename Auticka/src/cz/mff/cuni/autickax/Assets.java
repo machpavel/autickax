@@ -106,6 +106,12 @@ public class Assets {
 		return tr;
 	}
 	
+	public void disposeGameScreenGraphic(){
+		this.atlas.dispose();
+		this.atlas = null;
+		this.graphicsCacheMap = new HashMap<String, TextureRegion>();
+	}
+	
 	public void disposeLoadingScreenGraphics() {
 		this.atlas.dispose();
 		this.atlas = null;
