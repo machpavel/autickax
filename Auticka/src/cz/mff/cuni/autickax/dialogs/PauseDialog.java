@@ -3,6 +3,7 @@ package cz.mff.cuni.autickax.dialogs;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.menu.MenuButton;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -47,7 +48,7 @@ public class PauseDialog extends DecisionDialog{
 						}
 					}
 				};
-				this.buttonTooltips.setPosition(Constants.PAUSE_DIALOG_TOOLTIPS_POSITION_X, Constants.PAUSE_DIALOG_TOOLTIPS_POSITION_Y);
+				this.buttonTooltips.setPosition(Constants.PAUSE_DIALOG_TOOLTIPS_POSITION_X * Input.xStretchFactor, Constants.PAUSE_DIALOG_TOOLTIPS_POSITION_Y * Input.yStretchFactor);
 				stage.addActor(this.buttonTooltips);
 				
 				// Sounds Button------------------------------------------------
@@ -80,7 +81,7 @@ public class PauseDialog extends DecisionDialog{
 						}
 					}
 				};
-				this.buttonSounds.setPosition(Constants.PAUSE_DIALOG_SOUNDS_POSITION_X, Constants.PAUSE_DIALOG_SOUNDS_POSITION_Y);
+				this.buttonSounds.setPosition(Constants.PAUSE_DIALOG_SOUNDS_POSITION_X * Input.xStretchFactor, Constants.PAUSE_DIALOG_SOUNDS_POSITION_Y * Input.yStretchFactor);
 				stage.addActor(this.buttonSounds);
 				
 				// Music Button------------------------------------------------
@@ -115,7 +116,7 @@ public class PauseDialog extends DecisionDialog{
 						}
 					}
 				};
-				this.buttonMusic.setPosition(Constants.PAUSE_DIALOG_MUSIC_POSITION_X, Constants.PAUSE_DIALOG_MUSIC_POSITION_Y);
+				this.buttonMusic.setPosition(Constants.PAUSE_DIALOG_MUSIC_POSITION_X * Input.xStretchFactor, Constants.PAUSE_DIALOG_MUSIC_POSITION_Y * Input.yStretchFactor);
 				stage.addActor(this.buttonMusic);
 
 	}

@@ -211,7 +211,7 @@ public class GameScreen extends BaseScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
-		
+		this.pathwayTexture.getTexture().dispose();		
 		this.level.deleteDistanceMap();
 	}
 	
