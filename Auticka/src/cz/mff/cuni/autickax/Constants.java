@@ -266,6 +266,15 @@ public final class Constants {
 	public static final int COMPLETE_DIALOG_STAR_POSITION_Y = 155;
 	
 	
+	public static final int PAUSE_DIALOG_TOOLTIPS_POSITION_X = 100;
+	public static final int PAUSE_DIALOG_TOOLTIPS_POSITION_Y = 290;
+	public static final int PAUSE_DIALOG_SOUNDS_POSITION_X = 320;
+	public static final int PAUSE_DIALOG_SOUNDS_POSITION_Y = 315;
+	public static final int PAUSE_DIALOG_MUSIC_POSITION_X = 550;
+	public static final int PAUSE_DIALOG_MUSIC_POSITION_Y = 315;
+	
+	
+	
 	//
 	// MINIGAMES
 	//
