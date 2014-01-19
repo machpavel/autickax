@@ -230,18 +230,32 @@ public class GameScreen extends BaseScreen {
 	}
 	
 	
+	public void onApplicationPause(){
+		this.currentPhase.onPause();
+		this.pathwayTexture.getTexture().dispose();
+		
+	}
 	public void onApplicationResume(){
 		FileHandle textureFile = null;
-    	if(Gdx.files.isLocalStorageAvailable())
+    	if(Gdx.files.isLocalStorageAvailable()){
     		textureFile = Gdx.files.local(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
-    	else
+    		System.out.println("Local loading...");
+    	}
+    	else{
     		textureFile = Gdx.files.internal(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
+    		System.out.println("Internal loading...");
+    	}
+    	
     	
 		if(textureFile.exists()){
 			Pixmap pixmap = PixmapIO.readCIM(textureFile);
 			this.pathwayTexture = new TextureRegion(new Texture(pixmap), Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 			pixmap.dispose();
+			System.out.println("Secceeded...");
 		}
+		else{
+			System.out.println("Failed...");
+		}		
 	}
 
 }

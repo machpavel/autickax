@@ -88,7 +88,7 @@ public class SubLevel2 extends SubLevel {
 
 	@Override
 	public void onDialogEnded() {
-		Dialog dialogLocal = this.dialog;
+		Dialog dialogLocal = this.dialogStack.peek();
 		eraseDialog();
 		switch (dialogLocal.getDecision()) {
 		case CONTINUE:
@@ -112,7 +112,7 @@ public class SubLevel2 extends SubLevel {
 		eraseMinigame();
 		switch (miniGameLocal.getResult()) {
 		case FAILED:
-			this.dialog = new DecisionDialog(this.level, this, miniGameLocal.getResultFailMessage(), false);
+			this.dialogStack.push(new DecisionDialog(this.level, this, miniGameLocal.getResultFailMessage(), false));
 			stats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
 			break;
@@ -124,7 +124,7 @@ public class SubLevel2 extends SubLevel {
 			break;
 		case PROCEEDED_WITH_VALUE:
 			if (Autickax.settings.showTooltips)
-				this.dialog = new MessageDialog(this.level, this, miniGameLocal.getResultFailMessage());
+				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultFailMessage()));
 
 			stats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
@@ -148,8 +148,8 @@ public class SubLevel2 extends SubLevel {
 		if (state != SubLevel2States.ENGINE_RAGING_STATE)
 			timeStatusBar.update(this.stats.getPhase2ElapsedTime());
 		
-		if (this.dialog != null) {
-			this.dialog.update(delta);
+		if (!this.dialogStack.isEmpty()) {
+			this.dialogStack.peek().update(delta);
 		} else if (this.miniGame != null) {
 			this.miniGame.update(delta);
 
@@ -221,7 +221,7 @@ public class SubLevel2 extends SubLevel {
 			this.updateScore();
 			this.unlockNewLevel();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_BIG_CHEER_VOLUME);
-			dialog = new CompleteLevelDialog(this.level, this, this.stats, this.isNextLevelAvaible());
+			dialogStack.push(new CompleteLevelDialog(this.level, this, this.stats, this.isNextLevelAvaible()));
 		}
 		else{
 			Vector2 newPos = moveCarToNewPosition(delta);
@@ -248,7 +248,7 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	private void updateInMistakeState(float delta) {
-		this.dialog = new MessageDialog(this.level, this, "MISTAKE");
+		this.dialogStack.push(new MessageDialog(this.level, this, "MISTAKE"));
 	}
 
 	@Override
@@ -266,8 +266,8 @@ public class SubLevel2 extends SubLevel {
 
 		timeStatusBar.draw(batch);
 		
-		if (dialog != null) {
-			dialog.draw(batch);
+		if (!dialogStack.isEmpty()) {
+			dialogStack.peek().draw(batch);
 		}
 		else if (miniGame != null) {
 			miniGame.draw(batch);
@@ -366,7 +366,7 @@ public class SubLevel2 extends SubLevel {
 	
 	
 	public void onLevelComplete(){
-		Dialog dialogLocal = this.dialog;
+		Dialog dialogLocal = this.dialogStack.peek();
 		eraseDialog();
 		
 		updateScore();

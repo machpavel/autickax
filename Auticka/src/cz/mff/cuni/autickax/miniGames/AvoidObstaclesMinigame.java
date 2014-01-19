@@ -1,8 +1,6 @@
 package cz.mff.cuni.autickax.miniGames;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;

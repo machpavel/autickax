@@ -9,7 +9,6 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.scene.LevelLoadingScreen;
 import cz.mff.cuni.autickax.scene.LevelSelectScreen;
 import cz.mff.cuni.autickax.scene.MainMenuScreen;
-import cz.mff.cuni.autickax.drawing.Font;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.LoadingScreen;
 
@@ -69,6 +68,8 @@ public class Autickax extends Game {
 	public void dispose() {
 		assets.disposeGameScreenGraphic();
 		
+		
+		// Deletes the temporary pathway texture file
 		FileHandle textureFile = null;
     	if(Gdx.files.isLocalStorageAvailable())
     		textureFile = Gdx.files.local(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
@@ -81,8 +82,9 @@ public class Autickax extends Game {
 
 	@Override
 	public void pause() {
-		// maybe here should me code from dispose method
-		// TODO Auto-generated method stub			
+		if(gameScreen != null){
+			gameScreen.onApplicationPause();
+		}		
 		super.pause();
 	}
 }

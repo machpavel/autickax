@@ -322,6 +322,8 @@ public final class Constants {
 	
 	public static final String PHASE_2_MINIGAME_FAILED = "You failed.";
 	
+	public static final String GAME_PAUSED = "Game paused"; 
+	
 	
 	
 	//

@@ -2,7 +2,6 @@ package cz.mff.cuni.autickax.pathway;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import java.util.Queue;
 
 import com.badlogic.gdx.Gdx;
@@ -228,14 +227,17 @@ public class DistanceMap implements java.io.Serializable {
 
 		// Save pixmap to temporary file
 		FileHandle textureFile = null;
-		if (Gdx.files.isLocalStorageAvailable())
+		if (Gdx.files.isLocalStorageAvailable()) {
 			textureFile = Gdx.files
 					.local(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 							+ ".cim");
-		else
+			System.out.println("Local saving...");
+		} else {
 			textureFile = Gdx.files
 					.internal(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 							+ ".cim");
+			System.out.println("Internal saving...");
+		}
 		PixmapIO.writeCIM(textureFile, pixmap);
 
 		// Texture from pixmap

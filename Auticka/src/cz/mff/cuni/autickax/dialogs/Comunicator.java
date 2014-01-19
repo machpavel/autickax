@@ -12,8 +12,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.scene.ScreenInputListener;
 
 public abstract class Comunicator extends SubLevel{
-	protected TextureRegionDrawable backgrountTexture;
-	protected Stage stage;
+	protected TextureRegionDrawable backgrountTexture;	
 	protected DialogAbstractStatus status;
 	protected SubLevel parent;
 	
@@ -23,7 +22,7 @@ public abstract class Comunicator extends SubLevel{
 		super(gameScreen);
 		this.parent = sublevel;
 		this.status = DialogAbstractStatus.IN_PROGRESS;
-		stage = new Stage(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+		this.stage = new Stage(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 		this.stage.addListener(new ScreenInputListener(this.level));
 		takeFocus();
 	}
