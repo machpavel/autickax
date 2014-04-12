@@ -143,10 +143,10 @@ public final class AvoidObstaclesMinigame extends Minigame{
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 			
-			Vector2 shift = new Vector2(this.level.getCar().getPosition()).sub(touchPos.x, touchPos.y);
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
 			if (shift.len() <= Constants.CAR_CAPABLE_DISTANCE) {
-				this.level.getCar().setDragged(true);
-				this.level.getCar().setShift(shift);
+				this.car.setDragged(true);
+				this.car.setShift(shift);
 				state = States.DRIVING_STATE;
 			}						
 		}
@@ -154,9 +154,14 @@ public final class AvoidObstaclesMinigame extends Minigame{
 	}
 
 	private void updateInDrivingState(float delta) {
+		System.out.println(this.car.getPosition().toString());
 		// Focus was lost
 		if (!this.car.isDragged()) {
 			// this.parent.setDialog(new DecisionDialog(this.level, this, "Pustil jsi auto", false));
+			fail();
+		}
+		//Car is out of borders
+		else if (!isInWorld(this.car.getPosition())){
 			fail();
 		}
 		//Finish reached
@@ -175,6 +180,12 @@ public final class AvoidObstaclesMinigame extends Minigame{
 		}
 	}
 	
+	private boolean isInWorld(Vector2 position){		
+		return position.x > Constants.DIALOG_WORLD_X_OFFSET && 
+				position.x < Constants.DIALOG_WORLD_X_OFFSET + Constants.DIALOG_WORLD_WIDTH && 
+				position.y > Constants.DIALOG_WORLD_Y_OFFSET && 
+				position.y < Constants.DIALOG_WORLD_Y_OFFSET + Constants.DIALOG_WORLD_HEIGHT;
+	}
 	private void fail(){
 		this.status = DialogAbstractStatus.FINISHED;
 		switch (obstaclesType) {
