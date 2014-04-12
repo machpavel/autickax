@@ -88,9 +88,16 @@ public final class GearShiftMinigame extends Minigame{
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
 		Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-		if (this.gearShifter.getPosition().dst(touchPos.x, touchPos.y) <= MAX_DISTANCE_FROM_LINE) {
+		
+		Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(touchPos.x, touchPos.y);
+		if (shift.len() <= Constants.CAR_CAPABLE_DISTANCE) {			
 			this.gearShifter.setDragged(true);
-			state = States.DRIVING_STATE;
+			this.gearShifter.setShift(shift);
+			state = States.DRIVING_STATE;					
+		}
+		
+		if (this.gearShifter.getPosition().dst(touchPos.x, touchPos.y) <= MAX_DISTANCE_FROM_LINE) {
+			
 		}
 	}
 		

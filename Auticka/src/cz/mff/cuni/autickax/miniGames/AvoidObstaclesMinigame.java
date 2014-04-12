@@ -1,6 +1,7 @@
 package cz.mff.cuni.autickax.miniGames;
 
 import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -141,10 +142,13 @@ public final class AvoidObstaclesMinigame extends Minigame{
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-			if (this.car.getPosition().dst(touchPos.x, touchPos.y) <= Constants.MAX_DISTANCE_FROM_PATHWAY) {
-				this.car.setDragged(true);
+			
+			Vector2 shift = new Vector2(this.level.getCar().getPosition()).sub(touchPos.x, touchPos.y);
+			if (shift.len() <= Constants.CAR_CAPABLE_DISTANCE) {
+				this.level.getCar().setDragged(true);
+				this.level.getCar().setShift(shift);
 				state = States.DRIVING_STATE;
-			}
+			}						
 		}
 
 	}

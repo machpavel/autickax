@@ -80,6 +80,7 @@ public class SubLevel2 extends SubLevel {
 		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_START, 1);
 		
 		// Car positioning
+		this.level.getCar().reset();
 		this.level.getCar().move(this.from.position);
 		this.level.getCar().setNextPositionIsDirection();
 		this.level.getCar().move(this.to.position);

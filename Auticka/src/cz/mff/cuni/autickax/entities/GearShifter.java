@@ -19,6 +19,7 @@ public final class GearShifter extends GameObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private boolean isDragged = false;
+	private Vector2 shift = Vector2.Zero;
 
 	public GearShifter(float x, float y, GameScreen gameScreen) {
 		super(x, y, gameScreen, 0);			
@@ -35,6 +36,10 @@ public final class GearShifter extends GameObject implements Serializable {
 	public void setDragged(boolean value) {
 		this.isDragged = value;
 	}
+	
+	public void setShift(Vector2 value){
+		this.shift = value;
+	}
 
 	@Override
 	public String getName() {
@@ -46,7 +51,7 @@ public final class GearShifter extends GameObject implements Serializable {
 		if (this.isDragged()) {
 			if (Gdx.input.isTouched()) {
 				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-				this.move(touchPos);
+				this.move(touchPos.add(shift));
 			}
 		}
 

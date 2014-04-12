@@ -201,8 +201,10 @@ public class SubLevel1 extends SubLevel {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
-			if (this.level.getCar().getPosition().dst(touchPos.x, touchPos.y) <= Constants.MAX_DISTANCE_FROM_PATHWAY) {
+			Vector2 shift = new Vector2(this.level.getCar().getPosition()).sub(touchPos.x, touchPos.y);
+			if (shift.len() <= Constants.CAR_CAPABLE_DISTANCE) {
 				this.level.getCar().setDragged(true);
+				this.level.getCar().setShift(shift);
 				state = SubLevel1States.DRIVING_STATE;
 				timeMeasured = true;
 			}
@@ -252,6 +254,7 @@ public class SubLevel1 extends SubLevel {
 		}
 		
 		// Car positioning
+		this.level.getCar().reset();
 		setCarToStart();
 					
 		if (Autickax.settings.showTooltips)

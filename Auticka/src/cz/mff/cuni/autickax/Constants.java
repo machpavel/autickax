@@ -28,6 +28,10 @@ public final class Constants {
 	/** Determines maximal total distance from pathway (in pixels). Beyond it is no pathway.*/
 	public static final int MAX_DISTANCE_FROM_PATHWAY = 60;
 	
+
+	/** Determines the distance from user's finger that the car can be controlled.*/
+	public static final int CAR_CAPABLE_DISTANCE = 60;
+	
 	/** Determines maximal distance of proper surface  from pathway (in pixels)*/
 	//public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY = 30;
 	public static final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT = 30;
@@ -307,17 +311,17 @@ public final class Constants {
 	public static final float GEAR_SHIFT_MINIGAME_COLUMN_1 = 320;
 	public static final float GEAR_SHIFT_MINIGAME_COLUMN_2 = 400;
 	public static final float GEAR_SHIFT_MINIGAME_COLUMN_3 = 480;	
-	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_KIDDIE = 40;
-	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_BEGINNER = 30;
-	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_NORMAL = 20;
-	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD = 10;
-	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME = 5;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_KIDDIE = 50;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_BEGINNER = 40;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_NORMAL = 30;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD = 20;
+	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME = 15;
 	
 	//
 	// STRINGS
 	//
 	public static final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway\n  with your finger,\n    hurry to finish\n   and avoid nasty \n          objects!";
-	public static final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid trees";
+	public static final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid this obstacle";
 	public static final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and\n      reach finish";
 	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever\n   to the right position";
 	public static final String TOOLTIP_MINIGAME_AVOID_HOLES_FAIL = "  You felt into a hole.\nYou will be punised by\n     speed reduction";

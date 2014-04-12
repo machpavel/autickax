@@ -23,11 +23,20 @@ public final class Car extends GameObject implements Serializable {
 	private boolean isDragged = false;
 	private TextureRegion[] positionTextures;	
 	private Vector2 lastCarPosition;
+	private Vector2 shift;
 	private float lastRotationDistance = 0;
 
 	public Car(float x, float y, GameScreen gameScreen, int type) {
-		super(x, y, gameScreen, type);		
+		super(x, y, gameScreen, type);
+		this.shift = Vector2.Zero;
 		this.lastCarPosition = new Vector2(x, y);		
+	}
+	
+
+	public void reset(){
+		this.shift = Vector2.Zero;
+		this.lastCarPosition = new Vector2(0,0);
+		this.lastRotationDistance = 0;
 	}
 
 	public boolean isDragged() {
@@ -37,6 +46,10 @@ public final class Car extends GameObject implements Serializable {
 	public void setDragged(boolean value) {
 		this.isDragged = value;
 	}
+	
+	public void setShift(Vector2 value){
+		this.shift = value;
+	}
 
 	@Override
 	public String getName() {
@@ -45,6 +58,7 @@ public final class Car extends GameObject implements Serializable {
 
 	@Override
 	public void move(Vector2 newPos) {
+		newPos.add(shift);
 		super.move(newPos); 
 				
 		lastRotationDistance += newPos.dst(lastCarPosition);
