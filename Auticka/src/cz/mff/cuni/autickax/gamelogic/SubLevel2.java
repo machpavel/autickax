@@ -1,5 +1,7 @@
 package cz.mff.cuni.autickax.gamelogic;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -42,6 +44,8 @@ public class SubLevel2 extends SubLevel {
 	private float speedModifierValue = 1f;
 	
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
+	
+	private ArrayList<GameObject> objectsInCollision = new ArrayList<GameObject>(); // Objects which were used in collision but the car haven't left them yet.
 
 	private SubLevel2States state = SubLevel2States.ENGINE_RAGING_STATE;
 	private float elapsedFromEngine = 0.0f;
@@ -226,16 +230,27 @@ public class SubLevel2 extends SubLevel {
 		}
 		else{
 			Vector2 newPos = moveCarToNewPosition(delta);
-			points.add(new Vector2(newPos));
-			for (GameObject gameObject : this.level.getGameObjects()) {
-				if (gameObject.isActive() && this.level.getCar().collides(gameObject)) {
+				
+			
+			for (int i = 0; i < objectsInCollision.size(); i++) {
+				if(!this.level.getCar().collides(objectsInCollision.get(i))){
+					objectsInCollision.get(i).setIsActive(true);
+					objectsInCollision.remove(i);
+					i--;
+				}
+			}
+						
+			for (GameObject gameObject : this.level.getGameObjects()) {			
+				if ( gameObject.getIsActive() && this.level.getCar().collides(gameObject)) {
 					playSound(gameObject);
-
+					gameObject.setIsActive(false);
+					this.objectsInCollision.add(gameObject);
 					stats.increaseCollisions();
-					gameObject.deactivate();
 					this.miniGame = gameObject.getMinigame(this.level, this);
 				}
 			}
+			
+			points.add(new Vector2(newPos));
 		}
 		
 	}

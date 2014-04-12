@@ -249,11 +249,12 @@ abstract public class GameObject implements Serializable {
 	
 	public abstract String getSoundName();
 	
-	public boolean isActive(){
-		return this.isActive;
+	public void setIsActive(boolean value){
+		this.isActive = value;
 	}
-	public void deactivate(){
-		this.isActive = false;
+	
+	public boolean getIsActive(){
+		return this.isActive;
 	}
 
 	public TextureRegion getTexture() {

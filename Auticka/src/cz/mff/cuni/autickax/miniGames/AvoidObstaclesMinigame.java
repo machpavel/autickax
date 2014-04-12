@@ -153,8 +153,7 @@ public final class AvoidObstaclesMinigame extends Minigame{
 
 	}
 
-	private void updateInDrivingState(float delta) {
-		System.out.println(this.car.getPosition().toString());
+	private void updateInDrivingState(float delta) {		
 		// Focus was lost
 		if (!this.car.isDragged()) {
 			// this.parent.setDialog(new DecisionDialog(this.level, this, "Pustil jsi auto", false));
