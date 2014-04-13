@@ -28,7 +28,6 @@ public final class Constants {
 	/** Determines maximal total distance from pathway (in pixels). Beyond it is no pathway.*/
 	public static final int MAX_DISTANCE_FROM_PATHWAY = 60;
 	
-
 	/** Determines the distance from user's finger that the car can be controlled.*/
 	public static final int CAR_CAPABLE_DISTANCE = 60;
 	
@@ -51,7 +50,6 @@ public final class Constants {
 	
 	/** Amount of parts used between two points during the counting of distances in DistanceMap*/
 	public static final int LINE_SEGMENTATION = 100; 
-	
 	
 	
 	//
@@ -323,7 +321,7 @@ public final class Constants {
 	public static final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway\n  with your finger,\n    hurry to finish\n   and avoid nasty \n          objects!";
 	public static final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid this obstacle";
 	public static final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and\n      reach finish";
-	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever\n   to the right position";
+	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever\n   to the correct position";
 	public static final String TOOLTIP_MINIGAME_AVOID_HOLES_FAIL = "  You felt into a hole.\nYou will be punised by\n     speed reduction";
 	public static final String TOOLTIP_MINIGAME_AVOID_STONES_FAIL = "You crashed into a stone.\n           Level failed.";
 	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not enough\naccurate. You will be\n punished by speed\n        reduction";
