@@ -3,6 +3,8 @@ package cz.mff.cuni.autickax;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
+import cz.mff.cuni.autickax.constants.Constants;
+
 public class Main {
 	public static void main(String[] args) {
 	// Runtime packing - expects assetSrc folder in a parent folder of this project
