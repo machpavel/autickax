@@ -2,10 +2,8 @@ package cz.mff.cuni.autickax.dialogs;
 
 import java.text.DecimalFormat;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.GameStatistics;
 import cz.mff.cuni.autickax.gamelogic.SubLevel2;
 import cz.mff.cuni.autickax.input.Input;
@@ -25,19 +23,19 @@ public class CompleteLevelDialog extends DecisionDialog {
 				
 		
 		this.messageLabel = new FinishDialogLabel(createResultString());
-		this.messageLabel.setPosition( Constants.COMPLETE_DIALOG_MESSAGE_POSITION_X  - messageLabel.getWidth() / 2, Constants.COMPLETE_DIALOG_MESSAGE_POSITION_Y - messageLabel.getHeight() / 2);
+		this.messageLabel.setPosition( Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X  - messageLabel.getWidth() / 2, Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y - messageLabel.getHeight() / 2);
 		this.stage.addActor(this.messageLabel);
 		
-		drawStars(stats.getNumberOfStars(), Constants.COMPLETE_DIALOG_STAR_POSITION_X, Constants.COMPLETE_DIALOG_STAR_POSITION_Y);
+		drawStars(stats.getNumberOfStars(), Constants.dialog.COMPLETE_DIALOG_STAR_POSITION_X, Constants.dialog.COMPLETE_DIALOG_STAR_POSITION_Y);
 	}	
 	
 	private void drawStars(byte stars, int x, int y) {
 		byte j = 0;
 		for (; j < stars; ++j) {
-			drawStar(x, y, j, Constants.COMPLETE_DIALOG_STAR_FILLED_TEXTURE);
+			drawStar(x, y, j, Constants.dialog.COMPLETE_DIALOG_STAR_FILLED_TEXTURE);
 		}
 		for (; j < 3; ++j) {
-			drawStar(x, y, j, Constants.COMPLETE_DIALOG_STAR_EMPTY_TEXTURE);
+			drawStar(x, y, j, Constants.dialog.COMPLETE_DIALOG_STAR_EMPTY_TEXTURE);
 		}
 	}
 	
@@ -86,9 +84,9 @@ public class CompleteLevelDialog extends DecisionDialog {
 	protected void CreateButtonContinue() {
 		buttonContinue = new DialogButton(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE),
+						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE),
 				Autickax.getInstance().assets
-						.getGraphics(Constants.DECISION_DIALOG_BUTTON_CONTINUE_OVER_TEXTURE)) {
+						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_OVER_TEXTURE)) {
 
 			@Override
 			public void action() {
@@ -99,9 +97,9 @@ public class CompleteLevelDialog extends DecisionDialog {
 			}
 		};
 		buttonContinue.setPosition(
-				Constants.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_X
+				Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_X
 						- buttonContinue.getWidth() / 2,
-				Constants.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_Y
+				Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_Y
 						- buttonContinue.getHeight() / 2);
 		this.stage.addActor(buttonContinue);
 	}

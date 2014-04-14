@@ -1,8 +1,9 @@
 package cz.mff.cuni.autickax.dialogs;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -15,9 +16,9 @@ public class MessageDialog extends Dialog {
 		super(gameScreen, subLevel, message);
 		buttonOk = new DialogButton(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.MESSAGE_DIALOG_BUTTON_OK_TEXTURE),
+						.getGraphics(Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_TEXTURE),
 				Autickax.getInstance().assets
-						.getGraphics(Constants.MESSAGE_DIALOG_BUTTON_OK_OVER_TEXTURE)) {
+						.getGraphics(Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_OVER_TEXTURE)) {
 			@Override
 			public void action() {
 				playButtonSound();
@@ -27,9 +28,9 @@ public class MessageDialog extends Dialog {
 			}
 		};
 		buttonOk.setPosition(
-				Constants.MESSAGE_DIALOG_BUTTON_OK_POSITION_X
+				Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_POSITION_X
 						- buttonOk.getWidth() / 2,
-				Constants.MESSAGE_DIALOG_BUTTON_OK_POSITION_Y
+				Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_POSITION_Y
 						- buttonOk.getHeight() / 2);
 		this.stage.addActor(buttonOk);
 	}

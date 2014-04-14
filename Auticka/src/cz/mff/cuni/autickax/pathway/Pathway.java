@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 
 /**
  * @author Shabby

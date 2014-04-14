@@ -1,8 +1,9 @@
 package cz.mff.cuni.autickax.dialogs;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -25,9 +26,9 @@ public class DecisionDialog extends Dialog {
 	protected void CreateButtonContinue() {
 		buttonContinue = new DialogButton(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE),
+						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE),
 				Autickax.getInstance().assets
-						.getGraphics(Constants.DECISION_DIALOG_BUTTON_CONTINUE_OVER_TEXTURE)) {
+						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_OVER_TEXTURE)) {
 
 			@Override
 			public void action() {
@@ -39,9 +40,9 @@ public class DecisionDialog extends Dialog {
 			}
 		};
 		buttonContinue.setPosition(
-				Constants.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_X
+				Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_X
 						- buttonContinue.getWidth() / 2,
-				Constants.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_Y
+				Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_Y
 						- buttonContinue.getHeight() / 2);
 		this.stage.addActor(buttonContinue);
 	}
@@ -49,9 +50,9 @@ public class DecisionDialog extends Dialog {
 	private void CreateButtonRestart() {
 		buttonRestart = new DialogButton(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.DECISION_DIALOG_BUTTON_RESTART_TEXTURE),
+						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_RESTART_TEXTURE),
 				Autickax.getInstance().assets
-						.getGraphics(Constants.DECISION_DIALOG_BUTTON_RESTART_OVER_TEXTURE)) {
+						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_RESTART_OVER_TEXTURE)) {
 
 			@Override
 			public void action() {
@@ -63,9 +64,9 @@ public class DecisionDialog extends Dialog {
 			}
 		};
 		buttonRestart.setPosition(
-				Constants.DECISION_DIALOG_BUTTON_RESTART_POSITION_X
+				Constants.dialog.DECISION_DIALOG_BUTTON_RESTART_POSITION_X
 						- buttonRestart.getWidth() / 2,
-				Constants.DECISION_DIALOG_BUTTON_RESTART_POSITION_Y
+				Constants.dialog.DECISION_DIALOG_BUTTON_RESTART_POSITION_Y
 						- buttonRestart.getHeight() / 2);
 		this.stage.addActor(buttonRestart);
 	}
@@ -73,9 +74,9 @@ public class DecisionDialog extends Dialog {
 	private void CreateCuttonGoToMainMenu() {
 		buttonGoToMainMenu = new DialogButton(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_TEXTURE),
+						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_TEXTURE),
 				Autickax.getInstance().assets
-						.getGraphics(Constants.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_OVER_TEXTURE)) {
+						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_OVER_TEXTURE)) {
 			@Override
 			public void action() {
 				playButtonSound();
@@ -86,9 +87,9 @@ public class DecisionDialog extends Dialog {
 			}
 		};
 		buttonGoToMainMenu.setPosition(
-				Constants.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_X
+				Constants.dialog.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_X
 						- buttonGoToMainMenu.getWidth() / 2,
-				Constants.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_Y
+				Constants.dialog.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_Y
 						- buttonGoToMainMenu.getHeight() / 2);
 		this.stage.addActor(buttonGoToMainMenu);
 	}

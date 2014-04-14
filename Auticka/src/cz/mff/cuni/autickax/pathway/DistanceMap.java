@@ -13,8 +13,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.constants.Constants;
 
 /**
  * @author Shabby Class for representing 2-dimensional field of the closest
@@ -90,7 +90,7 @@ public class DistanceMap implements java.io.Serializable {
 		progress = 0;
 
 		// Set line position to zero
-		int totalLines = controlPoints.size() * Constants.LINE_SEGMENTATION;
+		int totalLines = controlPoints.size() * Constants.misc.LINE_SEGMENTATION;
 		Vector2 point;
 		for (float i = 0; i <= totalLines; i++) {
 			point = Splines.GetPoint(controlPoints, i / totalLines,
@@ -103,7 +103,7 @@ public class DistanceMap implements java.io.Serializable {
 		progress = 10;
 
 		// Start and finish circle positions to zero
-		int CIRCLE_RADIUS = Constants.PATHWAY_START_AND_FINISH_CIRCLE_RADIUS;
+		int CIRCLE_RADIUS = Constants.misc.PATHWAY_START_AND_FINISH_CIRCLE_RADIUS;
 		int CIRCLE_RADIUS_SQR = CIRCLE_RADIUS * CIRCLE_RADIUS;
 		Vector2 startF = Splines.GetPoint(controlPoints, 0,
 				typeOfInterpolation, pathwayType);
@@ -157,7 +157,7 @@ public class DistanceMap implements java.io.Serializable {
 					if ((x == 0 && y == 0)
 							|| !isInWorld(currentPoint.x + x, currentPoint.y
 									+ y)
-							|| map[currentPoint.x][currentPoint.y] >= Constants.MAX_DISTANCE_FROM_PATHWAY) {
+							|| map[currentPoint.x][currentPoint.y] >= Constants.misc.MAX_DISTANCE_FROM_PATHWAY) {
 						continue;
 					}
 
@@ -207,17 +207,17 @@ public class DistanceMap implements java.io.Serializable {
 						- 1);
 
 				if (distance < difficulty.getMaxDistanceFromSurface()) {
-					pixmap.setColor(Constants.PATHWAY_COLOR);
+					pixmap.setColor(Constants.misc.PATHWAY_COLOR);
 					pixmap.drawPixel(column, row);
 				} else if (distance < difficulty.getMaxDistanceFromSurface()
-						+ Constants.PATHWAY_BORDER_BLEND_DISTANCE) {
+						+ Constants.misc.PATHWAY_BORDER_BLEND_DISTANCE) {
 					float alpha = 1
 							- (distance - difficulty
 									.getMaxDistanceFromSurface())
-							/ Constants.PATHWAY_BORDER_BLEND_DISTANCE;
-					Color color = new Color(Constants.PATHWAY_COLOR.r,
-							Constants.PATHWAY_COLOR.g,
-							Constants.PATHWAY_COLOR.b, alpha);
+							/ Constants.misc.PATHWAY_BORDER_BLEND_DISTANCE;
+					Color color = new Color(Constants.misc.PATHWAY_COLOR.r,
+							Constants.misc.PATHWAY_COLOR.g,
+							Constants.misc.PATHWAY_COLOR.b, alpha);
 
 					pixmap.setColor(color);
 					pixmap.drawPixel(column, row);
@@ -229,12 +229,12 @@ public class DistanceMap implements java.io.Serializable {
 		FileHandle textureFile = null;
 		if (Gdx.files.isLocalStorageAvailable()) {
 			textureFile = Gdx.files
-					.local(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
+					.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 							+ ".cim");
 			System.out.println("Local saving...");
 		} else {
 			textureFile = Gdx.files
-					.internal(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
+					.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 							+ ".cim");
 			System.out.println("Internal saving...");
 		}

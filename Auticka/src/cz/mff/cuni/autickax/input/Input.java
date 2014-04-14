@@ -2,7 +2,7 @@ package cz.mff.cuni.autickax.input;
 
 import com.badlogic.gdx.Gdx;
 
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 
 public class Input {	
 	public static float xStretchFactor;

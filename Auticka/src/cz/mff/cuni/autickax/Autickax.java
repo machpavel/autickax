@@ -9,6 +9,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.scene.LevelLoadingScreen;
 import cz.mff.cuni.autickax.scene.LevelSelectScreen;
 import cz.mff.cuni.autickax.scene.MainMenuScreen;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.LoadingScreen;
 
@@ -72,9 +73,9 @@ public class Autickax extends Game {
 		// Deletes the temporary pathway texture file
 		FileHandle textureFile = null;
     	if(Gdx.files.isLocalStorageAvailable())
-    		textureFile = Gdx.files.local(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
+    		textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
     	else
-    		textureFile = Gdx.files.internal(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");    	
+    		textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");    	
 		if(textureFile.exists())
 			textureFile.delete();
 		super.dispose();

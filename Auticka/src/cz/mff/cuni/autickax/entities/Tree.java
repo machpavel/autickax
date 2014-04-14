@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
-import cz.mff.cuni.autickax.Constants;
+
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.Crash;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -40,7 +41,7 @@ public final class Tree extends GameObject implements Serializable {
 		
 	/** Gets the texture name according to a type*/
 	public static String GetTextureName(int type){
-		return Constants.TREE_TEXTURE_PREFIX + type;
+		return Constants.gameObjects.TREE_TEXTURE_PREFIX + type;
 	}
 
 	@Override
@@ -60,6 +61,6 @@ public final class Tree extends GameObject implements Serializable {
 	
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_TREE;
+		return Constants.sounds.SOUND_TREE;
 	}
 }

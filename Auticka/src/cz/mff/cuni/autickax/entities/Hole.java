@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -42,7 +42,7 @@ public final class Hole extends GameObject implements Serializable {
 
 	/** Gets the texture name according to a type*/
 	public static  String GetTextureName(int type){
-		return Constants.HOLE_TEXTURE_NAME_PREFIX + type;
+		return Constants.gameObjects.HOLE_TEXTURE_NAME_PREFIX + type;
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public final class Hole extends GameObject implements Serializable {
 	
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_HOLE;
+		return Constants.sounds.SOUND_HOLE;
 	}
 
 }

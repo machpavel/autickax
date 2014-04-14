@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.Dialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
@@ -46,8 +46,8 @@ public class SubLevel1 extends SubLevel {
 		timeStatusBar = new TimeStatusBar(gameScreen,tLimit, true);
 		pathway = gameScreen.getPathWay();
 
-		initWayPoints(Constants.START_POSITION_IN_CURVE,
-				Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
+		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
+				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
 
 		checkPoints = new LinkedList<CheckPoint>();	
 		state = SubLevel1States.BEGINNING_STATE;
@@ -60,7 +60,7 @@ public class SubLevel1 extends SubLevel {
 	
 	private void playStartEngineSound()
 	{
-		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_ENGINE_START, Constants.SOUND_ENGINE_VOLUME);
+		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_ENGINE_START, Constants.sounds.SOUND_ENGINE_VOLUME);
 	}
 	
 	public void onDialogEnded() {
@@ -137,10 +137,10 @@ public class SubLevel1 extends SubLevel {
 		timeStatusBar.update(stats.getPhase1ElapsedTime());
 		// stopped dragging
 		if (!this.level.getCar().isDragged()) {
-			switchToMistakeState(Constants.PHASE_1_FINISH_NOT_REACHED);
+			switchToMistakeState(Constants.strings.PHASE_1_FINISH_NOT_REACHED);
 			return;
 		} else if (stats.getPhase1ElapsedTime() >= stats.getPhase1TimeLimit()) {
-			switchToMistakeState(Constants.PHASE_1_TIME_EXPIRED);
+			switchToMistakeState(Constants.strings.PHASE_1_TIME_EXPIRED);
 			return;
 		}
 
@@ -161,21 +161,21 @@ public class SubLevel1 extends SubLevel {
 				
 				if (wayPoints.isEmpty()){
 					state = SubLevel1States.FINISH_STATE;
-					this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB1_CHEER, Constants.SOUND_DEFAULT_VOLUME);
-					dialogStack.push(new DecisionDialog(this.level, this, Constants.PHASE_1_FINISH_REACHED, true));
+					this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_CHEER, Constants.sounds.SOUND_DEFAULT_VOLUME);
+					dialogStack.push(new DecisionDialog(this.level, this, Constants.strings.PHASE_1_FINISH_REACHED, true));
 					timeMeasured = false;
 					this.level.getCar().setDragged(false);
 				}
 				else{
-					switchToMistakeState(Constants.PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS);
+					switchToMistakeState(Constants.strings.PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS);
 				}
 			}
 
 
 			// not on track OR all checkpoint not yet reached (if reached, we
 			// may have reached the finish line)
-			if (map.At(carPosition) > Constants.MAX_DISTANCE_FROM_PATHWAY) {
-				switchToMistakeState(Constants.PHASE_1_OUT_OF_LINE);
+			if (map.At(carPosition) > Constants.misc.MAX_DISTANCE_FROM_PATHWAY) {
+				switchToMistakeState(Constants.strings.PHASE_1_OUT_OF_LINE);
 
 			} else {				
 				checkPoints.add(new CheckPoint(stats.getPhase1ElapsedTime(), carPosition));
@@ -186,7 +186,7 @@ public class SubLevel1 extends SubLevel {
 						Vector2 way = new Vector2(wayPoints.peekFirst());
 						Vector2 pos = new Vector2(this.level.getCar()
 								.getPosition());
-						if (way.sub(pos).len() <= Constants.MAX_DISTANCE_FROM_PATHWAY)
+						if (way.sub(pos).len() <= Constants.misc.MAX_DISTANCE_FROM_PATHWAY)
 							wayPoints.removeFirst();
 						else
 							canRemove = false;
@@ -202,7 +202,7 @@ public class SubLevel1 extends SubLevel {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
 			Vector2 shift = new Vector2(this.level.getCar().getPosition()).sub(touchPos.x, touchPos.y);
-			if (shift.len() <= Constants.CAR_CAPABLE_DISTANCE) {
+			if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {
 				this.level.getCar().setDragged(true);
 				this.level.getCar().setShift(shift);
 				state = SubLevel1States.DRIVING_STATE;
@@ -246,8 +246,8 @@ public class SubLevel1 extends SubLevel {
 		
 		this.stats.reset();		
 		checkPoints.clear();
-		initWayPoints(Constants.START_POSITION_IN_CURVE,
-				Constants.FINISH_POSITION_IN_CURVE, Constants.WAYPOINTS_COUNT);
+		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
+				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
 		
 		for (GameObject gameObject : this.level.getGameObjects()) {
 			gameObject.reset();
@@ -259,14 +259,14 @@ public class SubLevel1 extends SubLevel {
 					
 		if (Autickax.settings.showTooltips)
 			this.dialogStack.push(new MessageDialog(this.level, this, 
-					Constants.TOOLTIP_PHASE_1_WHAT_TO_DO));
+					Constants.strings.TOOLTIP_PHASE_1_WHAT_TO_DO));
 	}
 
 	public void setCarToStart(){
 		// Car positioning
 		float EPSILON_F = 0.01f;
 		Vector2 startPosition = this.level.getStart().getPosition();
-		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.START_POSITION_IN_CURVE + EPSILON_F)).sub(startPosition).nor().scl(2 * Constants.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION);
+		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE + EPSILON_F)).sub(startPosition).nor().scl(2 * Constants.gameObjects.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION);
 		Vector2 preparePosition = new Vector2(startPosition).sub(startDirection);						
 		this.level.getCar().move(new Vector2(preparePosition));		
 		this.level.getCar().move(new Vector2(startPosition));
@@ -276,7 +276,7 @@ public class SubLevel1 extends SubLevel {
 	 * Player failed to finish the track
 	 */
 	private void switchToMistakeState(String str) {
-		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB1_FAIL, Constants.SOUND_DEFAULT_VOLUME);
+		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
 		this.dialogStack.push(new DecisionDialog(this.level, this, str, false));
 		this.state = SubLevel1States.MISTAKE_STATE;
 		this.level.getCar().setDragged(false);
@@ -288,7 +288,7 @@ public class SubLevel1 extends SubLevel {
 		wayPoints = new LinkedList<Vector2>();
 		float step = (finish - start) / nofWayPoints;
 		Vector2 lastAdded = null;
-		float sumRadii = this.level.getFinish().getBoundingRadius() + Constants.MAX_DISTANCE_FROM_PATHWAY;
+		float sumRadii = this.level.getFinish().getBoundingRadius() + Constants.misc.MAX_DISTANCE_FROM_PATHWAY;
 		for (float f = start; f < finish; f += step) {
 			//TODO revise
 			//do not add waypoints too close to finish

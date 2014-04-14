@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.entities.AvoidHole;
 import cz.mff.cuni.autickax.entities.AvoidStone;
@@ -22,15 +22,15 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidObstaclesMinigame extends Minigame{	
-	private final float CAR_START_POSITION_X = Constants.AVOID_OBSTACLES_CAR_START_POSITION_X;
-	private final float FINISH_START_POSITION_X = Constants.AVOID_OBSTACLES_FINISH_START_POSITION_X;
-	private final int FINISH_TYPE = Constants.AVOID_OBSTACLES_FINISH_TYPE;	
+	private final float CAR_START_POSITION_X = Constants.minigames.AVOID_OBSTACLES_CAR_START_POSITION_X;
+	private final float FINISH_START_POSITION_X = Constants.minigames.AVOID_OBSTACLES_FINISH_START_POSITION_X;
+	private final int FINISH_TYPE = Constants.minigames.AVOID_OBSTACLES_FINISH_TYPE;	
 	private float MINIMAL_DISTANCE_BETWEEN_OBSTACLES;
-	private final float MINIMAL_DISTANCE_BETWEEN_CAR = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_CAR;
-	private final float MINIMAL_DISTANCE_BETWEEN_FINISH = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_FINISH;
-	private final int NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE = Constants.AVOID_OBSTACLES_NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE;
+	private final float MINIMAL_DISTANCE_BETWEEN_CAR = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_CAR;
+	private final float MINIMAL_DISTANCE_BETWEEN_FINISH = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_FINISH;
+	private final int NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE = Constants.minigames.AVOID_OBSTACLES_NUMBER_OF_TRIES_TO_GENERATE_OBSTACLE;
 	
-	private final float FAIL_VALUE = Constants.AVOID_OBSTACLES_FAIL_VALUE;
+	private final float FAIL_VALUE = Constants.minigames.AVOID_OBSTACLES_FAIL_VALUE;
 	
 	private ObstaclesType obstaclesType;
 	private ArrayList<GameObject> gameObjects;
@@ -44,10 +44,10 @@ public final class AvoidObstaclesMinigame extends Minigame{
 		
 		setDifficulty(this.level.getDifficulty());
 				
-		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
+		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.minigames.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Autickax.settings.showTooltips)
-			this.parent.setDialog(new MessageDialog(gameScreen, parent, Constants.TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO));
+			this.parent.setDialog(new MessageDialog(gameScreen, parent, Constants.strings.TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO));
 
 		this.gameObjects = new ArrayList<GameObject>();
 		
@@ -71,8 +71,8 @@ public final class AvoidObstaclesMinigame extends Minigame{
 			do  {
 				positionIsCorrect = true;
 				
-				xPosition = MathUtils.random(Constants.DIALOG_WORLD_WIDTH - 20) + Constants.DIALOG_WORLD_X_OFFSET + 10;
-				yPosition = MathUtils.random(Constants.DIALOG_WORLD_HEIGHT - 20) + Constants.DIALOG_WORLD_Y_OFFSET + 10;
+				xPosition = MathUtils.random(Constants.dialog.DIALOG_WORLD_WIDTH - 20) + Constants.dialog.DIALOG_WORLD_X_OFFSET + 10;
+				yPosition = MathUtils.random(Constants.dialog.DIALOG_WORLD_HEIGHT - 20) + Constants.dialog.DIALOG_WORLD_Y_OFFSET + 10;
 				Vector2 position = new Vector2(xPosition, yPosition);
 
 				
@@ -99,11 +99,11 @@ public final class AvoidObstaclesMinigame extends Minigame{
 			{
 				switch (obstaclesType) {
 				case HOLES:
-					int avoidHoleType = MathUtils.random(1, Constants.AVOID_HOLES_TYPES_COUNT);
+					int avoidHoleType = MathUtils.random(1, Constants.gameObjects.AVOID_HOLES_TYPES_COUNT);
 					gameObjects.add(new AvoidHole(xPosition, yPosition, this.level, avoidHoleType));
 					break;
 				case STONES:
-					int avoidStoneType = MathUtils.random(1, Constants.AVOID_STONE_TYPES_COUNT);
+					int avoidStoneType = MathUtils.random(1, Constants.gameObjects.AVOID_STONE_TYPES_COUNT);
 					gameObjects.add(new AvoidStone(xPosition, yPosition, this.level, avoidStoneType));
 					break;
 				default:
@@ -144,7 +144,7 @@ public final class AvoidObstaclesMinigame extends Minigame{
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 			
 			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
-			if (shift.len() <= Constants.CAR_CAPABLE_DISTANCE) {
+			if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {
 				this.car.setDragged(true);
 				this.car.setShift(shift);
 				state = States.DRIVING_STATE;
@@ -180,25 +180,25 @@ public final class AvoidObstaclesMinigame extends Minigame{
 	}
 	
 	private boolean isInWorld(Vector2 position){		
-		return position.x > Constants.DIALOG_WORLD_X_OFFSET && 
-				position.x < Constants.DIALOG_WORLD_X_OFFSET + Constants.DIALOG_WORLD_WIDTH && 
-				position.y > Constants.DIALOG_WORLD_Y_OFFSET && 
-				position.y < Constants.DIALOG_WORLD_Y_OFFSET + Constants.DIALOG_WORLD_HEIGHT;
+		return position.x > Constants.dialog.DIALOG_WORLD_X_OFFSET && 
+				position.x < Constants.dialog.DIALOG_WORLD_X_OFFSET + Constants.dialog.DIALOG_WORLD_WIDTH && 
+				position.y > Constants.dialog.DIALOG_WORLD_Y_OFFSET && 
+				position.y < Constants.dialog.DIALOG_WORLD_Y_OFFSET + Constants.dialog.DIALOG_WORLD_HEIGHT;
 	}
 	private void fail(){
 		this.status = DialogAbstractStatus.FINISHED;
 		switch (obstaclesType) {
 		case STONES:
-			this.resultMessage = Constants.TOOLTIP_MINIGAME_AVOID_STONES_FAIL;
+			this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_AVOID_STONES_FAIL;
 			this.result = ResultType.FAILED;
 			break;
 		case HOLES:
-			this.resultMessage = Constants.TOOLTIP_MINIGAME_AVOID_HOLES_FAIL;
+			this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_AVOID_HOLES_FAIL;
 			this.result = ResultType.PROCEEDED_WITH_VALUE;
 			this.resultValue = FAIL_VALUE; 
 			break;
 		default:
-			this.resultMessage = Constants.PHASE_2_MINIGAME_FAILED;
+			this.resultMessage = Constants.strings.PHASE_2_MINIGAME_FAILED;
 			this.result = ResultType.FAILED;
 			break;
 		}		
@@ -206,7 +206,7 @@ public final class AvoidObstaclesMinigame extends Minigame{
 	}
 
 	private void updateInFinishState(float delta) {
-		this.resultMessage = Constants.TOOLTIP_MINIGAME_AVOID_SUCCESS;
+		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_AVOID_SUCCESS;
 		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED;
 		parent.onMinigameEnded();
@@ -255,22 +255,22 @@ public final class AvoidObstaclesMinigame extends Minigame{
 	private void setDifficulty(Difficulty difficulty) {
 		switch (difficulty) {
 		case Kiddie:
-			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_KIDDIE;
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_KIDDIE;
 			break;
 		case Beginner:
-			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_BEGINNER;
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_BEGINNER;
 			break;
 		case Normal:
-			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_NORMAL;
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_NORMAL;
 			break;
 		case Hard:
-			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_HARD;
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_HARD;
 			break;
 		case Extreme:
-			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_EXTREME;
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_EXTREME;
 			break;
 		default:
-			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_DEFAULT;
+			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_DEFAULT;
 			break;
 		}
 		return;

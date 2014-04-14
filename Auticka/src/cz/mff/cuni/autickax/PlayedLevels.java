@@ -5,6 +5,8 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
+import cz.mff.cuni.autickax.constants.Constants;
+
 public class PlayedLevels {
 	public Vector<PlayedLevel> kiddieLevels = new Vector<PlayedLevel>();
 	public Vector<PlayedLevel> beginnerLevels = new Vector<PlayedLevel>();
@@ -25,13 +27,13 @@ public class PlayedLevels {
 	 * locked levels. This isn't such an issue, since it is not designed for desktop.
 	 */
 	public void storeLevels() {
-		Preferences prefs = Gdx.app.getPreferences(Constants.PLAYED_LEVELS_FILENAME);
+		Preferences prefs = Gdx.app.getPreferences(Constants.serialization.PLAYED_LEVELS_FILENAME);
 		
-		putLevels(prefs, this.kiddieLevels, Constants.PLAYED_LEVELS_KIDDIE_NAME);
-		putLevels(prefs, this.beginnerLevels, Constants.PLAYED_LEVELS_BEGINNER_NAME);
-		putLevels(prefs, this.normalLevels, Constants.PLAYED_LEVELS_NORMAL_NAME);
-		putLevels(prefs, this.hardLevels, Constants.PLAYED_LEVELS_HARD_NAME);
-		putLevels(prefs, this.extremeLevels, Constants.PLAYED_LEVELS_EXTREME_NAME);
+		putLevels(prefs, this.kiddieLevels, Constants.serialization.PLAYED_LEVELS_KIDDIE_NAME);
+		putLevels(prefs, this.beginnerLevels, Constants.serialization.PLAYED_LEVELS_BEGINNER_NAME);
+		putLevels(prefs, this.normalLevels, Constants.serialization.PLAYED_LEVELS_NORMAL_NAME);
+		putLevels(prefs, this.hardLevels, Constants.serialization.PLAYED_LEVELS_HARD_NAME);
+		putLevels(prefs, this.extremeLevels, Constants.serialization.PLAYED_LEVELS_EXTREME_NAME);
 		
 		prefs.flush();
 	}
@@ -47,13 +49,13 @@ public class PlayedLevels {
 	}
 	
 	public void loadLevels() {
-		Preferences prefs = Gdx.app.getPreferences(Constants.PLAYED_LEVELS_FILENAME);
+		Preferences prefs = Gdx.app.getPreferences(Constants.serialization.PLAYED_LEVELS_FILENAME);
 		
-		loadLevels(prefs, this.kiddieLevels, Constants.PLAYED_LEVELS_KIDDIE_NAME);
-		loadLevels(prefs, this.beginnerLevels, Constants.PLAYED_LEVELS_BEGINNER_NAME);
-		loadLevels(prefs, this.normalLevels, Constants.PLAYED_LEVELS_NORMAL_NAME);
-		loadLevels(prefs, this.hardLevels, Constants.PLAYED_LEVELS_HARD_NAME);
-		loadLevels(prefs, this.extremeLevels, Constants.PLAYED_LEVELS_EXTREME_NAME);
+		loadLevels(prefs, this.kiddieLevels, Constants.serialization.PLAYED_LEVELS_KIDDIE_NAME);
+		loadLevels(prefs, this.beginnerLevels, Constants.serialization.PLAYED_LEVELS_BEGINNER_NAME);
+		loadLevels(prefs, this.normalLevels, Constants.serialization.PLAYED_LEVELS_NORMAL_NAME);
+		loadLevels(prefs, this.hardLevels, Constants.serialization.PLAYED_LEVELS_HARD_NAME);
+		loadLevels(prefs, this.extremeLevels, Constants.serialization.PLAYED_LEVELS_EXTREME_NAME);
 	}
 
 	private void loadLevels(Preferences prefs, Vector<PlayedLevel> levels, String levelsName) {

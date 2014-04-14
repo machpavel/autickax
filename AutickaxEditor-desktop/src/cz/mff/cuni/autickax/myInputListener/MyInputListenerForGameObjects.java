@@ -2,8 +2,8 @@ package cz.mff.cuni.autickax.myInputListener;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.EditorScreen;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.entities.Booster;
 import cz.mff.cuni.autickax.entities.Hole;
 import cz.mff.cuni.autickax.entities.Mud;

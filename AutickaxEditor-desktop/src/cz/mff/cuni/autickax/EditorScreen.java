@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlWriter;
 
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.drawing.LevelBackground;
 import cz.mff.cuni.autickax.entities.Booster;
 import cz.mff.cuni.autickax.entities.Car;
@@ -241,7 +242,7 @@ public final class EditorScreen extends BaseScreenEditor {
 						shapeRenderer.point(column, row, 0);
 					} else if (distance < difficulty.getMaxDistanceFromSurface()) {
 						// cause this is where the transparency begin
-						distance -= Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
+						distance -= Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
 						float alpha = (difficulty.getMaxDistanceFromSurface() - distance)
 								/ difficulty.getMaxDistanceFromSurface();
 						shapeRenderer.setColor(196.f / 255, 154.f / 255,
@@ -353,8 +354,8 @@ public final class EditorScreen extends BaseScreenEditor {
 				float delta = 0.01f;	
 				pathway.CreateDistances();
 				start = new Start(
-						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).x,
-						pathway.GetPosition(Constants.START_POSITION_IN_CURVE).y,
+						pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).x,
+						pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).y,
 						null, START_TYPE);
 				start.setTexture();
 				Vector2 startTo = pathway.GetPosition(delta);
@@ -364,8 +365,8 @@ public final class EditorScreen extends BaseScreenEditor {
 				
 				
 				finish = new Finish(
-						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).x,
-						pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE).y,
+						pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).x,
+						pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).y,
 						null, FINISH_TYPE);
 				finish.setTexture();
 				Vector2 finishTo = pathway.GetPosition(1 - delta);
@@ -453,7 +454,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		int heightOffset = 0;
 		int width = 30;
 		int height = 18;
-		for (int i = 1; i <= Constants.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {			
+		for (int i = 1; i <= Constants.misc.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {			
 			Button button = new EditorBackgroundButton(game.assets.getGraphics(LevelBackground.GetTextureName(i)), i , this);
 			button.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset,
 					Constants.WORLD_HEIGHT - heightOffset - height);
@@ -479,7 +480,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		Vector2i maxValue = new Vector2i(0, 0);
 
 		// Holes
-		for (int i = 1; i <= Constants.HOLE_TYPES_COUNT; i++) {
+		for (int i = 1; i <= Constants.gameObjects.HOLE_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Hole
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.HOLE, i,
@@ -488,7 +489,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 
 		// Muds
-		for (int i = 1; i <= Constants.MUD_TYPES_COUNT; i++) {
+		for (int i = 1; i <= Constants.gameObjects.MUD_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Mud
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.MUD, i,
@@ -496,7 +497,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 
 		// Stones
-		for (int i = 1; i <= Constants.STONE_TYPES_COUNT; i++) {
+		for (int i = 1; i <= Constants.gameObjects.STONE_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Stone
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.STONE, i,
@@ -505,7 +506,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 
 		// Trees
-		for (int i = 1; i <= Constants.TREE_TYPES_COUNT; i++) {
+		for (int i = 1; i <= Constants.gameObjects.TREE_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Tree
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.TREE, i,
@@ -514,7 +515,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 		
 		// Boosts
-				for (int i = 1; i <= Constants.BOOSTER_TYPES_COUNT; i++) {
+				for (int i = 1; i <= Constants.gameObjects.BOOSTER_TYPES_COUNT; i++) {
 					trd = new TextureRegionDrawable(game.assets.getGraphics(Booster
 							.GetTextureName(i)));
 					createGameObjectButtons(trd, TypeOfGameObjectButton.BOOSTER, i,

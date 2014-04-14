@@ -1,11 +1,11 @@
 package cz.mff.cuni.autickax;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+
+import cz.mff.cuni.autickax.constants.Constants;
 
 public class SoundAndMusicManager {
 	private Map<String, Sound> soundsMap;
@@ -34,7 +34,7 @@ public class SoundAndMusicManager {
 		if (Autickax.settings.playMusic)
 		{
 			raceMusic.setLooping(true);
-			raceMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
+			raceMusic.setVolume(Constants.sounds.MUSIC_DEFAULT_VOLUME);
 			raceMusic.play();
 		}
 	}
@@ -44,7 +44,7 @@ public class SoundAndMusicManager {
 		if (Autickax.settings.playMusic)
 		{
 			menuMusic.setLooping(true);
-			menuMusic.setVolume(Constants.MUSIC_DEFAULT_VOLUME);
+			menuMusic.setVolume(Constants.sounds.MUSIC_DEFAULT_VOLUME);
 			menuMusic.play();
 		}
 	}

@@ -6,10 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.PlayedLevel;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.menu.MenuTextButton;
 
 public class LevelSelectScreen extends BaseScreen {
@@ -36,29 +36,29 @@ public class LevelSelectScreen extends BaseScreen {
 		for (int i = 0; i < levels.size(); ++i) {		
 			final int levelIndex = i;
 			
-			String buttonTexture = Constants.BUTTON_MENU_LEVEL_NO_STAR;
-			String buttonTextureHover = Constants.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
+			String buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
+			String buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
 			
 			if (i < playedLevels.size()) {
 				switch (playedLevels.get(i).starsNumber) {
 				case 0:
-					buttonTexture = Constants.BUTTON_MENU_LEVEL_NO_STAR;
-					buttonTextureHover = Constants.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
+					buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
+					buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
 					break;
 	
 				case 1:
-					buttonTexture = Constants.BUTTON_MENU_LEVEL_ONE_STAR;
-					buttonTextureHover = Constants.BUTTON_MENU_LEVEL_ONE_STAR_HOVER;
+					buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_ONE_STAR;
+					buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_ONE_STAR_HOVER;
 					break;
 	
 				case 2:
-					buttonTexture = Constants.BUTTON_MENU_LEVEL_TWO_STARS;
-					buttonTextureHover = Constants.BUTTON_MENU_LEVEL_TWO_STARS_HOVER;
+					buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_TWO_STARS;
+					buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_TWO_STARS_HOVER;
 					break;
 	
 				case 3:
-					buttonTexture = Constants.BUTTON_MENU_LEVEL_THREE_STARS;
-					buttonTextureHover = Constants.BUTTON_MENU_LEVEL_THREE_STARS_HOVER;
+					buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_THREE_STARS;
+					buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_THREE_STARS_HOVER;
 					break;
 					
 				default:
@@ -71,7 +71,7 @@ public class LevelSelectScreen extends BaseScreen {
 				Integer.toString(i),
 				getGame().assets.getGraphics(buttonTexture),
 				getGame().assets.getGraphics(buttonTextureHover),
-				getGame().assets.getGraphics(Constants.BUTTON_MENU_LEVEL_DISABLED),
+				getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_LEVEL_DISABLED),
 				this.getGame().assets.getLevelNumberFont(),
 				i < playedLevels.size()
 			)
@@ -79,7 +79,7 @@ public class LevelSelectScreen extends BaseScreen {
 				@Override
 				public void action() {
 					getGame().assets.soundAndMusicManager.pauseMenuMusic();
-					getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
+					getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_OPEN, Constants.sounds.SOUND_DEFAULT_VOLUME);
 					
 					if (Autickax.levelLoadingScreen != null) {
 						Autickax.levelLoadingScreen.dispose();
@@ -111,7 +111,7 @@ public class LevelSelectScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
-		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
+		getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_CLOSE, Constants.sounds.SOUND_DEFAULT_VOLUME);
 		Autickax.difficultySelectScreen.dispose();
 		Autickax.difficultySelectScreen = new DifficultySelectScreen();
 		this.getGame().setScreen(Autickax.difficultySelectScreen);	
@@ -119,7 +119,7 @@ public class LevelSelectScreen extends BaseScreen {
 	
 	@Override
 	protected void clearScreenWithColor() {
-		Gdx.gl.glClearColor(Constants.LEVELS_MENU_RED, Constants.LEVELS_MENU_GREEN, Constants.LEVELS_MENU_BLUE, 1);
+		Gdx.gl.glClearColor(Constants.menu.LEVELS_MENU_RED, Constants.menu.LEVELS_MENU_GREEN, Constants.menu.LEVELS_MENU_BLUE, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	}
 

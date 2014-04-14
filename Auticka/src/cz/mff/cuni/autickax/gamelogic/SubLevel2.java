@@ -10,10 +10,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.PlayedLevel;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.CompleteLevelDialog;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.Dialog;
@@ -77,10 +77,10 @@ public class SubLevel2 extends SubLevel {
 								
 
 
-		speedModifiers.add(Constants.GLOBAL_SPEED_REGULATOR);
+		speedModifiers.add(Constants.misc.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
-		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_START, 1);
+		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB2_START, 1);
 		
 		// Car positioning
 		this.level.getCar().reset();
@@ -119,12 +119,12 @@ public class SubLevel2 extends SubLevel {
 			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
 				this.dialogStack.push(new DecisionDialog(this.level, this, miniGameLocal.getResultMessage(), false));
 			stats.increaseFailed();
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
 			break;
 		case PROCEEDED:
 			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
 				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultMessage()));
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_SUCCESS, Constants.SOUND_DEFAULT_VOLUME);
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_SUCCESS, Constants.sounds.SOUND_DEFAULT_VOLUME);
 
 			stats.increaseSucceeded();
 			break;
@@ -133,7 +133,7 @@ public class SubLevel2 extends SubLevel {
 				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultMessage()));
 
 			stats.increaseSucceeded();
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_SUCCESS, Constants.SOUND_DEFAULT_VOLUME);
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_SUCCESS, Constants.sounds.SOUND_DEFAULT_VOLUME);
 			float winResult = miniGameLocal.getResultValue();
 				speedModifiers.add(winResult);
 				computeSpeedModifierValue();
@@ -143,7 +143,7 @@ public class SubLevel2 extends SubLevel {
 				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultMessage()));
 
 			stats.increaseFailed();
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
 			float failResult = miniGameLocal.getResultValue();
 				speedModifiers.add(failResult);
 				computeSpeedModifierValue();
@@ -205,7 +205,7 @@ public class SubLevel2 extends SubLevel {
 	private void updateInEngineRagingState(float delta)
 	{
 		elapsedFromEngine += delta;
-		if (elapsedFromEngine >= Constants.SOUNDS_ENGINE_DELAY)
+		if (elapsedFromEngine >= Constants.sounds.SOUNDS_ENGINE_DELAY)
 			state = SubLevel2States.BEGINNING_STATE;
 	}
 	
@@ -220,9 +220,9 @@ public class SubLevel2 extends SubLevel {
 	{
 		if (Autickax.settings.playSounds) {
 			String soundName = collisionOrigin.getSoundName();
-			if (!soundName.equals(Constants.SOUND_NO_SOUND))
+			if (!soundName.equals(Constants.sounds.SOUND_NO_SOUND))
 			{
-				this.level.getGame().assets.soundAndMusicManager.playSound(soundName, Constants.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
+				this.level.getGame().assets.soundAndMusicManager.playSound(soundName, Constants.sounds.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
 			}
 		}
 			
@@ -236,7 +236,7 @@ public class SubLevel2 extends SubLevel {
 			state = SubLevel2States.FINISH_STATE;
 			this.updateScore();
 			this.unlockNewLevel();
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_SUB2_CHEER, Constants.SOUND_BIG_CHEER_VOLUME);
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB2_CHEER, Constants.sounds.SOUND_BIG_CHEER_VOLUME);
 			dialogStack.push(new CompleteLevelDialog(this.level, this, this.stats, this.isNextLevelAvaible()));
 		}
 		else{
@@ -372,7 +372,7 @@ public class SubLevel2 extends SubLevel {
 		float distanceFromCurveCenter = distMap.At(this.level.getCar()
 				.getPosition());
 		if (distanceFromCurveCenter > difficulty.getMaxDistanceFromSurface()) {
-			this.penalizationFactor = Constants.OUT_OF_SURFACE_PENALIZATION_FACTOR
+			this.penalizationFactor = Constants.misc.OUT_OF_SURFACE_PENALIZATION_FACTOR
 					/ (float) Math.log(distanceFromCurveCenter + 2);
 		}
 		else

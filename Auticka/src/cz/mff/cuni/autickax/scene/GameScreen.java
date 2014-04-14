@@ -16,10 +16,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.PlayedLevel;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.drawing.LevelBackground;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
@@ -100,13 +100,13 @@ public class GameScreen extends BaseScreen {
 		
 		
 		this.start = level.getStart();
-		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.START_POSITION_IN_CURVE + EPSILON_F)).sub(this.start.getPosition()).nor();
-		this.start.setShift(startDirection.scl(Constants.CAR_DISTANCE_FROM_START));
+		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE + EPSILON_F)).sub(this.start.getPosition()).nor();
+		this.start.setShift(startDirection.scl(Constants.misc.CAR_DISTANCE_FROM_START));
 		this.start.setRotation((startDirection.angle() + 270) % 360);
 		
 		this.finish = level.getFinish();
-		Vector2 finishDirection = new Vector2(this.pathway.GetPosition(Constants.FINISH_POSITION_IN_CURVE - EPSILON_F)).sub(this.finish.getPosition()).nor();
-		this.finish.setShift(finishDirection.scl(Constants.CAR_DISTANCE_FROM_START));
+		Vector2 finishDirection = new Vector2(this.pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE - EPSILON_F)).sub(this.finish.getPosition()).nor();
+		this.finish.setShift(finishDirection.scl(Constants.misc.CAR_DISTANCE_FROM_START));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 		
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
@@ -197,7 +197,7 @@ public class GameScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
-		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
+		getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_CLOSE, Constants.sounds.SOUND_DEFAULT_VOLUME);
 		this.getGame().assets.soundAndMusicManager.stopRaceMusic();
 		this.getGame().assets.soundAndMusicManager.playMenuMusic();
 		Autickax.levelSelectScreen.dispose();
@@ -238,11 +238,11 @@ public class GameScreen extends BaseScreen {
 	public void onApplicationResume(){
 		FileHandle textureFile = null;
     	if(Gdx.files.isLocalStorageAvailable()){
-    		textureFile = Gdx.files.local(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
+    		textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
     		System.out.println("Local loading...");
     	}
     	else{
-    		textureFile = Gdx.files.internal(Constants.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
+    		textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
     		System.out.println("Internal loading...");
     	}
     	

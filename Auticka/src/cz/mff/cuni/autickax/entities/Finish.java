@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
 
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -21,7 +21,7 @@ public class Finish extends GameObject implements Serializable {
 	public Finish(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen, type);
 		super.type = type;
-		this.boundingCircleRadius = Constants.FINISH_BOUNDING_RADIUS;
+		this.boundingCircleRadius = Constants.gameObjects.FINISH_BOUNDING_RADIUS;
 	}
 
 	
@@ -61,7 +61,7 @@ public class Finish extends GameObject implements Serializable {
 		
 	/** Gets the texture name according to a type*/
 	public static  String GetTextureName(int type){		
-			return Constants.FINISH_TEXTURE_PREFIX + type;		
+			return Constants.gameObjects.FINISH_TEXTURE_PREFIX + type;		
 	}
 	
 	@Override
@@ -83,13 +83,13 @@ public class Finish extends GameObject implements Serializable {
 	
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_NO_SOUND;
+		return Constants.sounds.SOUND_NO_SOUND;
 	}
 	
 	//TODO delete this method and fix the reason for the issue
 	public void resetBoundingRadius()
 	{
-		this.boundingCircleRadius = Constants.FINISH_BOUNDING_RADIUS;
+		this.boundingCircleRadius = Constants.gameObjects.FINISH_BOUNDING_RADIUS;
 	}
 	
 	public float getBoundingRadius()

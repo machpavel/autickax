@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.entities.GearShiftMinigameFinish;
 import cz.mff.cuni.autickax.entities.GearShifter;
@@ -17,13 +17,13 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class GearShiftMinigame extends Minigame{	
-	private static final float FAIL_VALUE = Constants.GEAR_SHIFT_FAIL_VALUE;
-	private static final float ROW_1 = Constants.GEAR_SHIFT_MINIGAME_ROW_1;
-	private static final float ROW_2 = Constants.GEAR_SHIFT_MINIGAME_ROW_2;
-	private static final float ROW_3 = Constants.GEAR_SHIFT_MINIGAME_ROW_3;
-	private static final float COLUMN_1 = Constants.GEAR_SHIFT_MINIGAME_COLUMN_1;
-	private static final float COLUMN_2 = Constants.GEAR_SHIFT_MINIGAME_COLUMN_2;
-	private static final float COLUMN_3 = Constants.GEAR_SHIFT_MINIGAME_COLUMN_3;
+	private static final float FAIL_VALUE = Constants.minigames.GEAR_SHIFT_FAIL_VALUE;
+	private static final float ROW_1 = Constants.minigames.GEAR_SHIFT_MINIGAME_ROW_1;
+	private static final float ROW_2 = Constants.minigames.GEAR_SHIFT_MINIGAME_ROW_2;
+	private static final float ROW_3 = Constants.minigames.GEAR_SHIFT_MINIGAME_ROW_3;
+	private static final float COLUMN_1 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_1;
+	private static final float COLUMN_2 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_2;
+	private static final float COLUMN_3 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_3;
 	private static float MAX_DISTANCE_FROM_LINE;
 	
 	private States state = States.BEGINNING_STATE;
@@ -33,10 +33,10 @@ public final class GearShiftMinigame extends Minigame{
 	public GearShiftMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
 		setDifficulty(this.level.getDifficulty());		
-		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
+		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.minigames.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
 				
 		if(Autickax.settings.showTooltips)
-			this.parent.setDialog(new MessageDialog(screen, parent, Constants.TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO));
+			this.parent.setDialog(new MessageDialog(screen, parent, Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO));
 		
 		randomizeStartAndFinish(screen);
 	}
@@ -90,7 +90,7 @@ public final class GearShiftMinigame extends Minigame{
 		Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 		
 		Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(touchPos.x, touchPos.y);
-		if (shift.len() <= Constants.CAR_CAPABLE_DISTANCE) {			
+		if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {			
 			this.gearShifter.setDragged(true);
 			this.gearShifter.setShift(shift);
 			state = States.DRIVING_STATE;					
@@ -121,7 +121,7 @@ public final class GearShiftMinigame extends Minigame{
 	
 
 	private void fail(){
-		this.resultMessage = Constants.TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL;
+		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL;
 		this.result = ResultType.FAILED_WITH_VALUE;
 		this.resultValue = FAIL_VALUE; 
 		parent.onMinigameEnded();
@@ -129,7 +129,7 @@ public final class GearShiftMinigame extends Minigame{
 
 
 	private void updateInFinishState(float delta) {
-		this.resultMessage = Constants.TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS;
+		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS;
 		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED;
 		parent.onMinigameEnded();		
@@ -191,19 +191,19 @@ public final class GearShiftMinigame extends Minigame{
 	private void setDifficulty(Difficulty difficulty) {
 		switch (difficulty) {
 		case Kiddie:
-			MAX_DISTANCE_FROM_LINE = Constants.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_KIDDIE;
+			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_KIDDIE;
 			break;
 		case Beginner:
-			MAX_DISTANCE_FROM_LINE = Constants.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_BEGINNER;
+			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_BEGINNER;
 			break;
 		case Normal:
-			MAX_DISTANCE_FROM_LINE = Constants.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_NORMAL;
+			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_NORMAL;
 			break;
 		case Hard:
-			MAX_DISTANCE_FROM_LINE = Constants.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD;
+			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD;
 			break;
 		case Extreme:
-			MAX_DISTANCE_FROM_LINE = Constants.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME;
+			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME;
 			break;
 		default:
 			//TODO assert

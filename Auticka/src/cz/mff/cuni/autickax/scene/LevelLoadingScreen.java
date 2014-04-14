@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.constants.Constants;
 
 public class LevelLoadingScreen extends BaseScreen {
 	
@@ -39,7 +39,7 @@ public class LevelLoadingScreen extends BaseScreen {
 		
 
 		// now draw elements
-		Image background = new Image(getGame().assets.getGraphics(Constants.LOADING_LEVEL_MENU_BACKGROUND));
+		Image background = new Image(getGame().assets.getGraphics(Constants.menu.LOADING_LEVEL_MENU_BACKGROUND));
 		background.setSize(stageWidth, stageHeight);
 		stage.addActor(background);
 	}

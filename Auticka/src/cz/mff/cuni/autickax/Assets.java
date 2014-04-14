@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.serialization.AvailableLevelsLoader;
 
 public class Assets {
@@ -191,23 +192,23 @@ public class Assets {
 	
 	private void loadSounds() {
 		Map<String, Sound> soundsMap = new HashMap<String, Sound>();
-		soundsMap.put(Constants.SOUND_EDITOR, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_EDITOR_PATH)));
-		soundsMap.put(Constants.SOUND_MUD, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_MUD_PATH)));
-		soundsMap.put(Constants.SOUND_TREE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_TREE_PATH)));
-		soundsMap.put(Constants.SOUND_HOLE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_HOLE_PATH)));
-		soundsMap.put(Constants.SOUND_STONE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_STONE_PATH)));
-		soundsMap.put(Constants.SOUND_ENGINE_START, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_ENGINE_START_PATH)));
-		soundsMap.put(Constants.SOUND_MENU_OPEN, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_MENU_OPEN_PATH)));
-		soundsMap.put(Constants.SOUND_MENU_CLOSE, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_MENU_CLOSE_PATH)));
-		soundsMap.put(Constants.SOUND_MINIGAME_FAIL, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_MINIGAME_FAIL_PATH)));
-		soundsMap.put(Constants.SOUND_MINIGAME_SUCCESS, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_MINIGAME_SUCCESS_PATH)));
-		soundsMap.put(Constants.SOUND_SUB1_CHEER, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_SUB1_CHEER_PATH)));
-		soundsMap.put(Constants.SOUND_SUB2_CHEER, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_SUB2_CHEER_PATH)));
-		soundsMap.put(Constants.SOUND_SUB1_FAIL, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_SUB1_FAIL_PATH)));
-		soundsMap.put(Constants.SOUND_SUB2_START, Gdx.audio.newSound(Gdx.files.internal(Constants.SOUND_SUB2_START_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_EDITOR, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_EDITOR_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_MUD, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_MUD_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_TREE, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_TREE_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_HOLE, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_HOLE_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_STONE, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_STONE_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_ENGINE_START, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_ENGINE_START_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_MENU_OPEN, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_MENU_OPEN_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_MENU_CLOSE, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_MENU_CLOSE_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_MINIGAME_FAIL, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_MINIGAME_FAIL_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_MINIGAME_SUCCESS, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_MINIGAME_SUCCESS_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_SUB1_CHEER, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB1_CHEER_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_SUB2_CHEER, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB2_CHEER_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_SUB1_FAIL, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB1_FAIL_PATH)));
+		soundsMap.put(Constants.sounds.SOUND_SUB2_START, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB2_START_PATH)));
 		
-		Music menuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_MENU_PATH));
-		Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.MUSIC_RACE_PATH));
+		Music menuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.sounds.MUSIC_MENU_PATH));
+		Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.sounds.MUSIC_RACE_PATH));
 		this.soundAndMusicManager = new SoundAndMusicManager(soundsMap, raceMusic, menuMusic);
 	}
 	

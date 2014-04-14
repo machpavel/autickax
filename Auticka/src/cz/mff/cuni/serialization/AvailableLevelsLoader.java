@@ -50,6 +50,7 @@ public class AvailableLevelsLoader extends AsynchronousAssetLoader<AvailableLeve
 	}
 
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Array<AssetDescriptor> getDependencies(String fileName,
 			FileHandle file, AvailableLevelsParameter parameter) {

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 
 public class LevelBackground {
 	
@@ -31,11 +31,11 @@ public class LevelBackground {
 	
 	/** Gets the height according to a type*/
 	public static String GetTextureName(int type){
-		return Constants.LEVEL_BACKGROUND_TEXTURE_PREFIX + type;
+		return Constants.misc.LEVEL_BACKGROUND_TEXTURE_PREFIX + type;
 	}	
 	/** Gets the height according to a type*/
 	public static String GetSmallTextureName(int type){
-		return Constants.LEVEL_BACKGROUND_TEXTURE_PREFIX + type + Constants.LEVEL_SMALL_BACKGROUND_TEXTURE_POSTFIX;
+		return Constants.misc.LEVEL_BACKGROUND_TEXTURE_PREFIX + type + Constants.misc.LEVEL_SMALL_BACKGROUND_TEXTURE_POSTFIX;
 	}
 	
 }

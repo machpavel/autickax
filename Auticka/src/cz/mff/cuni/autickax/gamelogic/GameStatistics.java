@@ -1,7 +1,7 @@
 package cz.mff.cuni.autickax.gamelogic;
 
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.constants.Constants;
 
 public class GameStatistics {
 	private int succeeded = 0;
@@ -57,12 +57,12 @@ public class GameStatistics {
 	
 	private byte getNumberOfStars(float timeElapsed, float timeLimit)
 	{
-		float timeLimitAfterGlobalRegulation = timeLimit / Constants.GLOBAL_SPEED_REGULATOR;
+		float timeLimitAfterGlobalRegulation = timeLimit / Constants.misc.GLOBAL_SPEED_REGULATOR;
 		
 		float [] starsThresholds = {
-				Constants.STARS_THREE_TIME_THRESHOLD,
-				Constants.STARS_TWO_TIME_THRESHOLD,
-				Constants.STARS_ONE_TIME_THRESHOLD
+				Constants.misc.STARS_THREE_TIME_THRESHOLD,
+				Constants.misc.STARS_TWO_TIME_THRESHOLD,
+				Constants.misc.STARS_ONE_TIME_THRESHOLD
 			};
 		
 		byte res = 0;
@@ -70,7 +70,7 @@ public class GameStatistics {
 		{
 			if (timeElapsed <= timeLimitAfterGlobalRegulation *  starsThresholds[i])
 			{
-				res = (byte)(Constants.STARS_MAX - i);
+				res = (byte)(Constants.misc.STARS_MAX - i);
 			}
 		}
 		return res;
@@ -82,15 +82,15 @@ public class GameStatistics {
 	
 	public int getScoreFromTime()
 	{
-		float normalizedElapsed = phase2ElapsedTime / Constants.GLOBAL_SPEED_REGULATOR;
-		int score = (int)(Constants.SCORE_MULTIPLIER / normalizedElapsed);
+		float normalizedElapsed = phase2ElapsedTime / Constants.misc.GLOBAL_SPEED_REGULATOR;
+		int score = (int)(Constants.misc.SCORE_MULTIPLIER / normalizedElapsed);
 		return score;
 	}
 	
 	public float getTimeFromScore(int score)
 	{
-		float normalizedTime = (Constants.SCORE_MULTIPLIER / (float)score);
-		float resultTime = normalizedTime * Constants.GLOBAL_SPEED_REGULATOR;
+		float normalizedTime = (Constants.misc.SCORE_MULTIPLIER / (float)score);
+		float resultTime = normalizedTime * Constants.misc.GLOBAL_SPEED_REGULATOR;
 		return resultTime;
 	}
 

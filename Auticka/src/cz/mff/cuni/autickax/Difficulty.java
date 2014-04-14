@@ -2,6 +2,8 @@ package cz.mff.cuni.autickax;
 
 import java.util.Vector;
 
+import cz.mff.cuni.autickax.constants.Constants;
+
 /** Difficulty of the level played. */
 public enum Difficulty {
 	Kiddie,
@@ -17,22 +19,22 @@ public enum Difficulty {
 		switch(this)
 		{
 		case Kiddie: 
-			distSurface = Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_KIDDIE;
+			distSurface = Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_KIDDIE;
 			break;
 		case Beginner:
-			distSurface = Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_BEGINNER;
+			distSurface = Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_BEGINNER;
 			break;
 		case Normal:
-			distSurface = Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_NORMAL;
+			distSurface = Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_NORMAL;
 			break;
 		case Hard:
-			distSurface = Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_HARD;
+			distSurface = Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_HARD;
 			break;
 		case Extreme:
-			distSurface = Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_EXTREME;
+			distSurface = Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_EXTREME;
 			break;
 		default:
-			distSurface = Constants.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
+			distSurface = Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
 		}
 		return distSurface;
 	}

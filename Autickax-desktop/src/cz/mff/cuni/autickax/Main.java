@@ -1,6 +1,5 @@
 package cz.mff.cuni.autickax;
 
-import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -16,10 +15,9 @@ public class Main {
 		cfg.height = 480;
 		cfg.fullscreen = false;
 		cfg.resizable = false;
-		cfg.addIcon("icons/128.png", FileType.Internal);
-		cfg.addIcon("icons/32.png", FileType.Internal);
-		cfg.addIcon("icons/16.png", FileType.Internal);
-		
+		//cfg.addIcon("icons/128.png", FileType.Internal);
+		//cfg.addIcon("icons/32.png", FileType.Internal);
+		//cfg.addIcon("icons/16.png", FileType.Internal);
 		
 		new LwjglApplication(new Autickax(), cfg);
 	}

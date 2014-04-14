@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -42,7 +42,7 @@ public final class AvoidStone extends GameObject implements Serializable {
 	
 	/** Gets the texture name according to a type*/
 	public static  String GetTextureName(int type){
-		return Constants.AVOID_STONE_TEXTURE_NAME_PREFIX + type;
+		return Constants.gameObjects.AVOID_STONE_TEXTURE_NAME_PREFIX + type;
 		
 	}
 	
@@ -64,7 +64,7 @@ public final class AvoidStone extends GameObject implements Serializable {
 	
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_STONE;
+		return Constants.sounds.SOUND_STONE;
 	}
 
 }

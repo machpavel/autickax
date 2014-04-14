@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
 
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -60,7 +60,7 @@ public class Start extends GameObject implements Serializable {
 	
 	/** Gets the texture name according to a type*/
 	public static  String GetTextureName(int type){
-		return Constants.START_TEXTURE_PREFIX + type;
+		return Constants.gameObjects.START_TEXTURE_PREFIX + type;
 	}
 	
 	@Override
@@ -82,7 +82,7 @@ public class Start extends GameObject implements Serializable {
 	
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_NO_SOUND;
+		return Constants.sounds.SOUND_NO_SOUND;
 	}
 
 }

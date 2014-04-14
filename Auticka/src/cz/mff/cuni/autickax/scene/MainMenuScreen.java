@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;*/
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 //import cz.mff.cuni.autickax.menu.MenuAnimator;
 import cz.mff.cuni.autickax.menu.MenuButton;
 
@@ -27,20 +27,20 @@ public class MainMenuScreen extends BaseScreen {
 		this.playMenuMusic();
 
 		// Background
-		Image background = new Image(getGame().assets.getGraphics(Constants.MAIN_MENU_BACKGROUND));
+		Image background = new Image(getGame().assets.getGraphics(Constants.menu.MAIN_MENU_BACKGROUND));
 		background.setSize(stageWidth, stageHeight);
 		stage.addActor(background); // stage initialized in superclass
 									// constructor
 
 		// Play Button-----------------------------------------------------
 		this.buttonPlay = new MenuButton (
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_PLAY),
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_PLAY_HOVER)
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_PLAY),
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_PLAY_HOVER)
 		)
 		{
 			@Override
 			public void action() {
-				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
+				getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_OPEN, Constants.sounds.SOUND_DEFAULT_VOLUME);
 				if (Autickax.difficultySelectScreen != null) {
 					Autickax.difficultySelectScreen.dispose();
 					Autickax.difficultySelectScreen = null;
@@ -54,8 +54,8 @@ public class MainMenuScreen extends BaseScreen {
 		
 		// Exit Button-----------------------------------------------------
 		this.buttonExit = new MenuButton (
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_EXIT),
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_EXIT_HOVER)
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_EXIT),
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_EXIT_HOVER)
 		)
 		{
 			@Override
@@ -68,9 +68,9 @@ public class MainMenuScreen extends BaseScreen {
 		
 		// Tooltips Button------------------------------------------------
 		String tooltipsTexture = Autickax.settings.showTooltips ?
-				Constants.BUTTON_MENU_TOOLTIPS_ON : Constants.BUTTON_MENU_TOOLTIPS_OFF;
+				Constants.menu.BUTTON_MENU_TOOLTIPS_ON : Constants.menu.BUTTON_MENU_TOOLTIPS_OFF;
 		String tooltipsHoverTexture = Autickax.settings.showTooltips ?
-				Constants.BUTTON_MENU_TOOLTIPS_ON_HOVER : Constants.BUTTON_MENU_TOOLTIPS_OFF_HOVER;
+				Constants.menu.BUTTON_MENU_TOOLTIPS_ON_HOVER : Constants.menu.BUTTON_MENU_TOOLTIPS_OFF_HOVER;
 		
 		this.buttonTooltips = new MenuButton (
 			getGame().assets.getGraphics(tooltipsTexture),
@@ -84,14 +84,14 @@ public class MainMenuScreen extends BaseScreen {
 				
 				if (Autickax.settings.showTooltips) {
 					buttonTooltips.setStyle(
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_ON),
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_ON_HOVER)
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_ON),
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_ON_HOVER)
 					);
 				}
 				else {
 					buttonTooltips.setStyle(
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_OFF),
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_TOOLTIPS_OFF_HOVER)
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_OFF),
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_OFF_HOVER)
 					);
 				}
 			}
@@ -101,9 +101,9 @@ public class MainMenuScreen extends BaseScreen {
 		
 		// Sounds Button------------------------------------------------
 		String soundsTexture = Autickax.settings.playSounds ?
-				Constants.BUTTON_MENU_SOUNDS_ON : Constants.BUTTON_MENU_SOUNDS_OFF;
+				Constants.menu.BUTTON_MENU_SOUNDS_ON : Constants.menu.BUTTON_MENU_SOUNDS_OFF;
 		String soundsHoverTexture = Autickax.settings.playSounds ?
-				Constants.BUTTON_MENU_SOUNDS_ON_HOVER : Constants.BUTTON_MENU_SOUNDS_OFF_HOVER;
+				Constants.menu.BUTTON_MENU_SOUNDS_ON_HOVER : Constants.menu.BUTTON_MENU_SOUNDS_OFF_HOVER;
 		
 		this.buttonSounds = new MenuButton (
 			getGame().assets.getGraphics(soundsTexture),
@@ -117,14 +117,14 @@ public class MainMenuScreen extends BaseScreen {
 				
 				if (Autickax.settings.playSounds) {
 					buttonSounds.setStyle(
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_ON),
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_ON_HOVER)
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_ON),
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_ON_HOVER)
 					);
 				}
 				else {
 					buttonSounds.setStyle(
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_OFF),
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_SOUNDS_OFF_HOVER)
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_OFF),
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_OFF_HOVER)
 					);
 				}
 			}
@@ -134,9 +134,9 @@ public class MainMenuScreen extends BaseScreen {
 		
 		// Music Button------------------------------------------------
 		String musicTexture = Autickax.settings.playMusic ?
-				Constants.BUTTON_MENU_MUSIC_ON : Constants.BUTTON_MENU_MUSIC_OFF;
+				Constants.menu.BUTTON_MENU_MUSIC_ON : Constants.menu.BUTTON_MENU_MUSIC_OFF;
 		String musicHoverTexture = Autickax.settings.playMusic ?
-				Constants.BUTTON_MENU_MUSIC_ON_HOVER : Constants.BUTTON_MENU_MUSIC_OFF_HOVER;
+				Constants.menu.BUTTON_MENU_MUSIC_ON_HOVER : Constants.menu.BUTTON_MENU_MUSIC_OFF_HOVER;
 		
 		this.buttonMusic = new MenuButton (
 			getGame().assets.getGraphics(musicTexture),
@@ -150,15 +150,15 @@ public class MainMenuScreen extends BaseScreen {
 				
 				if (Autickax.settings.playMusic) {
 					buttonMusic.setStyle(
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON),
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_ON_HOVER)
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_ON),
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_ON_HOVER)
 					);
 					getGame().assets.soundAndMusicManager.playMenuMusic();
 				}
 				else {
 					buttonMusic.setStyle(
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF),
-							getGame().assets.getGraphics(Constants.BUTTON_MENU_MUSIC_OFF_HOVER)
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_OFF),
+							getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_OFF_HOVER)
 					);
 					getGame().assets.soundAndMusicManager.stopAllMusic();
 				}

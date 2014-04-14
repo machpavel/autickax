@@ -3,13 +3,15 @@ package cz.mff.cuni.autickax;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 
+import cz.mff.cuni.autickax.constants.Constants;
+
 public class Settings {
 	public boolean showTooltips = true;
 	public boolean playSounds = true;
 	public boolean playMusic = true;
 	
 	public void loadSettings() {
-		Preferences prefs = Gdx.app.getPreferences(Constants.PREFERENCES_FILENAME);
+		Preferences prefs = Gdx.app.getPreferences(Constants.serialization.PREFERENCES_FILENAME);
 		
 		this.showTooltips = prefs.getBoolean("showTooltips", true);
 		this.playSounds = prefs.getBoolean("playSounds", true);
@@ -17,7 +19,7 @@ public class Settings {
 	}
 	
 	public void storeSettings() {
-		Preferences prefs = Gdx.app.getPreferences(Constants.PREFERENCES_FILENAME);
+		Preferences prefs = Gdx.app.getPreferences(Constants.serialization.PREFERENCES_FILENAME);
 		
 		prefs.putBoolean("showTooltips", this.showTooltips);
 		prefs.putBoolean("playSounds", this.playSounds);

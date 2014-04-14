@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -62,7 +62,7 @@ public final class Car extends GameObject implements Serializable {
 		super.move(newPos); 
 				
 		lastRotationDistance += newPos.dst(lastCarPosition);
-		if(lastRotationDistance > Constants.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION){	
+		if(lastRotationDistance > Constants.gameObjects.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION){	
 			lastRotationDistance = 0;
 			this.setRotation(new Vector2(this.lastCarPosition).sub(newPos).scl(-1).angle());			
 			this.lastCarPosition = newPos;
@@ -70,7 +70,7 @@ public final class Car extends GameObject implements Serializable {
 	}
 	
 	public void setNextPositionIsDirection(){
-		this.lastRotationDistance  = Constants.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION;
+		this.lastRotationDistance  = Constants.gameObjects.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION;
 	}
 	
 	@Override
@@ -134,21 +134,21 @@ public final class Car extends GameObject implements Serializable {
 		switch (type) {
 		case 1:
 			this.positionTextures[0] = this.gameScreen.getGame().assets
-					.getGraphics(Constants.CAR_TYPE_1_POSITION_0_TEXTURE_NAME);
+					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_0_TEXTURE_NAME);
 			this.positionTextures[1] = this.gameScreen.getGame().assets
-					.getGraphics(Constants.CAR_TYPE_1_POSITION_1_TEXTURE_NAME);
+					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_1_TEXTURE_NAME);
 			this.positionTextures[2] = this.gameScreen.getGame().assets
-					.getGraphics(Constants.CAR_TYPE_1_POSITION_2_TEXTURE_NAME);
+					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_2_TEXTURE_NAME);
 			this.positionTextures[3] = this.gameScreen.getGame().assets
-					.getGraphics(Constants.CAR_TYPE_1_POSITION_3_TEXTURE_NAME);
+					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_3_TEXTURE_NAME);
 			this.positionTextures[4] = this.gameScreen.getGame().assets
-					.getGraphics(Constants.CAR_TYPE_1_POSITION_4_TEXTURE_NAME);
+					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_4_TEXTURE_NAME);
 			this.positionTextures[5] = this.gameScreen.getGame().assets
-					.getGraphics(Constants.CAR_TYPE_1_POSITION_5_TEXTURE_NAME);
+					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_5_TEXTURE_NAME);
 			this.positionTextures[6] = this.gameScreen.getGame().assets
-					.getGraphics(Constants.CAR_TYPE_1_POSITION_6_TEXTURE_NAME);
+					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_6_TEXTURE_NAME);
 			this.positionTextures[7] = this.gameScreen.getGame().assets
-					.getGraphics(Constants.CAR_TYPE_1_POSITION_7_TEXTURE_NAME);
+					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_7_TEXTURE_NAME);
 			super.texture = this.positionTextures[0];			
 			super.setMeasurements(texture.getRegionWidth(), texture.getRegionHeight());
 			break;
@@ -167,6 +167,6 @@ public final class Car extends GameObject implements Serializable {
 
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_NO_SOUND;
+		return Constants.sounds.SOUND_NO_SOUND;
 	}
 }

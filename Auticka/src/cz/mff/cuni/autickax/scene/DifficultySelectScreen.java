@@ -4,8 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.Difficulty;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.menu.MenuTextButton;
 
 public class DifficultySelectScreen extends BaseScreen {
@@ -20,7 +20,7 @@ public class DifficultySelectScreen extends BaseScreen {
 		super();
 
 		// Background
-		Image background = new Image(getGame().assets.getGraphics(Constants.DIFFICULTY_MENU_BACKGROUND));
+		Image background = new Image(getGame().assets.getGraphics(Constants.menu.DIFFICULTY_MENU_BACKGROUND));
 		background.setSize(stageWidth, stageHeight);
 		stage.addActor(background); // stage initialized in superclass
 									// constructor
@@ -28,13 +28,13 @@ public class DifficultySelectScreen extends BaseScreen {
 		// Beginner Button-----------------------------------------------------
 		this.buttonBeginner = new MenuTextButton (
 			"EASY",
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY),
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY_HOVER)
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY),
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY_HOVER)
 		)
 		{
 			@Override
 			public void action() {
-				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
+				getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_OPEN, Constants.sounds.SOUND_DEFAULT_VOLUME);
 				if (Autickax.levelSelectScreen != null) {
 					Autickax.levelSelectScreen.dispose();
 					Autickax.levelSelectScreen = null;
@@ -49,13 +49,13 @@ public class DifficultySelectScreen extends BaseScreen {
 		// Normal Button-----------------------------------------------------
 		this.buttonNormal = new MenuTextButton (
 			"MEDIUM",
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY),
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY_HOVER)
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY),
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY_HOVER)
 		)
 		{
 			@Override
 			public void action() {
-				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
+				getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_OPEN, Constants.sounds.SOUND_DEFAULT_VOLUME);
 				if (Autickax.levelSelectScreen != null) {
 					Autickax.levelSelectScreen.dispose();
 					Autickax.levelSelectScreen = null;
@@ -70,13 +70,13 @@ public class DifficultySelectScreen extends BaseScreen {
 		// Hard Button-----------------------------------------------------
 		this.buttonHard = new MenuTextButton (
 			"HARD",
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY),
-			getGame().assets.getGraphics(Constants.BUTTON_MENU_DIFFICULTY_HOVER)
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY),
+			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY_HOVER)
 		)
 		{
 			@Override
 			public void action() {
-				getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_OPEN, Constants.SOUND_DEFAULT_VOLUME);
+				getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_OPEN, Constants.sounds.SOUND_DEFAULT_VOLUME);
 				if (Autickax.levelSelectScreen != null) {
 					Autickax.levelSelectScreen.dispose();
 					Autickax.levelSelectScreen = null;
@@ -91,7 +91,7 @@ public class DifficultySelectScreen extends BaseScreen {
 	
 	@Override
 	protected void onBackKeyPressed() {
-		getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MENU_CLOSE, Constants.SOUND_DEFAULT_VOLUME);
+		getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_CLOSE, Constants.sounds.SOUND_DEFAULT_VOLUME);
 		Autickax.mainMenuScreen.dispose();
 		Autickax.mainMenuScreen = new MainMenuScreen();
 		this.getGame().setScreen(Autickax.mainMenuScreen);		

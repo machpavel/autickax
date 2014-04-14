@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -16,7 +16,7 @@ public class GearShiftMinigameFinish extends GameObject implements Serializable 
 
 	public GearShiftMinigameFinish(float x, float y, GameScreen gameScreen) {	
 		super(x,y,gameScreen, 0);
-		this.boundingCircleRadius = Constants.GEAR_SHIFT_MINIGAME_FINISH_RADIUS;
+		this.boundingCircleRadius = Constants.minigames.GEAR_SHIFT_MINIGAME_FINISH_RADIUS;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class GearShiftMinigameFinish extends GameObject implements Serializable 
 
 	@Override
 	public void setTexture(int type) {
-		super.setTexture(Constants.GEAR_SHIFT_MINIGAME_FINISH_TEXTURE);		
+		super.setTexture(Constants.minigames.GEAR_SHIFT_MINIGAME_FINISH_TEXTURE);		
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class GearShiftMinigameFinish extends GameObject implements Serializable 
 	
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_NO_SOUND;
+		return Constants.sounds.SOUND_NO_SOUND;
 	}
 
 }

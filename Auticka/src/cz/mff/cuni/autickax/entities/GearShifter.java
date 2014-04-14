@@ -6,7 +6,7 @@ import java.io.Serializable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
-import cz.mff.cuni.autickax.Constants;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -79,12 +79,12 @@ public final class GearShifter extends GameObject implements Serializable {
 
 	@Override
 	public String getSoundName() {
-		return Constants.SOUND_NO_SOUND;
+		return Constants.sounds.SOUND_NO_SOUND;
 	}
 	
 	@Override
 	public void setTexture(int type) {
-		super.setTexture(Constants.GEAR_SHIFTER_TEXTURE);		
+		super.setTexture(Constants.minigames.GEAR_SHIFTER_TEXTURE);		
 	}
 	
 	

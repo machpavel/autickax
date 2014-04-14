@@ -7,8 +7,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Constants;
-import cz.mff.cuni.autickax.drawing.Font;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.input.Input;
 
 
@@ -36,9 +35,9 @@ public class LoadingScreen extends BaseScreen {
 		this.getGame().assets.loadLoadingScreenGraphics();
 		while (!getGame().assets.update()); // wait until it is loaded
 		
-		this.background = new TextureRegion(this.game.assets.getLoadingScreenGraphics(Constants.LOADING_SCREEN_BACKGROUND));
-		this.car = new TextureRegion(this.game.assets.getLoadingScreenGraphics(Constants.LOADING_SCREEN_CAR));
-		this.fume = new TextureRegion(this.game.assets.getLoadingScreenGraphics(Constants.LOADING_SCREEN_FUME));
+		this.background = new TextureRegion(this.game.assets.getLoadingScreenGraphics(Constants.menu.LOADING_SCREEN_BACKGROUND));
+		this.car = new TextureRegion(this.game.assets.getLoadingScreenGraphics(Constants.menu.LOADING_SCREEN_CAR));
+		this.fume = new TextureRegion(this.game.assets.getLoadingScreenGraphics(Constants.menu.LOADING_SCREEN_FUME));
 		
 		getGame().assets.load();
 	}

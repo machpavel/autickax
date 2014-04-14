@@ -4,8 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
-import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.EditorScreen;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.entities.GameObject;
 
 public class PlacedObjectsInputListener extends MyInputListener {
