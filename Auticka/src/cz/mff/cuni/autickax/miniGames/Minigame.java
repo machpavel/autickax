@@ -8,7 +8,7 @@ public abstract class Minigame extends Comunicator {
 
 	protected ResultType result;
 	protected float resultValue;
-	protected String resultFailMessage;
+	protected String resultMessage = null;
 	
 	public Minigame(GameScreen gameScreen, SubLevel parent) {
 		super(gameScreen, parent);
@@ -22,11 +22,11 @@ public abstract class Minigame extends Comunicator {
 		return this.resultValue;
 	}
 	
-	public String getResultFailMessage(){
-		return resultFailMessage;
+	public String getResultMessage(){
+		return resultMessage;
 	}
 	
 	public enum ResultType{
-		FAILED, PROCEEDED_WITH_VALUE, PROCEEDED;
+		FAILED, FAILED_WITH_VALUE, PROCEEDED_WITH_VALUE, PROCEEDED;
 	}
 }

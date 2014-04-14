@@ -315,16 +315,51 @@ public final class Constants {
 	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD = 20;
 	public static final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME = 15;
 	
+	// Boost
+	public static final String BOOST_MINIGAME_BACKGROUND_TEXTURE = "BoostMinigameBackground";
+	public static final String BOOST_MINIGAME_WAITING_BUTTON_TEXTURE = "BoostMinigameButtonUp";
+	public static final String BOOST_MINIGAME_HIGHLIGHTED_BUTTON_TEXTURE = "BoostMinigameButtonDown";	
+	public static final float BOOST_MINIGAME_BUTTONS_DISTANCE = 60;
+	public static final int BOOST_MINIGAME_ROWS_KIDDIE = 1;
+	public static final int BOOST_MINIGAME_ROWS_BEGINNER = 2;
+	public static final int BOOST_MINIGAME_ROWS_NORMAL = 2;
+	public static final int BOOST_MINIGAME_ROWS_HARD = 3;
+	public static final int BOOST_MINIGAME_ROWS_EXTREME = 4;
+	public static final int BOOST_MINIGAME_COLUMNS_KIDDIE = 1;
+	public static final int BOOST_MINIGAME_COLUMNS_BEGINNER = 2;
+	public static final int BOOST_MINIGAME_COLUMNS_NORMAL = 4;
+	public static final int BOOST_MINIGAME_COLUMNS_HARD = 3;
+	public static final int BOOST_MINIGAME_COLUMNS_EXTREME = 4;
+	public static final float BOOST_MINIGAME_TIME_LIMIT_KIDDIE = 6;
+	public static final float BOOST_MINIGAME_TIME_LIMIT_BEGINNER = 4;
+	public static final float BOOST_MINIGAME_TIME_LIMIT_NORMAL = 2;
+	public static final float BOOST_MINIGAME_TIME_LIMIT_HARD = 1;
+	public static final float BOOST_MINIGAME_TIME_LIMIT_EXTREME = 0.5f;
+	public static final float BOOST_MINIGAME_RESULT_WIN_VALUE = 20;
+	public static final float BOOST_MINIGAME_TIME_GENERATION_LIMIT = 0.5f;	
+	public static final int BOOST_MINIGAME_HITS_LIMIT_KIDDIE = 2;
+	public static final int BOOST_MINIGAME_HITS_LIMIT_BEGINNER = 3;
+	public static final int BOOST_MINIGAME_HITS_LIMIT_NORMAL = 5;
+	public static final int BOOST_MINIGAME_HITS_LIMIT_HARD = 10;
+	public static final int BOOST_MINIGAME_HITS_LIMIT_EXTREME = 15;
+	
+	
 	//
 	// STRINGS
 	//
+	//TODO: do TODO strings
 	public static final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway\n  with your finger,\n    hurry to finish\n   and avoid nasty \n          objects!";
 	public static final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid this obstacle";
 	public static final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and\n      reach finish";
 	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever\n   to the correct position";
+	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not enough\naccurate. You will be\n punished by speed\n        reduction";
+	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS = "TODO:";
+	public static final String TOOLTIP_MINIGAME_BOOST_WHAT_TO_DO = "TODO: what to do";
+	public static final String TOOLTIP_MINIGAME_BOOST_FAIL = "TODO: fail";
+	public static final String TOOLTIP_MINIGAME_BOOST_SUCCESS = "TODO: success";
 	public static final String TOOLTIP_MINIGAME_AVOID_HOLES_FAIL = "  You felt into a hole.\nYou will be punised by\n     speed reduction";
 	public static final String TOOLTIP_MINIGAME_AVOID_STONES_FAIL = "You crashed into a stone.\n           Level failed.";
-	public static final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not enough\naccurate. You will be\n punished by speed\n        reduction";
+	public static final String TOOLTIP_MINIGAME_AVOID_SUCCESS = "TODO: ";
 	public static final String PHASE_1_FINISH_REACHED = "Finish reached";
 	public static final String PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS = "You have to drive\n     along whole\n    the pathway.";
 	public static final String PHASE_1_OUT_OF_LINE = "  You went out\nof the pathway.";
@@ -377,6 +412,9 @@ public final class Constants {
 	
 	public static final int AVOID_HOLES_TYPES_COUNT = 18;
 	public static final String 	AVOID_HOLES_TEXTURE_NAME_PREFIX = "avoidhole";
+	
+	public static final int BOOSTER_TYPES_COUNT = 1;
+	public static final String 	BOOSTER_TEXTURE_NAME_PREFIX = "booster";
 	
 	//GOLDEN STARS
 	//Defines the max multiply of time limit which a player must not cross in order to gain the stars

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
+import cz.mff.cuni.autickax.entities.Booster;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.Hole;
@@ -67,7 +68,7 @@ public class LevelLoading implements java.io.Serializable {
 	
 	public void parseLevel(GameScreen gameScreen, FileHandle file) throws Exception {
 	
-		System.out.println("Loading level...");
+		System.out.println("Loading level " + file.name());
 		
 		Element root = new XmlReader().parse(file);			
 		
@@ -83,9 +84,9 @@ public class LevelLoading implements java.io.Serializable {
 			Vector2 controlPointPosition = new Vector2(controlPoint.getFloat("X"), controlPoint.getFloat("Y"));
 			this.pathway.getControlPoints().add(controlPointPosition);			
 		}			
-		for (Vector2 point : this.pathway.getControlPoints()) {
-			System.out.println("point " + point);
-		}
+//		for (Vector2 point : this.pathway.getControlPoints()) {
+//			System.out.println("point " + point);
+//		}
 		
 				
 		// Loading game objects
@@ -105,26 +106,29 @@ public class LevelLoading implements java.io.Serializable {
 			else if (objectName.equals("hole")){
 				gameObjects.add(new Hole(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameScreen, gameObject.getInt("type", 0)));
 			}
+			else if (objectName.equals("booster")){
+				gameObjects.add(new Booster(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameScreen, gameObject.getInt("type", 0)));
+			}
 			else throw new IOException("Loading object failed: Unknown type");
 		}
-		for (GameObject gameObject : gameObjects) {
-			System.out.println(gameObject.toString());
-		}
+//		for (GameObject gameObject : gameObjects) {
+//			System.out.println(gameObject.toString());
+//		}
 		
 		// Loading car
 		Element car = root.getChildByName("car");
 		this.car = new Car(car.getFloat("X"), car.getFloat("Y"), gameScreen, car.getInt("type", 1));
-		System.out.println(car.toString());
+		//System.out.println(car.toString());
 		
 		//Loading start
 		Element start = root.getChildByName("start");
 		this.start = new Start(start.getFloat("X"), start.getFloat("Y"), gameScreen, start.getInt("type", 1));
-		System.out.println(start.toString());
+		//System.out.println(start.toString());
 		
 		//Loading finish
 		Element finish = root.getChildByName("finish");
 		this.finish = new Finish(finish.getFloat("X"), finish.getFloat("Y"), gameScreen, finish.getInt("type", 1));
-		System.out.println(finish.toString());
+		//System.out.println(finish.toString());
 				
 		
 		// Background
@@ -133,7 +137,7 @@ public class LevelLoading implements java.io.Serializable {
 		// Time limit
 		this.timeLimit = root.getFloat("timeLimit");
 		
-		System.out.println("Loading done...");
+		System.out.println("Loading level done...");
 	}
 	
 	public void calculateDistanceMap() {

@@ -1,7 +1,6 @@
 package cz.mff.cuni.autickax.gamelogic;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -117,24 +116,36 @@ public class SubLevel2 extends SubLevel {
 		eraseMinigame();
 		switch (miniGameLocal.getResult()) {
 		case FAILED:
-			this.dialogStack.push(new DecisionDialog(this.level, this, miniGameLocal.getResultFailMessage(), false));
+			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
+				this.dialogStack.push(new DecisionDialog(this.level, this, miniGameLocal.getResultMessage(), false));
 			stats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
 			break;
 		case PROCEEDED:
-			// Just continue normally.
+			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
+				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultMessage()));
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_SUCCESS, Constants.SOUND_DEFAULT_VOLUME);
 
 			stats.increaseSucceeded();
 			break;
 		case PROCEEDED_WITH_VALUE:
-			if (Autickax.settings.showTooltips)
-				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultFailMessage()));
+			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
+				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultMessage()));
+
+			stats.increaseSucceeded();
+			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_SUCCESS, Constants.SOUND_DEFAULT_VOLUME);
+			float winResult = miniGameLocal.getResultValue();
+				speedModifiers.add(winResult);
+				computeSpeedModifierValue();
+			break;
+		case FAILED_WITH_VALUE:
+			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
+				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultMessage()));
 
 			stats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.SOUND_MINIGAME_FAIL, Constants.SOUND_DEFAULT_VOLUME);
-			float result = miniGameLocal.getResultValue();
-				speedModifiers.add(result);
+			float failResult = miniGameLocal.getResultValue();
+				speedModifiers.add(failResult);
 				computeSpeedModifierValue();
 			break;
 		default:

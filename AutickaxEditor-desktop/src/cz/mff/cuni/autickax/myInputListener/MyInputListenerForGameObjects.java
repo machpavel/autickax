@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 import cz.mff.cuni.autickax.Constants;
 import cz.mff.cuni.autickax.EditorScreen;
+import cz.mff.cuni.autickax.entities.Booster;
 import cz.mff.cuni.autickax.entities.Hole;
 import cz.mff.cuni.autickax.entities.Mud;
 import cz.mff.cuni.autickax.entities.Stone;
@@ -33,6 +34,9 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			break;
 		case TREE:
 			this.screen.draggedObject = new Tree(x ,y, null, type);
+			break;
+		case BOOSTER:
+			this.screen.draggedObject = new Booster(x ,y, null, type);
 			break;
 		default:
 			break;

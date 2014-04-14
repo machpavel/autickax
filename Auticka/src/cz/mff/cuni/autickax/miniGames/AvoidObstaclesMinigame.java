@@ -189,16 +189,16 @@ public final class AvoidObstaclesMinigame extends Minigame{
 		this.status = DialogAbstractStatus.FINISHED;
 		switch (obstaclesType) {
 		case STONES:
-			this.resultFailMessage = Constants.TOOLTIP_MINIGAME_AVOID_STONES_FAIL;
+			this.resultMessage = Constants.TOOLTIP_MINIGAME_AVOID_STONES_FAIL;
 			this.result = ResultType.FAILED;
 			break;
 		case HOLES:
-			this.resultFailMessage = Constants.TOOLTIP_MINIGAME_AVOID_HOLES_FAIL;
+			this.resultMessage = Constants.TOOLTIP_MINIGAME_AVOID_HOLES_FAIL;
 			this.result = ResultType.PROCEEDED_WITH_VALUE;
 			this.resultValue = FAIL_VALUE; 
 			break;
 		default:
-			this.resultFailMessage = Constants.PHASE_2_MINIGAME_FAILED;
+			this.resultMessage = Constants.PHASE_2_MINIGAME_FAILED;
 			this.result = ResultType.FAILED;
 			break;
 		}		
@@ -206,6 +206,7 @@ public final class AvoidObstaclesMinigame extends Minigame{
 	}
 
 	private void updateInFinishState(float delta) {
+		this.resultMessage = Constants.TOOLTIP_MINIGAME_AVOID_SUCCESS;
 		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED;
 		parent.onMinigameEnded();

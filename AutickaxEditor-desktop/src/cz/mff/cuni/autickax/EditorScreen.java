@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.drawing.LevelBackground;
+import cz.mff.cuni.autickax.entities.Booster;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -468,7 +469,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	public enum TypeOfGameObjectButton {
-		HOLE, MUD, STONE, TREE
+		HOLE, MUD, STONE, TREE, BOOSTER
 	}
 
 	private void createGameObjectsButtons() {
@@ -511,6 +512,15 @@ public final class EditorScreen extends BaseScreenEditor {
 					offsetOnScreen,
 					maxValue);
 		}
+		
+		// Boosts
+				for (int i = 1; i <= Constants.BOOSTER_TYPES_COUNT; i++) {
+					trd = new TextureRegionDrawable(game.assets.getGraphics(Booster
+							.GetTextureName(i)));
+					createGameObjectButtons(trd, TypeOfGameObjectButton.BOOSTER, i,
+							offsetOnScreen,
+							maxValue);
+				}
 	}
 
 	private void createGameObjectButtons(TextureRegionDrawable trd,

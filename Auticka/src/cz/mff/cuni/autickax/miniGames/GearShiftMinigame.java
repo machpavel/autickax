@@ -121,14 +121,15 @@ public final class GearShiftMinigame extends Minigame{
 	
 
 	private void fail(){
-		this.resultFailMessage = Constants.TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL;
-		this.result = ResultType.PROCEEDED_WITH_VALUE;
+		this.resultMessage = Constants.TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL;
+		this.result = ResultType.FAILED_WITH_VALUE;
 		this.resultValue = FAIL_VALUE; 
 		parent.onMinigameEnded();
 	}
 
 
 	private void updateInFinishState(float delta) {
+		this.resultMessage = Constants.TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS;
 		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED;
 		parent.onMinigameEnded();		
