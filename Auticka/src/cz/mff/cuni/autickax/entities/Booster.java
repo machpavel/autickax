@@ -12,7 +12,8 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Booster extends GameObject implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
+	
 
 	public Booster(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen, type);
@@ -22,11 +23,24 @@ public final class Booster extends GameObject implements Serializable {
 		super(object);		
 	}
 	
+	//TODO remove static
+	private static float adder = 0.4f;
 	
 	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
-
+	public void update(float delta) {	
+		this.rotation += delta * 100;
+		// TODO Auto-generated method stub					
+		this.scale.add(adder * delta, adder * delta);
+		if(this.scale.x > 1.1f){
+			this.scale.x = 1.1f;
+			this.scale.y = 1.1f;
+			adder *= -1;
+		}
+		else if(this.scale.x < 0.9f){
+			this.scale.x = 0.9f;
+			this.scale.y = 0.9f;
+			adder *= -1;
+		}				
 	}
 
 	@Override
