@@ -168,8 +168,6 @@ public class SubLevel2 extends SubLevel {
 			this.dialogStack.peek().update(delta);
 		} else if (this.miniGame != null) {
 			this.miniGame.update(delta);
-
-			this.stats.increasePhase2ElapsedTime(delta);
 		}		
 		else{
 			for (GameObject gameObject : this.level.getGameObjects()) {

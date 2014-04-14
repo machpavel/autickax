@@ -83,7 +83,10 @@ public final class BoostMinigame extends Minigame {
 			if(this.hitCounter >= this.hitsLimit)
 				this.state = States.FINISH_STATE;
 			
-		}		
+		}	
+		else{
+			fail();
+		}
 	}
 	private void reverseButton(int index){
 		buttonsHighlighted[index].setVisible(!buttonsHighlighted[index].isVisible());
