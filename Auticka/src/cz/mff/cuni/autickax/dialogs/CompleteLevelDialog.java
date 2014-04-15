@@ -17,18 +17,20 @@ public class CompleteLevelDialog extends DecisionDialog {
 
 		
 	public CompleteLevelDialog(GameScreen gameScreen, SubLevel2 subLevel2, GameStatistics stats, boolean isNextLevelAvailible) {
-		super(gameScreen, subLevel2, "", isNextLevelAvailible);
+		super(gameScreen, subLevel2, null, isNextLevelAvailible);
 		this.stats = stats;
 		this.subLevel2 = subLevel2;
 				
-		
-		this.messageLabel = new FinishDialogLabel(createResultString());
-		this.messageLabel.setPosition( Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X  - messageLabel.getWidth() / 2, Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y - messageLabel.getHeight() / 2);
-		this.stage.addActor(this.messageLabel);
+		createLabels();
+//		this.messageLabel = new FinishDialogLabel(createResultString());
+//		this.messageLabel.setPosition( Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X  - messageLabel.getWidth() / 2, Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y - messageLabel.getHeight() / 2);
+//		this.stage.addActor(this.messageLabel);
 		
 		drawStars(stats.getNumberOfStars(), Constants.dialog.COMPLETE_DIALOG_STAR_POSITION_X, Constants.dialog.COMPLETE_DIALOG_STAR_POSITION_Y);
 	}	
 	
+
+
 	private void drawStars(byte stars, int x, int y) {
 		byte j = 0;
 		for (; j < stars; ++j) {
@@ -77,6 +79,42 @@ public class CompleteLevelDialog extends DecisionDialog {
 		str.append('\n');
 		
 		return str.toString();
+	}
+	
+	private void createLabels() {
+		FinishDialogLabel[][] labels = new FinishDialogLabel[6][2];
+
+		// TODO Auto-generated method stub		
+		labels[0][0] = new FinishDialogLabel("Difficulty:");
+		labels[0][1] = new FinishDialogLabel(stats.getDifficulty().toString());
+		
+		labels[1][0] = new FinishDialogLabel("Succeeded collisions:");
+		labels[1][1] = new FinishDialogLabel(String.valueOf(stats.getSucceeded()));
+		
+		labels[2][0] = new FinishDialogLabel("Failed collisions:");
+		labels[2][1] = new FinishDialogLabel(String.valueOf(stats.getFailed()));
+		
+		DecimalFormat decimalFormat = new DecimalFormat("0.#");
+		labels[3][0] = new FinishDialogLabel("Time in first part:");
+		labels[3][1] = new FinishDialogLabel(decimalFormat.format(stats.getPhase1ElapsedTime()) + '/' + decimalFormat.format(stats.getPhase1TimeLimit()));
+				
+		labels[4][0] = new FinishDialogLabel("Time in second part:");
+		labels[4][1] = new FinishDialogLabel(decimalFormat.format(stats.getPhase2ElapsedTime()));
+
+		labels[5][0] = new FinishDialogLabel("Score:");
+		labels[5][1] = new FinishDialogLabel(Integer.toString(stats.getScoreFromTime()));
+		
+		FinishDialogLabel foo = new FinishDialogLabel(Integer.toString(stats.getScoreFromTime()));
+		System.out.println(foo.getWidth());
+		
+		for (int row = 0; row < labels.length; row++) {
+			labels[row][0].setPosition( Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X  - Constants.dialog.COMPLETE_DIALOG_MESSAGE_WIDTH / 2, Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y + Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT / 2 - Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT / labels.length * row);
+			this.stage.addActor(labels[row][0]);
+			
+			labels[row][1].setPosition( Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X  + Constants.dialog.COMPLETE_DIALOG_MESSAGE_WIDTH / 2 - labels[row][1].getWidth(), Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y + Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT / 2 - Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT / labels.length * row);
+			this.stage.addActor(labels[row][1]);						
+		}
+		
 	}
 	
 	

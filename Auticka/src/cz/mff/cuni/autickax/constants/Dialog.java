@@ -40,7 +40,9 @@ public final class Dialog {
 	public final float DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_Y = 110;
 
 	public final float COMPLETE_DIALOG_MESSAGE_POSITION_X = 360;
-	public final float COMPLETE_DIALOG_MESSAGE_POSITION_Y = 270;
+	public final float COMPLETE_DIALOG_MESSAGE_POSITION_Y = 230;
+	public final float COMPLETE_DIALOG_MESSAGE_WIDTH = 450;
+	public final float COMPLETE_DIALOG_MESSAGE_HEIGHT = 250;
 	public final String COMPLETE_DIALOG_STAR_FILLED_TEXTURE = "endOfLevelFullStar";
 	public final String COMPLETE_DIALOG_STAR_EMPTY_TEXTURE = "endOfLevelEmptyStar";
 	public final int COMPLETE_DIALOG_STAR_POSITION_X = 600;
