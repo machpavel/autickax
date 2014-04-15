@@ -22,10 +22,7 @@ public class CompleteLevelDialog extends DecisionDialog {
 		this.subLevel2 = subLevel2;
 				
 		createLabels();
-//		this.messageLabel = new FinishDialogLabel(createResultString());
-//		this.messageLabel.setPosition( Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X  - messageLabel.getWidth() / 2, Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y - messageLabel.getHeight() / 2);
-//		this.stage.addActor(this.messageLabel);
-		
+
 		drawStars(stats.getNumberOfStars(), Constants.dialog.COMPLETE_DIALOG_STAR_POSITION_X, Constants.dialog.COMPLETE_DIALOG_STAR_POSITION_Y);
 	}	
 	
@@ -49,38 +46,7 @@ public class CompleteLevelDialog extends DecisionDialog {
 		gainedStar.setPosition(x * Input.xStretchFactor , (y + j * offset) * Input.yStretchFactor);
 		stage.addActor(gainedStar);
 	}
-	
-	private String createResultString(){
-		StringBuilder str = new StringBuilder();
-		str.append("Difficulty:                ");
-		str.append(stats.getDifficulty());
-		str.append('\n');
-							
-		str.append("Succeeded collisions:       ");
-		str.append(String.valueOf(stats.getSucceeded()));
-		str.append('\n');
-		str.append("Failed collisions:                ");		
-		str.append(String.valueOf(stats.getFailed()));
-		str.append('\n');
 		
-		DecimalFormat decimalFormat = new DecimalFormat("0.##");
-		str.append("Time in first part:     ");
-		str.append(decimalFormat.format(stats.getPhase1ElapsedTime()));
-		str.append('/');
-		str.append(decimalFormat.format(stats.getPhase1TimeLimit()));
-		str.append('\n');
-						
-		str.append("Time in second part:     ");
-		str.append(decimalFormat.format(stats.getPhase2ElapsedTime()));
-		str.append('\n');
-		
-		str.append("Score:                        ");
-		str.append(stats.getScoreFromTime());
-		str.append('\n');
-		
-		return str.toString();
-	}
-	
 	private void createLabels() {
 		FinishDialogLabel[][] labels = new FinishDialogLabel[6][2];
 
