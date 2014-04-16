@@ -40,9 +40,4 @@ public class BoostMinigameButton extends Button {
 		return super.getPrefWidth() * Input.xStretchFactorInv;
 	}
 
-	@Override
-	public void setPosition(float x, float y) {
-		super.setPosition(x * Input.xStretchFactorInv, y
-				* Input.yStretchFactorInv);
-	}	
 }
