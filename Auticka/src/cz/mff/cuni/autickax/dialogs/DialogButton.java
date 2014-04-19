@@ -35,7 +35,7 @@ public abstract class DialogButton extends Button {
 	
 	@Override
 	public void setPosition(float x, float y) {
-		super.setPosition(x , y );
+		super.setPosition(x * Input.xStretchFactorInv, y * Input.xStretchFactorInv);
 	}
 	
 	public abstract void action();

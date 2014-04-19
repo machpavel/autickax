@@ -6,7 +6,6 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.GameStatistics;
 import cz.mff.cuni.autickax.gamelogic.SubLevel2;
-import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.menu.MenuImage;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -43,7 +42,7 @@ public class CompleteLevelDialog extends DecisionDialog {
 	float offset = 80;
 	private void drawStar(int x, int y, byte j, String textureName) {
 		MenuImage gainedStar = new MenuImage(Autickax.getInstance().assets.getGraphics(textureName));
-		gainedStar.setPosition(x * Input.xStretchFactor , (y + j * offset) * Input.yStretchFactor);
+		gainedStar.setPosition(x, (y + j * offset));
 		stage.addActor(gainedStar);
 	}
 		
