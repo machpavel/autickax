@@ -1,4 +1,4 @@
-package cz.mff.cuni.autickax.menu;
+package cz.mff.cuni.autickax.screenObjects;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.input.Input;
 
-public class MenuTextButtonStyle extends TextButtonStyle {
-	MenuTextButtonStyle(TextureRegion image, TextureRegion imageHover, TextureRegion disabled, BitmapFont font) {
+public class ScreenAdaptiveButtonStyle extends TextButtonStyle {
+	ScreenAdaptiveButtonStyle(TextureRegion image, TextureRegion imageHover, TextureRegion disabled, BitmapFont font) {
 		this.up = new TextureRegionDrawable(image);
 		this.over = new TextureRegionDrawable(imageHover);
 		this.down = new TextureRegionDrawable(imageHover);
@@ -22,7 +22,7 @@ public class MenuTextButtonStyle extends TextButtonStyle {
 		this.font.setScale(Input.xStretchFactorInv, Input.yStretchFactorInv);
 	}
 	
-	MenuTextButtonStyle(TextureRegion image, TextureRegion imageHover) {
+	ScreenAdaptiveButtonStyle(TextureRegion image, TextureRegion imageHover) {
 		this(image, imageHover, null, Autickax.getInstance().assets.getMenuFont());
 	}
 }

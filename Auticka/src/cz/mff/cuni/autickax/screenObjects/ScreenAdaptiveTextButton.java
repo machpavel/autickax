@@ -1,4 +1,4 @@
-package cz.mff.cuni.autickax.menu;
+package cz.mff.cuni.autickax.screenObjects;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,11 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.input.Input;
 
-public abstract class MenuTextButton extends TextButton {
+public abstract class ScreenAdaptiveTextButton extends TextButton {
 	
 	private final String text;
 	
-	public MenuTextButton (
+	public ScreenAdaptiveTextButton (
 			String text,
 			TextureRegion image,
 			TextureRegion imageHover,
@@ -21,7 +21,7 @@ public abstract class MenuTextButton extends TextButton {
 			BitmapFont font,
 			boolean hasListener
 		) {
-		super(text, new MenuTextButtonStyle(image, imageHover, disabled, font));
+		super(text, new ScreenAdaptiveButtonStyle(image, imageHover, disabled, font));
 		
 		this.text = text;
 		
@@ -40,7 +40,7 @@ public abstract class MenuTextButton extends TextButton {
 		}
 	}
 	
-	public MenuTextButton (
+	public ScreenAdaptiveTextButton (
 			String text,
 			TextureRegion image,
 			TextureRegion imageHover,
@@ -50,15 +50,15 @@ public abstract class MenuTextButton extends TextButton {
 		this(text, image, imageHover, disabled, font, true);
 	}
 	
-	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover, TextureRegion disabled) {
+	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover, TextureRegion disabled) {
 		this(text, image, imageHover, disabled, Autickax.getInstance().assets.getMenuFont(), true);
 	}
 	
-	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover, BitmapFont font) {
+	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover, BitmapFont font) {
 		this(text, image, imageHover, null, font, true);
 	}
 	
-	public MenuTextButton(String text, TextureRegion image, TextureRegion imageHover) {
+	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover) {
 		this(text, image, imageHover, null, Autickax.getInstance().assets.getMenuFont(), true);
 	}
 	

@@ -6,6 +6,7 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.scene.GameScreen;
+import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveButton;
 
 public class MessageDialog extends Dialog {
 
@@ -14,7 +15,7 @@ public class MessageDialog extends Dialog {
 	public MessageDialog(GameScreen gameScreen, SubLevel subLevel,
 			String message) {
 		super(gameScreen, subLevel, message);
-		buttonOk = new DialogButton(
+		buttonOk = new ScreenAdaptiveButton(
 				Autickax.getInstance().assets
 						.getGraphics(Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_TEXTURE),
 				Autickax.getInstance().assets

@@ -1,4 +1,4 @@
-package cz.mff.cuni.autickax.menu;
+package cz.mff.cuni.autickax.screenObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 import cz.mff.cuni.autickax.input.Input;
 
-public abstract class MenuButton extends Button {
+public abstract class ScreenAdaptiveButton extends Button {
 	
-	public MenuButton(TextureRegion image, TextureRegion imageHover) {
-		super(new MenuButtonStyle(image, imageHover));
+	public ScreenAdaptiveButton(TextureRegion image, TextureRegion imageHover) {
+		super(new ScreenAdaptiveButtonStyle(image, imageHover));
 		
 		this.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
@@ -26,7 +26,7 @@ public abstract class MenuButton extends Button {
 	}
 	
 	public void setStyle(TextureRegion image, TextureRegion imageHover) {
-		this.setStyle(new MenuButtonStyle(image, imageHover));
+		this.setStyle(new ScreenAdaptiveButtonStyle(image, imageHover));
 	}
 	
 	@Override

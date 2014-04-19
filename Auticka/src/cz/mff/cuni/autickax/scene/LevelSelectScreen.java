@@ -10,7 +10,7 @@ import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.LevelLoading;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.menu.MenuTextButton;
+import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveTextButton;
 
 public class LevelSelectScreen extends BaseScreen {
 	
@@ -67,7 +67,7 @@ public class LevelSelectScreen extends BaseScreen {
 				}
 			}
 			
-			MenuTextButton levelButton = new MenuTextButton (
+			ScreenAdaptiveTextButton levelButton = new ScreenAdaptiveTextButton (
 				Integer.toString(i),
 				getGame().assets.getGraphics(buttonTexture),
 				getGame().assets.getGraphics(buttonTextureHover),

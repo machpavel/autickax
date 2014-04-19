@@ -3,14 +3,14 @@ package cz.mff.cuni.autickax.dialogs;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.menu.MenuButton;
 import cz.mff.cuni.autickax.scene.GameScreen;
+import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveButton;
 
 public class PauseDialog extends DecisionDialog {
 
-	private MenuButton buttonTooltips;
-	private MenuButton buttonSounds;
-	private MenuButton buttonMusic;
+	private ScreenAdaptiveButton buttonTooltips;
+	private ScreenAdaptiveButton buttonSounds;
+	private ScreenAdaptiveButton buttonMusic;
 
 	public PauseDialog(GameScreen gameScreen, SubLevel subLevel) {
 		super(gameScreen, subLevel, Constants.strings.GAME_PAUSED, true);
@@ -21,7 +21,7 @@ public class PauseDialog extends DecisionDialog {
 		String tooltipsHoverTexture = Autickax.settings.showTooltips ? Constants.menu.BUTTON_MENU_TOOLTIPS_ON_HOVER
 				: Constants.menu.BUTTON_MENU_TOOLTIPS_OFF_HOVER;
 
-		this.buttonTooltips = new MenuButton(
+		this.buttonTooltips = new ScreenAdaptiveButton(
 				Autickax.getInstance().assets.getGraphics(tooltipsTexture),
 				Autickax.getInstance().assets.getGraphics(tooltipsHoverTexture)) {
 			@Override
@@ -58,7 +58,7 @@ public class PauseDialog extends DecisionDialog {
 		String soundsHoverTexture = Autickax.settings.playSounds ? Constants.menu.BUTTON_MENU_SOUNDS_ON_HOVER
 				: Constants.menu.BUTTON_MENU_SOUNDS_OFF_HOVER;
 
-		this.buttonSounds = new MenuButton(
+		this.buttonSounds = new ScreenAdaptiveButton(
 				Autickax.getInstance().assets.getGraphics(soundsTexture),
 				Autickax.getInstance().assets.getGraphics(soundsHoverTexture)) {
 			@Override
@@ -95,7 +95,7 @@ public class PauseDialog extends DecisionDialog {
 		String musicHoverTexture = Autickax.settings.playMusic ? Constants.menu.BUTTON_MENU_MUSIC_ON_HOVER
 				: Constants.menu.BUTTON_MENU_MUSIC_OFF_HOVER;
 
-		this.buttonMusic = new MenuButton(
+		this.buttonMusic = new ScreenAdaptiveButton(
 				Autickax.getInstance().assets.getGraphics(musicTexture),
 				Autickax.getInstance().assets.getGraphics(musicHoverTexture)) {
 			@Override

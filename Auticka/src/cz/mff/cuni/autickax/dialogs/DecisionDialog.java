@@ -6,12 +6,13 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.scene.GameScreen;
+import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveButton;
 
 public class DecisionDialog extends Dialog {
 
 	protected Button buttonContinue;
 	protected Button buttonRestart;
-	protected DialogButton buttonGoToMainMenu;
+	protected ScreenAdaptiveButton buttonGoToMainMenu;
 	protected DecisionType decision;
 
 	public DecisionDialog(GameScreen gameScreen, SubLevel subLevel,
@@ -24,7 +25,7 @@ public class DecisionDialog extends Dialog {
 	}
 
 	protected void CreateButtonContinue() {
-		buttonContinue = new DialogButton(
+		buttonContinue = new ScreenAdaptiveButton(
 				Autickax.getInstance().assets
 						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_TEXTURE),
 				Autickax.getInstance().assets
@@ -48,7 +49,7 @@ public class DecisionDialog extends Dialog {
 	}
 
 	private void CreateButtonRestart() {
-		buttonRestart = new DialogButton(
+		buttonRestart = new ScreenAdaptiveButton(
 				Autickax.getInstance().assets
 						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_RESTART_TEXTURE),
 				Autickax.getInstance().assets
@@ -72,7 +73,7 @@ public class DecisionDialog extends Dialog {
 	}
 
 	private void CreateCuttonGoToMainMenu() {
-		buttonGoToMainMenu = new DialogButton(
+		buttonGoToMainMenu = new ScreenAdaptiveButton(
 				Autickax.getInstance().assets
 						.getGraphics(Constants.dialog.DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_TEXTURE),
 				Autickax.getInstance().assets

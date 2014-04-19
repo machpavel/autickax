@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.menu.MenuTextButton;
+import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveTextButton;
 
 public class DifficultySelectScreen extends BaseScreen {
 
@@ -26,7 +26,7 @@ public class DifficultySelectScreen extends BaseScreen {
 									// constructor
 		
 		// Beginner Button-----------------------------------------------------
-		this.buttonBeginner = new MenuTextButton (
+		this.buttonBeginner = new ScreenAdaptiveTextButton (
 			"EASY",
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY),
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY_HOVER)
@@ -47,7 +47,7 @@ public class DifficultySelectScreen extends BaseScreen {
 		stage.addActor(this.buttonBeginner);
 		
 		// Normal Button-----------------------------------------------------
-		this.buttonNormal = new MenuTextButton (
+		this.buttonNormal = new ScreenAdaptiveTextButton (
 			"MEDIUM",
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY),
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY_HOVER)
@@ -68,7 +68,7 @@ public class DifficultySelectScreen extends BaseScreen {
 		stage.addActor(this.buttonNormal);
 		
 		// Hard Button-----------------------------------------------------
-		this.buttonHard = new MenuTextButton (
+		this.buttonHard = new ScreenAdaptiveTextButton (
 			"HARD",
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY),
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY_HOVER)

@@ -8,18 +8,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 //import cz.mff.cuni.autickax.menu.MenuAnimator;
-import cz.mff.cuni.autickax.menu.MenuButton;
+import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveButton;
 
 /*
  * This is the "Main menu" screen in the game, only contains a play button
  */
 public class MainMenuScreen extends BaseScreen {
 
-	private MenuButton buttonPlay;
-	private MenuButton buttonExit;
-	private MenuButton buttonTooltips;
-	private MenuButton buttonSounds;
-	private MenuButton buttonMusic;
+	private ScreenAdaptiveButton buttonPlay;
+	private ScreenAdaptiveButton buttonExit;
+	private ScreenAdaptiveButton buttonTooltips;
+	private ScreenAdaptiveButton buttonSounds;
+	private ScreenAdaptiveButton buttonMusic;
 
 	public MainMenuScreen() {
 		super();
@@ -33,7 +33,7 @@ public class MainMenuScreen extends BaseScreen {
 									// constructor
 
 		// Play Button-----------------------------------------------------
-		this.buttonPlay = new MenuButton (
+		this.buttonPlay = new ScreenAdaptiveButton (
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_PLAY),
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_PLAY_HOVER)
 		)
@@ -53,7 +53,7 @@ public class MainMenuScreen extends BaseScreen {
 		stage.addActor(this.buttonPlay);
 		
 		// Exit Button-----------------------------------------------------
-		this.buttonExit = new MenuButton (
+		this.buttonExit = new ScreenAdaptiveButton (
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_EXIT),
 			getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_EXIT_HOVER)
 		)
@@ -72,7 +72,7 @@ public class MainMenuScreen extends BaseScreen {
 		String tooltipsHoverTexture = Autickax.settings.showTooltips ?
 				Constants.menu.BUTTON_MENU_TOOLTIPS_ON_HOVER : Constants.menu.BUTTON_MENU_TOOLTIPS_OFF_HOVER;
 		
-		this.buttonTooltips = new MenuButton (
+		this.buttonTooltips = new ScreenAdaptiveButton (
 			getGame().assets.getGraphics(tooltipsTexture),
 			getGame().assets.getGraphics(tooltipsHoverTexture)
 		)
@@ -105,7 +105,7 @@ public class MainMenuScreen extends BaseScreen {
 		String soundsHoverTexture = Autickax.settings.playSounds ?
 				Constants.menu.BUTTON_MENU_SOUNDS_ON_HOVER : Constants.menu.BUTTON_MENU_SOUNDS_OFF_HOVER;
 		
-		this.buttonSounds = new MenuButton (
+		this.buttonSounds = new ScreenAdaptiveButton (
 			getGame().assets.getGraphics(soundsTexture),
 			getGame().assets.getGraphics(soundsHoverTexture)
 		)
@@ -138,7 +138,7 @@ public class MainMenuScreen extends BaseScreen {
 		String musicHoverTexture = Autickax.settings.playMusic ?
 				Constants.menu.BUTTON_MENU_MUSIC_ON_HOVER : Constants.menu.BUTTON_MENU_MUSIC_OFF_HOVER;
 		
-		this.buttonMusic = new MenuButton (
+		this.buttonMusic = new ScreenAdaptiveButton (
 			getGame().assets.getGraphics(musicTexture),
 			getGame().assets.getGraphics(musicHoverTexture)
 		)

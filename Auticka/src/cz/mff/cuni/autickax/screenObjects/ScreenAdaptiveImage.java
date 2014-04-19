@@ -1,17 +1,15 @@
-package cz.mff.cuni.autickax.dialogs;
+package cz.mff.cuni.autickax.screenObjects;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.input.Input;
 
-public class DialogLabel extends Label {
+public class ScreenAdaptiveImage extends Image {
 	
-	public DialogLabel(String text) {
-		super(text, new LabelStyle(Autickax.getInstance().assets.getDialogFont(), Color.WHITE));
+	public ScreenAdaptiveImage(TextureRegion graphics) {
+		super(graphics);
 	}
-	
 	@Override
 	public float getPrefHeight() {
 		return super.getPrefHeight() * Input.yStretchFactorInv;
