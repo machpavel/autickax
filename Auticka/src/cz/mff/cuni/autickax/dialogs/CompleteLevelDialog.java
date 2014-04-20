@@ -101,11 +101,10 @@ public class CompleteLevelDialog extends DecisionDialog {
 				endCommunication();
 			}
 		};
-		buttonContinue.setPosition(
-				Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_X
-						- buttonContinue.getWidth() / 2,
-				Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_Y
-						- buttonContinue.getHeight() / 2);
+		buttonContinue.setCenterPosition(
+			Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_X,
+			Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_Y
+		);
 		this.stage.addActor(buttonContinue);
 	}
 }

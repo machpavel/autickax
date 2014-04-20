@@ -10,6 +10,7 @@ public class ScreenAdaptiveImage extends Image {
 	public ScreenAdaptiveImage(TextureRegion graphics) {
 		super(graphics);
 	}
+	
 	@Override
 	public float getPrefHeight() {
 		return super.getPrefHeight() * Input.yStretchFactorInv;
@@ -17,6 +18,21 @@ public class ScreenAdaptiveImage extends Image {
 	@Override
 	public float getPrefWidth() {
 		return super.getPrefWidth() * Input.xStretchFactorInv;
+	}
+	
+	public float getActualWidth() {
+		return super.getWidth() * Input.xStretchFactorInv;
+	}
+	
+	public float getActualHeight() {
+		return super.getHeight() * Input.yStretchFactorInv;
+	}
+	
+	public void setCenterPosition(float x, float y) {
+		super.setPosition (
+			x * Input.xStretchFactorInv - this.getActualWidth() / 2,
+			y * Input.yStretchFactorInv - this.getActualHeight() / 2
+		);
 	}
 	
 	@Override

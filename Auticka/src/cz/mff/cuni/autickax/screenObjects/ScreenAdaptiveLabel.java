@@ -8,13 +8,10 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.input.Input;
 
 public class ScreenAdaptiveLabel extends Label {
-	
-	private ScreenAdaptiveLabel(String text) {
-		super(text, new LabelStyle(Autickax.getInstance().assets.getMenuFont(), Color.WHITE));
-	}
-	
+
 	private ScreenAdaptiveLabel(String text, BitmapFont font) {
 		super(text, new LabelStyle(font, Color.WHITE));
+		this.setFontScale(Input.xStretchFactorInv, Input.yStretchFactorInv);
 	}
 	
 	static public ScreenAdaptiveLabel getDialogLabel(String text) {
@@ -29,13 +26,30 @@ public class ScreenAdaptiveLabel extends Label {
 		return new ScreenAdaptiveLabel(text, Autickax.getInstance().assets.getFinishDialogFont());
 	}
 	
-	@Override
+	/*@Override
 	public float getPrefHeight() {
 		return super.getPrefHeight() * Input.yStretchFactorInv;
 	}
 	@Override
 	public float getPrefWidth() {
 		return super.getPrefWidth() * Input.xStretchFactorInv;
+	}*/
+	
+	public float getActualWidth() {
+		return super.getWidth() * Input.xStretchFactorInv;
+	}
+	
+	public float getActualHeight() {
+		return super.getHeight() * Input.yStretchFactorInv;
+	}
+	
+	public void setCenterPosition(float x, float y) {
+		super.setPosition (
+			x * Input.xStretchFactorInv - this.getActualWidth() / 2,
+			y * Input.yStretchFactorInv - this.getHeight() / 2
+			// Strange different behavior in the axes x and y;
+			// Propably bug in the libgdx?
+		);
 	}
 	
 	@Override

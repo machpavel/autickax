@@ -1,7 +1,5 @@
 package cz.mff.cuni.autickax.dialogs;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
@@ -10,7 +8,7 @@ import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveButton;
 
 public class MessageDialog extends Dialog {
 
-	private Button buttonOk;
+	private ScreenAdaptiveButton buttonOk;
 
 	public MessageDialog(GameScreen gameScreen, SubLevel subLevel,
 			String message) {
@@ -28,11 +26,10 @@ public class MessageDialog extends Dialog {
 				endCommunication();
 			}
 		};
-		buttonOk.setPosition(
-				Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_POSITION_X
-						- buttonOk.getWidth() / 2,
-				Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_POSITION_Y
-						- buttonOk.getHeight() / 2);
+		buttonOk.setCenterPosition(
+			Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_POSITION_X,
+			Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_POSITION_Y
+		);
 		this.stage.addActor(buttonOk);
 	}
 
