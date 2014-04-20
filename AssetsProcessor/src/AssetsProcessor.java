@@ -12,7 +12,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class Main {
+public class AssetsProcessor {
 
 	private static final String ASSETS_PATH = "../Assets/";
 	private static final String ASSETS_IMAGES_PATH = ASSETS_PATH + "images";
