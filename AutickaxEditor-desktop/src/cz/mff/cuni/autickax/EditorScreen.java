@@ -10,9 +10,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -25,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlWriter;
 
+import cz.cuni.mff.autickax.colorDrawable.ColorDrawable;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.drawing.LevelBackground;
 import cz.mff.cuni.autickax.entities.Booster;
@@ -53,6 +56,8 @@ public final class EditorScreen extends BaseScreenEditor {
 	private static final float TIME_LIMIT = 10;
 	protected static final int FINISH_TYPE = 2;
 	protected static final int START_TYPE = 4;
+	
+	private final TextButtonStyle textButtonStyle;
 
 
 	// Rendering
@@ -83,10 +88,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	private boolean anyButtonTouched = false;
 	ArrayList<Button> gameObjectsButtons = new ArrayList<Button>();
 	
-	public Difficulty difficulty = Difficulty.Normal;  
-
-	// Texture region for buttons
-	TextureRegionDrawable trbGreenPixel;
+	public Difficulty difficulty = Difficulty.Normal;
 
 	// Variables for dragging new object values
 	public boolean objectIsDragging = false;
@@ -104,7 +106,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	public EditorScreen() {
 		super();
-
+				
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 
@@ -112,8 +114,12 @@ public final class EditorScreen extends BaseScreenEditor {
 		shapeRenderer = new ShapeRenderer();
 
 		this.font = game.assets.getFont();
-		trbGreenPixel = new TextureRegionDrawable(
-				game.assets.getGraphics("greenpixel"));
+		
+		
+		Sprite backgroundColor = new Sprite();
+		backgroundColor.setColor(Color.GREEN);
+		ColorDrawable textButtonBackground = new ColorDrawable(Color.GREEN);
+		this.textButtonStyle = new TextButtonStyle(textButtonBackground, textButtonBackground, textButtonBackground, this.font);
 
 		restart();
 	}
@@ -337,8 +343,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	public void createGenerateButton() {
-		buttonGeneratePoints = new TextButton("Generate", new TextButtonStyle(
-				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		buttonGeneratePoints = new TextButton("Generate", this.textButtonStyle);
 		buttonGeneratePoints.setPosition(Constants.WORLD_WIDTH, 0);
 		stage.addActor(buttonGeneratePoints);
 
@@ -378,8 +383,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	public void createRestartButton() {
-		buttonRestart = new TextButton("Restart", new TextButtonStyle(
-				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		buttonRestart = new TextButton("Restart", this.textButtonStyle);
 		buttonRestart.setPosition(Constants.WORLD_WIDTH,
 				buttonGeneratePoints.getY() + buttonGeneratePoints.getHeight());
 		stage.addActor(buttonRestart);
@@ -406,8 +410,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		return true;
 	}
 	public void createSaveButton() {
-		buttonSave = new TextButton("Save", new TextButtonStyle(trbGreenPixel,
-				trbGreenPixel, trbGreenPixel, font));
+		buttonSave = new TextButton("Save", this.textButtonStyle);
 		buttonSave.setPosition(Constants.WORLD_WIDTH, buttonRestart.getY()
 				+ buttonRestart.getHeight());
 		stage.addActor(buttonSave);
@@ -556,8 +559,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	public void createDifficultyButtons() {
 		int BUTTONS_OFFSET = 10;		
-		Button buttonDif1 = new TextButton("1", new TextButtonStyle(
-				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		Button buttonDif1 = new TextButton("1", this.textButtonStyle);
 		buttonDif1.setPosition(Constants.WORLD_WIDTH + BUTTONS_OFFSET,
 				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
 		stage.addActor(buttonDif1);
@@ -569,8 +571,7 @@ public final class EditorScreen extends BaseScreenEditor {
 				difficulty = Difficulty.Kiddie;
 			}
 		});
-		Button buttonDif2 = new TextButton("2", new TextButtonStyle(
-				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		Button buttonDif2 = new TextButton("2", this.textButtonStyle);
 		buttonDif2.setPosition(buttonDif1.getX() + buttonDif1.getWidth() + BUTTONS_OFFSET,
 				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
 		stage.addActor(buttonDif2);
@@ -582,8 +583,7 @@ public final class EditorScreen extends BaseScreenEditor {
 				difficulty = Difficulty.Beginner;
 			}
 		});
-		Button buttonDif3 = new TextButton("3", new TextButtonStyle(
-				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		Button buttonDif3 = new TextButton("3", this.textButtonStyle);
 		buttonDif3.setPosition(buttonDif2.getX() + buttonDif2.getWidth() + BUTTONS_OFFSET,
 				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
 		stage.addActor(buttonDif3);
@@ -596,8 +596,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			}
 		});
 
-		Button buttonDif4 = new TextButton("4", new TextButtonStyle(
-				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		Button buttonDif4 = new TextButton("4", this.textButtonStyle);
 		buttonDif4.setPosition(buttonDif3.getX() + buttonDif3.getWidth() + BUTTONS_OFFSET,
 				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
 		stage.addActor(buttonDif4);
@@ -610,8 +609,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			}
 		});
 
-		Button buttonDif5 = new TextButton("5", new TextButtonStyle(
-				trbGreenPixel, trbGreenPixel, trbGreenPixel, font));
+		Button buttonDif5 = new TextButton("5", this.textButtonStyle);
 		buttonDif5.setPosition(buttonDif4.getX() + buttonDif4.getWidth() + BUTTONS_OFFSET,
 				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
 		stage.addActor(buttonDif5);
