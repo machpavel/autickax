@@ -1,24 +1,27 @@
 package cz.mff.cuni.autickax.pathway;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.pathway.Splines.TypeOfInterpolation;
 
 /**
  * @author Shabby
  * Main class for representing a pathway.
  */
-public class Pathway implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
+public class Pathway implements java.io.Externalizable {
 	
 	private DistanceMap distanceMap;
 	private ArrayList<Vector2> controlPoints;
 	private PathwayType pathwayType;
 	private Splines.TypeOfInterpolation typeOfInterpolation;
 	
-	public enum PathwayType implements java.io.Serializable {
+	public enum PathwayType {
 		CLOSED, OPENED;
 	}
 		
@@ -96,6 +99,21 @@ public class Pathway implements java.io.Serializable {
 			this.typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_SPLINE;
 		else 
 			throw new Exception("Unknown type of interpolation");
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		this.controlPoints = (ArrayList<Vector2>) in.readObject();
+		this.pathwayType = (PathwayType) in.readObject();
+		this.typeOfInterpolation = (TypeOfInterpolation) in.readObject();
+		
+	}
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(this.controlPoints);
+		out.writeObject(this.pathwayType);
+		out.writeObject(this.typeOfInterpolation);		
 	}
 	
 	

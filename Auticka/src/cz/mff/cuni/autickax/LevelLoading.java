@@ -1,6 +1,8 @@
 package cz.mff.cuni.autickax;
 
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.files.FileHandle;
@@ -20,11 +22,11 @@ import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public class LevelLoading implements java.io.Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class LevelLoading implements java.io.Externalizable {
 	
-	private Pathway pathway = new Pathway();
+	private static final byte MAGIC_LEVEL_END = (byte) 255;
+	
+	private Pathway pathway;
 	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
 	private Car car;
 	private int backgroundType;
@@ -73,6 +75,7 @@ public class LevelLoading implements java.io.Serializable {
 		Element root = new XmlReader().parse(file);			
 		
 		// Loading pathway
+		this.pathway = new Pathway();
 		Element pathwayElement = root.getChildByName("pathway");
 		pathway.setType(pathwayElement.getAttribute("pathwayType"));
 		pathway.setTypeOfInterpolation(pathwayElement.getAttribute("typeOfInterpolation"));
@@ -84,9 +87,6 @@ public class LevelLoading implements java.io.Serializable {
 			Vector2 controlPointPosition = new Vector2(controlPoint.getFloat("X"), controlPoint.getFloat("Y"));
 			this.pathway.getControlPoints().add(controlPointPosition);			
 		}			
-//		for (Vector2 point : this.pathway.getControlPoints()) {
-//			System.out.println("point " + point);
-//		}
 		
 				
 		// Loading game objects
@@ -111,24 +111,18 @@ public class LevelLoading implements java.io.Serializable {
 			}
 			else throw new IOException("Loading object failed: Unknown type");
 		}
-//		for (GameObject gameObject : gameObjects) {
-//			System.out.println(gameObject.toString());
-//		}
 		
 		// Loading car
 		Element car = root.getChildByName("car");
 		this.car = new Car(car.getFloat("X"), car.getFloat("Y"), gameScreen, car.getInt("type", 1));
-		//System.out.println(car.toString());
 		
 		//Loading start
 		Element start = root.getChildByName("start");
 		this.start = new Start(start.getFloat("X"), start.getFloat("Y"), gameScreen, start.getInt("type", 1));
-		//System.out.println(start.toString());
 		
 		//Loading finish
 		Element finish = root.getChildByName("finish");
 		this.finish = new Finish(finish.getFloat("X"), finish.getFloat("Y"), gameScreen, finish.getInt("type", 1));
-		//System.out.println(finish.toString());
 				
 		
 		// Background
@@ -159,5 +153,42 @@ public class LevelLoading implements java.io.Serializable {
 		this.car.setTexture();
 		this.start.setTexture();
 		this.finish.setTexture();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		
+		this.pathway = (Pathway)in.readObject();
+		
+		this.gameObjects = (ArrayList<GameObject>) in.readObject();
+		
+		this.car = (Car) in.readObject();
+		this.backgroundType = in.readInt();
+		this.start = (Start)in.readObject();
+		this.finish = (Finish)in.readObject();
+		this.pathwayTextureType = in.readInt();
+		this.timeLimit = in.readFloat();
+		
+		byte check = in.readByte();
+		assert(check == LevelLoading.MAGIC_LEVEL_END);
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		
+		out.writeObject(this.pathway);
+		
+		out.writeObject(this.gameObjects);
+		
+		out.writeObject(this.car);
+		out.writeInt(this.backgroundType);
+		out.writeObject(this.start);
+		out.writeObject(this.finish);
+		out.writeInt(this.pathwayTextureType);
+		out.writeFloat(this.timeLimit);
+		
+		out.writeByte(LevelLoading.MAGIC_LEVEL_END);
 	}
 }

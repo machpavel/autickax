@@ -1,7 +1,6 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,14 +16,17 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Car extends GameObject implements Serializable {
-	private static final long serialVersionUID = 1L;
+public final class Car extends GameObject {
 	
 	private boolean isDragged = false;
 	private TextureRegion[] positionTextures;	
 	private Vector2 lastCarPosition;
 	private Vector2 shift;
 	private float lastRotationDistance = 0;
+	
+	/** Parameterless constructor for the externalization */
+	public Car() {
+	}
 
 	public Car(float x, float y, GameScreen gameScreen, int type) {
 		super(x, y, gameScreen, type);

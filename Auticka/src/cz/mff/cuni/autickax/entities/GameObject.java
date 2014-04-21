@@ -1,7 +1,9 @@
 package cz.mff.cuni.autickax.entities;
 
+import java.io.Externalizable;
 import java.io.IOException;
-import java.io.Serializable;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,12 +20,10 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 /**
  * Base class for all game entities
  */
-abstract public class GameObject implements Serializable {
+abstract public class GameObject implements Externalizable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final byte MAGIC_GAME_OBJECT_END = 127;
+	
 	/** Position of the center of GameObject. */
 	protected Vector2 position;
 	private int width;
@@ -40,6 +40,7 @@ abstract public class GameObject implements Serializable {
 	protected boolean isActive = true;
 	
 	protected transient boolean canBeDragged = false;
+	
 	public boolean canBeDragged() {
 		return this.canBeDragged;
 	}
@@ -48,6 +49,11 @@ abstract public class GameObject implements Serializable {
 		this.canBeDragged = canBeDragged;
 	}
 	protected transient boolean isDragged = false;
+	
+	/** Parameterless constructor for the externalization */
+	public GameObject() {
+		
+	}
 
 	public GameObject(float startX, float startY, GameScreen gameScreen, int type) {
 		this.position = new Vector2(startX, startY);
@@ -279,5 +285,32 @@ abstract public class GameObject implements Serializable {
 
 	protected void setHeight(int height) {
 		this.height = height;
+	}
+	
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		this.position = (Vector2) in.readObject();
+		this.width = in.readInt();
+		this.height = in.readInt();
+		this.rotation = in.readFloat();
+		this.scale = (Vector2) in.readObject();
+		this.boundingCircleRadius = in.readFloat();
+		this.type = in.readInt();
+		
+		byte check = in.readByte();
+		assert (check == GameObject.MAGIC_GAME_OBJECT_END);
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(this.position);
+		out.writeInt(this.width);
+		out.writeInt(this.height);
+		out.writeFloat(this.rotation);
+		out.writeObject(this.scale);
+		out.writeFloat(this.boundingCircleRadius);
+		out.writeInt(this.type);
+		out.writeByte(GameObject.MAGIC_GAME_OBJECT_END);
 	}
 }

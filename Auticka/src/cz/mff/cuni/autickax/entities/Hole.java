@@ -1,7 +1,7 @@
 package cz.mff.cuni.autickax.entities;
 
+import java.io.Externalizable;
 import java.io.IOException;
-import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -12,8 +12,7 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame.ObstaclesType;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Hole extends GameObject implements Serializable {
-	private static final long serialVersionUID = 1L;
+public final class Hole extends GameObject implements Externalizable {
 
 	public Hole(float x, float y, GameScreen gameScreen, int type) {	
 		super(x,y,gameScreen, type);
@@ -21,6 +20,10 @@ public final class Hole extends GameObject implements Serializable {
 
 	public Hole(GameObject object){
 		super(object);		
+	}
+	
+	/** Parameterless constructor for the externalization */
+	public Hole() {
 	}
 	
 	

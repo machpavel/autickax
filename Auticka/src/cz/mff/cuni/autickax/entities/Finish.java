@@ -1,7 +1,9 @@
 package cz.mff.cuni.autickax.entities;
 
+import java.io.Externalizable;
 import java.io.IOException;
-import java.io.Serializable;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -13,8 +15,7 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public class Finish extends GameObject implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Finish extends GameObject implements Externalizable {
 	
 	Vector2 shift = new Vector2(0, 0);
 	
@@ -22,6 +23,10 @@ public class Finish extends GameObject implements Serializable {
 		super(x,y,gameScreen, type);
 		super.type = type;
 		this.boundingCircleRadius = Constants.gameObjects.FINISH_BOUNDING_RADIUS;
+	}
+	
+	/** Parameterless constructor for the externalization */
+	public Finish() {
 	}
 
 	
@@ -97,4 +102,19 @@ public class Finish extends GameObject implements Serializable {
 		return this.boundingCircleRadius;
 	}
 
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		super.readExternal(in);
+		
+		this.shift = (Vector2) in.readObject();
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		super.writeExternal(out);
+		
+		out.writeObject(this.shift);
+	}
 }
