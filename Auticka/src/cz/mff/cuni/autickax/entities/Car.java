@@ -12,6 +12,7 @@ import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 
+import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -32,6 +33,10 @@ public final class Car extends GameObject {
 		super(x, y, type);
 		this.shift = Vector2.Zero;
 		this.lastCarPosition = new Vector2(x, y);		
+	}
+	
+	public static Car parseCar(Element car) {
+		return new Car(car.getFloat("X"), car.getFloat("Y"), car.getInt("type", 1));
 	}
 	
 

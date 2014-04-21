@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -72,6 +73,32 @@ abstract public class GameObject implements Externalizable {
 		this.setTexture(object.getTexture());
 		this.gameScreen = object.gameScreen;
 		this.type = object.type;
+	}
+
+	public static GameObject parseGameObject(Element gameObject) throws IOException {
+		GameObject retval;
+		
+		String objectName = gameObject.getName();
+		if (objectName.equals("mud")){
+			retval = new Mud(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("stone")){
+			retval = new Stone(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("tree")){
+			retval = new Tree(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("hole")){
+			retval = new Hole(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("booster")){
+			retval = new Booster(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else { 
+			throw new IOException("Loading object failed: Unknown type");
+		}
+		
+		return retval; 
 	}
 	
 	public void reset(){

@@ -6,19 +6,13 @@ import java.io.ObjectOutput;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
-import cz.mff.cuni.autickax.entities.Booster;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
-import cz.mff.cuni.autickax.entities.Hole;
 import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.GameObject;
-import cz.mff.cuni.autickax.entities.Mud;
-import cz.mff.cuni.autickax.entities.Stone;
-import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -27,12 +21,11 @@ public class LevelLoading implements java.io.Externalizable {
 	private static final byte MAGIC_LEVEL_END = (byte) 255;
 	
 	private Pathway pathway;
-	private ArrayList<GameObject> gameObjects = new ArrayList<GameObject>();
+	private ArrayList<GameObject> gameObjects;
 	private Car car;
 	private int backgroundType;
 	private Start start;
 	private Finish finish;
-	private int pathwayTextureType;
 	private float timeLimit;
 	
 	public Pathway getPathway() {
@@ -65,7 +58,7 @@ public class LevelLoading implements java.io.Externalizable {
 	}
 	
 	public int getPathwayTextureType() {
-		return this.pathwayTextureType;
+		return this.pathway.getTextureType();
 	}
 	
 	public void parseLevel(GameScreen gameScreen, FileHandle file) throws Exception {
@@ -74,55 +67,30 @@ public class LevelLoading implements java.io.Externalizable {
 		
 		Element root = new XmlReader().parse(file);			
 		
-		// Loading pathway
-		this.pathway = new Pathway();
-		Element pathwayElement = root.getChildByName("pathway");
-		pathway.setType(pathwayElement.getAttribute("pathwayType"));
-		pathway.setTypeOfInterpolation(pathwayElement.getAttribute("typeOfInterpolation"));
-		pathwayTextureType = pathwayElement.getInt("textureType");
-		Element controlPoints = pathwayElement.getChildByName("controlPoints");
-		int controlPointsCount = controlPoints.getChildCount(); 
-		for(int i = 0; i < controlPointsCount; i++){			
-			Element controlPoint = controlPoints.getChild(i);
-			Vector2 controlPointPosition = new Vector2(controlPoint.getFloat("X"), controlPoint.getFloat("Y"));
-			this.pathway.getControlPoints().add(controlPointPosition);			
-		}			
+		this.pathway = Pathway.parsePathway(root);			
 		
 				
 		// Loading game objects
 		Element entities = root.getChildByName("entities");
-		for(int i = 0; i < entities.getChildCount() ; i++){
+		
+		this.gameObjects = new ArrayList<GameObject>();
+		for (int i = 0; i < entities.getChildCount() ; i++) {
 			Element gameObject = entities.getChild(i);
-			String objectName = gameObject.getName(); 
-			if(objectName.equals("mud")){
-				gameObjects.add(new Mud(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameScreen, gameObject.getInt("type", 0)));
-			}
-			else if (objectName.equals("stone")){
-				gameObjects.add(new Stone(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameScreen, gameObject.getInt("type", 0)));
-			}
-			else if (objectName.equals("tree")){
-				gameObjects.add(new Tree(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameScreen, gameObject.getInt("type", 0)));
-			}
-			else if (objectName.equals("hole")){
-				gameObjects.add(new Hole(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameScreen, gameObject.getInt("type", 0)));
-			}
-			else if (objectName.equals("booster")){
-				gameObjects.add(new Booster(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameScreen, gameObject.getInt("type", 0)));
-			}
-			else throw new IOException("Loading object failed: Unknown type");
+			
+			this.gameObjects.add(GameObject.parseGameObject(gameObject));
 		}
 		
 		// Loading car
 		Element car = root.getChildByName("car");
-		this.car = new Car(car.getFloat("X"), car.getFloat("Y"), gameScreen, car.getInt("type", 1));
+		this.car = Car.parseCar(car);
 		
 		//Loading start
 		Element start = root.getChildByName("start");
-		this.start = new Start(start.getFloat("X"), start.getFloat("Y"), gameScreen, start.getInt("type", 1));
+		this.start = Start.parseStart(start);
 		
 		//Loading finish
 		Element finish = root.getChildByName("finish");
-		this.finish = new Finish(finish.getFloat("X"), finish.getFloat("Y"), gameScreen, finish.getInt("type", 1));
+		this.finish = Finish.parseFinish(finish);
 				
 		
 		// Background
@@ -168,7 +136,6 @@ public class LevelLoading implements java.io.Externalizable {
 		this.backgroundType = in.readInt();
 		this.start = (Start)in.readObject();
 		this.finish = (Finish)in.readObject();
-		this.pathwayTextureType = in.readInt();
 		this.timeLimit = in.readFloat();
 		
 		byte check = in.readByte();
@@ -186,7 +153,6 @@ public class LevelLoading implements java.io.Externalizable {
 		out.writeInt(this.backgroundType);
 		out.writeObject(this.start);
 		out.writeObject(this.finish);
-		out.writeInt(this.pathwayTextureType);
 		out.writeFloat(this.timeLimit);
 		
 		out.writeByte(LevelLoading.MAGIC_LEVEL_END);

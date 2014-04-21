@@ -7,6 +7,7 @@ import java.io.ObjectOutput;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.constants.Constants;
@@ -25,6 +26,10 @@ public class Start extends GameObject implements Externalizable {
 	
 	/** Parameterless constructor for the externalization */
 	public Start() {
+	}
+	
+	public static Start parseStart(Element start) {
+		return new Start(start.getFloat("X"), start.getFloat("Y"), start.getInt("type", 1));
 	}
 	
 	public void setShift(Vector2 shift){
