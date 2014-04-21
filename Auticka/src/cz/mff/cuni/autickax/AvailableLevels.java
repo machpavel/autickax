@@ -7,28 +7,28 @@ import java.util.Vector;
 
 public class AvailableLevels implements java.io.Externalizable {
 	
-	public Vector<LevelLoading> kiddieLevels;
-	public Vector<LevelLoading> beginnerLevels;
-	public Vector<LevelLoading> normalLevels;
-	public Vector<LevelLoading> hardLevels;
-	public Vector<LevelLoading> extremeLevels;
+	public Vector<Level> kiddieLevels;
+	public Vector<Level> beginnerLevels;
+	public Vector<Level> normalLevels;
+	public Vector<Level> hardLevels;
+	public Vector<Level> extremeLevels;
 	
 	public AvailableLevels() {
-		this.kiddieLevels = new Vector<LevelLoading>();
-		this.beginnerLevels = new Vector<LevelLoading>();
-		this.normalLevels = new Vector<LevelLoading>();
-		this.hardLevels = new Vector<LevelLoading>();
-		this.extremeLevels = new Vector<LevelLoading>();
+		this.kiddieLevels = new Vector<Level>();
+		this.beginnerLevels = new Vector<Level>();
+		this.normalLevels = new Vector<Level>();
+		this.hardLevels = new Vector<Level>();
+		this.extremeLevels = new Vector<Level>();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-		this.kiddieLevels = (Vector<LevelLoading>) in.readObject();
-		this.beginnerLevels = (Vector<LevelLoading>) in.readObject();
-		this.normalLevels = (Vector<LevelLoading>) in.readObject();
-		this.hardLevels = (Vector<LevelLoading>) in.readObject();
-		this.extremeLevels = (Vector<LevelLoading>) in.readObject();
+		this.kiddieLevels = (Vector<Level>) in.readObject();
+		this.beginnerLevels = (Vector<Level>) in.readObject();
+		this.normalLevels = (Vector<Level>) in.readObject();
+		this.hardLevels = (Vector<Level>) in.readObject();
+		this.extremeLevels = (Vector<Level>) in.readObject();
 	}
 
 	@Override

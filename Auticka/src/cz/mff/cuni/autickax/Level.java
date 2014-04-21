@@ -16,7 +16,7 @@ import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public class LevelLoading implements java.io.Externalizable {
+public class Level implements java.io.Externalizable {
 	
 	private static final byte MAGIC_LEVEL_END = (byte) 255;
 	
@@ -139,7 +139,7 @@ public class LevelLoading implements java.io.Externalizable {
 		this.timeLimit = in.readFloat();
 		
 		byte check = in.readByte();
-		assert(check == LevelLoading.MAGIC_LEVEL_END);
+		assert(check == Level.MAGIC_LEVEL_END);
 	}
 
 	@Override
@@ -155,6 +155,6 @@ public class LevelLoading implements java.io.Externalizable {
 		out.writeObject(this.finish);
 		out.writeFloat(this.timeLimit);
 		
-		out.writeByte(LevelLoading.MAGIC_LEVEL_END);
+		out.writeByte(Level.MAGIC_LEVEL_END);
 	}
 }
