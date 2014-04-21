@@ -14,8 +14,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Stone extends GameObject implements Externalizable {
 
-	public Stone(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen, type);
+	public Stone(float x, float y, int type) {	
+		super(x, y, type);
 	}
 	
 	public Stone(GameObject object){

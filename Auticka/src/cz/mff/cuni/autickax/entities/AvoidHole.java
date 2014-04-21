@@ -12,8 +12,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidHole extends GameObject implements Externalizable {
 
-	public AvoidHole(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen, type);
+	public AvoidHole(float x, float y, int type) {	
+		super(x, y, type);
 	}
 	
 	public AvoidHole(GameObject object){

@@ -51,7 +51,8 @@ public final class GearShiftMinigame extends Minigame{
 			gearFinishRandomX = MathUtils.random(2);
 			gearFinishRandomY = MathUtils.random(2);
 		} while (gearFinishRandomY == 1);				
-		this.finish = new GearShiftMinigameFinish(columns[gearFinishRandomX], rows[gearFinishRandomY], screen);
+		this.finish = new GearShiftMinigameFinish(columns[gearFinishRandomX], rows[gearFinishRandomY]);
+		this.finish.setScreen(screen);
 		
 		int gearShifterRandomX = 0;
 		int gearShifterRandomY = 0;		
@@ -59,7 +60,8 @@ public final class GearShiftMinigame extends Minigame{
 			gearShifterRandomX = MathUtils.random(2);
 			gearShifterRandomY = MathUtils.random(2);
 		} while (gearShifterRandomY == 1 || (gearShifterRandomX == gearFinishRandomX && gearShifterRandomY == gearFinishRandomY));				
-		this.gearShifter = new GearShifter(columns[gearShifterRandomX], rows[gearShifterRandomY], screen);		
+		this.gearShifter = new GearShifter(columns[gearShifterRandomX], rows[gearShifterRandomY]);
+		this.gearShifter.setScreen(screen);
 		
 	}
 

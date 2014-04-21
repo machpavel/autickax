@@ -55,15 +55,10 @@ abstract public class GameObject implements Externalizable {
 		
 	}
 
-	public GameObject(float startX, float startY, GameScreen gameScreen, int type) {
+	public GameObject(float startX, float startY, int type) {
 		this.position = new Vector2(startX, startY);
-		this.gameScreen = gameScreen;
 		this.rotation = 0;
 		this.type = type;
-		
-		if (this.gameScreen != null) { // caused by asset processor
-			this.setTexture(type);
-		}
 	}
 
 	public GameObject(GameObject object) {

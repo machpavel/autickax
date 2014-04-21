@@ -28,8 +28,8 @@ public final class Car extends GameObject {
 	public Car() {
 	}
 
-	public Car(float x, float y, GameScreen gameScreen, int type) {
-		super(x, y, gameScreen, type);
+	public Car(float x, float y, int type) {
+		super(x, y, type);
 		this.shift = Vector2.Zero;
 		this.lastCarPosition = new Vector2(x, y);		
 	}

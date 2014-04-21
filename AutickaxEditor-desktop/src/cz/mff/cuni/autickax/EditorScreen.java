@@ -67,7 +67,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	// Entities
 	private ArrayList<GameObject> gameObjects;
-	private Car car = new Car(0, 0, null, CAR_TYPE);
+	private Car car = new Car(0, 0, CAR_TYPE);
 	private Start start;
 	private Finish finish;
 
@@ -358,10 +358,11 @@ public final class EditorScreen extends BaseScreenEditor {
 				}
 				float delta = 0.01f;	
 				pathway.CreateDistances();
-				start = new Start(
-						pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).x,
-						pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).y,
-						null, START_TYPE);
+				start = new Start (
+					pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).x,
+					pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).y,
+					START_TYPE
+				);
 				start.setTexture();
 				Vector2 startTo = pathway.GetPosition(delta);
 				Vector2 startFrom = pathway.GetPosition(0);
@@ -369,10 +370,11 @@ public final class EditorScreen extends BaseScreenEditor {
 				start.setRotation((startAngle + 270) % 360);
 				
 				
-				finish = new Finish(
-						pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).x,
-						pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).y,
-						null, FINISH_TYPE);
+				finish = new Finish (
+					pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).x,
+					pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).y,
+					FINISH_TYPE
+				);
 				finish.setTexture();
 				Vector2 finishTo = pathway.GetPosition(1 - delta);
 				Vector2 finishFrom = pathway.GetPosition(1);

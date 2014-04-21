@@ -14,8 +14,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public final class Booster extends GameObject implements Externalizable {	
 	
 
-	public Booster(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen, type);
+	public Booster(float x, float y, int type) {	
+		super(x, y, type);
 	}
 
 	public Booster(GameObject object){

@@ -13,8 +13,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Tree extends GameObject implements Externalizable {
 
-	public Tree(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen, type);
+	public Tree(float x, float y, int type) {	
+		super(x, y, type);
 	}
 	
 	public Tree(GameObject object){

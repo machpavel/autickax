@@ -12,8 +12,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidStone extends GameObject implements Externalizable {
 
-	public AvoidStone(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen, type);
+	public AvoidStone(float x, float y, int type) {	
+		super(x, y, type);
 	}
 	
 	public AvoidStone(GameObject object){

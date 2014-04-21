@@ -21,8 +21,8 @@ public final class GearShifter extends GameObject implements Externalizable {
 	private boolean isDragged = false;
 	private Vector2 shift = Vector2.Zero;
 
-	public GearShifter(float x, float y, GameScreen gameScreen) {
-		super(x, y, gameScreen, 0);			
+	public GearShifter(float x, float y) {
+		super(x, y, 0);			
 	}
 	
 	public GearShifter(GameObject object){

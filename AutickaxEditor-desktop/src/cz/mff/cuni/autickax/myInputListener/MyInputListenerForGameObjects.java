@@ -24,19 +24,19 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			int button) {
 		switch (typeOfClass) {
 		case HOLE:
-			this.screen.draggedObject = new Hole(x ,y, null, type);
+			this.screen.draggedObject = new Hole(x ,y, type);
 			break;
 		case MUD:
-			this.screen.draggedObject = new Mud(x ,y, null, type);
+			this.screen.draggedObject = new Mud(x ,y, type);
 			break;
 		case STONE:
-			this.screen.draggedObject = new Stone(x ,y, null, type);
+			this.screen.draggedObject = new Stone(x ,y, type);
 			break;
 		case TREE:
-			this.screen.draggedObject = new Tree(x ,y, null, type);
+			this.screen.draggedObject = new Tree(x ,y, type);
 			break;
 		case BOOSTER:
-			this.screen.draggedObject = new Booster(x ,y, null, type);
+			this.screen.draggedObject = new Booster(x ,y, type);
 			break;
 		default:
 			break;

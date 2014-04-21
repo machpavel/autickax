@@ -13,8 +13,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Mud extends GameObject implements Externalizable {
 
-	public Mud(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen, type);
+	public Mud(float x, float y, int type) {	
+		super(x, y, type);
 	}
 	
 	public Mud(GameObject object){

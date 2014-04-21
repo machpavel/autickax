@@ -6,6 +6,7 @@ import java.io.ObjectOutput;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.pathway.Splines.TypeOfInterpolation;
@@ -20,6 +21,7 @@ public class Pathway implements java.io.Externalizable {
 	private ArrayList<Vector2> controlPoints;
 	private PathwayType pathwayType;
 	private Splines.TypeOfInterpolation typeOfInterpolation;
+	private int textureType;
 	
 	public enum PathwayType {
 		CLOSED, OPENED;
@@ -32,6 +34,29 @@ public class Pathway implements java.io.Externalizable {
 		this();
 		this.typeOfInterpolation = typeOfInterpolation;
 		this.pathwayType = pathwayType;		 
+	}
+	
+	public int getTextureType() {
+		return this.textureType;
+	}
+	
+
+	public static Pathway parsePathway(Element root) throws Exception {
+		Pathway retval = new Pathway();
+		Element pathwayElement = root.getChildByName("pathway");
+		retval.setType(pathwayElement.getAttribute("pathwayType"));
+		retval.setTypeOfInterpolation(pathwayElement.getAttribute("typeOfInterpolation"));
+		retval.textureType = pathwayElement.getInt("textureType");
+		Element controlPoints = pathwayElement.getChildByName("controlPoints");
+		int controlPointsCount = controlPoints.getChildCount();
+		
+		for (int i = 0; i < controlPointsCount; ++i) {			
+			Element controlPoint = controlPoints.getChild(i);
+			Vector2 controlPointPosition = new Vector2(controlPoint.getFloat("X"), controlPoint.getFloat("Y"));
+			retval.getControlPoints().add(controlPointPosition);			
+		}
+		
+		return retval;
 	}
 
 	
@@ -100,6 +125,7 @@ public class Pathway implements java.io.Externalizable {
 		else 
 			throw new Exception("Unknown type of interpolation");
 	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void readExternal(ObjectInput in) throws IOException,
@@ -107,13 +133,14 @@ public class Pathway implements java.io.Externalizable {
 		this.controlPoints = (ArrayList<Vector2>) in.readObject();
 		this.pathwayType = (PathwayType) in.readObject();
 		this.typeOfInterpolation = (TypeOfInterpolation) in.readObject();
-		
+		this.textureType = in.readInt();
 	}
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeObject(this.controlPoints);
 		out.writeObject(this.pathwayType);
-		out.writeObject(this.typeOfInterpolation);		
+		out.writeObject(this.typeOfInterpolation);
+		out.writeInt(this.textureType);
 	}
 	
 	

@@ -12,8 +12,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class GearShiftMinigameFinish extends GameObject implements Externalizable {
 
-	public GearShiftMinigameFinish(float x, float y, GameScreen gameScreen) {	
-		super(x,y,gameScreen, 0);
+	public GearShiftMinigameFinish(float x, float y) {	
+		super(x, y, 0);
 		this.boundingCircleRadius = Constants.minigames.GEAR_SHIFT_MINIGAME_FINISH_RADIUS;
 	}
 	
