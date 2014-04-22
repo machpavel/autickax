@@ -1,7 +1,7 @@
 package cz.mff.cuni.autickax.entities;
 
+import java.io.Externalizable;
 import java.io.IOException;
-import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -11,15 +11,18 @@ import cz.mff.cuni.autickax.miniGames.GearShiftMinigame;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Mud extends GameObject implements Serializable {
-	private static final long serialVersionUID = 1L;
+public final class Mud extends GameObject implements Externalizable {
 
-	public Mud(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen, type);
+	public Mud(float x, float y, int type) {	
+		super(x, y, type);
 	}
 	
 	public Mud(GameObject object){
 		super(object);		
+	}
+	
+	/** Parameterless constructor for the externalization */
+	public Mud() {
 	}
 	
 

@@ -1,7 +1,7 @@
 package cz.mff.cuni.autickax.entities;
 
+import java.io.Externalizable;
 import java.io.IOException;
-import java.io.Serializable;
 
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -10,15 +10,18 @@ import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class AvoidStone extends GameObject implements Serializable {
-	private static final long serialVersionUID = 1L;
+public final class AvoidStone extends GameObject implements Externalizable {
 
-	public AvoidStone(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen, type);
+	public AvoidStone(float x, float y, int type) {	
+		super(x, y, type);
 	}
 	
 	public AvoidStone(GameObject object){
 		super(object);		
+	}
+	
+	/** Parameterless constructor for the externalization */
+	public AvoidStone() {
 	}
 	
 

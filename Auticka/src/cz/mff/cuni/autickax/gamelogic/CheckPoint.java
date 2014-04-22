@@ -1,14 +1,11 @@
 package cz.mff.cuni.autickax.gamelogic;
 
-import java.io.Serializable;
-
 import com.badlogic.gdx.math.Vector2;
 
 /**
  * Represents one point that player did went through. Contains time of the event and coordinates.
  */
-public class CheckPoint implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class CheckPoint{
 	
 	final float time;
 	final Vector2 position;

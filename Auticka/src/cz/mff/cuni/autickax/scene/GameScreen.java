@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
-import cz.mff.cuni.autickax.LevelLoading;
+import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.drawing.LevelBackground;
@@ -46,7 +46,7 @@ public class GameScreen extends BaseScreen {
 	
 	// Levels
 	private SubLevel currentPhase;
-	private LevelLoading level;
+	private Level level;
 	private PlayedLevel playedLevel;
 	private final int levelIndex;
 	private final Difficulty levelDifficulty;
@@ -122,7 +122,7 @@ public class GameScreen extends BaseScreen {
 	 * If the playedLevel information is not preset, adds a blank one.
 	 * @param levelIndex
 	 */
-	private void loadLevels(int levelIndex, Vector<LevelLoading> levels, Vector<PlayedLevel> playedLevels) {
+	private void loadLevels(int levelIndex, Vector<Level> levels, Vector<PlayedLevel> playedLevels) {
 		this.level = levels.get(levelIndex);		
 		this.playedLevel = playedLevels.get(levelIndex);
 	}

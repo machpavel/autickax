@@ -1,10 +1,13 @@
 package cz.mff.cuni.autickax.entities;
 
+import java.io.Externalizable;
 import java.io.IOException;
-import java.io.Serializable;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.constants.Constants;
@@ -13,17 +16,23 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public class Finish extends GameObject implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Finish extends GameObject implements Externalizable {
 	
 	Vector2 shift = new Vector2(0, 0);
 	
-	public Finish(float x, float y, GameScreen gameScreen, int type) {	
-		super(x,y,gameScreen, type);
+	public Finish(float x, float y, int type) {	
+		super(x, y, type);
 		super.type = type;
 		this.boundingCircleRadius = Constants.gameObjects.FINISH_BOUNDING_RADIUS;
 	}
+	
+	/** Parameterless constructor for the externalization */
+	public Finish() {
+	}
 
+	public static Finish parseFinish(Element finish) {
+		return new Finish(finish.getFloat("X"), finish.getFloat("Y"), finish.getInt("type", 1));	
+	}
 	
 	public void setShift(Vector2 shift){
 		this.shift = shift;
@@ -97,4 +106,19 @@ public class Finish extends GameObject implements Serializable {
 		return this.boundingCircleRadius;
 	}
 
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		super.readExternal(in);
+		
+		this.shift = (Vector2) in.readObject();
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		super.writeExternal(out);
+		
+		out.writeObject(this.shift);
+	}
 }

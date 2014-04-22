@@ -40,7 +40,7 @@ public enum Difficulty {
 	}
 	
 
-	public Vector<LevelLoading> getAvailableLevels() {
+	public Vector<Level> getAvailableLevels() {
 		switch(this)
 		{
 		case Kiddie: 

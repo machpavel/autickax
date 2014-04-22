@@ -2,21 +2,21 @@ import java.io.File;
 
 import com.badlogic.gdx.files.FileHandle;
 
-import cz.mff.cuni.autickax.LevelLoading;
+import cz.mff.cuni.autickax.Level;
 
 public class LevelPath {
 
 
 	private final File file;
 	
-	private LevelLoading level = null;
+	private Level level = null;
 
 	public LevelPath(File file) {
 		this.file = file;
 	}
 	
 	public void parseLevel() {
-		this.level = new LevelLoading();
+		this.level = new Level();
 		try {
 			level.parseLevel(null, new FileHandle(this.file));
 		} catch (Exception e) {
@@ -26,7 +26,7 @@ public class LevelPath {
 		}
 	}
 	
-	public LevelLoading getLevel() {
+	public Level getLevel() {
 		return this.level;
 	}
 }

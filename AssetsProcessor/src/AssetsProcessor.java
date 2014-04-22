@@ -3,7 +3,7 @@ import com.badlogic.gdx.tools.imagepacker.TexturePacker;
 
 import cz.mff.cuni.autickax.AvailableLevels;
 import cz.mff.cuni.autickax.Difficulty;
-import cz.mff.cuni.autickax.LevelLoading;
+import cz.mff.cuni.autickax.Level;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -63,7 +63,7 @@ public class AssetsProcessor {
         	for( File file : files ) {
 	    		LevelPath levelPath = new LevelPath(file);
 	    		levelPath.parseLevel();
-	    		LevelLoading level = levelPath.getLevel();
+	    		Level level = levelPath.getLevel();
         	
 	        	switch (levelDifficulty) {
 				case Beginner:

@@ -1,13 +1,16 @@
 package cz.mff.cuni.autickax.entities;
 
+import java.io.Externalizable;
 import java.io.IOException;
-import java.io.Serializable;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -18,12 +21,10 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 /**
  * Base class for all game entities
  */
-abstract public class GameObject implements Serializable {
+abstract public class GameObject implements Externalizable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final byte MAGIC_GAME_OBJECT_END = 127;
+	
 	/** Position of the center of GameObject. */
 	protected Vector2 position;
 	private int width;
@@ -40,6 +41,7 @@ abstract public class GameObject implements Serializable {
 	protected boolean isActive = true;
 	
 	protected transient boolean canBeDragged = false;
+	
 	public boolean canBeDragged() {
 		return this.canBeDragged;
 	}
@@ -48,16 +50,16 @@ abstract public class GameObject implements Serializable {
 		this.canBeDragged = canBeDragged;
 	}
 	protected transient boolean isDragged = false;
+	
+	/** Parameterless constructor for the externalization */
+	public GameObject() {
+		
+	}
 
-	public GameObject(float startX, float startY, GameScreen gameScreen, int type) {
+	public GameObject(float startX, float startY, int type) {
 		this.position = new Vector2(startX, startY);
-		this.gameScreen = gameScreen;
 		this.rotation = 0;
 		this.type = type;
-		
-		if (this.gameScreen != null) { // caused by asset processor
-			this.setTexture(type);
-		}
 	}
 
 	public GameObject(GameObject object) {
@@ -71,6 +73,32 @@ abstract public class GameObject implements Serializable {
 		this.setTexture(object.getTexture());
 		this.gameScreen = object.gameScreen;
 		this.type = object.type;
+	}
+
+	public static GameObject parseGameObject(Element gameObject) throws IOException {
+		GameObject retval;
+		
+		String objectName = gameObject.getName();
+		if (objectName.equals("mud")){
+			retval = new Mud(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("stone")){
+			retval = new Stone(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("tree")){
+			retval = new Tree(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("hole")){
+			retval = new Hole(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("booster")){
+			retval = new Booster(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else { 
+			throw new IOException("Loading object failed: Unknown type");
+		}
+		
+		return retval; 
 	}
 	
 	public void reset(){
@@ -279,5 +307,32 @@ abstract public class GameObject implements Serializable {
 
 	protected void setHeight(int height) {
 		this.height = height;
+	}
+	
+	@Override
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		this.position = (Vector2) in.readObject();
+		this.width = in.readInt();
+		this.height = in.readInt();
+		this.rotation = in.readFloat();
+		this.scale = (Vector2) in.readObject();
+		this.boundingCircleRadius = in.readFloat();
+		this.type = in.readInt();
+		
+		byte check = in.readByte();
+		assert (check == GameObject.MAGIC_GAME_OBJECT_END);
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(this.position);
+		out.writeInt(this.width);
+		out.writeInt(this.height);
+		out.writeFloat(this.rotation);
+		out.writeObject(this.scale);
+		out.writeFloat(this.boundingCircleRadius);
+		out.writeInt(this.type);
+		out.writeByte(GameObject.MAGIC_GAME_OBJECT_END);
 	}
 }

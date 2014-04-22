@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL10;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
-import cz.mff.cuni.autickax.LevelLoading;
+import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveTextButton;
@@ -27,7 +27,7 @@ public class LevelSelectScreen extends BaseScreen {
 		this.difficulty = difficulty;
 		
 		
-		Vector<LevelLoading> levels = this.difficulty.getAvailableLevels();
+		Vector<Level> levels = this.difficulty.getAvailableLevels();
 		Vector<PlayedLevel> playedLevels = this.difficulty.getPlayedLevels();
 		
 		int x = buttonsStartXPosition;

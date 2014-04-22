@@ -21,8 +21,7 @@ import cz.mff.cuni.autickax.constants.Constants;
  *         distances of a curve.
  */
 
-public class DistanceMap implements java.io.Serializable {
-	private static final long serialVersionUID = 1L;
+public class DistanceMap {
 
 	private float[][] map;
 	private static float sqrtOfTwo = (float) Math.sqrt(2);

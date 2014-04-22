@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
-import cz.mff.cuni.autickax.LevelLoading;
+import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.CompleteLevelDialog;
@@ -446,7 +446,7 @@ public class SubLevel2 extends SubLevel {
 	}
 	
 	private boolean isNextLevelAvaible(){
-		Vector<LevelLoading> availableLevels = this.level.getDifficulty().getAvailableLevels();
+		Vector<Level> availableLevels = this.level.getDifficulty().getAvailableLevels();
 		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
 		
 		return this.level.getLevelIndex() < playedLevels.size() &&
