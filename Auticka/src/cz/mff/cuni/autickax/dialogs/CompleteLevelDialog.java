@@ -71,9 +71,6 @@ public class CompleteLevelDialog extends DecisionDialog {
 		labels[5][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Score:");
 		labels[5][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(Integer.toString(stats.getScoreFromTime()));
 		
-		ScreenAdaptiveLabel foo = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(Integer.toString(stats.getScoreFromTime()));
-		System.out.println(foo.getWidth());
-		
 		for (int row = 0; row < labels.length; row++) {
 			labels[row][0].setPosition( Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X  - Constants.dialog.COMPLETE_DIALOG_MESSAGE_WIDTH / 2, Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y + Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT / 2 - Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT / labels.length * row);
 			this.stage.addActor(labels[row][0]);

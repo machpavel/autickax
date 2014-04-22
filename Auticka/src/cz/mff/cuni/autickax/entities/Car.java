@@ -17,12 +17,11 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Car extends GameObject {
+public final class Car extends ShiftableGameObject {
 	
 	private boolean isDragged = false;
 	private TextureRegion[] positionTextures;	
 	private Vector2 lastCarPosition;
-	private Vector2 shift;
 	private float lastRotationDistance = 0;
 	
 	/** Parameterless constructor for the externalization */
@@ -31,7 +30,6 @@ public final class Car extends GameObject {
 
 	public Car(float x, float y, int type) {
 		super(x, y, type);
-		this.shift = Vector2.Zero;
 		this.lastCarPosition = new Vector2(x, y);		
 	}
 	
@@ -41,7 +39,7 @@ public final class Car extends GameObject {
 	
 
 	public void reset(){
-		this.shift = Vector2.Zero;
+		super.reset();
 		this.lastCarPosition = new Vector2(0,0);
 		this.lastRotationDistance = 0;
 	}
@@ -54,9 +52,7 @@ public final class Car extends GameObject {
 		this.isDragged = value;
 	}
 	
-	public void setShift(Vector2 value){
-		this.shift = value;
-	}
+
 
 	@Override
 	public String getName() {
@@ -65,7 +61,6 @@ public final class Car extends GameObject {
 
 	@Override
 	public void move(Vector2 newPos) {
-		newPos.add(shift);
 		super.move(newPos); 
 				
 		lastRotationDistance += newPos.dst(lastCarPosition);

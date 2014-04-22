@@ -2,9 +2,6 @@ package cz.mff.cuni.autickax.entities;
 
 import java.io.Externalizable;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
@@ -17,9 +14,8 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class GearShifter extends GameObject implements Externalizable {
+public final class GearShifter extends ShiftableGameObject implements Externalizable {
 	private boolean isDragged = false;
-	private Vector2 shift = Vector2.Zero;
 
 	public GearShifter(float x, float y) {
 		super(x, y, 0);			
@@ -41,10 +37,6 @@ public final class GearShifter extends GameObject implements Externalizable {
 		this.isDragged = value;
 	}
 	
-	public void setShift(Vector2 value){
-		this.shift = value;
-	}
-
 	@Override
 	public String getName() {
 		return "gearShifter";
@@ -55,7 +47,7 @@ public final class GearShifter extends GameObject implements Externalizable {
 		if (this.isDragged()) {
 			if (Gdx.input.isTouched()) {
 				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-				this.move(touchPos.add(shift));
+				super.move(touchPos);
 			}
 		}
 
@@ -92,19 +84,6 @@ public final class GearShifter extends GameObject implements Externalizable {
 	}
 
 
-	@Override
-	public void readExternal(ObjectInput in) throws IOException,
-			ClassNotFoundException {
-		super.readExternal(in);
-		
-		this.shift = (Vector2) in.readObject();
-	}
 
-	@Override
-	public void writeExternal(ObjectOutput out) throws IOException {
-		super.writeExternal(out);
-		
-		out.writeObject(this.shift);
-	}	
 	
 }
