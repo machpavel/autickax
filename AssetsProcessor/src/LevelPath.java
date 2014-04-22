@@ -18,7 +18,7 @@ public class LevelPath {
 	public void parseLevel() {
 		this.level = new Level();
 		try {
-			level.parseLevel(null, new FileHandle(this.file));
+			level.parseLevel(new FileHandle(this.file));
 		} catch (Exception e) {
 			System.out.println("Unable to parse file " + this.file.getName()
 					+ ". Details: " + e.getMessage());

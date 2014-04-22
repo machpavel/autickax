@@ -61,7 +61,7 @@ public class Level implements java.io.Externalizable {
 		return this.pathway.getTextureType();
 	}
 	
-	public void parseLevel(GameScreen gameScreen, FileHandle file) throws Exception {
+	public void parseLevel(FileHandle file) throws Exception {
 	
 		System.out.println("Loading level " + file.name());
 		

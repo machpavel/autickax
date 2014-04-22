@@ -10,6 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -53,12 +54,13 @@ public final class EditorScreen extends BaseScreenEditor {
 	private static final Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
 	private static final Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
 	private static final int PATHWAY_TEXTURE_TYPE = 0;
-	private static final float TIME_LIMIT = 10;
+
 	protected static final int FINISH_TYPE = 2;
 	protected static final int START_TYPE = 4;
-	
+
 	private final TextButtonStyle textButtonStyle;
 
+	private float timeLimit = 10;
 
 	// Rendering
 	private OrthographicCamera camera;
@@ -84,10 +86,10 @@ public final class EditorScreen extends BaseScreenEditor {
 	Button buttonGeneratePoints;
 	Button buttonRestart;
 	Button buttonSave;
+	Button buttonLoad;
 	ArrayList<Button> backgroundButtons = new ArrayList<Button>();
 	private boolean anyButtonTouched = false;
-	ArrayList<Button> gameObjectsButtons = new ArrayList<Button>();
-	
+
 	public Difficulty difficulty = Difficulty.Normal;
 
 	// Variables for dragging new object values
@@ -106,7 +108,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	public EditorScreen() {
 		super();
-				
+
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 
@@ -114,25 +116,26 @@ public final class EditorScreen extends BaseScreenEditor {
 		shapeRenderer = new ShapeRenderer();
 
 		this.font = game.assets.getFont();
-		
-		
+
 		Sprite backgroundColor = new Sprite();
 		backgroundColor.setColor(Color.GREEN);
 		ColorDrawable textButtonBackground = new ColorDrawable(Color.GREEN);
-		this.textButtonStyle = new TextButtonStyle(textButtonBackground, textButtonBackground, textButtonBackground, this.font);
+		this.textButtonStyle = new TextButtonStyle(textButtonBackground,
+				textButtonBackground, textButtonBackground, this.font);
 
 		restart();
 	}
 
 	public void restart() {
 		background.SetType(1);
-		
+
 		stage.clear();
 
 		// This order has to be kept.
 		createGenerateButton();
 		createRestartButton();
 		createSaveButton();
+		createLoadButton();
 		createBackgroundButtons();
 		createGameObjectsButtons();
 		createDifficultyButtons();
@@ -143,6 +146,44 @@ public final class EditorScreen extends BaseScreenEditor {
 		pathway = new Pathway(pathwayType, typeOfInterpolation);
 		start = null;
 		finish = null;
+		
+		objectIsDragging = false;
+		draggedObject = null;
+	}
+
+	public void LoadLevel(FileHandle file) throws Exception {
+		restart();
+		Level level = new Level();
+		level.parseLevel(file);
+		level.calculateDistanceMap();
+
+		this.car = level.getCar();
+		this.finish = level.getFinish();
+		this.gameObjects = level.getGameObjects();
+		this.pathway = level.getPathway();
+		this.start = level.getStart();
+		this.timeLimit = level.getTimeLimit();
+		this.background.SetType(level.getBackgroundType());
+
+		for (GameObject gameObject : this.gameObjects) {
+			gameObject.setTexture();
+
+			Button button = new ImageButton(new TextureRegionDrawable(
+					gameObject.getTexture()), new TextureRegionDrawable(
+					gameObject.getTexture()));
+
+			button.setPosition(
+					gameObject.getPosition().x - gameObject.getWidth() / 2,
+					gameObject.getPosition().y - gameObject.getHeight() / 2);
+
+			button.addListener(new PlacedObjectsInputListener(gameObject,
+					button, this));
+			stage.addActor(button);
+		}
+
+		this.start.setTexture();
+		this.finish.setTexture();
+		generateStartAndFinish();
 	}
 
 	private void update(float delta) {
@@ -150,7 +191,8 @@ public final class EditorScreen extends BaseScreenEditor {
 		if (Gdx.input.justTouched()) {
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
-			if(x > 0 && x < Constants.WORLD_WIDTH && y > 0 && y < Constants.WORLD_HEIGHT){
+			if (x > 0 && x < Constants.WORLD_WIDTH && y > 0
+					&& y < Constants.WORLD_HEIGHT) {
 				Vector2 point = new Vector2(Gdx.input.getX(), stageHeight
 						- Gdx.input.getY());
 				pathway.getControlPoints().add(point);
@@ -162,10 +204,9 @@ public final class EditorScreen extends BaseScreenEditor {
 	public void render(float delta) {
 		stage.act(delta); // don't forget to advance the stage ( input + actions
 
-		if (anyButtonTouched){
+		if (anyButtonTouched) {
 			SetAnyButtonTouched(false);
-		}			
-		else
+		} else
 			update(delta);
 
 		renderScene();
@@ -181,32 +222,36 @@ public final class EditorScreen extends BaseScreenEditor {
 					batch.end();
 				} else {
 					// dragging placed object
-					this.draggedButton.setPosition (
-							Gdx.input.getX() - this.draggedButton.getWidth() / 2,
-							Constants.WORLD_HEIGHT - Gdx.input.getY() - this.draggedButton.getHeight() / 2
-						);
+					this.draggedButton.setPosition(Gdx.input.getX()
+							- this.draggedButton.getWidth() / 2,
+							Constants.WORLD_HEIGHT - Gdx.input.getY()
+									- this.draggedButton.getHeight() / 2);
+					
+					
 				}
 			} else {
 				float x = Gdx.input.getX();
 				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
 
-				if (this.newObjectIsDragging &&
-						x > 0 && x < Constants.WORLD_WIDTH &&
-						y > 0 && y < Constants.WORLD_HEIGHT) {
-					
-							Button button = new ImageButton (
-									new TextureRegionDrawable(this.draggedObject.getTexture()),
-									new TextureRegionDrawable(this.draggedObject.getTexture())
-								);
-							
-							button.setPosition (
-									this.draggedObject.getPosition().x - this.draggedObject.getWidth() / 2,
-									this.draggedObject.getPosition().y - this.draggedObject.getHeight() / 2);
-							
-							this.gameObjects.add(this.draggedObject.copy());
-							
-							button.addListener(new PlacedObjectsInputListener(draggedObject, button, this));
-							stage.addActor(button);
+				if (this.newObjectIsDragging && x > 0
+						&& x < Constants.WORLD_WIDTH && y > 0
+						&& y < Constants.WORLD_HEIGHT) {
+
+					Button button = new ImageButton(new TextureRegionDrawable(
+							this.draggedObject.getTexture()),
+							new TextureRegionDrawable(this.draggedObject
+									.getTexture()));
+
+					button.setPosition(this.draggedObject.getPosition().x
+							- this.draggedObject.getWidth() / 2,
+							this.draggedObject.getPosition().y
+									- this.draggedObject.getHeight() / 2);
+
+					this.gameObjects.add(this.draggedObject.copy());
+
+					button.addListener(new PlacedObjectsInputListener(
+							draggedObject, button, this));
+					stage.addActor(button);
 				}
 
 				objectIsDragging = false;
@@ -228,25 +273,24 @@ public final class EditorScreen extends BaseScreenEditor {
 				Constants.WORLD_HEIGHT);
 		batch.end();
 
-		if(pathway != null && pathway.getDistanceMap() != null){
+		if (pathway != null && pathway.getDistanceMap() != null) {
 			// Renders the distance map
 			// See LevelPath.createBitmap()
 			Gdx.gl.glEnable(GL10.GL_BLEND);
 			Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 			Gdx.gl10.glPointSize(1);
 			shapeRenderer.begin(ShapeType.Point);
-			
-        
-			
+
 			for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
-				for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {												
+				for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
 					float distance = pathway.getDistanceMap().At(column, row);
-	
+
 					if (distance < difficulty.getMaxDistanceFromSurface()) {
 						shapeRenderer.setColor(196.f / 255, 154.f / 255,
 								108.f / 255, 1);
 						shapeRenderer.point(column, row, 0);
-					} else if (distance < difficulty.getMaxDistanceFromSurface()) {
+					} else if (distance < difficulty
+							.getMaxDistanceFromSurface()) {
 						// cause this is where the transparency begin
 						distance -= Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
 						float alpha = (difficulty.getMaxDistanceFromSurface() - distance)
@@ -273,11 +317,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		stage.draw(); // and also display it :)
 
 		batch.begin();
-//		for (GameObject gameObject : gameObjects) {
-//			gameObject.draw(batch);
-//
-//		}
-		// car.draw(batch);
+
 		if (start != null) {
 			start.draw(batch);
 		}
@@ -322,7 +362,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			finish.toXml(xml);
 
 			xml.element("levelBackgroundType", this.background.GetType());
-			xml.element("timeLimit", TIME_LIMIT);
+			xml.element("timeLimit", timeLimit);
 
 			xml.pop();
 			xml.close();
@@ -342,6 +382,29 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 	}
 
+	public void generateStartAndFinish() {
+		float delta = 0.01f;
+		start = new Start(
+				pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).x,
+				pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).y,
+				START_TYPE);
+		start.setTexture();
+		Vector2 startTo = pathway.GetPosition(delta);
+		Vector2 startFrom = pathway.GetPosition(0);
+		float startAngle = startTo.sub(startFrom).angle();
+		start.setRotation((startAngle + 270) % 360);
+
+		finish = new Finish(
+				pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).x,
+				pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).y,
+				FINISH_TYPE);
+		finish.setTexture();
+		Vector2 finishTo = pathway.GetPosition(1 - delta);
+		Vector2 finishFrom = pathway.GetPosition(1);
+		float finishAngle = finishTo.sub(finishFrom).angle();
+		finish.setRotation((finishAngle + 90) % 360);
+	}
+
 	public void createGenerateButton() {
 		buttonGeneratePoints = new TextButton("Generate", this.textButtonStyle);
 		buttonGeneratePoints.setPosition(Constants.WORLD_WIDTH, 0);
@@ -351,35 +414,18 @@ public final class EditorScreen extends BaseScreenEditor {
 		buttonGeneratePoints.addListener(new MyInputListener(this) {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if (pathway.getControlPoints().size() < 4)
-				{
-					JOptionPane.showMessageDialog(null, "You have to set at least 4 points to generate the pathway.", "Warning: ", JOptionPane.INFORMATION_MESSAGE );
+				if (pathway.getControlPoints().size() < 4) {
+					JOptionPane
+							.showMessageDialog(
+									null,
+									"You have to set at least 4 points to generate the pathway.",
+									"Warning: ",
+									JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
-				float delta = 0.01f;	
+
 				pathway.CreateDistances();
-				start = new Start (
-					pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).x,
-					pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).y,
-					START_TYPE
-				);
-				start.setTexture();
-				Vector2 startTo = pathway.GetPosition(delta);
-				Vector2 startFrom = pathway.GetPosition(0);
-				float startAngle = startTo.sub(startFrom).angle();
-				start.setRotation((startAngle + 270) % 360);
-				
-				
-				finish = new Finish (
-					pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).x,
-					pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).y,
-					FINISH_TYPE
-				);
-				finish.setTexture();
-				Vector2 finishTo = pathway.GetPosition(1 - delta);
-				Vector2 finishFrom = pathway.GetPosition(1);
-				float finishAngle = finishTo.sub(finishFrom).angle();
-				finish.setRotation((finishAngle + 90) % 360);				
+				generateStartAndFinish();
 			}
 		});
 	}
@@ -394,23 +440,26 @@ public final class EditorScreen extends BaseScreenEditor {
 		buttonRestart.addListener(new MyInputListener(this) {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if(JOptionPane.showConfirmDialog(null, "Are you sure that you want to reset this level?", "Question: ", JOptionPane.INFORMATION_MESSAGE ) == JOptionPane.YES_OPTION)
+				if (JOptionPane.showConfirmDialog(null,
+						"Are you sure that you want to reset this level?",
+						"Question: ", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION)
 					restart();
 			}
 		});
 	}
 
-	private boolean isReadyForSaving(){
-		if(pathway.getControlPoints().size() < 4)
+	private boolean isReadyForSaving() {
+		if (pathway.getControlPoints().size() < 4)
 			return false;
-		if(finish == null)
+		if (finish == null)
 			return false;
-		if(start == null)
+		if (start == null)
 			return false;
-		if(car == null)
-			return false;		
+		if (car == null)
+			return false;
 		return true;
 	}
+
 	public void createSaveButton() {
 		buttonSave = new TextButton("Save", this.textButtonStyle);
 		buttonSave.setPosition(Constants.WORLD_WIDTH, buttonRestart.getY()
@@ -422,18 +471,20 @@ public final class EditorScreen extends BaseScreenEditor {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 
-				if(!isReadyForSaving()){
-					JOptionPane.showMessageDialog(null, "Level is not ready for saving", "Warning: ", JOptionPane.INFORMATION_MESSAGE );
+				if (!isReadyForSaving()) {
+					JOptionPane.showMessageDialog(null,
+							"Level is not ready for saving", "Warning: ",
+							JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
-				
+
 				JFileChooser chooser = new JFileChooser();
 				chooser.setCurrentDirectory(new java.io.File("."));
-				chooser.setDialogTitle("choosertitle");
+				chooser.setDialogTitle("Save file");
 				chooser.setDialogType(JFileChooser.SAVE_DIALOG);
 				chooser.setAcceptAllFileFilterUsed(false);
 
-				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+				if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 					File fileToBeSaved;
 					if (!chooser.getSelectedFile().getAbsolutePath()
 							.endsWith(".xml"))
@@ -444,9 +495,52 @@ public final class EditorScreen extends BaseScreenEditor {
 
 					try {
 						generateXml(fileToBeSaved);
-					} catch (Exception e) {												
-						JOptionPane.showMessageDialog(null, "Unable to save the file", "Warning: ", JOptionPane.INFORMATION_MESSAGE );
-						
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null,
+								"Unable to save the file", "Warning: ",
+								JOptionPane.INFORMATION_MESSAGE);
+
+					}
+
+				}
+			}
+		});
+	}
+
+	public void createLoadButton() {
+		buttonLoad = new TextButton("Load", this.textButtonStyle);
+		buttonLoad.setPosition(
+				Constants.WORLD_WIDTH + 20 + buttonSave.getWidth(),
+				buttonSave.getY());
+		stage.addActor(buttonLoad);
+
+		// Creates listener
+		buttonLoad.addListener(new MyInputListener(this) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+
+				JFileChooser chooser = new JFileChooser();
+				chooser.setCurrentDirectory(new java.io.File("."));
+				chooser.setDialogTitle("Load file");
+				chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+				chooser.setAcceptAllFileFilterUsed(false);
+
+				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					File fileToBeLoad;
+					if (!chooser.getSelectedFile().getAbsolutePath()
+							.endsWith(".xml"))
+						fileToBeLoad = new File(chooser.getSelectedFile()
+								+ ".xml");
+					else
+						fileToBeLoad = chooser.getSelectedFile();
+
+					try {
+						LoadLevel(new FileHandle(fileToBeLoad));
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null,
+								"Unable to load the file", "Warning: ",
+								JOptionPane.INFORMATION_MESSAGE);
+						restart();
 					}
 
 				}
@@ -459,15 +553,17 @@ public final class EditorScreen extends BaseScreenEditor {
 		int heightOffset = 0;
 		int width = 30;
 		int height = 18;
-		for (int i = 1; i <= Constants.misc.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {			
-			Button button = new EditorBackgroundButton(game.assets.getGraphics(LevelBackground.GetTextureName(i)), i , this);
+		for (int i = 1; i <= Constants.misc.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {
+			Button button = new EditorBackgroundButton(
+					game.assets.getGraphics(LevelBackground.GetTextureName(i)),
+					i, this);
 			button.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset,
 					Constants.WORLD_HEIGHT - heightOffset - height);
 			button.addListener(new MyInputListenerForBackground(i, this));
 			stage.addActor(button);
-			
+
 			widthOffset += width;
-			if(widthOffset > EditorConstants.CONTROL_PANEL_WIDTH - width){
+			if (widthOffset > EditorConstants.CONTROL_PANEL_WIDTH - width) {
 				widthOffset = 0;
 				heightOffset += height;
 			}
@@ -489,8 +585,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Hole
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.HOLE, i,
-					offsetOnScreen,
-					maxValue);
+					offsetOnScreen, maxValue);
 		}
 
 		// Muds
@@ -506,8 +601,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Stone
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.STONE, i,
-					offsetOnScreen,
-					maxValue);
+					offsetOnScreen, maxValue);
 		}
 
 		// Trees
@@ -515,39 +609,36 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Tree
 					.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.TREE, i,
-					offsetOnScreen,
-					maxValue);
+					offsetOnScreen, maxValue);
 		}
-		
+
 		// Boosts
-				for (int i = 1; i <= Constants.gameObjects.BOOSTER_TYPES_COUNT; i++) {
-					trd = new TextureRegionDrawable(game.assets.getGraphics(Booster
-							.GetTextureName(i)));
-					createGameObjectButtons(trd, TypeOfGameObjectButton.BOOSTER, i,
-							offsetOnScreen,
-							maxValue);
-				}
+		for (int i = 1; i <= Constants.gameObjects.BOOSTER_TYPES_COUNT; i++) {
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Booster
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfGameObjectButton.BOOSTER, i,
+					offsetOnScreen, maxValue);
+		}
 	}
 
 	private void createGameObjectButtons(TextureRegionDrawable trd,
 			TypeOfGameObjectButton typeOfClass, int type,
-			Vector2i offsetOnScreen,
-			Vector2i maxValue) {
+			Vector2i offsetOnScreen, Vector2i maxValue) {
 
 		int HEIGHT_OFFSET = 50;
 		Button button = new ImageButton(trd);
 		float objectWidth = button.getWidth();
 		float objectHeight = button.getHeight();
-		
+
 		if (offsetOnScreen.x + objectWidth > EditorConstants.CONTROL_PANEL_WIDTH) {
 			offsetOnScreen.x = 0;
 			maxValue.y = 0;
 		}
 		if (maxValue.y < objectHeight) {
 			offsetOnScreen.y += objectHeight - maxValue.y;
-			maxValue.y = (int)objectHeight;
+			maxValue.y = (int) objectHeight;
 		}
-		
+
 		button.setPosition(Constants.WORLD_WIDTH + 5 + offsetOnScreen.x,
 				Constants.WORLD_HEIGHT - HEIGHT_OFFSET - offsetOnScreen.y);
 		button.addListener(new MyInputListenerForGameObjects(typeOfClass, type,
@@ -556,11 +647,9 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		offsetOnScreen.x += objectWidth;
 	}
-	
-	
 
 	public void createDifficultyButtons() {
-		int BUTTONS_OFFSET = 10;		
+		int BUTTONS_OFFSET = 10;
 		Button buttonDif1 = new TextButton("1", this.textButtonStyle);
 		buttonDif1.setPosition(Constants.WORLD_WIDTH + BUTTONS_OFFSET,
 				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
@@ -574,8 +663,9 @@ public final class EditorScreen extends BaseScreenEditor {
 			}
 		});
 		Button buttonDif2 = new TextButton("2", this.textButtonStyle);
-		buttonDif2.setPosition(buttonDif1.getX() + buttonDif1.getWidth() + BUTTONS_OFFSET,
-				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
+		buttonDif2.setPosition(buttonDif1.getX() + buttonDif1.getWidth()
+				+ BUTTONS_OFFSET, buttonSave.getY() + buttonSave.getHeight()
+				+ BUTTONS_OFFSET);
 		stage.addActor(buttonDif2);
 
 		// Creates listener
@@ -586,8 +676,9 @@ public final class EditorScreen extends BaseScreenEditor {
 			}
 		});
 		Button buttonDif3 = new TextButton("3", this.textButtonStyle);
-		buttonDif3.setPosition(buttonDif2.getX() + buttonDif2.getWidth() + BUTTONS_OFFSET,
-				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
+		buttonDif3.setPosition(buttonDif2.getX() + buttonDif2.getWidth()
+				+ BUTTONS_OFFSET, buttonSave.getY() + buttonSave.getHeight()
+				+ BUTTONS_OFFSET);
 		stage.addActor(buttonDif3);
 
 		// Creates listener
@@ -599,8 +690,9 @@ public final class EditorScreen extends BaseScreenEditor {
 		});
 
 		Button buttonDif4 = new TextButton("4", this.textButtonStyle);
-		buttonDif4.setPosition(buttonDif3.getX() + buttonDif3.getWidth() + BUTTONS_OFFSET,
-				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
+		buttonDif4.setPosition(buttonDif3.getX() + buttonDif3.getWidth()
+				+ BUTTONS_OFFSET, buttonSave.getY() + buttonSave.getHeight()
+				+ BUTTONS_OFFSET);
 		stage.addActor(buttonDif4);
 
 		// Creates listener
@@ -612,8 +704,9 @@ public final class EditorScreen extends BaseScreenEditor {
 		});
 
 		Button buttonDif5 = new TextButton("5", this.textButtonStyle);
-		buttonDif5.setPosition(buttonDif4.getX() + buttonDif4.getWidth() + BUTTONS_OFFSET,
-				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
+		buttonDif5.setPosition(buttonDif4.getX() + buttonDif4.getWidth()
+				+ BUTTONS_OFFSET, buttonSave.getY() + buttonSave.getHeight()
+				+ BUTTONS_OFFSET);
 		stage.addActor(buttonDif5);
 
 		// Creates listener
