@@ -41,8 +41,11 @@ public abstract class SubLevel {
 			this.dialogStack.peek().takeFocus();
 		}
 		else if (this.dialogStack.size() == 1){
-			this.dialogStack.pop();			
-			takeFocus();	
+			this.dialogStack.pop();
+			if(this.miniGame != null)
+				this.miniGame.takeFocus();
+			else
+				takeFocus();
 		}
 		else
 			takeFocus();
@@ -63,6 +66,7 @@ public abstract class SubLevel {
 	public abstract void onMinigameEnded();
 	
 	public void onPause(){
-		this.dialogStack.push(new PauseDialog(this.level, this));
+		if(this.dialogStack.isEmpty())
+			this.dialogStack.push(new PauseDialog(this.level, this));
 	}
 }

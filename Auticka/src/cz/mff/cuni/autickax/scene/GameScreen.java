@@ -203,7 +203,7 @@ public class GameScreen extends BaseScreen {
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty);
 		this.getGame().setScreen(Autickax.levelSelectScreen);
-		Gdx.input.setInputProcessor(Autickax.levelSelectScreen.getStage());
+		Gdx.input.setInputProcessor(Autickax.levelSelectScreen.getStage());		
 	}
 	
 	
@@ -229,21 +229,22 @@ public class GameScreen extends BaseScreen {
 		return this.levelIndex;
 	}
 	
-	
-	public void onApplicationPause(){
+	@Override
+	public void pause() {
 		this.currentPhase.onPause();
 		this.pathwayTexture.getTexture().dispose();
-		
 	}
-	public void onApplicationResume(){
+	
+	@Override
+	public void resume(){
 		FileHandle textureFile = null;
     	if(Gdx.files.isLocalStorageAvailable()){
     		textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
-    		System.out.println("Local loading...");
+    		//System.out.println("Texture of pathway is loaded from local memory.");
     	}
     	else{
     		textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
-    		System.out.println("Internal loading...");
+    		//System.out.println("Texture of pathway is loaded from internal memory.");
     	}
     	
     	
@@ -251,11 +252,10 @@ public class GameScreen extends BaseScreen {
 			Pixmap pixmap = PixmapIO.readCIM(textureFile);
 			this.pathwayTexture = new TextureRegion(new Texture(pixmap), Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 			pixmap.dispose();
-			System.out.println("Secceeded...");
+			//System.out.println("The pathway texture was loaded succesfully.");
 		}
 		else{
-			System.out.println("Failed...");
+			//System.out.println("Loading of pathway texture failed..");
 		}		
 	}
-
 }

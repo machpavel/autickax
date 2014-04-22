@@ -230,12 +230,12 @@ public class DistanceMap {
 			textureFile = Gdx.files
 					.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 							+ ".cim");
-			System.out.println("Local saving...");
+			//System.out.println("Texture of pathway was saved into local memory.");
 		} else {
 			textureFile = Gdx.files
 					.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 							+ ".cim");
-			System.out.println("Internal saving...");
+			//System.out.println("Texture of pathway was saved into internal memory.");
 		}
 		PixmapIO.writeCIM(textureFile, pixmap);
 

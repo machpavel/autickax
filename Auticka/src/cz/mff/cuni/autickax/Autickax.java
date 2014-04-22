@@ -34,8 +34,6 @@ public class Autickax extends Game {
 	}
 	
 
-	
-
 	@Override
 	public void create() {
 		Input.InitDimensions();
@@ -49,15 +47,6 @@ public class Autickax extends Game {
 		playedLevels.loadLevels();
 		
 		setScreen(Autickax.loadingScreen);
-	}
-	
-	
-	@Override
-	public void resume() {
-		if(gameScreen != null){
-			gameScreen.onApplicationResume();
-		}
-		super.resume();
 	}
 
 	public static Autickax getInstance() {
@@ -79,13 +68,5 @@ public class Autickax extends Game {
 		if(textureFile.exists())
 			textureFile.delete();
 		super.dispose();
-	}
-
-	@Override
-	public void pause() {
-		if(gameScreen != null){
-			gameScreen.onApplicationPause();
-		}		
-		super.pause();
 	}
 }
