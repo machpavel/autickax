@@ -2,6 +2,7 @@ package cz.mff.cuni.autickax.dialogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.constants.Constants;
@@ -21,6 +22,7 @@ public abstract class Comunicator extends SubLevel{
 		super(gameScreen);
 		this.parent = sublevel;
 		this.status = DialogAbstractStatus.IN_PROGRESS;
+		this.stage = new Stage(Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 		this.stage.addListener(new ScreenInputListener(this.level));
 		takeFocus();
 	}
