@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -21,10 +22,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -43,6 +47,7 @@ import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.myInputListener.MyInputListener;
 import cz.mff.cuni.autickax.myInputListener.MyInputListenerForBackground;
 import cz.mff.cuni.autickax.myInputListener.MyInputListenerForGameObjects;
+import cz.mff.cuni.autickax.myInputListener.MyTextNumberListener;
 import cz.mff.cuni.autickax.myInputListener.PlacedObjectsInputListener;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
@@ -57,10 +62,12 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	protected static final int FINISH_TYPE = 2;
 	protected static final int START_TYPE = 4;
+	protected static final float TIME_LIMIT_DEFAULT = 10;
 
 	private final TextButtonStyle textButtonStyle;
+	private final TextFieldStyle textFieldStyle;
 
-	private float timeLimit = 10;
+	private float timeLimit = TIME_LIMIT_DEFAULT;
 
 	// Rendering
 	private OrthographicCamera camera;
@@ -74,8 +81,8 @@ public final class EditorScreen extends BaseScreenEditor {
 	private Finish finish;
 
 	// Cached font
-	private BitmapFont font;
 
+	private BitmapFont font;
 	// Pathway
 	private Pathway pathway;
 
@@ -87,6 +94,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	Button buttonRestart;
 	Button buttonSave;
 	Button buttonLoad;
+	TextField timeTextField;
 	ArrayList<Button> backgroundButtons = new ArrayList<Button>();
 	private boolean anyButtonTouched = false;
 
@@ -122,6 +130,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		ColorDrawable textButtonBackground = new ColorDrawable(Color.GREEN);
 		this.textButtonStyle = new TextButtonStyle(textButtonBackground,
 				textButtonBackground, textButtonBackground, this.font);
+		this.textFieldStyle = new TextFieldStyle(this.font, new Color(1, 0, 0, 1), new ColorDrawable(Color.GREEN), new ColorDrawable(Color.WHITE), new ColorDrawable(Color.BLUE));
 
 		restart();
 	}
@@ -139,6 +148,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		createBackgroundButtons();
 		createGameObjectsButtons();
 		createDifficultyButtons();
+		createTextField();
 
 		this.gameObjects = new ArrayList<GameObject>();
 
@@ -149,7 +159,12 @@ public final class EditorScreen extends BaseScreenEditor {
 		
 		objectIsDragging = false;
 		draggedObject = null;
+		timeLimit = TIME_LIMIT_DEFAULT;
+		timeTextField.setText(new DecimalFormat().format(timeLimit));
+		stage.setKeyboardFocus(timeTextField);
 	}
+
+
 
 	public void LoadLevel(FileHandle file) throws Exception {
 		restart();
@@ -162,7 +177,8 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.gameObjects = level.getGameObjects();
 		this.pathway = level.getPathway();
 		this.start = level.getStart();
-		this.timeLimit = level.getTimeLimit();
+		timeLimit = level.getTimeLimit();
+		timeTextField.setText(new DecimalFormat().format(timeLimit));
 		this.background.SetType(level.getBackgroundType());
 
 		for (GameObject gameObject : this.gameObjects) {
@@ -362,7 +378,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			finish.toXml(xml);
 
 			xml.element("levelBackgroundType", this.background.GetType());
-			xml.element("timeLimit", timeLimit);
+			xml.element("timeLimit", getTimeLimit());
 
 			xml.pop();
 			xml.close();
@@ -716,6 +732,40 @@ public final class EditorScreen extends BaseScreenEditor {
 				difficulty = Difficulty.Extreme;
 			}
 		});
+	}
+	
+	private void createTextField() {
+		timeTextField = new TextField(new DecimalFormat().format(timeLimit), this.textFieldStyle);
+		timeTextField.setPosition(buttonRestart.getX() + buttonRestart.getWidth() + 20, buttonRestart.getHeight());
+		timeTextField.setTextFieldListener(new MyTextNumberListener(this));
+		timeTextField.addListener(new InputListener() {
+			@Override
+			public boolean keyTyped(InputEvent event, char character) {
+				if(event.getCharacter() == '+' || event.getKeyCode() == 19 || event.getKeyCode() == 22){
+					timeLimit++;
+					if(timeLimit > 99)
+						timeLimit = 99;
+					timeTextField.setText(new DecimalFormat().format(timeLimit));
+				}
+				else if(event.getCharacter() == '-' || event.getKeyCode() == 20 || event.getKeyCode() == 21){
+					timeLimit--;
+					if(timeLimit < 0)
+						timeLimit = 0;
+					timeTextField.setText(new DecimalFormat().format(timeLimit));
+				}
+				timeTextField.setCursorPosition(timeTextField.getText().length());				
+				return super.keyTyped(event, character);
+			}
+		});
+		stage.addActor(timeTextField);
+	}
+
+	public float getTimeLimit() {
+		return timeLimit;
+	}
+
+	public void setTimeLimit(float timeLimit) {
+		this.timeLimit = timeLimit;
 	}
 
 }
