@@ -115,9 +115,8 @@ public class SubLevel2 extends SubLevel {
 		Minigame miniGameLocal = this.miniGame;
 		eraseMinigame();
 		switch (miniGameLocal.getResult()) {
-		case FAILED:
-			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
-				this.dialogStack.push(new DecisionDialog(this.level, this, miniGameLocal.getResultMessage(), false));
+		case FAILED:			
+			this.dialogStack.push(new DecisionDialog(this.level, this, miniGameLocal.getResultMessage(), false));
 			stats.increaseFailed();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
 			break;
@@ -256,6 +255,7 @@ public class SubLevel2 extends SubLevel {
 					this.objectsInCollision.add(gameObject);
 					stats.increaseCollisions();
 					this.miniGame = gameObject.getMinigame(this.level, this);
+					break;
 				}
 			}
 			

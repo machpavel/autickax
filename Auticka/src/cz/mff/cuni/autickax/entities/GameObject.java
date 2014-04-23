@@ -60,6 +60,7 @@ abstract public class GameObject implements Externalizable {
 		this.position = new Vector2(startX, startY);
 		this.rotation = 0;
 		this.type = type;
+		setTexture(type);
 	}
 
 	public GameObject(GameObject object) {
@@ -195,12 +196,8 @@ abstract public class GameObject implements Externalizable {
 	}
 
 	public void setTexture(String name) {
-		// TODO: This condition is temporary hack due to loading levels in
-		// AssetsProcessor. REWRITE!
-//		if (this.gameScreen != null && this.gameScreen.getGame() != null) {
 			this.texture = Autickax.getInstance().assets.getGraphics(name);
 			setMeasurements(this.texture.getRegionWidth(), this.texture.getRegionHeight());
-//		}
 	}
 
 	/**

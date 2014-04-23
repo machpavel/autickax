@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
@@ -132,24 +133,24 @@ public final class Car extends ShiftableGameObject {
 	@Override
 	public void setTexture(int type) {
 		if(this.positionTextures == null)
-			this.positionTextures = new TextureRegion[8];
+			this.positionTextures = new TextureRegion[8];		
 		switch (type) {
 		case 1:
-			this.positionTextures[0] = this.gameScreen.getGame().assets
+			this.positionTextures[0] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_0_TEXTURE_NAME);
-			this.positionTextures[1] = this.gameScreen.getGame().assets
+			this.positionTextures[1] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_1_TEXTURE_NAME);
-			this.positionTextures[2] = this.gameScreen.getGame().assets
+			this.positionTextures[2] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_2_TEXTURE_NAME);
-			this.positionTextures[3] = this.gameScreen.getGame().assets
+			this.positionTextures[3] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_3_TEXTURE_NAME);
-			this.positionTextures[4] = this.gameScreen.getGame().assets
+			this.positionTextures[4] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_4_TEXTURE_NAME);
-			this.positionTextures[5] = this.gameScreen.getGame().assets
+			this.positionTextures[5] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_5_TEXTURE_NAME);
-			this.positionTextures[6] = this.gameScreen.getGame().assets
+			this.positionTextures[6] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_6_TEXTURE_NAME);
-			this.positionTextures[7] = this.gameScreen.getGame().assets
+			this.positionTextures[7] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_7_TEXTURE_NAME);
 			super.texture = this.positionTextures[0];			
 			super.setMeasurements(texture.getRegionWidth(), texture.getRegionHeight());

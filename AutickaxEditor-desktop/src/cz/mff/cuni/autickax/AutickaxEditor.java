@@ -39,6 +39,7 @@ public class AutickaxEditor extends Game {
 		cfg.useGL20 = false;
 		cfg.width = (int) (Constants.WORLD_WIDTH + EditorConstants.CONTROL_PANEL_WIDTH);
 		cfg.height = (int) Constants.WORLD_HEIGHT;
+		cfg.resizable = false;
 
 		new LwjglApplication(new AutickaxEditor(), cfg);
 	}

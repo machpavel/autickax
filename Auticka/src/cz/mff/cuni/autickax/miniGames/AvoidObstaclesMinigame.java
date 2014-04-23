@@ -170,6 +170,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	private void updateInDrivingState(float delta) {
 		// Focus was lost
 		if (!this.car.isDragged()) {
+			//TODO:
 			// this.parent.setDialog(new DecisionDialog(this.level, this,
 			// "Pustil jsi auto", false));
 			fail();
@@ -185,6 +186,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			// Collision detection
 			for (GameObject gameObject : gameObjects) {
 				if (this.car.collides(gameObject)) {
+					//TODO:
 					// this.parent.setDialog(new DecisionDialog(this.level,
 					// this, "Narazil jsi do kamene", false));
 					fail();
