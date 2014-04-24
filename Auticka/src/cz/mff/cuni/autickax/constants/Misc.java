@@ -9,7 +9,7 @@ public final class Misc {
 	//
 
 	/** Determines the color of a pathway */
-	public final Color PATHWAY_COLOR = new Color(0.75f, 0.7f, 0.6f, 0.9f);
+	public final Color PATHWAY_COLOR = new Color(0.75f, 0.7f, 0.6f, 1f);
 	/** How many pictures should be blended from the border of pathway */
 	public final float PATHWAY_BORDER_BLEND_DISTANCE = 2;
 	/**
