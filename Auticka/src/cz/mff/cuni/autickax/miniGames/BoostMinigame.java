@@ -33,7 +33,7 @@ public final class BoostMinigame extends Minigame {
 	public BoostMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
 		setDifficulty(this.level.getDifficulty());
-		this.backgrountTexture = new TextureRegionDrawable(
+		this.backgroundTexture = new TextureRegionDrawable(
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.BOOST_MINIGAME_BACKGROUND_TEXTURE));
 

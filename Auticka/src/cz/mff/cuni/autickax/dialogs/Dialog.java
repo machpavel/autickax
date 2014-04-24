@@ -1,10 +1,12 @@
 package cz.mff.cuni.autickax.dialogs;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveLabel;
 
@@ -13,10 +15,17 @@ public abstract class Dialog extends Comunicator{
 		
 	public Dialog(GameScreen gameScreen, SubLevel parent, String message) {
 		super(gameScreen, parent);
-		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.dialog.DIALOG_BACKGROUND_TEXTURE));
+		this.backgroundTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.dialog.DIALOG_BACKGROUND_TEXTURE));
 		this.messageLabel = ScreenAdaptiveLabel.getDialogLabel(message);
-		this.messageLabel.setCenterPosition(Constants.dialog.DIALOG_MESSAGE_POSITION_X, Constants.dialog.DIALOG_MESSAGE_POSITION_Y);
-		this.stage.addActor(this.messageLabel);
+		
+		this.messageLabel.setWrap(true);
+		this.messageLabel.setAlignment(0,0);
+		this.messageLabel.setFontScaleX(Input.xStretchFactorInv);
+		this.messageLabel.setFontScaleY(Input.yStretchFactorInv);
+		Table table = new Table();
+		table.setPosition(Constants.dialog.DIALOG_MESSAGE_POSITION_X * Input.xStretchFactorInv, Constants.dialog.DIALOG_MESSAGE_POSITION_Y * Input.yStretchFactorInv);
+		table.add(messageLabel).width(Constants.dialog.DIALOG_MESSAGE_WIDTH);		
+		this.stage.addActor(table);
 	}
 	protected void playButtonSound()
 	{

@@ -45,7 +45,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 
 		setDifficulty(this.level.getDifficulty());
 
-		this.backgrountTexture = new TextureRegionDrawable(
+		this.backgroundTexture = new TextureRegionDrawable(
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
 

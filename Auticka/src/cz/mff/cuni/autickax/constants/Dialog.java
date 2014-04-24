@@ -18,6 +18,7 @@ public final class Dialog {
 
 	public final float DIALOG_MESSAGE_POSITION_X = 400;
 	public final float DIALOG_MESSAGE_POSITION_Y = 270;
+	public final float DIALOG_MESSAGE_WIDTH = 600;	
 
 	public final String MESSAGE_DIALOG_BUTTON_OK_TEXTURE = "popOk";
 	public final String MESSAGE_DIALOG_BUTTON_OK_OVER_TEXTURE = "popOkOver";

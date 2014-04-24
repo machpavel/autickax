@@ -33,7 +33,7 @@ public final class GearShiftMinigame extends Minigame{
 	public GearShiftMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
 		setDifficulty(this.level.getDifficulty());		
-		this.backgrountTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.minigames.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
+		this.backgroundTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.minigames.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
 				
 		if(Autickax.settings.showTooltips)
 			this.parent.setDialog(new MessageDialog(screen, parent, Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO));
