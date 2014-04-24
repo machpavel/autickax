@@ -132,6 +132,8 @@ public final class Car extends ShiftableGameObject {
 
 	@Override
 	public void setTexture(int type) {
+		if (Autickax.getInstance() == null)
+			return;
 		if(this.positionTextures == null)
 			this.positionTextures = new TextureRegion[8];		
 		switch (type) {

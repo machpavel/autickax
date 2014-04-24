@@ -62,9 +62,7 @@ public class Level implements java.io.Externalizable {
 	}
 	
 	public void parseLevel(FileHandle file) throws Exception {
-	
-		System.out.println("Loading level " + file.name());
-		
+			
 		Element root = new XmlReader().parse(file);			
 		
 		this.pathway = Pathway.parsePathway(root);			
@@ -99,7 +97,7 @@ public class Level implements java.io.Externalizable {
 		// Time limit
 		this.timeLimit = root.getFloat("timeLimit");
 		
-		System.out.println("Loading level done...");
+		System.out.println("Loading level \"" + file.name() + "\" done.");
 	}
 	
 	public void calculateDistanceMap() {

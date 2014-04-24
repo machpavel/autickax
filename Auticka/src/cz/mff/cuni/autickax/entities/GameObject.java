@@ -195,9 +195,20 @@ abstract public class GameObject implements Externalizable {
 		//this.boundingCircleRadius = (width + height) / 4;		
 	}
 
-	public void setTexture(String name) {
+	/**
+	 * Sets texture from main game texture atlas. 
+	 * @param name
+	 * @return True when texture was set.
+	 */
+	public boolean setTexture(String name) {
+		if(Autickax.getInstance() != null){
 			this.texture = Autickax.getInstance().assets.getGraphics(name);
 			setMeasurements(this.texture.getRegionWidth(), this.texture.getRegionHeight());
+			return true;
+		}
+		else
+			return false;
+			
 	}
 
 	/**
