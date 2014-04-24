@@ -10,6 +10,7 @@ import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveButton;
 import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveTextButton;
 
 public class LevelSelectScreen extends BaseScreen {
@@ -17,23 +18,32 @@ public class LevelSelectScreen extends BaseScreen {
 	private final Difficulty difficulty;
 	
 	private static final int buttonsStartXPosition = 20;
-	private static final int buttonsStartYPosition = 310;
+	private static final int buttonsStartYPosition = 330;
 	private static final int buttonsMaxXPosition = 750;
 	private static final int buttonsXShift = 150;
 	private static final int buttonsYShift = 150;
+	private static final int maximumCountOfButtons = Constants.menu.DISPLAYED_LEVELS_MAX_COUNT;
 	
-	public LevelSelectScreen(final Difficulty difficulty) {
+	private static final int leftShifterPositionX = 5;
+	private static final int leftShifterPositionY = 200;
+	private static final int rightShifterPositionX = 750;
+	private static final int rightShifterPositionY = 200;
+	
+	public LevelSelectScreen(final Difficulty difficulty){
+		this(difficulty, 0);
+	}
+	
+	public LevelSelectScreen(final Difficulty difficulty, final int levelsOffset) {
 		
 		this.difficulty = difficulty;
-		
 		
 		Vector<Level> levels = this.difficulty.getAvailableLevels();
 		Vector<PlayedLevel> playedLevels = this.difficulty.getPlayedLevels();
 		
 		int x = buttonsStartXPosition;
 		int y = buttonsStartYPosition;
-		
-		for (int i = 0; i < levels.size(); ++i) {		
+		int numberOfButtons = Math.min(maximumCountOfButtons, levels.size() - levelsOffset);
+		for (int i = levelsOffset; i < levelsOffset + numberOfButtons; ++i) {		
 			final int levelIndex = i;
 			
 			String buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
@@ -68,7 +78,7 @@ public class LevelSelectScreen extends BaseScreen {
 			}
 			
 			ScreenAdaptiveTextButton levelButton = new ScreenAdaptiveTextButton (
-				Integer.toString(i),
+				Integer.toString(i + 1),
 				getGame().assets.getGraphics(buttonTexture),
 				getGame().assets.getGraphics(buttonTextureHover),
 				getGame().assets.getGraphics(Constants.menu.BUTTON_MENU_LEVEL_DISABLED),
@@ -107,6 +117,52 @@ public class LevelSelectScreen extends BaseScreen {
 				y -= LevelSelectScreen.buttonsYShift;
 			}
 		}
+		
+		// Creates shift to the left
+		if(levelsOffset > 0){
+			createShiftButton(leftShifterPositionX, leftShifterPositionY, ShifterDirection.LEFT, levelsOffset);
+		}
+		// Creates shift to the right
+		if(levelsOffset + maximumCountOfButtons < levels.size()){
+			createShiftButton(rightShifterPositionX, rightShifterPositionY, ShifterDirection.RIGHT, levelsOffset);
+		}
+	}
+	
+	private void createShiftButton(float x, float y, ShifterDirection direction,  final int levelsOffset){
+		final int shiftChange;
+		String buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
+		String buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
+		switch (direction) {
+		case LEFT:
+			shiftChange = -maximumCountOfButtons;
+			buttonTexture = Constants.menu.BUTTON_MENU_LEFT_SHIFTER;
+			buttonTextureHover = Constants.menu.BUTTON_MENU_LEFT_SHIFTER_HOVER;
+			break;
+		case RIGHT:
+			shiftChange = maximumCountOfButtons;
+			buttonTexture = Constants.menu.BUTTON_MENU_RIGHT_SHIFTER;
+			buttonTextureHover = Constants.menu.BUTTON_MENU_RIGHT_SHIFTER_HOVER;
+			break;
+		default:
+			shiftChange = 0;
+			break;
+		}
+		
+		ScreenAdaptiveButton button = new ScreenAdaptiveButton(
+				getGame().assets.getGraphics(buttonTexture),
+				getGame().assets.getGraphics(buttonTextureHover))
+				{
+			
+			@Override
+			public void action() {
+				if (Autickax.levelSelectScreen != null)
+					Autickax.levelSelectScreen.dispose();
+				Autickax.levelSelectScreen = new LevelSelectScreen(difficulty, levelsOffset + shiftChange);
+				getGame().setScreen(Autickax.levelSelectScreen);				
+			}
+		};
+		button.setPosition(x, y);
+		stage.addActor(button);
 	}
 
 	@Override
@@ -121,6 +177,10 @@ public class LevelSelectScreen extends BaseScreen {
 	protected void clearScreenWithColor() {
 		Gdx.gl.glClearColor(Constants.menu.LEVELS_MENU_RED, Constants.menu.LEVELS_MENU_GREEN, Constants.menu.LEVELS_MENU_BLUE, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+	}
+	
+	private enum ShifterDirection{
+		LEFT,RIGHT
 	}
 
 }

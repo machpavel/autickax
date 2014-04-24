@@ -50,5 +50,11 @@ public final class Menu {
 	public final String BUTTON_MENU_MUSIC_ON_HOVER = "menuMusicOnHover";
 	public final String BUTTON_MENU_MUSIC_OFF = "menuMusicOff";
 	public final String BUTTON_MENU_MUSIC_OFF_HOVER = "menuMusicOffHover";
+	
+	public final String BUTTON_MENU_LEFT_SHIFTER = "leftShifter";
+	public final String BUTTON_MENU_LEFT_SHIFTER_HOVER = "leftShifterHover";
+	public final String BUTTON_MENU_RIGHT_SHIFTER = "rightShifter";
+	public final String BUTTON_MENU_RIGHT_SHIFTER_HOVER = "rightShifterHover";
+	public final int DISPLAYED_LEVELS_MAX_COUNT = 15;
 
 }

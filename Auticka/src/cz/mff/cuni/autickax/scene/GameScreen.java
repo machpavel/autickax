@@ -201,7 +201,7 @@ public class GameScreen extends BaseScreen {
 		this.getGame().assets.soundAndMusicManager.stopRaceMusic();
 		this.getGame().assets.soundAndMusicManager.playMenuMusic();
 		Autickax.levelSelectScreen.dispose();
-		Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty);
+		Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty, (levelIndex / Constants.menu.DISPLAYED_LEVELS_MAX_COUNT) * Constants.menu.DISPLAYED_LEVELS_MAX_COUNT);
 		this.getGame().setScreen(Autickax.levelSelectScreen);
 		Gdx.input.setInputProcessor(Autickax.levelSelectScreen.getStage());		
 	}
