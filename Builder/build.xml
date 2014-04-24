@@ -5,7 +5,7 @@
     <target name="create_run_jar">
         <jar destfile="auticka.jar" filesetmanifest="mergewithoutmain">
             <manifest>
-                <attribute name="Main-Class" value="cz.mff.cuni.autickax.Main"/>
+                <attribute name="Main-Class" value="cz.mff.cuni.autickax.AutickaxDesktop"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
             <fileset dir="../Autickax-desktop/bin"/>
