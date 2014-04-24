@@ -234,7 +234,7 @@ public class SubLevel2 extends SubLevel {
 			this.updateScore();
 			this.unlockNewLevel();
 			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB2_CHEER, Constants.sounds.SOUND_BIG_CHEER_VOLUME);
-			dialogStack.push(new CompleteLevelDialog(this.level, this, this.stats, this.isNextLevelAvaible()));
+			dialogStack.push(new CompleteLevelDialog(this.level, this, this.stats, true));
 		}
 		else{
 			Vector2 newPos = moveCarToNewPosition(delta);
@@ -268,7 +268,6 @@ public class SubLevel2 extends SubLevel {
 
 	
 	private void updateInFinishState(float delta) {
-		//TODO not to main screen
 		this.level.goToMainScreen();
 	}
 
@@ -399,8 +398,11 @@ public class SubLevel2 extends SubLevel {
 		unlockNewLevel();
 		
 		switch (dialogLocal.getDecision()) {
-			case CONTINUE:				
-				this.playNextLevel();
+			case CONTINUE:	
+				if(this.isNextLevelAvaible())
+					this.playNextLevel();
+				else
+					this.dialogStack.push(new MessageDialog(this.level, this, this.level.getDifficulty().toString() + Constants.strings.DIFFICULTY_FINISHED));
 				break;
 			case RESTART:
 				this.level.switchToPhase(this.phase1);				
@@ -410,8 +412,7 @@ public class SubLevel2 extends SubLevel {
 				break;
 			default:
 				break;
-		}
-		
+		}		
 	}
 
 	private void unlockNewLevel() {
