@@ -50,6 +50,7 @@ public class SubLevel2 extends SubLevel {
 	private float elapsedFromEngine = 0.0f;
 	
 	private Difficulty difficulty;
+	private boolean playNextLevel = false; //It is for decision in final state. If should be played next level or go to main screen; 
 	
 	private TimeStatusBar timeStatusBar;
 	private GameStatistics stats;
@@ -268,7 +269,10 @@ public class SubLevel2 extends SubLevel {
 
 	
 	private void updateInFinishState(float delta) {
-		this.level.goToMainScreen();
+		if(this.playNextLevel) 
+			this.playNextLevel();
+		else
+			this.level.goToMainScreen();
 	}
 
 	private void updateInMistakeState(float delta) {
@@ -400,7 +404,7 @@ public class SubLevel2 extends SubLevel {
 		switch (dialogLocal.getDecision()) {
 			case CONTINUE:	
 				if(this.isNextLevelAvaible())
-					this.playNextLevel();
+					this.playNextLevel = true;
 				else
 					this.dialogStack.push(new MessageDialog(this.level, this, this.level.getDifficulty().toString() + Constants.strings.DIFFICULTY_FINISHED));
 				break;
@@ -419,6 +423,9 @@ public class SubLevel2 extends SubLevel {
 		if (this.isNextLevelAvaible() &&
 				this.level.getLevelIndex() == this.level.getDifficulty().getPlayedLevels().size() - 1) {
 			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte)0));
+			if(Autickax.settings.showTooltips){
+				this.dialogStack.push(new MessageDialog(this.level, this, Constants.strings.NEW_LEVEL_UNLOCK));	
+			}			
 		}
 	}
 
