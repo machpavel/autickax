@@ -214,17 +214,7 @@ public class SubLevel2 extends SubLevel {
 
 	}
 
-	private void playSound(GameObject collisionOrigin)
-	{
-		if (Autickax.settings.playSounds) {
-			String soundName = collisionOrigin.getSoundName();
-			if (!soundName.equals(Constants.sounds.SOUND_NO_SOUND))
-			{
-				this.level.getGame().assets.soundAndMusicManager.playSound(soundName, Constants.sounds.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
-			}
-		}
-			
-	}
+
 	
 	private void updateInDrivingState(float delta) {
 
