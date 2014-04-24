@@ -43,8 +43,8 @@ public final class Minigames {
 
 	// Boost
 	public final String BOOST_MINIGAME_BACKGROUND_TEXTURE = "BoostMinigameBackground";
-	public final String BOOST_MINIGAME_WAITING_BUTTON_TEXTURE = "BoostMinigameButtonUp";
-	public final String BOOST_MINIGAME_HIGHLIGHTED_BUTTON_TEXTURE = "BoostMinigameButtonDown";
+	public final String BOOST_MINIGAME_WAITING_BUTTON_TEXTURE = "BoostMinigameWaitingButton";
+	public final String BOOST_MINIGAME_HIGHLIGHTED_BUTTON_TEXTURE = "BoostMinigameHighlightButton";
 	public final float BOOST_MINIGAME_BUTTONS_DISTANCE = 60;
 	public final int BOOST_MINIGAME_ROWS_KIDDIE = 1;
 	public final int BOOST_MINIGAME_ROWS_BEGINNER = 2;
