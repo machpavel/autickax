@@ -214,7 +214,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			break;
 		case HOLES:
 			this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_AVOID_HOLES_FAIL;
-			this.result = ResultType.PROCEEDED_WITH_VALUE;
+			this.result = ResultType.FAILED_WITH_VALUE;
 			this.resultValue = FAIL_VALUE;
 			break;
 		default:
