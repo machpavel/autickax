@@ -46,8 +46,7 @@ public class SubLevel1 extends SubLevel {
 		timeStatusBar = new TimeStatusBar(gameScreen,tLimit, true);
 		pathway = gameScreen.getPathWay();
 
-		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
-				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
+
 
 		checkPoints = new LinkedList<CheckPoint>();	
 		state = SubLevel1States.BEGINNING_STATE;
@@ -55,6 +54,9 @@ public class SubLevel1 extends SubLevel {
 		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 
 		this.level.getFinish().resetBoundingRadius();
 				
+		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
+				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
+		
 		reset();
 	}
 	
@@ -143,6 +145,17 @@ public class SubLevel1 extends SubLevel {
 			switchToMistakeState(Constants.strings.PHASE_1_TIME_EXPIRED);
 			return;
 		}
+		
+		
+		//collision checking
+		/*for (GameObject gameObject : this.level.getGameObjects()) {			
+			if (gameObject instanceof cz.mff.cuni.autickax.entities.Tree && this.level.getCar().collides(gameObject)) {
+				playSound(gameObject);
+				switchToMistakeState("KOLIZE");
+				return;
+			}
+		}*/
+		
 
 		this.level.getCar().update(delta);
 		// did not move from last update
@@ -186,7 +199,7 @@ public class SubLevel1 extends SubLevel {
 						Vector2 way = new Vector2(wayPoints.peekFirst());
 						Vector2 pos = new Vector2(this.level.getCar()
 								.getPosition());
-						if (way.sub(pos).len() <= Constants.misc.MAX_DISTANCE_FROM_PATHWAY)
+						if (way.sub(pos).len() <= Constants.misc.MAX_DISTANCE_FROM_PATHWAY*1.2)
 							wayPoints.removeFirst();
 						else
 							canRemove = false;
@@ -315,7 +328,7 @@ public class SubLevel1 extends SubLevel {
 		}
 		
 		/*shapeRenderer.setColor(new Color(0.1f, 0.1f, 0.9f, 0.5f));
-		shapeRenderer.circle(this.level.getFinish().getX(), this.level.getFinish().getY(), Constants.FINISH_BOUNDING_RADIUS);
+		//shapeRenderer.circle(this.level.getFinish().getX(), this.level.getFinish().getY(), Constants.FINISH_BOUNDING_RADIUS);
 		
 		shapeRenderer.setColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
 		for(Vector2 waypoint: wayPoints)
