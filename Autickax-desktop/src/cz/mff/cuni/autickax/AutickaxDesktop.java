@@ -11,7 +11,7 @@ public class AutickaxDesktop {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "AutickaX";
 		cfg.useGL20 = false;
-		cfg.width =800;
+		cfg.width = 800;
 		cfg.height = 480;
 		cfg.fullscreen = false;
 		cfg.resizable = false;

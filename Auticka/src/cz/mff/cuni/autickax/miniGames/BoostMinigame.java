@@ -10,6 +10,7 @@ import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.miniGames.support.BoostMinigameButton;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class BoostMinigame extends Minigame {

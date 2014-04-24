@@ -1,33 +1,27 @@
-package cz.mff.cuni.autickax.miniGames;
+package cz.mff.cuni.autickax.miniGames.support;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
 import cz.mff.cuni.autickax.input.Input;
+import cz.mff.cuni.autickax.miniGames.SwitchingMinigame;
 
-public class BoostMinigameButton extends Button {
-	private int index;
-	private BoostMinigame minigame;
-
-	public BoostMinigameButton(int index, BoostMinigame minigame, TextureRegion textureRegion ) {		
-		super(new TextureRegionDrawable(textureRegion));
-
+public class SwitchingMinigameButton extends Button {
+	SwitchingMinigame minigame;
+	public SwitchingMinigameButton(ButtonStyle style, final SwitchingMinigame minigame) {		
+		super(style);
+		this.minigame = minigame;
+		
 		this.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				BoostMinigameButton.this.minigame.buttonPressed(BoostMinigameButton.this.index);
+				if(!SwitchingMinigameButton.this.isDisabled()){
+					minigame.switchButtons();
+				}				
 				return true;
 			}			
-		});
-		
-		this.index = index;
-		this.minigame = minigame;
-		
-		
+		});					
 	}
 
 	@Override

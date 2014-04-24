@@ -13,8 +13,11 @@ public final class Strings {
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not enough accurate. You will be punished by speed reduction";
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS = "TODO:";
 	public final String TOOLTIP_MINIGAME_BOOST_WHAT_TO_DO = "TODO: what to do";
+	public final String TOOLTIP_MINIGAME_SWITCHING_WHAT_TO_DO = "TODO: what to do";
 	public final String TOOLTIP_MINIGAME_BOOST_FAIL = "TODO: fail";
 	public final String TOOLTIP_MINIGAME_BOOST_SUCCESS = "TODO: success";
+	public final String TOOLTIP_MINIGAME_SWITCHING_FAIL = "TODO: fail";
+	public final String TOOLTIP_MINIGAME_SWITCHING_SUCCESS = "TODO: success";
 	public final String TOOLTIP_MINIGAME_AVOID_HOLES_FAIL = " You felt into a hole. You will be punised by speed reduction";
 	public final String TOOLTIP_MINIGAME_AVOID_STONES_FAIL = "You crashed into a stone. Level failed.";
 	public final String TOOLTIP_MINIGAME_AVOID_SUCCESS = "TODO: ";

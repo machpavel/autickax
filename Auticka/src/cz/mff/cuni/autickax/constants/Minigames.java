@@ -68,4 +68,18 @@ public final class Minigames {
 	public final int BOOST_MINIGAME_HITS_LIMIT_NORMAL = 5;
 	public final int BOOST_MINIGAME_HITS_LIMIT_HARD = 10;
 	public final int BOOST_MINIGAME_HITS_LIMIT_EXTREME = 15;
+	
+	// Switching
+	public final String SWITCHING_MINIGAME_BACKGROUND_TEXTURE = "SwitchingMinigameBackground";
+	public final String SWITCHING_MINIGAME_BUTTON_TEXTURE = "SwitchingMinigameButton";
+	public final String SWITCHING_MINIGAME_DISABLED_BUTTON_TEXTURE = "SwitchingMinigameButtonDisabled";
+	public final String SWITCHING_MINIGAME_SLIDER_BACKGROUND_TEXTURE = "SwitchingSliderBackground";
+	public final String SWITCHING_MINIGAME_SLIDER_KNOB_TEXTURE = "SwitchingSliderKnob";
+	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_KIDDIE = 1;
+	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_BEGINNER = 5;
+	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_NORMAL = 10;
+	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_HARD = 20;
+	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_EXTREME = 30;
+	
+	
 }
