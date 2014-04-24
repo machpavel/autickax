@@ -45,7 +45,7 @@
 		</controlPoints>
 	</pathway>
 	<entities>
-		<tree X="158.0" Y="135.0" type="16"/>
+		<fence X="158.0" Y="135.0" type="1"/>
 		<mud X="457.0" Y="158.0" type="16"/>
 		<mud X="552.0" Y="415.0" type="16"/>
 		<mud X="671.0" Y="120.0" type="16"/>

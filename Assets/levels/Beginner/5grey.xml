@@ -28,10 +28,10 @@
 		<stone X="502.0" Y="121.0" type="4"/>
 		<stone X="361.0" Y="135.0" type="3"/>
 		<stone X="564.0" Y="220.0" type="1"/>
-		<tree X="750.0" Y="444.0" type="20"/>
-		<tree X="748.0" Y="399.0" type="21"/>
-		<tree X="410.0" Y="187.0" type="23"/>
-		<tree X="183.0" Y="99.0" type="18"/>
+		<parkingCar X="750.0" Y="444.0" type="1"/>
+		<parkingCar X="748.0" Y="399.0" type="2"/>
+		<parkingCar X="410.0" Y="187.0" type="4"/>
+		<wall X="183.0" Y="99.0" type="1"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="683.1667" Y="137.66667" type="4"/>

@@ -70,13 +70,13 @@
 	</pathway>
 	<entities>
 		<tree X="411.0" Y="330.0" type="6"/>
-		<tree X="582.0" Y="365.0" type="18"/>
-		<tree X="582.0" Y="233.0" type="16"/>
-		<tree X="261.0" Y="87.0" type="21"/>
+		<wall X="582.0" Y="365.0" type="1"/>
+		<fence X="582.0" Y="233.0" type="1"/>
+		<parkingCar X="261.0" Y="87.0" type="2"/>
 		<hole X="104.0" Y="233.0" type="1"/>
 		<hole X="41.0" Y="358.0" type="3"/>
 		<mud X="198.0" Y="449.0" type="3"/>
-		<tree X="601.0" Y="98.0" type="23"/>
+		<parkingCar X="601.0" Y="98.0" type="4"/>
 		<mud X="292.0" Y="376.0" type="1"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>

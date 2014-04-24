@@ -22,12 +22,12 @@
 	</pathway>
 	<entities>
 		<mud X="246.0" Y="241.0" type="17"/>
-		<tree X="246.0" Y="267.0" type="11"/>
+		<house X="246.0" Y="267.0" type="1"/>
 		<mud X="440.0" Y="420.0" type="17"/>
 		<mud X="470.0" Y="402.0" type="17"/>
 		<tree X="439.0" Y="443.0" type="10"/>
 		<mud X="489.0" Y="41.0" type="17"/>
-		<tree X="727.0" Y="79.0" type="11"/>
+		<house X="727.0" Y="79.0" type="1"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="325.5" Y="133.66667" type="4"/>

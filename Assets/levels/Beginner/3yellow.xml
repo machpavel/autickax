@@ -22,15 +22,15 @@
 	</pathway>
 	<entities>
 		<tree X="680.0" Y="68.0" type="12"/>
-		<tree X="431.0" Y="219.0" type="11"/>
+		<house X="431.0" Y="219.0" type="1"/>
 		<tree X="370.0" Y="375.0" type="10"/>
 		<tree X="530.0" Y="317.0" type="12"/>
 		<tree X="478.0" Y="40.0" type="10"/>
-		<tree X="476.0" Y="440.0" type="11"/>
+		<house X="476.0" Y="440.0" type="1"/>
 		<tree X="45.0" Y="436.0" type="12"/>
-		<tree X="187.0" Y="269.0" type="11"/>
+		<house X="187.0" Y="269.0" type="1"/>
 		<tree X="58.0" Y="58.0" type="10"/>
-		<tree X="755.0" Y="421.0" type="11"/>
+		<house X="755.0" Y="421.0" type="1"/>
 		<tree X="738.0" Y="161.0" type="12"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>

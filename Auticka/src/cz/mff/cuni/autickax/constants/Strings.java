@@ -8,6 +8,11 @@ public final class Strings {
 	// TODO: do TODO strings
 	public final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway with your finger, hurry to finish and avoid nasty objects! ";
 	public final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid this obstacle";
+	public final String TOOLTIP_MINIGAME_CRASHED_TREE_RESULT_MESSAGE = "Hey!! You crashed into a tree!";
+	public final String TOOLTIP_MINIGAME_CRASHED_FENCE_RESULT_MESSAGE = "Hey!! You crashed into a fence!";
+	public final String TOOLTIP_MINIGAME_CRASHED_WALL_RESULT_MESSAGE = "Hey!! You crashed into a wall!";
+	public final String TOOLTIP_MINIGAME_CRASHED_HOUSE_RESULT_MESSAGE = "Hey!! You crashed into a house!";
+	public final String TOOLTIP_MINIGAME_CRASHED_PARKING_CAR_RESULT_MESSAGE = "Hey!! You crashed into a parking car!";
 	public final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and reach finish";
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever to the correct position";
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not enough accurate. You will be punished by speed reduction";

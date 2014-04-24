@@ -89,6 +89,18 @@ abstract public class GameObject implements Externalizable {
 		else if (objectName.equals("tree")){
 			retval = new Tree(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
 		}
+		else if (objectName.equals("fence")){
+			retval = new Fence(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("parkingCar")){
+			retval = new ParkingCar(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("wall")){
+			retval = new Wall(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
+		else if (objectName.equals("house")){
+			retval = new House(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
+		}
 		else if (objectName.equals("hole")){
 			retval = new Hole(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
 		}
