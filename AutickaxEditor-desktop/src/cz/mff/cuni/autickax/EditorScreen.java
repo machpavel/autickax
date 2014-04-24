@@ -16,7 +16,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -125,8 +124,6 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		this.font = game.assets.getFont();
 
-		Sprite backgroundColor = new Sprite();
-		backgroundColor.setColor(Color.GREEN);
 		ColorDrawable textButtonBackground = new ColorDrawable(Color.GREEN);
 		this.textButtonStyle = new TextButtonStyle(textButtonBackground,
 				textButtonBackground, textButtonBackground, this.font);
