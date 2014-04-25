@@ -50,12 +50,12 @@ public final class Minigames {
 	public final int BOOST_MINIGAME_ROWS_BEGINNER = 2;
 	public final int BOOST_MINIGAME_ROWS_NORMAL = 2;
 	public final int BOOST_MINIGAME_ROWS_HARD = 3;
-	public final int BOOST_MINIGAME_ROWS_EXTREME = 4;
+	public final int BOOST_MINIGAME_ROWS_EXTREME = 3;
 	public final int BOOST_MINIGAME_COLUMNS_KIDDIE = 1;
 	public final int BOOST_MINIGAME_COLUMNS_BEGINNER = 2;
 	public final int BOOST_MINIGAME_COLUMNS_NORMAL = 4;
-	public final int BOOST_MINIGAME_COLUMNS_HARD = 3;
-	public final int BOOST_MINIGAME_COLUMNS_EXTREME = 4;
+	public final int BOOST_MINIGAME_COLUMNS_HARD = 4;
+	public final int BOOST_MINIGAME_COLUMNS_EXTREME = 5;
 	public final float BOOST_MINIGAME_TIME_LIMIT_KIDDIE = 6;
 	public final float BOOST_MINIGAME_TIME_LIMIT_BEGINNER = 4;
 	public final float BOOST_MINIGAME_TIME_LIMIT_NORMAL = 2;
