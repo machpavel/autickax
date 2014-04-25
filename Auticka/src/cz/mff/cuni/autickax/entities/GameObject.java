@@ -22,9 +22,9 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
  * Base class for all game entities
  */
 abstract public class GameObject implements Externalizable {
-	
+
 	private static final byte MAGIC_GAME_OBJECT_END = 127;
-	
+
 	/** Position of the center of GameObject. */
 	protected Vector2 position;
 	private int width;
@@ -39,9 +39,9 @@ abstract public class GameObject implements Externalizable {
 	protected GameScreen gameScreen;
 	protected int type;
 	protected boolean isActive = true;
-	
+
 	protected transient boolean canBeDragged = false;
-	
+
 	public boolean canBeDragged() {
 		return this.canBeDragged;
 	}
@@ -49,11 +49,12 @@ abstract public class GameObject implements Externalizable {
 	public void setCanBeDragged(boolean canBeDragged) {
 		this.canBeDragged = canBeDragged;
 	}
+
 	protected transient boolean isDragged = false;
-	
+
 	/** Parameterless constructor for the externalization */
 	public GameObject() {
-		
+
 	}
 
 	public GameObject(float startX, float startY, int type) {
@@ -76,33 +77,41 @@ abstract public class GameObject implements Externalizable {
 		this.type = object.type;
 	}
 
-	public static GameObject parseGameObject(Element gameObject) throws IOException {
+	public static GameObject parseGameObject(Element gameObject)
+			throws IOException {
 		GameObject retval;
-		
+
+		float x = gameObject.getFloat("X");
+		float y = gameObject.getFloat("Y");
+		int type = gameObject.getInt("type", 0);
+
 		String objectName = gameObject.getName();
-		if (objectName.equals("mud")){
-			retval = new Mud(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
-		}
-		else if (objectName.equals("stone")){
-			retval = new Stone(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
-		}
-		else if (objectName.equals("tree")){
-			retval = new Tree(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
-		}
-		else if (objectName.equals("hole")){
-			retval = new Hole(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
-		}
-		else if (objectName.equals("booster")){
-			retval = new Booster(gameObject.getFloat("X"), gameObject.getFloat("Y"), gameObject.getInt("type", 0));
-		}
-		else { 
+		if (objectName.equals("mud")) {
+			retval = new Mud(x, y, type);
+		} else if (objectName.equals("stone")) {
+			retval = new Stone(x, y, type);
+		} else if (objectName.equals("tree")) {
+			retval = new Tree(x, y, type);
+		} else if (objectName.equals("fence")) {
+			retval = new Fence(x, y, type);
+		} else if (objectName.equals("parkingCar")) {
+			retval = new ParkingCar(x, y, type);
+		} else if (objectName.equals("wall")) {
+			retval = new Wall(x, y, type);
+		} else if (objectName.equals("house")) {
+			retval = new House(x, y, type);
+		} else if (objectName.equals("hole")) {
+			retval = new Hole(x, y, type);
+		} else if (objectName.equals("booster")) {
+			retval = new Booster(x, y, type);
+		} else {
 			throw new IOException("Loading object failed: Unknown type");
 		}
-		
-		return retval; 
+
+		return retval;
 	}
-	
-	public void reset(){
+
+	public void reset() {
 		this.isActive = true;
 		this.rotation = 0;
 		this.scale = new Vector2(1, 1);
@@ -151,7 +160,7 @@ abstract public class GameObject implements Externalizable {
 					this.move(touchPos);
 				}
 			}
-	
+
 			if (!Gdx.input.isTouched()) {
 				this.isDragged = false;
 			}
@@ -162,11 +171,12 @@ abstract public class GameObject implements Externalizable {
 
 	public void draw(SpriteBatch batch) {
 		batch.draw(this.getTexture(), (this.position.x - this.getWidth() / 2)
-				* Input.xStretchFactorInv, (this.position.y - this.getHeight() / 2)
-				* Input.yStretchFactorInv, (this.getWidth() / 2)
-				* Input.xStretchFactorInv, (this.getHeight() / 2)
-				* Input.yStretchFactorInv,
-				this.getWidth() * Input.xStretchFactorInv, this.getHeight()
+				* Input.xStretchFactorInv,
+				(this.position.y - this.getHeight() / 2)
+						* Input.yStretchFactorInv, (this.getWidth() / 2)
+						* Input.xStretchFactorInv, (this.getHeight() / 2)
+						* Input.yStretchFactorInv, this.getWidth()
+						* Input.xStretchFactorInv, this.getHeight()
 						* Input.yStretchFactorInv, scale.x, scale.y,
 				this.rotation);
 	}
@@ -189,26 +199,27 @@ abstract public class GameObject implements Externalizable {
 	protected void setMeasurements(int width, int height) {
 		this.setWidth(width);
 		this.setHeight(height);
-		//TODO: which method of choosin bounding rectangle??
-		//this.boundingCircleRadius = width > height ? width / 2 : height / 2;
+		// TODO: which method of choosin bounding rectangle??
+		// this.boundingCircleRadius = width > height ? width / 2 : height / 2;
 		this.boundingCircleRadius = width > height ? height / 2 : width / 2;
-		//this.boundingCircleRadius = (width + height) / 4;		
+		// this.boundingCircleRadius = (width + height) / 4;
 	}
 
 	/**
-	 * Sets texture from main game texture atlas. 
+	 * Sets texture from main game texture atlas.
+	 * 
 	 * @param name
 	 * @return True when texture was set.
 	 */
 	public boolean setTexture(String name) {
-		if(Autickax.getInstance() != null){
+		if (Autickax.getInstance() != null) {
 			this.texture = Autickax.getInstance().assets.getGraphics(name);
-			setMeasurements(this.texture.getRegionWidth(), this.texture.getRegionHeight());
+			setMeasurements(this.texture.getRegionWidth(),
+					this.texture.getRegionHeight());
 			return true;
-		}
-		else
+		} else
 			return false;
-			
+
 	}
 
 	/**
@@ -218,8 +229,10 @@ abstract public class GameObject implements Externalizable {
 	 * @return
 	 */
 	public boolean collides(GameObject object2) {
-		float objectsDistance = new Vector2(this.position).sub(object2.position).len();
-		float minimalDistance = this.boundingCircleRadius + object2.boundingCircleRadius;
+		float objectsDistance = new Vector2(this.position)
+				.sub(object2.position).len();
+		float minimalDistance = this.boundingCircleRadius
+				+ object2.boundingCircleRadius;
 		return objectsDistance < minimalDistance;
 	}
 
@@ -271,25 +284,26 @@ abstract public class GameObject implements Externalizable {
 	}
 
 	public abstract GameObject copy();
-	
+
 	public abstract void setTexture(int type);
-	public void setTexture(){
+
+	public void setTexture() {
 		setTexture(this.type);
 	}
-	
+
 	public void setScreen(GameScreen screen) {
 		this.gameScreen = screen;
 	}
-	
+
 	public abstract Minigame getMinigame(GameScreen gameScreen, SubLevel parent);
-	
+
 	public abstract String getSoundName();
-	
-	public void setIsActive(boolean value){
+
+	public void setIsActive(boolean value) {
 		this.isActive = value;
 	}
-	
-	public boolean getIsActive(){
+
+	public boolean getIsActive() {
 		return this.isActive;
 	}
 
@@ -316,7 +330,7 @@ abstract public class GameObject implements Externalizable {
 	protected void setHeight(int height) {
 		this.height = height;
 	}
-	
+
 	@Override
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
@@ -327,7 +341,7 @@ abstract public class GameObject implements Externalizable {
 		this.scale = (Vector2) in.readObject();
 		this.boundingCircleRadius = in.readFloat();
 		this.type = in.readInt();
-		
+
 		byte check = in.readByte();
 		assert (check == GameObject.MAGIC_GAME_OBJECT_END);
 	}

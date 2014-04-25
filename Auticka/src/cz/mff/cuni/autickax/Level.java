@@ -9,6 +9,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
+import cz.mff.cuni.autickax.drawing.LevelBackground;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.Start;
@@ -17,97 +18,95 @@ import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class Level implements java.io.Externalizable {
-	
+
 	private static final byte MAGIC_LEVEL_END = (byte) 255;
-	
+
 	private Pathway pathway;
 	private ArrayList<GameObject> gameObjects;
 	private Car car;
-	private int backgroundType;
 	private Start start;
 	private Finish finish;
 	private float timeLimit;
-	
+	private LevelBackground background;
+
 	public Pathway getPathway() {
 		return this.pathway;
 	}
-	
+
 	public Car getCar() {
 		return this.car;
 	}
-	
+
 	public ArrayList<GameObject> getGameObjects() {
 		return this.gameObjects;
 	}
-	
-	public int getBackgroundType() {
-		return this.backgroundType;
-	}
-	
+
 	public Start getStart() {
 		return this.start;
 	}
-	
+
 	public Finish getFinish() {
 		return this.finish;
 	}
-	
-	public float getTimeLimit()
-	{
+
+	public float getTimeLimit() {
 		return timeLimit;
 	}
-	
+
+	public LevelBackground getLevelBackground() {
+		return this.background;
+	}
+
 	public int getPathwayTextureType() {
 		return this.pathway.getTextureType();
 	}
-	
+
 	public void parseLevel(FileHandle file) throws Exception {
-			
-		Element root = new XmlReader().parse(file);			
-		
-		this.pathway = Pathway.parsePathway(root);			
-		
-				
+
+		Element root = new XmlReader().parse(file);
+
+		this.pathway = Pathway.parsePathway(root);
+
 		// Loading game objects
 		Element entities = root.getChildByName("entities");
-		
+
 		this.gameObjects = new ArrayList<GameObject>();
-		for (int i = 0; i < entities.getChildCount() ; i++) {
+		for (int i = 0; i < entities.getChildCount(); i++) {
 			Element gameObject = entities.getChild(i);
-			
+
 			this.gameObjects.add(GameObject.parseGameObject(gameObject));
 		}
-		
+
 		// Loading car
 		Element car = root.getChildByName("car");
 		this.car = Car.parseCar(car);
-		
-		//Loading start
+
+		// Loading start
 		Element start = root.getChildByName("start");
 		this.start = Start.parseStart(start);
-		
-		//Loading finish
+
+		// Loading finish
 		Element finish = root.getChildByName("finish");
 		this.finish = Finish.parseFinish(finish);
-				
-		
+
 		// Background
-		this.backgroundType = root.getInt("levelBackgroundType");		
-		
+		Element background = root.getChildByName("background");
+		this.background = LevelBackground.parseLevelBackground(background);
+
 		// Time limit
 		this.timeLimit = root.getFloat("timeLimit");
-		
+
 		System.out.println("Loading level \"" + file.name() + "\" done.");
 	}
-	
+
 	public void calculateDistanceMap() {
 		this.pathway.CreateDistances();
 	}
-	
+
 	public void deleteDistanceMap() {
 		this.pathway.deleteDistanceMap();
 	}
-	
+
 	public void setGameScreen(GameScreen screen) {
 		for (GameObject gameObject : this.gameObjects) {
 			gameObject.setScreen(screen);
@@ -125,34 +124,34 @@ public class Level implements java.io.Externalizable {
 	@Override
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
-		
-		this.pathway = (Pathway)in.readObject();
-		
+
+		this.pathway = (Pathway) in.readObject();
+
 		this.gameObjects = (ArrayList<GameObject>) in.readObject();
-		
+
 		this.car = (Car) in.readObject();
-		this.backgroundType = in.readInt();
-		this.start = (Start)in.readObject();
-		this.finish = (Finish)in.readObject();
+		this.background = (LevelBackground) in.readObject();
+		this.start = (Start) in.readObject();
+		this.finish = (Finish) in.readObject();
 		this.timeLimit = in.readFloat();
-		
+
 		byte check = in.readByte();
-		assert(check == Level.MAGIC_LEVEL_END);
+		assert (check == Level.MAGIC_LEVEL_END);
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
-		
+
 		out.writeObject(this.pathway);
-		
+
 		out.writeObject(this.gameObjects);
-		
+
 		out.writeObject(this.car);
-		out.writeInt(this.backgroundType);
+		out.writeObject(this.background);
 		out.writeObject(this.start);
 		out.writeObject(this.finish);
 		out.writeFloat(this.timeLimit);
-		
+
 		out.writeByte(Level.MAGIC_LEVEL_END);
 	}
 }

@@ -39,14 +39,14 @@
 		<tree X="578.0" Y="323.0" type="9"/>
 		<hole X="584.0" Y="71.0" type="2"/>
 		<mud X="415.0" Y="274.0" type="2"/>
-		<tree X="298.0" Y="436.0" type="19"/>
-		<tree X="341.0" Y="423.0" type="16"/>
-		<tree X="260.0" Y="374.0" type="23"/>
+		<house X="298.0" Y="436.0" type="1"/>
+		<fence X="341.0" Y="423.0" type="1"/>
+		<parkingCar X="260.0" Y="374.0" type="4"/>
 		<tree X="255.0" Y="431.0" type="7"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="86.00001" Y="80.00001" type="4"/>
 	<finish X="702.0" Y="72.0" type="2"/>
-	<levelBackgroundType>10</levelBackgroundType>
+	<background><textureBackground textureName="background1" /></background>
 	<timeLimit>5.0</timeLimit>
 </AutickaX>

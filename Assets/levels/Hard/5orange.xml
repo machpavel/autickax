@@ -61,10 +61,10 @@
 		</controlPoints>
 	</pathway>
 	<entities>
-		<tree X="660.0" Y="302.0" type="19"/>
-		<tree X="483.0" Y="259.0" type="20"/>
+		<house X="660.0" Y="302.0" type="1"/>
+		<parkingCar X="483.0" Y="259.0" type="1"/>
 		<tree X="686.0" Y="137.0" type="17"/>
-		<tree X="56.0" Y="311.0" type="16"/>
+		<fence X="56.0" Y="311.0" type="1"/>
 		<mud X="169.0" Y="140.0" type="14"/>
 		<tree X="352.0" Y="402.0" type="6"/>
 		<tree X="348.0" Y="285.0" type="6"/>
@@ -79,6 +79,6 @@
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="452.6667" Y="100.333336" type="4"/>
 	<finish X="358.33334" Y="147.83333" type="2"/>
-	<levelBackgroundType>21</levelBackgroundType>
+	<background><textureBackground textureName="background12" /></background>
 	<timeLimit>10.0</timeLimit>
 </AutickaX>

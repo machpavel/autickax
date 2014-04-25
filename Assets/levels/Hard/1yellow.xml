@@ -35,7 +35,7 @@
 			<point X="69.0" Y="256.0"/>
 			<point X="89.0" Y="194.0"/>
 			<point X="166.0" Y="183.0"/>
-			<point X="243.0" Y="230.0"/>
+			<point X="243.0" Y="230.0"/>	
 			<point X="322.0" Y="241.0"/>
 			<point X="396.0" Y="217.0"/>
 			<point X="368.0" Y="159.0"/>
@@ -70,6 +70,6 @@
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="673.3334" Y="67.333336" type="4"/>
 	<finish X="450.33334" Y="70.666664" type="2"/>
-	<levelBackgroundType>19</levelBackgroundType>
+	<background><textureBackground textureName="background10" /></background>
 	<timeLimit>10.0</timeLimit>
 </AutickaX>

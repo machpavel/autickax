@@ -20,7 +20,6 @@ import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.drawing.LevelBackground;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -36,8 +35,7 @@ import cz.mff.cuni.autickax.pathway.Pathway;
 public class GameScreen extends BaseScreen {
 	public static final float EPSILON_F = 0.01f;
 	
-	// Textures
-	private LevelBackground levelBackground;	
+	// Textures	
 	private TextureRegion pathwayTexture;
 
 
@@ -94,8 +92,6 @@ public class GameScreen extends BaseScreen {
 		this.pathway = level.getPathway();
 		this.gameObjects = level.getGameObjects();
 		
-		this.levelBackground = new LevelBackground();
-		this.levelBackground.SetType(level.getBackgroundType());
 		this.car = level.getCar();		
 		
 		
@@ -163,17 +159,18 @@ public class GameScreen extends BaseScreen {
 	}
 
 	@Override
-	public void render(float delta) {		
+	public void render(float delta) {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); // This cryptic line clears the screen
-
+		
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);  // see https://github.com/libgdx/libgdx/wiki/Orthographic-camera
 		
-		batch.begin();		
-		batch.disableBlending(); //performance boost		
-		// background
-		this.levelBackground.draw(batch, stageWidth, stageHeight);
-		batch.enableBlending(); //don't forget to enabled this for alpha channel
+		batch.begin();
+		//batch.disableBlending(); //performance boost
+		//batch.enableBlending(); //don't forget to enabled this for alpha channel
+		
+		this.level.getLevelBackground().draw(batch, stageWidth, stageHeight);
+
 		batch.draw(this.pathwayTexture, 0, 0, stageWidth, stageHeight);
 		batch.end();
 				

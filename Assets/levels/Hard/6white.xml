@@ -59,13 +59,13 @@
 		<hole X="272.0" Y="75.0" type="1"/>
 		<hole X="558.0" Y="436.0" type="1"/>
 		<tree X="297.0" Y="387.0" type="4"/>
-		<tree X="394.0" Y="343.0" type="16"/>
+		<fence X="394.0" Y="343.0" type="1"/>
 		<tree X="547.0" Y="196.0" type="17"/>
 		<mud X="125.0" Y="318.0" type="4"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="91.16667" Y="198.16667" type="4"/>
 	<finish X="85.333336" Y="72.833336" type="2"/>
-	<levelBackgroundType>16</levelBackgroundType>
+	<background><textureBackground textureName="background7" /></background>
 	<timeLimit>10.0</timeLimit>
 </AutickaX>

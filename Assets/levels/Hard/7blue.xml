@@ -63,20 +63,20 @@
 		<stone X="37.0" Y="128.0" type="4"/>
 		<mud X="670.0" Y="49.0" type="4"/>
 		<mud X="550.0" Y="112.0" type="3"/>
-		<tree X="246.0" Y="290.0" type="11"/>
+		<house X="246.0" Y="290.0" type="1"/>
 		<tree X="102.0" Y="345.0" type="12"/>
 		<tree X="698.0" Y="404.0" type="10"/>
-		<tree X="514.0" Y="385.0" type="16"/>
+		<fence X="514.0" Y="385.0" type="1"/>
 		<hole X="621.0" Y="445.0" type="1"/>
 		<hole X="289.0" Y="111.0" type="1"/>
 		<mud X="260.0" Y="182.0" type="2"/>
-		<tree X="399.0" Y="116.0" type="18"/>
+		<wall X="399.0" Y="116.0" type="1"/>
 		<stone X="621.0" Y="381.0" type="5"/>
 		<hole X="134.0" Y="438.0" type="3"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="398.00003" Y="389.83334" type="4"/>
 	<finish X="270.33334" Y="395.33334" type="2"/>
-	<levelBackgroundType>15</levelBackgroundType>
+	<background><textureBackground textureName="background6" /></background>
 	<timeLimit>10.0</timeLimit>
 </AutickaX>

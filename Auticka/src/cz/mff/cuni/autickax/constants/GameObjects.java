@@ -31,7 +31,6 @@ public final class GameObjects {
 	public final String STONE_TEXTURE_PREFIX = "stone";
 
 	public final int TREE_TYPES_COUNT = 23;
-	public final String TREE_TEXTURE_PREFIX = "tree";
 
 	public final int HOLE_TYPES_COUNT = 3;
 	public final String HOLE_TEXTURE_NAME_PREFIX = "hole";

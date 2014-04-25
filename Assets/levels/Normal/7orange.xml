@@ -36,8 +36,8 @@
 		<mud X="560.0" Y="355.0" type="18"/>
 		<mud X="675.0" Y="405.0" type="18"/>
 		<mud X="575.0" Y="258.0" type="18"/>
-		<tree X="277.0" Y="184.0" type="16"/>
-		<tree X="308.0" Y="81.0" type="16"/>
+		<fence X="277.0" Y="184.0" type="1"/>
+		<fence X="308.0" Y="81.0" type="1"/>
 		<tree X="450.0" Y="103.0" type="14"/>
 		<tree X="536.0" Y="89.0" type="15"/>
 		<mud X="358.0" Y="334.0" type="1"/>
@@ -49,6 +49,6 @@
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="653.6667" Y="185.16667" type="4"/>
 	<finish X="625.1666" Y="77.0" type="2"/>
-	<levelBackgroundType>14</levelBackgroundType>
+	<background><textureBackground textureName="background5" /></background>
 	<timeLimit>10.0</timeLimit>
 </AutickaX>

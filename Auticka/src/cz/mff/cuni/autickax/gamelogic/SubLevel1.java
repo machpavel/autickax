@@ -1,5 +1,6 @@
 package cz.mff.cuni.autickax.gamelogic;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
@@ -15,6 +16,7 @@ import cz.mff.cuni.autickax.dialogs.Dialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
+import cz.mff.cuni.autickax.entities.GameTerminatingObject;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
@@ -41,6 +43,9 @@ public class SubLevel1 extends SubLevel {
 	
 	private GameStatistics stats;
 
+	
+	private ArrayList<GameTerminatingObject> terminators = new ArrayList<GameTerminatingObject>();
+	
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
 		timeStatusBar = new TimeStatusBar(gameScreen,tLimit, true);
@@ -54,10 +59,21 @@ public class SubLevel1 extends SubLevel {
 		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 
 		this.level.getFinish().resetBoundingRadius();
 				
+		initTerminatingGameObjects();
 		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
 				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
 		
 		reset();
+	}
+	
+	private void initTerminatingGameObjects()
+	{
+		//collision checking
+		for (GameObject gameObject : this.level.getGameObjects()) {			
+			if (gameObject instanceof GameTerminatingObject) {
+				terminators.add((GameTerminatingObject)gameObject);
+			}
+		}
 	}
 	
 	private void playStartEngineSound()
@@ -148,13 +164,13 @@ public class SubLevel1 extends SubLevel {
 		
 		
 		//collision checking
-		/*for (GameObject gameObject : this.level.getGameObjects()) {			
-			if (gameObject instanceof cz.mff.cuni.autickax.entities.Tree && this.level.getCar().collides(gameObject)) {
+		for (GameTerminatingObject gameObject : this.terminators) {			
+			if (this.level.getCar().collides(gameObject)) {
 				playSound(gameObject);
-				switchToMistakeState("KOLIZE");
+				switchToMistakeState("You crashed into a " + gameObject.getName()+ "!");
 				return;
 			}
-		}*/
+		}
 		
 
 		this.level.getCar().update(delta);

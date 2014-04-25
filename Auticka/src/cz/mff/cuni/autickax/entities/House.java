@@ -4,37 +4,38 @@ import java.io.Externalizable;
 
 import cz.mff.cuni.autickax.constants.Constants;
 
-public final class Tree extends GameTerminatingObject implements Externalizable {
+public final class House extends GameTerminatingObject implements Externalizable {
 
-	public Tree(float x, float y, int type) {
+	public House(float x, float y, int type) {
 		super(x, y, type);
 	}
 
-	public Tree(GameObject object) {
+	public House(GameObject object) {
 		super(object);
 	}
 
 	/** Parameterless constructor for the externalization */
-	public Tree() {
+	public House() {
 	}
 
 	@Override
 	public String getName() {
-		return "tree";
+		return "house";
 	}
 
 	@Override
 	public GameObject copy() {
-		return new Tree(this);
+		return new House(this);
 	}
 
 	@Override
 	public String getSoundName() {
+		assert(false); // add custom sounds!
 		return Constants.sounds.SOUND_TREE;
 	}
 
 	@Override
 	protected String getResultMessage() {
-		return Constants.strings.TOOLTIP_MINIGAME_CRASHED_TREE_RESULT_MESSAGE;
+		return Constants.strings.TOOLTIP_MINIGAME_CRASHED_HOUSE_RESULT_MESSAGE;
 	}
 }
