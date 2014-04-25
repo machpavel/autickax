@@ -42,11 +42,11 @@
 		<mud X="259.0" Y="181.0" type="3"/>
 		<mud X="195.0" Y="317.0" type="4"/>
 		<mud X="119.0" Y="246.0" type="3"/>
-		<tree X="472.0" Y="266.0" type="17"/>
+		<tree X="472.0" Y="266.0" type="1"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="58.5" Y="359.66666" type="4"/>
 	<finish X="640.5" Y="100.16667" type="2"/>
-	<levelBackgroundType>11</levelBackgroundType>
+	<background><textureBackground textureName="background2" /></background>
 	<timeLimit>10.0</timeLimit>
 </AutickaX>

@@ -32,6 +32,6 @@
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="325.5" Y="133.66667" type="4"/>
 	<finish X="590.8334" Y="364.99997" type="2"/>
-	<levelBackgroundType>1</levelBackgroundType>
+	<background><constantBackground red="162" green="222" blue="249" /></background>
 	<timeLimit>10.0</timeLimit>
 </AutickaX>

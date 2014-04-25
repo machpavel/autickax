@@ -1,41 +1,31 @@
 package cz.mff.cuni.autickax.drawing;
 
+import java.io.Externalizable;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.XmlReader.Element;
 
-import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.constants.Constants;
+public abstract class LevelBackground implements Externalizable {
+	
+	public static LevelBackground parseLevelBackground(
+			Element levelBackgroundRoot) {
+		Element levelBackground = levelBackgroundRoot.getChild(0);
 
-public class LevelBackground {
-	
-	private int type;
-	private TextureRegion backgroundTexture;	
-	
-	
-	public TextureRegion GetTexture(){
-		return this.backgroundTexture;
+		if (levelBackground.getName().equals("constantBackground")) {
+			int red = levelBackground.getInt("red");
+			int green = levelBackground.getInt("green");
+			int blue = levelBackground.getInt("blue");
+
+			return new LevelConstantBackground(red, green, blue);
+
+		} else {
+			String textureName = levelBackground.getAttribute("textureName");
+			
+			return new LevelTextureBackground(textureName);
+		}
+
 	}
-	
-	public void SetType(int type){
-		this.type = type;
-		this.backgroundTexture = Autickax.getInstance().assets.getGraphics(LevelBackground.GetTextureName(type));			
-	}
-	
-	public void draw(SpriteBatch batch, float stageWidth, float stageHeight){
-		batch.draw(this.backgroundTexture, 0, 0, stageWidth, stageHeight);
-	}
-	
-	public int GetType(){
-		return this.type;
-	}
-	
-	/** Gets the height according to a type*/
-	public static String GetTextureName(int type){
-		return Constants.misc.LEVEL_BACKGROUND_TEXTURE_PREFIX + type;
-	}	
-	/** Gets the height according to a type*/
-	public static String GetSmallTextureName(int type){
-		return Constants.misc.LEVEL_BACKGROUND_TEXTURE_PREFIX + type + Constants.misc.LEVEL_SMALL_BACKGROUND_TEXTURE_POSTFIX;
-	}
-	
+
+	public abstract void draw(SpriteBatch batch, float stageWidth,
+			float stageHeight);
 }
