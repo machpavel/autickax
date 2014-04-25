@@ -83,7 +83,7 @@ abstract public class GameObject implements Externalizable {
 
 		float x = gameObject.getFloat("X");
 		float y = gameObject.getFloat("Y");
-		int type = gameObject.getInt("type, 0");
+		int type = gameObject.getInt("type", 0);
 
 		String objectName = gameObject.getName();
 		if (objectName.equals("mud")) {
