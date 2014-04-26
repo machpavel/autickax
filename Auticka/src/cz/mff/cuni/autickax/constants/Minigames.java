@@ -25,8 +25,7 @@ public final class Minigames {
 
 	// Gear shift
 	public final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "GearShiftMinigameBackground";
-	public final String GEAR_SHIFTER_TEXTURE = "gearShifter";
-	public final float GEAR_SHIFT_FAIL_VALUE = 0.7f;
+	public final String GEAR_SHIFTER_TEXTURE = "gearShifter";	
 	public final String GEAR_SHIFT_MINIGAME_FINISH_TEXTURE = "gearShiftMinigameFinish";
 	public final float GEAR_SHIFT_MINIGAME_FINISH_RADIUS = 30;
 	public final float GEAR_SHIFT_MINIGAME_ROW_1 = 180;
@@ -40,6 +39,7 @@ public final class Minigames {
 	public final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_NORMAL = 30;
 	public final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD = 20;
 	public final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME = 15;
+	public final float GEAR_SHIFT_FAIL_VALUE = 0.7f;
 
 	// Boost
 	public final String BOOST_MINIGAME_BACKGROUND_TEXTURE = "BoostMinigameBackground";
@@ -61,14 +61,14 @@ public final class Minigames {
 	public final float BOOST_MINIGAME_TIME_LIMIT_NORMAL = 2;
 	public final float BOOST_MINIGAME_TIME_LIMIT_HARD = 1;
 	public final float BOOST_MINIGAME_TIME_LIMIT_EXTREME = 0.5f;
-	public final float BOOST_MINIGAME_RESULT_WIN_VALUE = 20;
-	public final float BOOST_MINIGAME_TIME_GENERATION_LIMIT = 0.5f;
 	public final int BOOST_MINIGAME_HITS_LIMIT_KIDDIE = 2;
 	public final int BOOST_MINIGAME_HITS_LIMIT_BEGINNER = 3;
 	public final int BOOST_MINIGAME_HITS_LIMIT_NORMAL = 5;
 	public final int BOOST_MINIGAME_HITS_LIMIT_HARD = 10;
-	public final int BOOST_MINIGAME_HITS_LIMIT_EXTREME = 15;
-	
+	public final int BOOST_MINIGAME_HITS_LIMIT_EXTREME = 15;	
+	public final float BOOST_MINIGAME_TIME_GENERATION_LIMIT = 0.5f;
+	public final float BOOST_MINIGAME_WIN_VALUE = 20;
+
 	// Switching
 	public final String SWITCHING_MINIGAME_BACKGROUND_TEXTURE = "SwitchingMinigameBackground";
 	public final String SWITCHING_MINIGAME_BUTTON_TEXTURE = "SwitchingMinigameButton";
@@ -80,6 +80,21 @@ public final class Minigames {
 	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_NORMAL = 10;
 	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_HARD = 20;
 	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_EXTREME = 30;
-	
-	
+
+	// Anglicak
+	public final String ANGLICAK_MINIGAME_BACKGROUND_TEXTURE = "AnglicakMinigameBackground";
+	public final String ANGLICAK_MINIGAME_TARGET_TEXTURE = "AnglicakMinigameTarget";
+	public final float ANGLICAK_MINIGAME_CAR_START_POSITION_X = Constants.dialog.DIALOG_WORLD_X_OFFSET + 30;
+	public final int ANGLICAK_MINIGAME_TARGET_POSITION_X = 550;
+	public final int ANGLICAK_MINIGAME_TARGET_POSITION_Y = 240; 
+	public final float ANGLICAK_MINIGAME_CONTROL_LINE_POSITION_X = 240;
+	public final float ANGLICAK_MINIGAME_FINISH_START_POSITION_X = Constants.WORLD_WIDTH - Constants.dialog.DIALOG_WORLD_X_OFFSET - 20;
+	public final float ANGLICAK_MINIGAME_TARGET_RADIUS_KIDDIE = 150;
+	public final float ANGLICAK_MINIGAME_TARGET_RADIUS_BEGINNER = 125;
+	public final float ANGLICAK_MINIGAME_TARGET_RADIUS_NORMAL = 75;
+	public final float ANGLICAK_MINIGAME_TARGET_RADIUS_HARD = 50;
+	public final float ANGLICAK_MINIGAME_TARGET_RADIUS_EXTREME = 25;	
+	public final float ANGLICAK_MINIGAME_FAIL_VALUE = 0.5f;
+	public final float ANGLICAK_MINIGAME_MAX_WIN_VALUE = 3.f;
+	public float ANGLICAK_MINIGAME_TRIES_COUNT = 3;
 }

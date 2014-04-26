@@ -7,8 +7,11 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.miniGames.AnglicakMinigame;
+import cz.mff.cuni.autickax.miniGames.BoostMinigame;
 import cz.mff.cuni.autickax.miniGames.GearShiftMinigame;
 import cz.mff.cuni.autickax.miniGames.Minigame;
+import cz.mff.cuni.autickax.miniGames.SwitchingMinigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Mud extends GameObject implements Externalizable {
@@ -61,7 +64,7 @@ public final class Mud extends GameObject implements Externalizable {
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new GearShiftMinigame(gameScreen, parent);
+		return new SwitchingMinigame(gameScreen, parent);
 	}
 	
 	@Override

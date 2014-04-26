@@ -119,6 +119,7 @@ public final class SwitchingMinigame extends Minigame {
 		this.result = ResultType.FAILED;
 		//this.resultValue = 1; // nothing happens
 		parent.onMinigameEnded();
+		this.endCommunication();
 	}
 
 	private void updateInFinishState(float delta) {
@@ -127,6 +128,7 @@ public final class SwitchingMinigame extends Minigame {
 		this.result = ResultType.PROCEEDED;
 		//this.resultValue = RESULT_WIN_VALUE;
 		parent.onMinigameEnded();
+		this.endCommunication();
 	}
 
 	@Override

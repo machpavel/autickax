@@ -41,6 +41,7 @@ public final class Car extends ShiftableGameObject {
 
 	public void reset(){
 		super.reset();
+		this.isDragged = false;
 		this.lastCarPosition = new Vector2(0,0);
 		this.lastRotationDistance = 0;
 	}

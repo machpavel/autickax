@@ -26,6 +26,7 @@ public class Crash extends Minigame {
 		this.result = ResultType.FAILED;
 		this.resultValue = 0;
 		parent.onMinigameEnded();
+		this.endCommunication();
 	}
 
 	@Override

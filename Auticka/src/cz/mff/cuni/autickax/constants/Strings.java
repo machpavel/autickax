@@ -17,6 +17,9 @@ public final class Strings {
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever to the correct position";
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not enough accurate. You will be punished by speed reduction";
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS = "TODO:";
+	public final String TOOLTIP_MINIGAME_ANGLICAK_WHAT_TO_DO = "TODO:";
+	public final String TOOLTIP_MINIGAME_ANGLICAK_FAIL = "TODO:";
+	public final String TOOLTIP_MINIGAME_ANGLICAK_SUCCESS = "TODO:";
 	public final String TOOLTIP_MINIGAME_BOOST_WHAT_TO_DO = "TODO: what to do";
 	public final String TOOLTIP_MINIGAME_SWITCHING_WHAT_TO_DO = "TODO: what to do";
 	public final String TOOLTIP_MINIGAME_BOOST_FAIL = "TODO: fail";

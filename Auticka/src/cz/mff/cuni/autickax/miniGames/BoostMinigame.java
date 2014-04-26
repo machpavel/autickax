@@ -15,7 +15,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class BoostMinigame extends Minigame {
 
-	private final float RESULT_WIN_VALUE = Constants.minigames.BOOST_MINIGAME_RESULT_WIN_VALUE;
+	private final float RESULT_WIN_VALUE = Constants.minigames.BOOST_MINIGAME_WIN_VALUE;
 	private final float TIME_GENERATION_LIMIT = Constants.minigames.BOOST_MINIGAME_TIME_GENERATION_LIMIT;	
 	
 	
@@ -158,6 +158,7 @@ public final class BoostMinigame extends Minigame {
 		this.result = ResultType.FAILED_WITH_VALUE;
 		this.resultValue = 1; // nothing happens
 		parent.onMinigameEnded();
+		this.endCommunication();
 	}
 
 	private void updateInFinishState(float delta) {
@@ -166,6 +167,7 @@ public final class BoostMinigame extends Minigame {
 		this.result = ResultType.PROCEEDED_WITH_VALUE;
 		this.resultValue = RESULT_WIN_VALUE;
 		parent.onMinigameEnded();
+		this.endCommunication();
 	}
 
 	@Override

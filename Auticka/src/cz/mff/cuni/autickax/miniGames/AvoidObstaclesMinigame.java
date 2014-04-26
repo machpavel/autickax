@@ -223,6 +223,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			break;
 		}
 		parent.onMinigameEnded();
+		this.endCommunication();
 	}
 
 	private void updateInFinishState(float delta) {
@@ -230,6 +231,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED;
 		parent.onMinigameEnded();
+		this.endCommunication();
 	}
 
 	@Override
