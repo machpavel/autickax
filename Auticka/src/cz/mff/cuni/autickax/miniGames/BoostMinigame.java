@@ -9,6 +9,7 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
+import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.support.BoostMinigameButton;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -116,8 +117,7 @@ public final class BoostMinigame extends Minigame {
 			updateInFinishState(delta);
 			break;
 		default:
-			// TODO implementation of exception
-			break;
+			throw new IllegalStateException(state.toString());
 		}
 
 	}
@@ -179,24 +179,6 @@ public final class BoostMinigame extends Minigame {
 		// batch.end();
 	}
 
-	@Override
-	public void onDialogEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onMinigameEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-
-	}
-
 	private void setDifficulty(Difficulty difficulty) {
 		switch (difficulty) {
 		case Kiddie:
@@ -230,7 +212,7 @@ public final class BoostMinigame extends Minigame {
 			this.hitsLimit = Constants.minigames.BOOST_MINIGAME_HITS_LIMIT_EXTREME;
 			break;
 		default:
-			throw new RuntimeException("Unknown difficulty");
+			throw new IllegalDifficultyException(difficulty.toString());
 		}
 		return;
 	}

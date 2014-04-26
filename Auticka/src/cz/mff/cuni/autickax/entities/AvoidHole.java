@@ -1,14 +1,7 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.Externalizable;
-import java.io.IOException;
-
-import com.badlogic.gdx.utils.XmlWriter;
-
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.miniGames.Minigame;
-import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidHole extends GameObject implements Externalizable {
 
@@ -23,26 +16,7 @@ public final class AvoidHole extends GameObject implements Externalizable {
 	/** Parameterless constructor for the externalization */
 	public AvoidHole() {
 	}
-	
-
-	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public String getName() {		
-		return "avoidhole";
-	}
-
-	@Override
-	void aditionalsToXml(XmlWriter writer) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 	/** Gets the texture name according to a type*/
 	public static  String GetTextureName(int type){
 		return Constants.gameObjects.AVOID_HOLES_TEXTURE_NAME_PREFIX + type;
@@ -60,15 +34,14 @@ public final class AvoidHole extends GameObject implements Externalizable {
 	}
 	
 	
-
-	@Override
-	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return null;
-	}
-	
 	@Override
 	public String getSoundName() {
 		return Constants.sounds.SOUND_HOLE;
+	}
+
+	@Override
+	public String getName() {
+		return "avoidhole";
 	}
 
 }

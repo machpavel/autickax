@@ -20,6 +20,7 @@ import cz.mff.cuni.autickax.dialogs.Dialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
+import cz.mff.cuni.autickax.exceptions.IllegalCommandException;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
@@ -106,7 +107,7 @@ public class SubLevel2 extends SubLevel {
 			this.level.goToMainScreen();
 			break;
 		default:
-			break;
+			throw new IllegalCommandException(dialogLocal.getDecision().toString());
 		}
 
 	}
@@ -149,8 +150,7 @@ public class SubLevel2 extends SubLevel {
 				computeSpeedModifierValue();
 			break;
 		default:
-			// TODO assert state
-			break;
+			throw new IllegalStateException(miniGameLocal.getResult().toString());
 		}
 	}
 	
@@ -194,8 +194,7 @@ public class SubLevel2 extends SubLevel {
 				updateInMistakeState(delta);
 				break;
 			default:
-				// TODO implementation of exception
-				break;
+				throw new IllegalStateException(state.toString());
 			}			
 		}
 	}
@@ -208,13 +207,8 @@ public class SubLevel2 extends SubLevel {
 	}
 	
 	private void updateInBeginnigState(float delta) {
-		// TODO Maybe some delay and countdown animation
-
 		state = SubLevel2States.DRIVING_STATE;
-
 	}
-
-
 	
 	private void updateInDrivingState(float delta) {
 
@@ -293,8 +287,6 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	public void render() {
-		// TODO if this.state == minigame
-
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(Color.RED);
 		for (CheckPoint ce : checkpoints) {
@@ -405,7 +397,7 @@ public class SubLevel2 extends SubLevel {
 				this.level.goToMainScreen();
 				break;
 			default:
-				break;
+				throw new IllegalCommandException(dialogLocal.getDecision().toString());
 		}		
 	}
 

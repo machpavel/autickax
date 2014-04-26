@@ -50,10 +50,7 @@ public abstract class Comunicator extends SubLevel{
 		);
 		batch.end();
 		stage.draw();
-	};
-
-	@Override
-	abstract public void render();
+	};	
 	
 	public DialogAbstractStatus getStatus(){
 		return this.status;

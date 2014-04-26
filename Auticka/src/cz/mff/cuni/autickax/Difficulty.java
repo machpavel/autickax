@@ -3,6 +3,7 @@ package cz.mff.cuni.autickax;
 import java.util.Vector;
 
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 
 /** Difficulty of the level played. */
 public enum Difficulty {
@@ -34,7 +35,7 @@ public enum Difficulty {
 			distSurface = Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_EXTREME;
 			break;
 		default:
-			distSurface = Constants.misc.MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT;
+			throw new IllegalDifficultyException(this.toString());
 		}
 		return distSurface;
 	}
@@ -54,8 +55,7 @@ public enum Difficulty {
 		case Extreme:
 			return Autickax.getInstance().assets.getAvailableLevels().extremeLevels;
 		default:
-			assert true;
-			return null;
+			throw new IllegalDifficultyException(this.toString());
 		}
 	}
 	
@@ -74,8 +74,7 @@ public enum Difficulty {
 		case Extreme:
 			return Autickax.playedLevels.extremeLevels;
 		default:
-			assert true;
-			return null;
+			throw new IllegalDifficultyException(this.toString());
 		}
 	}
 }

@@ -102,7 +102,7 @@ public class GameScreen extends BaseScreen {
 		
 		this.finish = level.getFinish();
 		Vector2 finishDirection = new Vector2(this.pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE - EPSILON_F)).sub(this.finish.getPosition()).nor();
-		this.finish.setShift(finishDirection.scl(Constants.misc.CAR_DISTANCE_FROM_START));
+		this.finish.setShift(finishDirection.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 		
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
@@ -143,13 +143,7 @@ public class GameScreen extends BaseScreen {
 	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {
 		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase, stats);
 	}
-	
-
-	
-	public void reset() {
-		// TODO: reseting of all game objects
-	}
-	
+			
 	public void unproject(Vector3 vector) {
 		this.camera.unproject(vector);
 	}

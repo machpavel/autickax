@@ -19,7 +19,7 @@ public final class GameObjects {
 
 	public final int FINISH_TYPES_COUNT = 2;
 	public final String FINISH_TEXTURE_PREFIX = "finish";
-	public final float FINISH_BOUNDING_RADIUS = 30;
+	public final float FINISH_BOUNDING_RADIUS = 40;
 
 	public final int MUD_TYPES_COUNT = 18;
 	public final String MUD_TEXTURE_PREFIX = "mud";

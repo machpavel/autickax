@@ -30,7 +30,7 @@ public final class ParkingCar extends GameTerminatingObject implements Externali
 
 	@Override
 	public String getSoundName() {
-		assert(false); // add custom sounds!
+		// TODO add custom sounds!
 		return Constants.sounds.SOUND_TREE;
 	}
 

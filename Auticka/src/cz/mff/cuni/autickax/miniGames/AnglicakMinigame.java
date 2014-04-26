@@ -4,11 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.entities.Car;
+import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.support.AnglicakMinigameTarget;
@@ -21,6 +23,10 @@ public final class AnglicakMinigame extends Minigame {
 	private static final float MAX_WIN_COEF = Constants.minigames.ANGLICAK_MINIGAME_MAX_WIN_VALUE;
 
 	private float numberOfTries = Constants.minigames.ANGLICAK_MINIGAME_TRIES_COUNT;
+	private float uniformDeceleration = Constants.minigames.ANGLICAK_MINIGAME_UNIFORM_DECELERATION;
+	
+	// TODO Modify the wind randomly and show the wind.	
+	private Vector2 wind = new Vector2(0, 2000);
 
 	// From how many changes should be counted a speed
 	private static final int averageCount = 5;
@@ -99,13 +105,9 @@ public final class AnglicakMinigame extends Minigame {
 			updateInFinishState(delta);
 			break;
 		default:
-			// TODO implementation of exception
-			break;
+			throw new IllegalStateException(state.toString());
 		}
 	}
-
-	private float uniformDeceleration = 5000f;
-	private Vector2 wind = new Vector2(0, 2000);
 
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
@@ -238,24 +240,6 @@ public final class AnglicakMinigame extends Minigame {
 		batch.end();
 	}
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onDialogEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onMinigameEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
 	public enum States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
 	}
@@ -279,8 +263,7 @@ public final class AnglicakMinigame extends Minigame {
 			this.targetRadius = Constants.minigames.ANGLICAK_MINIGAME_TARGET_RADIUS_EXTREME;
 			break;
 		default:
-			this.targetRadius = 0;
-			break;
+			throw new IllegalDifficultyException(difficulty.toString());
 		}
 		return;
 	}

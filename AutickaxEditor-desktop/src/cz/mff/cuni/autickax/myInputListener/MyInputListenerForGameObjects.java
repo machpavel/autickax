@@ -9,6 +9,7 @@ import cz.mff.cuni.autickax.entities.Hole;
 import cz.mff.cuni.autickax.entities.Mud;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
+import cz.mff.cuni.autickax.exceptions.IllegalGameObjectException;
 
 public class MyInputListenerForGameObjects extends MyInputListener {
 	EditorScreen.TypeOfGameObjectButton typeOfClass;
@@ -39,7 +40,7 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			this.screen.draggedObject = new Booster(x ,y, type);
 			break;
 		default:
-			break;
+			throw new IllegalGameObjectException(typeOfClass.toString());
 		}
 		this.screen.draggedObject.setTexture();
 		this.screen.draggedObject.setCanBeDragged(true);

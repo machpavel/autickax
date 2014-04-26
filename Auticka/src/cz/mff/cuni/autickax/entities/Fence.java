@@ -36,7 +36,7 @@ public class Fence extends GameTerminatingObject implements Externalizable {
 
 	@Override
 	public String getSoundName() {
-		assert(false); // add custom sounds!
+		// TODO add custom sounds!
 		return Constants.sounds.SOUND_TREE; 
 	}
 

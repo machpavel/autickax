@@ -34,26 +34,7 @@ public class MessageDialog extends Dialog {
 	}
 
 	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public DecisionType getDecision() {
 		return DecisionType.CONTINUE;
 	}
-
-	@Override
-	public void onDialogEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onMinigameEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

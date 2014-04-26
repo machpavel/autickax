@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.scene.GameScreen;
+import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -21,7 +22,7 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 /**
  * Base class for all game entities
  */
-abstract public class GameObject implements Externalizable {
+ public abstract class GameObject implements Externalizable {
 
 	private static final byte MAGIC_GAME_OBJECT_END = 127;
 
@@ -77,8 +78,7 @@ abstract public class GameObject implements Externalizable {
 		this.type = object.type;
 	}
 
-	public static GameObject parseGameObject(Element gameObject)
-			throws IOException {
+	public static GameObject parseGameObject(Element gameObject) throws IOException {
 		GameObject retval;
 
 		float x = gameObject.getFloat("X");
@@ -105,7 +105,8 @@ abstract public class GameObject implements Externalizable {
 		} else if (objectName.equals("booster")) {
 			retval = new Booster(x, y, type);
 		} else {
-			throw new IOException("Loading object failed: Unknown type");
+			throw new IOException("Loading object failed: Unknown type " + " \"" + objectName
+					+ "\"");
 		}
 
 		return retval;
@@ -171,20 +172,17 @@ abstract public class GameObject implements Externalizable {
 
 	public void draw(SpriteBatch batch) {
 		batch.draw(this.getTexture(), (this.position.x - this.getWidth() / 2)
-				* Input.xStretchFactorInv,
-				(this.position.y - this.getHeight() / 2)
-						* Input.yStretchFactorInv, (this.getWidth() / 2)
-						* Input.xStretchFactorInv, (this.getHeight() / 2)
-						* Input.yStretchFactorInv, this.getWidth()
-						* Input.xStretchFactorInv, this.getHeight()
-						* Input.yStretchFactorInv, scale.x, scale.y,
-				this.rotation);
+				* Input.xStretchFactorInv, (this.position.y - this.getHeight() / 2)
+				* Input.yStretchFactorInv, (this.getWidth() / 2) * Input.xStretchFactorInv,
+				(this.getHeight() / 2) * Input.yStretchFactorInv, this.getWidth()
+						* Input.xStretchFactorInv, this.getHeight() * Input.yStretchFactorInv,
+				scale.x, scale.y, this.rotation);
 	}
 
 	public String toString() {
-		return getName() + " PosX: " + this.position.x + " PosY: "
-				+ this.position.y + " Width: " + this.getWidth() + " Height: "
-				+ this.getHeight() + " Bounding: " + this.boundingCircleRadius;
+		return getName() + " PosX: " + this.position.x + " PosY: " + this.position.y + " Width: "
+				+ this.getWidth() + " Height: " + this.getHeight() + " Bounding: "
+				+ this.boundingCircleRadius;
 	}
 
 	public void toXml(XmlWriter writer) throws IOException {
@@ -199,10 +197,10 @@ abstract public class GameObject implements Externalizable {
 	protected void setMeasurements(int width, int height) {
 		this.setWidth(width);
 		this.setHeight(height);
-		// TODO: which method of choosin bounding rectangle??
-		// this.boundingCircleRadius = width > height ? width / 2 : height / 2;
-		this.boundingCircleRadius = width > height ? height / 2 : width / 2;
-		// this.boundingCircleRadius = (width + height) / 4;
+		
+		// Counts bounding radius only if it wasn't assigned before
+		if(this.boundingCircleRadius == 0)
+			this.boundingCircleRadius = width > height ? height / 2 : width / 2;
 	}
 
 	/**
@@ -214,8 +212,7 @@ abstract public class GameObject implements Externalizable {
 	public boolean setTexture(String name) {
 		if (Autickax.getInstance() != null) {
 			this.texture = Autickax.getInstance().assets.getGraphics(name);
-			setMeasurements(this.texture.getRegionWidth(),
-					this.texture.getRegionHeight());
+			setMeasurements(this.texture.getRegionWidth(), this.texture.getRegionHeight());
 			return true;
 		} else
 			return false;
@@ -229,10 +226,8 @@ abstract public class GameObject implements Externalizable {
 	 * @return
 	 */
 	public boolean collides(GameObject object2) {
-		float objectsDistance = new Vector2(this.position)
-				.sub(object2.position).len();
-		float minimalDistance = this.boundingCircleRadius
-				+ object2.boundingCircleRadius;
+		float objectsDistance = new Vector2(this.position).sub(object2.position).len();
+		float minimalDistance = this.boundingCircleRadius + object2.boundingCircleRadius;
 		return objectsDistance < minimalDistance;
 	}
 
@@ -258,7 +253,9 @@ abstract public class GameObject implements Externalizable {
 		return middlesDistance < this.boundingCircleRadius;
 	}
 
-	abstract void aditionalsToXml(XmlWriter writer) throws IOException;
+	void aditionalsToXml(XmlWriter writer) throws IOException{
+		// Every object can write its own values in writer
+	}
 
 	/**
 	 * Sets the rotation of object in degrees (counterclockwise).
@@ -295,9 +292,13 @@ abstract public class GameObject implements Externalizable {
 		this.gameScreen = screen;
 	}
 
-	public abstract Minigame getMinigame(GameScreen gameScreen, SubLevel parent);
+	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent){
+		return null;
+	}
 
-	public abstract String getSoundName();
+	public String getSoundName(){
+		return Constants.sounds.SOUND_NO_SOUND;
+	}
 
 	public void setIsActive(boolean value) {
 		this.isActive = value;
@@ -332,8 +333,7 @@ abstract public class GameObject implements Externalizable {
 	}
 
 	@Override
-	public void readExternal(ObjectInput in) throws IOException,
-			ClassNotFoundException {
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 		this.position = (Vector2) in.readObject();
 		this.width = in.readInt();
 		this.height = in.readInt();
@@ -343,7 +343,8 @@ abstract public class GameObject implements Externalizable {
 		this.type = in.readInt();
 
 		byte check = in.readByte();
-		assert (check == GameObject.MAGIC_GAME_OBJECT_END);
+		if (check != GameObject.MAGIC_GAME_OBJECT_END)
+			throw new RuntimeException("Game object wasn't read correctly");
 	}
 
 	@Override

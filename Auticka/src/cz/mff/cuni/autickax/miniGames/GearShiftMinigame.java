@@ -12,6 +12,7 @@ import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.entities.GearShiftMinigameFinish;
 import cz.mff.cuni.autickax.entities.GearShifter;
+import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -81,8 +82,7 @@ public final class GearShiftMinigame extends Minigame{
 			updateInFinishState(delta);
 			break;
 		default:
-			// TODO implementation of exception
-			break;
+			throw new IllegalStateException(state.toString());
 		}
 		
 	}
@@ -147,24 +147,6 @@ public final class GearShiftMinigame extends Minigame{
 		this.gearShifter.draw(batch);
 		batch.end();
 	}
-
-	@Override
-	public void onDialogEnded() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onMinigameEnded() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	private boolean isInGrid(float x, float y){
 		// Vertical limits
@@ -210,8 +192,7 @@ public final class GearShiftMinigame extends Minigame{
 			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME;
 			break;
 		default:
-			//TODO assert
-			break;
+			throw new IllegalDifficultyException(difficulty.toString());
 		}
 		return;
 	}

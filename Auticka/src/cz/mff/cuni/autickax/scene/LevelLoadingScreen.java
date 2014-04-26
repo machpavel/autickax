@@ -46,7 +46,6 @@ public class LevelLoadingScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
-		// TODO Auto-generated method stub
-		
+		// Rewrites the base method with doing nothing
 	}
 }

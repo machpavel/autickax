@@ -6,13 +6,12 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public abstract class Minigame extends Comunicator {
 
-	protected ResultType result;
-	protected float resultValue;
+	protected ResultType result = ResultType.UNASIGNED;
+	protected float resultValue = -1;
 	protected String resultMessage = null;
 	
 	public Minigame(GameScreen gameScreen, SubLevel parent) {
 		super(gameScreen, parent);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public ResultType getResult(){
@@ -27,6 +26,6 @@ public abstract class Minigame extends Comunicator {
 	}
 	
 	public enum ResultType{
-		FAILED, FAILED_WITH_VALUE, PROCEEDED_WITH_VALUE, PROCEEDED;
+		FAILED, FAILED_WITH_VALUE, PROCEEDED_WITH_VALUE, PROCEEDED, UNASIGNED;
 	}
 }

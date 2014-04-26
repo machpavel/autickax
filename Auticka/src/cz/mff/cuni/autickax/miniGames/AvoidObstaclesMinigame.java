@@ -17,6 +17,7 @@ import cz.mff.cuni.autickax.entities.AvoidStone;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
+import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
@@ -38,8 +39,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	private Finish finish;
 	States state = States.BEGINNING_STATE;
 
-	public AvoidObstaclesMinigame(GameScreen gameScreen, SubLevel parent,
-			ObstaclesType obstacleType) {
+	public AvoidObstaclesMinigame(GameScreen gameScreen, SubLevel parent, ObstaclesType obstacleType) {
 		super(gameScreen, parent);
 		this.obstaclesType = obstacleType;
 
@@ -50,17 +50,14 @@ public final class AvoidObstaclesMinigame extends Minigame {
 						.getGraphics(Constants.minigames.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Autickax.settings.showTooltips)
-			this.parent
-					.setDialog(new MessageDialog(
-							gameScreen,
-							parent,
-							Constants.strings.TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO));
+			this.parent.setDialog(new MessageDialog(gameScreen, parent,
+					Constants.strings.TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO));
 
 		this.gameObjects = new ArrayList<GameObject>();
 
 		this.finish = new Finish(FINISH_START_POSITION_X, Constants.WORLD_HEIGHT / 2, FINISH_TYPE);
 		this.finish.setScreen(gameScreen);
-		
+
 		this.car = new Car(CAR_START_POSITION_X, Constants.WORLD_HEIGHT / 2, 1);
 		this.car.setScreen(gameScreen);
 		this.car.setDragged(false);
@@ -81,11 +78,9 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			do {
 				positionIsCorrect = true;
 
-				xPosition = MathUtils
-						.random(Constants.dialog.DIALOG_WORLD_WIDTH - 20)
+				xPosition = MathUtils.random(Constants.dialog.DIALOG_WORLD_WIDTH - 20)
 						+ Constants.dialog.DIALOG_WORLD_X_OFFSET + 10;
-				yPosition = MathUtils
-						.random(Constants.dialog.DIALOG_WORLD_HEIGHT - 20)
+				yPosition = MathUtils.random(Constants.dialog.DIALOG_WORLD_HEIGHT - 20)
 						+ Constants.dialog.DIALOG_WORLD_Y_OFFSET + 10;
 				Vector2 position = new Vector2(xPosition, yPosition);
 
@@ -109,20 +104,22 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			if (!limitReached) {
 				switch (obstaclesType) {
 				case HOLES:
-					int avoidHoleType = MathUtils.random(1, Constants.gameObjects.AVOID_HOLES_TYPES_COUNT);
+					int avoidHoleType = MathUtils.random(1,
+							Constants.gameObjects.AVOID_HOLES_TYPES_COUNT);
 					AvoidHole avoidHoleObstacle = new AvoidHole(xPosition, yPosition, avoidHoleType);
 					avoidHoleObstacle.setScreen(this.level);
 					gameObjects.add(avoidHoleObstacle);
 					break;
 				case STONES:
-					int avoidStoneType = MathUtils.random(1, Constants.gameObjects.AVOID_STONE_TYPES_COUNT);
-					AvoidStone avoidStoneObstacle = new AvoidStone(xPosition, yPosition, avoidStoneType);
+					int avoidStoneType = MathUtils.random(1,
+							Constants.gameObjects.AVOID_STONE_TYPES_COUNT);
+					AvoidStone avoidStoneObstacle = new AvoidStone(xPosition, yPosition,
+							avoidStoneType);
 					avoidStoneObstacle.setScreen(this.level);
 					gameObjects.add(avoidStoneObstacle);
 					break;
 				default:
-					// TODO assert type
-					break;
+					throw new IllegalStateException(obstaclesType.toString());
 				}
 			}
 		} while (!limitReached);
@@ -147,8 +144,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			updateInFinishState(delta);
 			break;
 		default:
-			// TODO implementation of exception
-			break;
+			throw new IllegalStateException(state.toString());
 		}
 	}
 
@@ -156,8 +152,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
-			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
-					touchPos.y);
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
 			if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {
 				this.car.setDragged(true);
 				this.car.setShift(shift);
@@ -170,14 +165,11 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	private void updateInDrivingState(float delta) {
 		// Focus was lost
 		if (!this.car.isDragged()) {
-			//TODO:
-			// this.parent.setDialog(new DecisionDialog(this.level, this,
-			// "Pustil jsi auto", false));
-			fail();
+			fail(Constants.strings.TOOLTIP_MINIGAME_CAR_WAS_RELEASED);
 		}
 		// Car is out of borders
 		else if (!isInWorld(this.car.getPosition())) {
-			fail();
+			fail(Constants.strings.TOOLTIP_MINIGAME_CAR_OUT_OF_BOUNDS);
 		}
 		// Finish reached
 		else if (this.car.positionCollides(finish)) {
@@ -186,10 +178,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			// Collision detection
 			for (GameObject gameObject : gameObjects) {
 				if (this.car.collides(gameObject)) {
-					//TODO:
-					// this.parent.setDialog(new DecisionDialog(this.level,
-					// this, "Narazil jsi do kamene", false));
-					fail();
+					fail(null);
 					break;
 				}
 			}
@@ -205,7 +194,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 						+ Constants.dialog.DIALOG_WORLD_HEIGHT;
 	}
 
-	private void fail() {
+	private void fail(String primaryMessage) {
 		this.status = DialogAbstractStatus.FINISHED;
 		switch (obstaclesType) {
 		case STONES:
@@ -218,10 +207,10 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			this.resultValue = FAIL_VALUE;
 			break;
 		default:
-			this.resultMessage = Constants.strings.PHASE_2_MINIGAME_FAILED;
-			this.result = ResultType.FAILED;
-			break;
+			throw new IllegalStateException(obstaclesType.toString());
 		}
+		if (primaryMessage != null)
+			this.resultMessage = primaryMessage;
 		parent.onMinigameEnded();
 		this.endCommunication();
 	}
@@ -244,24 +233,6 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		this.finish.draw(batch);
 		this.car.draw(batch);
 		batch.end();
-	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onDialogEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onMinigameEnded() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public enum States {
@@ -290,8 +261,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_EXTREME;
 			break;
 		default:
-			MINIMAL_DISTANCE_BETWEEN_OBSTACLES = Constants.minigames.AVOID_OBSTACLES_MINIMAL_DISTANCE_BETWEEN_OBSTACLES_DEFAULT;
-			break;
+			throw new IllegalDifficultyException(difficulty.toString());
 		}
 		return;
 	}

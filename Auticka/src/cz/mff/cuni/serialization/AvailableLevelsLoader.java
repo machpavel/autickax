@@ -45,7 +45,6 @@ public class AvailableLevelsLoader extends AsynchronousAssetLoader<AvailableLeve
 	@Override
 	public AvailableLevels loadSync(AssetManager manager, String fileName,
 			FileHandle file, AvailableLevelsParameter parameter) {
-		// TODO Auto-generated method stub
 		return this.levels;
 	}
 

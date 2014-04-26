@@ -120,9 +120,9 @@ public class Assets {
 	}
 
 	private void loadGraphics() {
-		// TODO: Break into loading of common controls and level-specific.
-		// TODO: Handle multiple resolution loading.
-		//Figure out which graphics set to load, see http://wiki.starling-framework.org/manual/multi-resolution_development
+		// TODO Handle multiple resolution loading.
+		// Break into loading of common controls and level-specific.
+		// Figure out which graphics set to load, see http://wiki.starling-framework.org/manual/multi-resolution_development
 		//int screenWidth = Gdx.app.getGraphics().getWidth();
 		/*if( screenWidth >= 1280 ) {
 			graphicsHorizontalRes = 1280;

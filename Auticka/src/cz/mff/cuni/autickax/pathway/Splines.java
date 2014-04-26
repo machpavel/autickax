@@ -82,8 +82,10 @@ public class Splines {
 			part = 1f / (points.size() - 3);
 			index = (int) (u / part);			
 			localU = (u - (float) index * part) / part;
-		default:			
 			break;
+		default:
+			throw new RuntimeException("Unrecognized pathway type: " + pathwayType.toString());
+			
 		}
 
 		switch (type) {
@@ -92,8 +94,7 @@ public class Splines {
 		case CUBIC_SPLINE:
 			return GetLocalPointSpline(points, localU, index);
 		default:
-			// TODO exception
-			return new Vector2(0, 0);
+			throw new RuntimeException("Unrecognized spline interpolation type: " + type.toString());
 		}
 
 	}

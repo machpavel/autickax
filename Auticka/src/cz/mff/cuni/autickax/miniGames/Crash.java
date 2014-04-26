@@ -1,7 +1,5 @@
 package cz.mff.cuni.autickax.miniGames;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
@@ -33,29 +31,4 @@ public class Crash extends Minigame {
 	public void update(float delta) {
 		fail();
 	}
-
-	@Override
-	public void draw(SpriteBatch batch) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onDialogEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onMinigameEnded() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

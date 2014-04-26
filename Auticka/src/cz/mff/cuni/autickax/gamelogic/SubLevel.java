@@ -70,13 +70,13 @@ public abstract class SubLevel {
 		takeFocus();
 	}
 	
-	public abstract void update(float delta);
+	public void update(float delta){};
 	
-	public abstract void draw(SpriteBatch batch);
-	public abstract void render();
+	public void draw(SpriteBatch batch){};
+	public void render(){};
 	
-	public abstract void onDialogEnded();
-	public abstract void onMinigameEnded();
+	public void onDialogEnded(){};
+	public void onMinigameEnded(){};
 	
 	public void onPause(){
 		if(this.dialogStack.isEmpty())

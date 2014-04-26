@@ -1,10 +1,6 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.Externalizable;
-import java.io.IOException;
-
-import com.badlogic.gdx.utils.XmlWriter;
-
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -12,43 +8,29 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidStone extends GameObject implements Externalizable {
 
-	public AvoidStone(float x, float y, int type) {	
+	public AvoidStone(float x, float y, int type) {
 		super(x, y, type);
 	}
-	
-	public AvoidStone(GameObject object){
-		super(object);		
+
+	public AvoidStone(GameObject object) {
+		super(object);
 	}
-	
+
 	/** Parameterless constructor for the externalization */
 	public AvoidStone() {
 	}
-	
 
 	@Override
-	public void update(float delta) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String getName() {		
+	public String getName() {
 		return "avoidstone";
 	}
 
-	@Override
-	void aditionalsToXml(XmlWriter writer) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	/** Gets the texture name according to a type*/
-	public static  String GetTextureName(int type){
+	/** Gets the texture name according to a type */
+	public static String GetTextureName(int type) {
 		return Constants.gameObjects.AVOID_STONE_TEXTURE_NAME_PREFIX + type;
-		
+
 	}
-	
+
 	@Override
 	public GameObject copy() {
 		return new AvoidStone(this);
@@ -56,15 +38,14 @@ public final class AvoidStone extends GameObject implements Externalizable {
 
 	@Override
 	public void setTexture(int type) {
-		super.setTexture(AvoidStone.GetTextureName(type));		
+		super.setTexture(AvoidStone.GetTextureName(type));
 	}
-		
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
 		return null;
 	}
-	
+
 	@Override
 	public String getSoundName() {
 		return Constants.sounds.SOUND_STONE;

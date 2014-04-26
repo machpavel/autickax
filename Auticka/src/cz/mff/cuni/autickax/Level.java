@@ -110,14 +110,18 @@ public class Level implements java.io.Externalizable {
 	public void setGameScreen(GameScreen screen) {
 		for (GameObject gameObject : this.gameObjects) {
 			gameObject.setScreen(screen);
-			gameObject.setTexture();
+			if(gameObject.getTexture() == null)
+				gameObject.setTexture();
 		}
 		this.car.setScreen(screen);
 		this.start.setScreen(screen);
 		this.finish.setScreen(screen);
-		this.car.setTexture();
-		this.start.setTexture();
-		this.finish.setTexture();
+		if(this.car.getTexture() == null)
+			this.car.setTexture();
+		if(this.start.getTexture() == null)
+			this.start.setTexture();
+		if(this.finish.getTexture() == null)
+			this.finish.setTexture();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -136,7 +140,8 @@ public class Level implements java.io.Externalizable {
 		this.timeLimit = in.readFloat();
 
 		byte check = in.readByte();
-		assert (check == Level.MAGIC_LEVEL_END);
+		if(check != Level.MAGIC_LEVEL_END)
+			throw new RuntimeException("Level wasn't read correctly");
 	}
 
 	@Override

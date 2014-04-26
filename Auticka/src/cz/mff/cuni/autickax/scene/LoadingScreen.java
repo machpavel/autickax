@@ -85,15 +85,12 @@ public class LoadingScreen extends BaseScreen {
 				this.fumeXPositions.add(this.carXPosition - this.fumeLaunchInterval / 2);
 				this.carFumePosition = 0;
 			}
-		}
-		//trace("loading progress:" + game.assets.getProgress()); //TODO visualize
-
+		}	
 	}
 
 	@Override
 	protected void onBackKeyPressed() {
-		// TODO Auto-generated method stub
-		
+		// Rewrites the base method with doing nothing		
 	}
 
 }

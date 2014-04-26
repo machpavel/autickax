@@ -17,6 +17,7 @@ import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.GameTerminatingObject;
+import cz.mff.cuni.autickax.exceptions.IllegalCommandException;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
@@ -56,8 +57,7 @@ public class SubLevel1 extends SubLevel {
 		checkPoints = new LinkedList<CheckPoint>();	
 		state = SubLevel1States.BEGINNING_STATE;
 		
-		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 
-		this.level.getFinish().resetBoundingRadius();
+		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 		
 				
 		initTerminatingGameObjects();
 		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
@@ -94,8 +94,7 @@ public class SubLevel1 extends SubLevel {
 			this.level.goToMainScreen();
 			break;
 		default:
-			// TODO assert for type
-			break;
+			throw new IllegalCommandException(dialogLocal.getDecision().toString());
 		}
 		
 	}
@@ -135,8 +134,7 @@ public class SubLevel1 extends SubLevel {
 				updateInMistakeState(delta);
 				break;
 			default:
-				// TODO implementation of exception
-				break;
+				throw new IllegalStateException(state.toString());
 			}
 		}				
 	}
@@ -319,7 +317,6 @@ public class SubLevel1 extends SubLevel {
 		Vector2 lastAdded = null;
 		float sumRadii = this.level.getFinish().getBoundingRadius() + Constants.misc.MAX_DISTANCE_FROM_PATHWAY;
 		for (float f = start; f < finish; f += step) {
-			//TODO revise
 			//do not add waypoints too close to finish
 			Vector2 pathPosition = pathway.GetPosition(f);
 			if (new Vector2(pathPosition).sub(this.level.getFinish().getPosition()).len() >   sumRadii )

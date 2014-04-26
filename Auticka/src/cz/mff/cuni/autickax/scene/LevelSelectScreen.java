@@ -72,8 +72,7 @@ public class LevelSelectScreen extends BaseScreen {
 					break;
 					
 				default:
-					assert true;
-					// stars cannot be more than three
+					throw new RuntimeException("Stars can't be more then three");
 				}
 			}
 			
@@ -144,8 +143,7 @@ public class LevelSelectScreen extends BaseScreen {
 			buttonTextureHover = Constants.menu.BUTTON_MENU_RIGHT_SHIFTER_HOVER;
 			break;
 		default:
-			shiftChange = 0;
-			break;
+			throw new RuntimeException("Unrecognized direction: " + direction.toString());
 		}
 		
 		ScreenAdaptiveButton button = new ScreenAdaptiveButton(

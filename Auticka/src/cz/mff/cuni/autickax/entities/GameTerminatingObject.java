@@ -1,10 +1,6 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.Externalizable;
-import java.io.IOException;
-
-import com.badlogic.gdx.utils.XmlWriter;
-
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.Crash;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -39,11 +35,4 @@ public abstract class GameTerminatingObject extends GameObject implements Extern
 	}
 	
 	protected abstract String getResultMessage();
-
-	
-	@Override // remove...
-	void aditionalsToXml(XmlWriter writer) throws IOException {
-		// TODO Auto-generated method stub
-
-	}
 }

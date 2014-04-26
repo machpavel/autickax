@@ -4,6 +4,7 @@ import com.badlogic.gdx.tools.imagepacker.TexturePacker;
 import cz.mff.cuni.autickax.AvailableLevels;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.Level;
+import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,7 +83,7 @@ public class AssetsProcessor {
 					availableLevels.normalLevels.add(level);
 					break;
 				default:
-					break;
+					throw new IllegalDifficultyException(levelDifficulty.toString());
 	        	}
         	}
     	}

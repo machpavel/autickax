@@ -40,8 +40,7 @@ public final class Misc {
 	public final int CAR_CAPABLE_DISTANCE = 60;
 
 	/** Determines maximal distance of proper surface from pathway (in pixels) */
-	// public final int MAX_SURFACE_DISTANCE_FROM_PATHWAY = 30;
-	public final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT = 30;
+	// public final int MAX_SURFACE_DISTANCE_FROM_PATHWAY = 30;	
 
 	public final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_KIDDIE = 60;
 
