@@ -1,8 +1,9 @@
-package cz.mff.cuni.autickax.entities;
+package cz.mff.cuni.autickax.miniGames.support;
 
 import java.io.Externalizable;
 
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.entities.GameObject;
 
 public class GearShiftMinigameFinish extends GameObject implements Externalizable {
 

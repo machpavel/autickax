@@ -86,23 +86,23 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 		int type = gameObject.getInt("type", 0);
 
 		String objectName = gameObject.getName();
-		if (objectName.equals("mud")) {
+		if (objectName.equals(Mud.name)) {
 			retval = new Mud(x, y, type);
-		} else if (objectName.equals("stone")) {
+		} else if (objectName.equals(Stone.name)) {
 			retval = new Stone(x, y, type);
-		} else if (objectName.equals("tree")) {
+		} else if (objectName.equals(Tree.name)) {
 			retval = new Tree(x, y, type);
-		} else if (objectName.equals("fence")) {
+		} else if (objectName.equals(Fence.name)) {
 			retval = new Fence(x, y, type);
-		} else if (objectName.equals("parkingCar")) {
+		} else if (objectName.equals(ParkingCar.name)) {
 			retval = new ParkingCar(x, y, type);
-		} else if (objectName.equals("wall")) {
+		} else if (objectName.equals(Wall.name)) {
 			retval = new Wall(x, y, type);
-		} else if (objectName.equals("house")) {
+		} else if (objectName.equals(House.name)) {
 			retval = new House(x, y, type);
-		} else if (objectName.equals("hole")) {
+		} else if (objectName.equals(Hole.name)) {
 			retval = new Hole(x, y, type);
-		} else if (objectName.equals("booster")) {
+		} else if (objectName.equals(Booster.name)) {
 			retval = new Booster(x, y, type);
 		} else {
 			throw new IOException("Loading object failed: Unknown type " + " \"" + objectName

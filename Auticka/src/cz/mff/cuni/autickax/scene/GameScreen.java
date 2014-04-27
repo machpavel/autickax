@@ -160,10 +160,9 @@ public class GameScreen extends BaseScreen {
 		batch.setProjectionMatrix(camera.combined);  // see https://github.com/libgdx/libgdx/wiki/Orthographic-camera
 		
 		batch.begin();
-		//batch.disableBlending(); //performance boost
-		//batch.enableBlending(); //don't forget to enabled this for alpha channel
-		
+		batch.disableBlending();				
 		this.level.getLevelBackground().draw(batch, stageWidth, stageHeight);
+		batch.enableBlending();
 
 		batch.draw(this.pathwayTexture, 0, 0, stageWidth, stageHeight);
 		batch.end();

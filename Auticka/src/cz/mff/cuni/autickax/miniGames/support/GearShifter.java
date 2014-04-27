@@ -1,4 +1,4 @@
-package cz.mff.cuni.autickax.entities;
+package cz.mff.cuni.autickax.miniGames.support;
 
 import java.io.Externalizable;
 
@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.entities.GameObject;
+import cz.mff.cuni.autickax.entities.ShiftableGameObject;
 import cz.mff.cuni.autickax.input.Input;
 
 public final class GearShifter extends ShiftableGameObject implements Externalizable {

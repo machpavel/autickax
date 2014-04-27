@@ -1,31 +1,29 @@
 package cz.mff.cuni.autickax.drawing;
 
 import java.io.Externalizable;
+import java.io.IOException;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.XmlWriter;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 public abstract class LevelBackground implements Externalizable {
-	
-	public static LevelBackground parseLevelBackground(
-			Element levelBackgroundRoot) {
+
+	public static LevelBackground parseLevelBackground(Element levelBackgroundRoot)
+			throws IOException {
 		Element levelBackground = levelBackgroundRoot.getChild(0);
 
-		if (levelBackground.getName().equals("constantBackground")) {
-			int red = levelBackground.getInt("red");
-			int green = levelBackground.getInt("green");
-			int blue = levelBackground.getInt("blue");
-
-			return new LevelConstantBackground(red, green, blue);
-
+		String backgroundType = levelBackground.getName();
+		if (backgroundType.equals(LevelConstantBackground.xmlName)) {
+			return LevelConstantBackground.parseLevelBackground(levelBackground);
+		} else if (backgroundType.equals(LevelTextureBackground.xmlName)) {
+			return LevelTextureBackground.parseLevelBackground(levelBackground);
 		} else {
-			String textureName = levelBackground.getAttribute("textureName");
-			
-			return new LevelTextureBackground(textureName);
+			throw new IOException("Unknown type of background: " + backgroundType);
 		}
-
 	}
 
-	public abstract void draw(SpriteBatch batch, float stageWidth,
-			float stageHeight);
+	public abstract void toXml(XmlWriter writer) throws IOException;
+
+	public abstract void draw(SpriteBatch batch, float stageWidth, float stageHeight);
 }

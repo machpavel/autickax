@@ -12,6 +12,7 @@ import cz.mff.cuni.autickax.exceptions.IllegalGameObjectException;
 import cz.mff.cuni.autickax.input.Input;
 
 public final class Car extends ShiftableGameObject {
+	public static final String name = Constants.gameObjects.CAR_NAME;
 
 	private boolean isDragged = false;
 	private TextureRegion[] positionTextures;
@@ -52,7 +53,7 @@ public final class Car extends ShiftableGameObject {
 
 	@Override
 	public String getName() {
-		return "car";
+		return name;
 	}
 
 	@Override

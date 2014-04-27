@@ -5,10 +5,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import cz.mff.cuni.autickax.EditorScreen;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.entities.Booster;
+import cz.mff.cuni.autickax.entities.Fence;
+import cz.mff.cuni.autickax.entities.Hill;
 import cz.mff.cuni.autickax.entities.Hole;
+import cz.mff.cuni.autickax.entities.House;
 import cz.mff.cuni.autickax.entities.Mud;
+import cz.mff.cuni.autickax.entities.ParkingCar;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
+import cz.mff.cuni.autickax.entities.Wall;
 import cz.mff.cuni.autickax.exceptions.IllegalGameObjectException;
 
 public class MyInputListenerForGameObjects extends MyInputListener {
@@ -38,6 +43,21 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			break;
 		case BOOSTER:
 			this.screen.draggedObject = new Booster(x ,y, type);
+			break;
+		case FENCE:
+			this.screen.draggedObject = new Fence(x ,y, type);
+			break;
+		case HOUSE:
+			this.screen.draggedObject = new House(x ,y, type);
+			break;
+		case PARKING_CAR:
+			this.screen.draggedObject = new ParkingCar(x ,y, type);
+			break;
+		case WALL:
+			this.screen.draggedObject = new Wall(x ,y, type);
+			break;
+		case HILL:
+			this.screen.draggedObject = new Hill(x ,y, type);
 			break;
 		default:
 			throw new IllegalGameObjectException(typeOfClass.toString());

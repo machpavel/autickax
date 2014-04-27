@@ -1,13 +1,15 @@
-package cz.mff.cuni.autickax.entities;
+package cz.mff.cuni.autickax.miniGames.support;
 
 import java.io.Externalizable;
+
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidStone extends GameObject implements Externalizable {
-
+	public static String name = Constants.gameObjects.AVOID_STONE_NAME;
 	public AvoidStone(float x, float y, int type) {
 		super(x, y, type);
 	}
@@ -22,12 +24,12 @@ public final class AvoidStone extends GameObject implements Externalizable {
 
 	@Override
 	public String getName() {
-		return "avoidstone";
+		return name;
 	}
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.AVOID_STONE_TEXTURE_NAME_PREFIX + type;
+		return Constants.gameObjects.AVOID_STONE_NAME + type;
 
 	}
 

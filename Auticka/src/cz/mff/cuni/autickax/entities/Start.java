@@ -13,6 +13,7 @@ import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.input.Input;
 
 public class Start extends GameObject implements Externalizable {
+	public static final String name = Constants.gameObjects.START_NAME;
 	Vector2 visualShift = new Vector2(0, 0);
 
 	public Start(float x, float y, int type) {
@@ -53,12 +54,12 @@ public class Start extends GameObject implements Externalizable {
 
 	@Override
 	public String getName() {
-		return "start";
+		return name;
 	}
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.START_TEXTURE_PREFIX + type;
+		return Constants.gameObjects.START_NAME + type;
 	}
 
 	@Override

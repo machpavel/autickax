@@ -13,7 +13,7 @@ import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.input.Input;
 
 public class Finish extends GameObject implements Externalizable {
-
+	public static final String name = Constants.gameObjects.FINISH_NAME;
 	Vector2 visualShift = new Vector2(0, 0);
 
 	public Finish(float x, float y, int type) {
@@ -51,12 +51,12 @@ public class Finish extends GameObject implements Externalizable {
 
 	@Override
 	public String getName() {
-		return "finish";
+		return name;
 	}
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.FINISH_TEXTURE_PREFIX + type;
+		return Constants.gameObjects.FINISH_NAME + type;
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import cz.mff.cuni.autickax.miniGames.SwitchingMinigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Mud extends GameObject implements Externalizable {
+	public static final String name = Constants.gameObjects.MUD_NAME;
 
 	public Mud(float x, float y, int type) {
 		super(x, y, type);
@@ -24,12 +25,12 @@ public final class Mud extends GameObject implements Externalizable {
 
 	@Override
 	public String getName() {
-		return "mud";
+		return name;
 	}
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.MUD_TEXTURE_PREFIX + type;
+		return Constants.gameObjects.MUD_NAME + type;
 
 	}
 

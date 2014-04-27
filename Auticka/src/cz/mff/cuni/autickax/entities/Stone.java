@@ -10,6 +10,7 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Stone extends GameObject implements Externalizable {
+	public static final String name = Constants.gameObjects.STONE_NAME;
 
 	public Stone(float x, float y, int type) {
 		super(x, y, type);
@@ -25,12 +26,12 @@ public final class Stone extends GameObject implements Externalizable {
 
 	@Override
 	public String getName() {
-		return "stone";
+		return name;
 	}
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.STONE_TEXTURE_PREFIX + type;
+		return Constants.gameObjects.STONE_NAME + type;
 	}
 
 	@Override

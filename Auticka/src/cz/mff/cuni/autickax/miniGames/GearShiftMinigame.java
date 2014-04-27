@@ -10,11 +10,11 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
-import cz.mff.cuni.autickax.entities.GearShiftMinigameFinish;
-import cz.mff.cuni.autickax.entities.GearShifter;
 import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
+import cz.mff.cuni.autickax.miniGames.support.GearShiftMinigameFinish;
+import cz.mff.cuni.autickax.miniGames.support.GearShifter;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class GearShiftMinigame extends Minigame{	

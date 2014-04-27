@@ -51,6 +51,9 @@ public final class Misc {
 	public final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_HARD = 30;
 
 	public final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_EXTREME = 20;
+	
+	//TODO remove
+	public float MAX_SURFACE_DISTANCE_FROM_PATHWAY_DEFAULT = 40;
 
 	/** Number of waypoints that check if the player raced through all the track */
 	public final int WAYPOINTS_COUNT = 40;
@@ -81,13 +84,6 @@ public final class Misc {
 	public final String PATHWAY_TEXTURE_TYPE_1 = "pathway";
 	public final String TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME = "pathwayTexture";
 
-	/** Background texture in levels */
-	public final int LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT = 21;
-	public final String LEVEL_BACKGROUND_TEXTURE_PREFIX = "textury";
-	public final String LEVEL_SMALL_BACKGROUND_TEXTURE_POSTFIX = "small";
-
-
-
 	// GOLDEN STARS
 	// Defines the max multiply of time limit which a player must not cross in
 	// order to gain the stars
@@ -98,5 +94,6 @@ public final class Misc {
 
 	// SCORE CONSTANT
 	public final int SCORE_MULTIPLIER = 1000000;
+	
 
 }

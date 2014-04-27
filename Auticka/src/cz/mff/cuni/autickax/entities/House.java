@@ -5,6 +5,7 @@ import java.io.Externalizable;
 import cz.mff.cuni.autickax.constants.Constants;
 
 public final class House extends GameTerminatingObject implements Externalizable {
+	public static final String name = Constants.gameObjects.HOUSE_NAME;
 
 	public House(float x, float y, int type) {
 		super(x, y, type);
@@ -20,7 +21,7 @@ public final class House extends GameTerminatingObject implements Externalizable
 
 	@Override
 	public String getName() {
-		return "house";
+		return name;
 	}
 
 	@Override
@@ -37,5 +38,10 @@ public final class House extends GameTerminatingObject implements Externalizable
 	@Override
 	protected String getResultMessage() {
 		return Constants.strings.TOOLTIP_MINIGAME_CRASHED_HOUSE_RESULT_MESSAGE;
+	}
+	
+	/** Gets the texture name according to a type */
+	public static String GetStaticTextureName(int type) {
+		return Constants.gameObjects.HOUSE_NAME + type;
 	}
 }

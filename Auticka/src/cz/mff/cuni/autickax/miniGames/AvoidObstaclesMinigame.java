@@ -12,14 +12,14 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
-import cz.mff.cuni.autickax.entities.AvoidHole;
-import cz.mff.cuni.autickax.entities.AvoidStone;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
+import cz.mff.cuni.autickax.miniGames.support.AvoidHole;
+import cz.mff.cuni.autickax.miniGames.support.AvoidStone;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidObstaclesMinigame extends Minigame {

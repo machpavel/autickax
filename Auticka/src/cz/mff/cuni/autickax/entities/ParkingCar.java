@@ -5,6 +5,7 @@ import java.io.Externalizable;
 import cz.mff.cuni.autickax.constants.Constants;
 
 public final class ParkingCar extends GameTerminatingObject implements Externalizable {
+	public static final String name = Constants.gameObjects.PARKING_CAR_NAME;
 
 	public ParkingCar(float x, float y, int type) {
 		super(x, y, type);
@@ -20,7 +21,7 @@ public final class ParkingCar extends GameTerminatingObject implements Externali
 
 	@Override
 	public String getName() {
-		return "parkingCar";
+		return name;
 	}
 
 	@Override
@@ -37,5 +38,9 @@ public final class ParkingCar extends GameTerminatingObject implements Externali
 	@Override
 	protected String getResultMessage() {
 		return Constants.strings.TOOLTIP_MINIGAME_CRASHED_PARKING_CAR_RESULT_MESSAGE;
+	}
+	/** Gets the texture name according to a type */
+	public static String GetStaticTextureName(int type) {
+		return Constants.gameObjects.PARKING_CAR_NAME + type;
 	}
 }

@@ -78,15 +78,15 @@ public class Level implements java.io.Externalizable {
 		}
 
 		// Loading car
-		Element car = root.getChildByName("car");
+		Element car = root.getChildByName(Car.name);
 		this.car = Car.parseCar(car);
 
 		// Loading start
-		Element start = root.getChildByName("start");
+		Element start = root.getChildByName(Start.name);
 		this.start = Start.parseStart(start);
 
 		// Loading finish
-		Element finish = root.getChildByName("finish");
+		Element finish = root.getChildByName(Finish.name);
 		this.finish = Finish.parseFinish(finish);
 
 		// Background
