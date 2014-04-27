@@ -11,7 +11,7 @@ public final class Sounds {
 	public final String SOUND_NO_SOUND = "no_sound";
 	// MUD
 	public final String SOUND_MUD = "mud";
-	public final String SOUND_MUD_PATH = "sfx/collisions/mud02.wav";
+	public final String SOUND_MUD_PATH = "sfx/collisions/mud02.mp3";
 	// HOLE
 	public final String SOUND_HOLE = "hole";
 	public final String SOUND_HOLE_PATH = "sfx/collisions/vehicle_crash_small_hole.mp3";
