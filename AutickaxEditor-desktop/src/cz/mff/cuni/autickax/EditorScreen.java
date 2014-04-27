@@ -50,9 +50,11 @@ import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.entities.Wall;
+import cz.mff.cuni.autickax.myInputListener.ColorBackgroundInputListener;
+import cz.mff.cuni.autickax.myInputListener.TexturedBackgroundInputListener;
 import cz.mff.cuni.autickax.myInputListener.MyInputListener;
 import cz.mff.cuni.autickax.myInputListener.MyInputListenerForGameObjects;
-import cz.mff.cuni.autickax.myInputListener.MyTextNumberListener;
+import cz.mff.cuni.autickax.myInputListener.DigitsTextFieldInputListener;
 import cz.mff.cuni.autickax.myInputListener.PlacedObjectsInputListener;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
@@ -92,7 +94,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	private Pathway pathway;
 
 	// Background
-	private LevelBackground background = new LevelConstantBackground(169, 207, 56);// "background1");
+	private LevelBackground background;
 
 	// Pathway texture
 	private TextureRegion pathwayTexture;
@@ -121,7 +123,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	public LevelBackground GetBackground() {
 		return this.background;
 	}
-	
+
 	public void SetBackground(LevelBackground value) {
 		this.background = value;
 	}
@@ -148,16 +150,14 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	public void restart() {
-		// TODO
-		// background.SetType(1);
-
 		stage.clear();
+		background = new LevelConstantBackground(169, 207, 56);
 
 		// This order has to be kept.
 		createGenerateButton();
 		createRestartButton();
 		createSaveButton();
-		createLoadButton();		 
+		createLoadButton();
 		createBackgroundButtons();
 		createGameObjectsButtons();
 		createDifficultyButtons();
@@ -225,12 +225,13 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	@Override
 	public void render(float delta) {
-		stage.act(delta); // don't forget to advance the stage ( input + actions
+		stage.act(delta);
 
 		if (anyButtonTouched) {
 			SetAnyButtonTouched(false);
-		} else
+		} else {
 			update(delta);
+		}
 
 		renderScene();
 
@@ -398,7 +399,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		finish.setRotation((finishAngle + 90) % 360);
 	}
 
-	public void createGenerateButton() {
+	private void createGenerateButton() {
 		buttonGeneratePoints = new TextButton("Generate", this.textButtonStyle);
 		buttonGeneratePoints.setPosition(Constants.WORLD_WIDTH, 0);
 		stage.addActor(buttonGeneratePoints);
@@ -420,7 +421,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		});
 	}
 
-	public void createRestartButton() {
+	private void createRestartButton() {
 		buttonRestart = new TextButton("Restart", this.textButtonStyle);
 		buttonRestart.setPosition(Constants.WORLD_WIDTH, buttonGeneratePoints.getY()
 				+ buttonGeneratePoints.getHeight());
@@ -449,7 +450,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		return true;
 	}
 
-	public void createSaveButton() {
+	private void createSaveButton() {
 		buttonSave = new TextButton("Save", this.textButtonStyle);
 		buttonSave.setPosition(Constants.WORLD_WIDTH,
 				buttonRestart.getY() + buttonRestart.getHeight());
@@ -491,7 +492,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		});
 	}
 
-	public void createLoadButton() {
+	private void createLoadButton() {
 		buttonLoad = new TextButton("Load", this.textButtonStyle);
 		buttonLoad.setPosition(Constants.WORLD_WIDTH + 20 + buttonSave.getWidth(),
 				buttonSave.getY());
@@ -532,10 +533,26 @@ public final class EditorScreen extends BaseScreenEditor {
 		int heightOffset = 0;
 		int width = 30;
 		int height = 18;
+
+		Button colorButton = new Button(new ColorDrawable(new Color(1, 0, 0, 0.5f)));
+		colorButton.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset, Constants.WORLD_HEIGHT
+				- heightOffset - height);
+		colorButton.setWidth(2 * width);
+		;
+		colorButton.setHeight(height);
+		colorButton.addListener(new ColorBackgroundInputListener(this));
+		stage.addActor(colorButton);
+		widthOffset += 2 * width;
+
 		for (int i = 1; i <= EditorConstants.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {
-			Button button = new EditorBackgroundButton(EditorConstants.LEVEL_BACKGROUND_TEXTURE_PREFIX + Integer.toString(i), this);
+			String name = EditorConstants.LEVEL_BACKGROUND_TEXTURE_PREFIX + Integer.toString(i);
+			Button button = new Button(new TextureRegionDrawable(
+					AutickaxEditor.getInstance().assets.getGraphics(name)));
 			button.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset, Constants.WORLD_HEIGHT
-					- heightOffset - height);			
+					- heightOffset - height);
+			button.setWidth(width);
+			button.setHeight(height);
+			button.addListener(new TexturedBackgroundInputListener(name, this));
 			stage.addActor(button);
 
 			widthOffset += width;
@@ -642,7 +659,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		offsetOnScreen.x += objectWidth;
 	}
 
-	public void createDifficultyButtons() {
+	private void createDifficultyButtons() {
 		int BUTTONS_OFFSET = 10;
 		Button buttonDif1 = new TextButton("1", this.textButtonStyle);
 		buttonDif1.setPosition(Constants.WORLD_WIDTH + BUTTONS_OFFSET, buttonSave.getY()
@@ -712,7 +729,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		timeTextField = new TextField(new DecimalFormat().format(timeLimit), this.textFieldStyle);
 		timeTextField.setPosition(buttonRestart.getX() + buttonRestart.getWidth() + 20,
 				buttonRestart.getHeight());
-		timeTextField.setTextFieldListener(new MyTextNumberListener(this));
+		timeTextField.setTextFieldListener(new DigitsTextFieldInputListener(this));
 		timeTextField.addListener(new InputListener() {
 			@Override
 			public boolean keyTyped(InputEvent event, char character) {

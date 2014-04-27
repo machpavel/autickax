@@ -6,9 +6,9 @@ import cz.mff.cuni.autickax.AutickaxEditor;
 import cz.mff.cuni.autickax.EditorScreen;
 import cz.mff.cuni.autickax.drawing.LevelTextureBackground;
 
-public class MyInputListenerForBackground extends MyInputListener {
+public class TexturedBackgroundInputListener extends MyInputListener {
 	String name;
-	public MyInputListenerForBackground(String name, EditorScreen screen) {
+	public TexturedBackgroundInputListener(String name, EditorScreen screen) {
 		super(screen);
 		this.name = name;
 	}

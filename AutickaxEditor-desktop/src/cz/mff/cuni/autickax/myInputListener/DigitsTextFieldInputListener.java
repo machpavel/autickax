@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 
 import cz.mff.cuni.autickax.EditorScreen;
 
-public class MyTextNumberListener implements TextFieldListener {
+public class DigitsTextFieldInputListener implements TextFieldListener {
 	EditorScreen screen;
 
-	public MyTextNumberListener(EditorScreen screen) {
+	public DigitsTextFieldInputListener(EditorScreen screen) {
 		this.screen = screen;
 	}
 	
