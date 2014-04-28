@@ -18,12 +18,6 @@ public final class GearShifter extends ShiftableGameObject implements Externaliz
 		this.setCanBeDragged(true);
 	}
 
-	/** Parameterless constructor for the externalization */
-	public GearShifter() {
-		this.setCanBeDragged(true);
-	}
-
-
 	@Override
 	public String getName() {
 		return "gearShifter";

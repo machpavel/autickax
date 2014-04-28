@@ -5,6 +5,7 @@ import java.io.Externalizable;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.Minigame;
+import cz.mff.cuni.autickax.miniGames.RaceMinigame;
 import cz.mff.cuni.autickax.miniGames.SwitchingMinigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -46,7 +47,7 @@ public final class Mud extends GameObject implements Externalizable {
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new SwitchingMinigame(gameScreen, parent);
+		return new RaceMinigame(gameScreen, parent);
 	}
 
 	@Override

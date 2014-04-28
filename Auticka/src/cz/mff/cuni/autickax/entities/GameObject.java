@@ -22,7 +22,7 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 /**
  * Base class for all game entities
  */
- public abstract class GameObject implements Externalizable {
+public abstract class GameObject implements Externalizable {
 
 	private static final byte MAGIC_GAME_OBJECT_END = 127;
 
@@ -108,7 +108,7 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 			retval = new Hill(x, y, type);
 		} else if (objectName.equals(Tornado.name)) {
 			retval = new Tornado(x, y, type);
-		}else {
+		} else {
 			throw new IOException("Loading object failed: Unknown type " + " \"" + objectName
 					+ "\"");
 		}
@@ -163,11 +163,9 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 				if (Gdx.input.isTouched()) {
 					Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 					this.move(touchPos);
+				} else {
+					this.isDragged = false;
 				}
-			}
-
-			if (!Gdx.input.isTouched()) {
-				this.isDragged = false;
 			}
 		}
 	}
@@ -201,9 +199,9 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 	protected void setMeasurements(int width, int height) {
 		this.setWidth(width);
 		this.setHeight(height);
-		
+
 		// Counts bounding radius only if it wasn't assigned before
-		if(this.boundingCircleRadius == 0)
+		if (this.boundingCircleRadius == 0)
 			this.boundingCircleRadius = width > height ? height / 2 : width / 2;
 	}
 
@@ -257,7 +255,7 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 		return middlesDistance < this.boundingCircleRadius;
 	}
 
-	void aditionalsToXml(XmlWriter writer) throws IOException{
+	void aditionalsToXml(XmlWriter writer) throws IOException {
 		// Every object can write its own values in writer
 	}
 
@@ -296,11 +294,11 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 		this.gameScreen = screen;
 	}
 
-	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent){
+	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
 		return null;
 	}
 
-	public String getSoundName(){
+	public String getSoundName() {
 		return Constants.sounds.SOUND_NO_SOUND;
 	}
 
