@@ -69,12 +69,10 @@ public final class SwitchingMinigame extends Minigame {
 		for (int i = 0; i < buttons.length; i++) {
 			SwitchingMinigameButton newButton = new SwitchingMinigameButton(style, this);
 			newButton.setDisabled(true);
-			newButton.setPosition(Constants.dialog.DIALOG_WORLD_X_OFFSET * Input.xStretchFactorInv
-					+ Constants.dialog.DIALOG_WORLD_WIDTH * Input.xStretchFactorInv / 4
-					+ Constants.dialog.DIALOG_WORLD_WIDTH * Input.xStretchFactorInv * i / 2
-					- newButton.getWidth() / 2, Constants.dialog.DIALOG_WORLD_Y_OFFSET
-					* Input.yStretchFactorInv + Constants.dialog.DIALOG_WORLD_HEIGHT
-					* Input.yStretchFactorInv / 2 - newButton.getHeight() / 2);
+			newButton.setCenterPosition(Constants.dialog.DIALOG_WORLD_X_OFFSET
+					+ Constants.dialog.DIALOG_WORLD_WIDTH / 4 + Constants.dialog.DIALOG_WORLD_WIDTH
+					* i / 2, Constants.dialog.DIALOG_WORLD_Y_OFFSET
+					+ Constants.dialog.DIALOG_WORLD_HEIGHT / 2);
 			stage.addActor(newButton);
 			buttons[i] = newButton;
 		}

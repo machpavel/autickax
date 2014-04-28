@@ -1,13 +1,12 @@
 package cz.mff.cuni.autickax.miniGames.support;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.input.Input;
+import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveImage;
 
-public class AnglicakMinigameTarget extends Image {
+public class AnglicakMinigameTarget extends ScreenAdaptiveImage {
 
 	private Vector2 actualPosition;
 	private float boundingRadius;
@@ -15,10 +14,9 @@ public class AnglicakMinigameTarget extends Image {
 	public AnglicakMinigameTarget(int x, int y, float targetRadius) {
 		super(Autickax.getInstance().assets
 				.getGraphics(Constants.minigames.ANGLICAK_MINIGAME_TARGET_TEXTURE));
-		this.setWidth(targetRadius * 2 * Input.xStretchFactorInv);
-		this.setHeight(targetRadius * 2 * Input.yStretchFactorInv);
-		this.setPosition(x * Input.xStretchFactorInv - this.getWidth() / 2, y
-				* Input.yStretchFactorInv - this.getHeight() / 2);
+		this.setWidth(targetRadius * 2);
+		this.setHeight(targetRadius * 2);
+		this.setCenterPosition(x, y);
 		actualPosition = new Vector2(x, y);		
 		this.boundingRadius = targetRadius;
 	}
