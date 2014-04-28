@@ -17,7 +17,7 @@ public class ColorDrawable extends BaseDrawable {
 		pixmap.setColor(color);
 		pixmap.drawPixel(1, 1);
 		texture = new Texture(pixmap);
-		System.out.println(pixmap.getPixel(1, 1));
+		//System.out.println(pixmap.getPixel(1, 1));
 	}
 
 	@Override

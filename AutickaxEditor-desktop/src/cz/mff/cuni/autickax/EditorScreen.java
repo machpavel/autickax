@@ -48,6 +48,7 @@ import cz.mff.cuni.autickax.entities.Mud;
 import cz.mff.cuni.autickax.entities.ParkingCar;
 import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.Stone;
+import cz.mff.cuni.autickax.entities.Tornado;
 import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.entities.Wall;
 import cz.mff.cuni.autickax.myInputListener.ColorBackgroundInputListener;
@@ -187,6 +188,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.finish = level.getFinish();
 		this.gameObjects = level.getGameObjects();
 		this.pathway = level.getPathway();
+		this.pathwayTexture = this.pathway.getDistanceMap().generateTexture(this.difficulty);
 		this.start = level.getStart();
 		timeLimit = level.getTimeLimit();
 		timeTextField.setText(new DecimalFormat().format(timeLimit));
@@ -484,7 +486,7 @@ public final class EditorScreen extends BaseScreenEditor {
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Unable to save the file", "Warning: ",
 								JOptionPane.INFORMATION_MESSAGE);
-
+						e.printStackTrace();
 					}
 
 				}
@@ -520,6 +522,7 @@ public final class EditorScreen extends BaseScreenEditor {
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Unable to load the file", "Warning: ",
 								JOptionPane.INFORMATION_MESSAGE);
+						System.out.println(e.getMessage());
 						restart();
 					}
 
@@ -564,7 +567,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	public enum TypeOfGameObjectButton {
-		HOLE, MUD, STONE, TREE, BOOSTER, FENCE, PARKING_CAR, HOUSE, WALL, HILL
+		HOLE, MUD, STONE, TREE, BOOSTER, FENCE, PARKING_CAR, HOUSE, WALL, HILL, TORNADO
 	}
 
 	private void createGameObjectsButtons() {
@@ -632,6 +635,12 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Hill.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.HILL, i, offsetOnScreen, maxValue);
 		}
+		
+		// Tornados
+				for (int i = 1; i <= Constants.gameObjects.TORNADO_TYPES_COUNT; i++) {
+					trd = new TextureRegionDrawable(game.assets.getGraphics(Tornado.GetTextureName(i)));
+					createGameObjectButtons(trd, TypeOfGameObjectButton.TORNADO, i, offsetOnScreen, maxValue);
+				}
 	}
 
 	private void createGameObjectButtons(TextureRegionDrawable trd,

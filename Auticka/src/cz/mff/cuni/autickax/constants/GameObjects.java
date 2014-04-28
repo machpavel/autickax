@@ -60,4 +60,7 @@ public final class GameObjects {
 
 	public final int BOOSTER_TYPES_COUNT = 1;
 	public final String BOOSTER_NAME = "booster";
+	
+	public final int TORNADO_TYPES_COUNT = 2;
+	public final String TORNADO_NAME = "tornado";
 }

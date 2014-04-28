@@ -104,7 +104,11 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 			retval = new Hole(x, y, type);
 		} else if (objectName.equals(Booster.name)) {
 			retval = new Booster(x, y, type);
-		} else {
+		} else if (objectName.equals(Hill.name)) {
+			retval = new Hill(x, y, type);
+		} else if (objectName.equals(Tornado.name)) {
+			retval = new Tornado(x, y, type);
+		}else {
 			throw new IOException("Loading object failed: Unknown type " + " \"" + objectName
 					+ "\"");
 		}

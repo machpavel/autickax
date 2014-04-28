@@ -4,23 +4,24 @@ import java.io.Externalizable;
 
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.miniGames.GearShiftMinigame;
+import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame;
+import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame.ObstaclesType;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class Hill extends GameObject implements Externalizable {
-	public static final String name = Constants.gameObjects.HILL_NAME;
+public final class Tornado extends GameObject implements Externalizable {
+	public static final String name = Constants.gameObjects.TORNADO_NAME;
 
-	public Hill(float x, float y, int type) {
+	public Tornado(float x, float y, int type) {
 		super(x, y, type);
 	}
 
-	public Hill(GameObject object) {
+	public Tornado(GameObject object) {
 		super(object);
 	}
 
 	/** Parameterless constructor for the externalization */
-	public Hill() {
+	public Tornado() {
 	}
 
 	@Override
@@ -30,22 +31,21 @@ public final class Hill extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.HILL_NAME + type;
-
+		return Constants.gameObjects.TORNADO_NAME + type;
 	}
 
 	@Override
 	public GameObject copy() {
-		return new Hill(this);
+		return new Tornado(this);
 	}
 
 	@Override
 	public void setTexture(int type) {
-		super.setTexture(Hill.GetTextureName(type));
+		super.setTexture(Tornado.GetTextureName(type));
 	}
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new GearShiftMinigame(gameScreen, parent);
+		return new AvoidObstaclesMinigame(gameScreen, parent, ObstaclesType.HOLES);
 	}
 }
