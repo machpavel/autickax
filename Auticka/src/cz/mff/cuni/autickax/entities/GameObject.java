@@ -51,7 +51,7 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 		this.canBeDragged = canBeDragged;
 	}
 
-	protected transient boolean isDragged = false;
+	private transient boolean isDragged = false;
 
 	/** Parameterless constructor for the externalization */
 	public GameObject() {
@@ -361,5 +361,13 @@ import cz.mff.cuni.autickax.miniGames.Minigame;
 		out.writeFloat(this.boundingCircleRadius);
 		out.writeInt(this.type);
 		out.writeByte(GameObject.MAGIC_GAME_OBJECT_END);
+	}
+
+	public boolean isDragged() {
+		return isDragged;
+	}
+
+	public void setDragged(boolean isDragged) {
+		this.isDragged = isDragged;
 	}
 }

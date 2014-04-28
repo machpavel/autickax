@@ -3,7 +3,7 @@ package cz.mff.cuni.autickax.entities;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class ShiftableGameObject extends GameObject {	
-	protected Vector2 shift;
+	private Vector2 shift;
 	
 	/** Parameterless constructor for the externalization */
 	public ShiftableGameObject() {

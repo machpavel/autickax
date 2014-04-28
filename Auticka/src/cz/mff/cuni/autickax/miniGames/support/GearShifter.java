@@ -2,53 +2,31 @@ package cz.mff.cuni.autickax.miniGames.support;
 
 import java.io.Externalizable;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.ShiftableGameObject;
-import cz.mff.cuni.autickax.input.Input;
 
 public final class GearShifter extends ShiftableGameObject implements Externalizable {
-	private boolean isDragged = false;
 
 	public GearShifter(float x, float y) {
 		super(x, y, 0);
+		this.setCanBeDragged(true);
 	}
 
 	public GearShifter(GameObject object) {
 		super(object);
+		this.setCanBeDragged(true);
 	}
 
 	/** Parameterless constructor for the externalization */
 	public GearShifter() {
+		this.setCanBeDragged(true);
 	}
 
-	public boolean isDragged() {
-		return this.isDragged;
-	}
-
-	public void setDragged(boolean value) {
-		this.isDragged = value;
-	}
 
 	@Override
 	public String getName() {
 		return "gearShifter";
-	}
-
-	@Override
-	public void update(float delta) {
-		if (this.isDragged()) {
-			if (Gdx.input.isTouched()) {
-				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-				super.move(touchPos);
-			}
-		}
-
-		if (!Gdx.input.isTouched())
-			setDragged(false);
 	}
 
 	@Override

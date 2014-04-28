@@ -1,6 +1,5 @@
 package cz.mff.cuni.autickax.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -9,23 +8,23 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.exceptions.IllegalGameObjectException;
-import cz.mff.cuni.autickax.input.Input;
 
-public final class Car extends ShiftableGameObject {
+public class Car extends ShiftableGameObject {
 	public static final String name = Constants.gameObjects.CAR_NAME;
-
-	private boolean isDragged = false;
+	
 	private TextureRegion[] positionTextures;
 	private Vector2 lastCarPosition;
-	private float lastRotationDistance = 0;
+	private float lastRotationDistance = 0;  
 
 	/** Parameterless constructor for the externalization */
 	public Car() {
+		this.setCanBeDragged(true);
 	}
 
 	public Car(float x, float y, int type) {
 		super(x, y, type);
 		this.lastCarPosition = new Vector2(x, y);
+		setCanBeDragged(true);
 	}
 
 	public static Car parseCar(Element car) {
@@ -34,21 +33,14 @@ public final class Car extends ShiftableGameObject {
 
 	public Car(GameObject object) {
 		super(object);
+		setCanBeDragged(true);
 	}
 
 	public void reset() {
 		super.reset();
-		this.isDragged = false;
+		this.setDragged(false);
 		this.lastCarPosition = new Vector2(0, 0);
 		this.lastRotationDistance = 0;
-	}
-
-	public boolean isDragged() {
-		return this.isDragged;
-	}
-
-	public void setDragged(boolean value) {
-		this.isDragged = value;
 	}
 
 	@Override
@@ -70,19 +62,6 @@ public final class Car extends ShiftableGameObject {
 
 	public void setNextPositionIsDirection() {
 		this.lastRotationDistance = Constants.gameObjects.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION;
-	}
-
-	@Override
-	public void update(float delta) {
-		if (this.isDragged()) {
-			if (Gdx.input.isTouched()) {
-				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-				this.move(touchPos);
-			}
-		}
-
-		if (!Gdx.input.isTouched())
-			setDragged(false);
 	}
 
 	@Override
