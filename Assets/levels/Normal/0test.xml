@@ -34,8 +34,8 @@
 		</controlPoints>
 	</pathway>
 	<entities>
-		<mud X="561.0" Y="429.0" type="16"/>
-		<mud X="703.0" Y="449.0" type="8"/>
+		<mud X="561.0" Y="429.0" type="3"/>
+		<mud X="703.0" Y="449.0" type="2"/>
 		<tree X="578.0" Y="323.0" type="9"/>
 		<hole X="584.0" Y="71.0" type="2"/>
 		<mud X="415.0" Y="274.0" type="2"/>

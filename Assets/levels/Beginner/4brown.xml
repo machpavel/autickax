@@ -24,8 +24,8 @@
 		</controlPoints>
 	</pathway>
 	<entities>
-		<mud X="703.0" Y="400.0" type="16"/>
-		<mud X="69.0" Y="55.0" type="16"/>
+		<mud X="703.0" Y="400.0" type="1"/>
+		<mud X="69.0" Y="55.0" type="2"/>
 		<mud X="689.0" Y="248.0" type="3"/>
 		<mud X="700.0" Y="272.0" type="4"/>
 	</entities>

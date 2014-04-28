@@ -29,15 +29,15 @@
 		</controlPoints>
 	</pathway>
 	<entities>
-		<mud X="495.0" Y="142.0" type="6"/>
-		<mud X="503.0" Y="345.0" type="5"/>
-		<mud X="550.0" Y="212.0" type="6"/>
-		<mud X="492.0" Y="264.0" type="7"/>
-		<mud X="698.0" Y="426.0" type="7"/>
-		<mud X="732.0" Y="357.0" type="7"/>
-		<mud X="745.0" Y="439.0" type="7"/>
+		<mud X="495.0" Y="142.0" type="4"/>
+		<mud X="503.0" Y="345.0" type="4"/>
+		<mud X="550.0" Y="212.0" type="3"/>
+		<mud X="492.0" Y="264.0" type="2"/>
+		<mud X="698.0" Y="426.0" type="1"/>
+		<mud X="732.0" Y="357.0" type="2"/>
+		<mud X="745.0" Y="439.0" type="3"/>
 		<hole X="170.0" Y="257.0" type="1"/>
-		<mud X="688.0" Y="270.0" type="6"/>
+		<mud X="688.0" Y="270.0" type="2"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="47.666668" Y="326.5" type="4"/>

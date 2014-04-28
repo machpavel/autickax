@@ -33,9 +33,9 @@
 		</controlPoints>
 	</pathway>
 	<entities>
-		<mud X="560.0" Y="355.0" type="18"/>
-		<mud X="675.0" Y="405.0" type="18"/>
-		<mud X="575.0" Y="258.0" type="18"/>
+		<mud X="560.0" Y="355.0" type="1"/>
+		<mud X="675.0" Y="405.0" type="2"/>
+		<mud X="575.0" Y="258.0" type="3"/>
 		<fence X="277.0" Y="184.0" type="1"/>
 		<fence X="308.0" Y="81.0" type="1"/>
 		<tree X="450.0" Y="103.0" type="14"/>
@@ -44,7 +44,7 @@
 		<hole X="421.0" Y="277.0" type="1"/>
 		<mud X="127.0" Y="362.0" type="4"/>
 		<mud X="49.0" Y="298.0" type="3"/>
-		<tree X="321.0" Y="106.0" type="17"/>
+		<tree X="321.0" Y="106.0" type="14"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="653.6667" Y="185.16667" type="4"/>

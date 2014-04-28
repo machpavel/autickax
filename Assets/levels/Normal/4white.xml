@@ -37,10 +37,10 @@
 		</controlPoints>
 	</pathway>
 	<entities>
-		<mud X="692.0" Y="158.0" type="12"/>
-		<mud X="549.0" Y="43.0" type="5"/>
-		<mud X="360.0" Y="207.0" type="6"/>
-		<mud X="617.0" Y="381.0" type="6"/>
+		<mud X="692.0" Y="158.0" type="1"/>
+		<mud X="549.0" Y="43.0" type="2"/>
+		<mud X="360.0" Y="207.0" type="3"/>
+		<mud X="617.0" Y="381.0" type="4"/>
 		<fence X="98.0" Y="395.0" type="1"/>
 		<tree X="145.0" Y="316.0" type="4"/>
 	</entities>

@@ -32,7 +32,7 @@
 		<wall X="455.0" Y="88.0" type="1"/>
 		<wall X="378.0" Y="395.0" type="1"/>
 		<parkingCar X="705.0" Y="189.0" type="1"/>
-		<tree X="143.0" Y="300.0" type="16"/>
+		<tree X="143.0" Y="300.0" type="13"/>
 		<tree X="195.0" Y="332.0" type="9"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
