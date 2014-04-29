@@ -53,11 +53,11 @@ public class SubLevel1 extends SubLevel {
 		pathway = gameScreen.getPathWay();
 
 
-
+		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 
 		checkPoints = new LinkedList<CheckPoint>();	
 		state = SubLevel1States.BEGINNING_STATE;
 		
-		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit); 		
+				
 				
 		initTerminatingGameObjects();
 		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
@@ -161,14 +161,7 @@ public class SubLevel1 extends SubLevel {
 		}
 		
 		
-		//collision checking
-		for (GameTerminatingObject gameObject : this.terminators) {			
-			if (this.level.getCar().collides(gameObject)) {
-				playSound(gameObject);
-				switchToMistakeState("You crashed into a " + gameObject.getName()+ "!");
-				return;
-			}
-		}
+
 		
 
 		this.level.getCar().update(delta);
@@ -178,6 +171,22 @@ public class SubLevel1 extends SubLevel {
 
 		Vector2 carPosition = this.level.getCar().getPosition();
 
+		//collision checking
+		for (GameTerminatingObject gameObject : this.terminators) {	
+			//double boundRadius = this.level.getCar().getBoundingRadius();
+			
+			//float distTravelled = new Vector2(carPosition).sub(formerPosition).len();
+			if (!checkPoints.isEmpty())
+			{
+				Vector2 formerPosition = checkPoints.getLast().getPosition();
+				if (this.level.getCar().collidesWithinLineSegment(gameObject, formerPosition)) {
+					playSound(gameObject);
+					switchToMistakeState("You crashed into a " + gameObject.getName()+ "!");
+					return;
+				}
+			}
+		}
+		
 		// coordinates ok
 		DistanceMap map = pathway.getDistanceMap();
 		if (carPosition.x >= 0 && carPosition.x < map.getWidth()

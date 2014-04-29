@@ -232,6 +232,38 @@ public abstract class GameObject implements Externalizable {
 		float minimalDistance = this.boundingCircleRadius + object2.boundingCircleRadius;
 		return objectsDistance < minimalDistance;
 	}
+	
+	
+	/**
+	 * This method test whether this (a moving game object) collided with another object.
+	 * As a result of possible high velocity it is necessary to interpolate positions
+	 * between current location and last recorded location. Each of this position is test
+	 * for collision against given object. Number of tested positions depends on the bounding
+	 * radius of this object 
+	 * @param obstacle Source of possible collision
+	 * @param formerPosition Last known position of this object before the current one
+	 * @return true if there is a collision
+	 */
+	public boolean collidesWithinLineSegment(GameObject obstacle, Vector2 formerPosition)
+	{
+		GameObject movingObject = copy();
+		Vector2 dirVec = new Vector2(position).sub(formerPosition);
+		float dist = dirVec.len();
+		float sumRadii = boundingCircleRadius + obstacle.boundingCircleRadius;
+		Vector2 moveVec = new Vector2(dirVec).nor().scl(boundingCircleRadius);
+		//Vector2 pos = new Vector2(position);
+		
+		boolean close = dist <= sumRadii;
+		while (dist > sumRadii)
+		{
+			dist -= boundingCircleRadius;
+			movingObject.position.add(moveVec);
+			if (movingObject.collides(obstacle))
+				return true;
+		}
+		
+		return  close ? movingObject.collides(obstacle) : false;
+	}
 
 	/**
 	 * Determines when position of the middle of the object is in the other

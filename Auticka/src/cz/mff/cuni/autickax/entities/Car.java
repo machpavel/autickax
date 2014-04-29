@@ -94,7 +94,9 @@ public class Car extends ShiftableGameObject {
 
 	@Override
 	public GameObject copy() {
-		return new Car(this);
+		//return new Car(this);
+		Car copied = new Car(this.getX(),this.getY(),this.type);
+		return copied;
 	}
 
 	@Override
