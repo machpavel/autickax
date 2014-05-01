@@ -8,6 +8,8 @@ import java.io.ObjectOutput;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlWriter;
 import com.badlogic.gdx.utils.XmlReader.Element;
@@ -247,22 +249,30 @@ public abstract class GameObject implements Externalizable {
 	public boolean collidesWithinLineSegment(GameObject obstacle, Vector2 formerPosition)
 	{
 		GameObject movingObject = copy();
+		movingObject.position = formerPosition;
 		Vector2 dirVec = new Vector2(position).sub(formerPosition);
 		float dist = dirVec.len();
-		float sumRadii = boundingCircleRadius + obstacle.boundingCircleRadius;
-		Vector2 moveVec = new Vector2(dirVec).nor().scl(boundingCircleRadius);
-		//Vector2 pos = new Vector2(position);
+		Vector2 norm = new Vector2(dirVec).nor();
+		Vector2 lineCenter = new Vector2(formerPosition).add(new Vector2(norm).scl(dist/2));
 		
-		boolean close = dist <= sumRadii;
-		while (dist > sumRadii)
-		{
-			dist -= boundingCircleRadius;
-			movingObject.position.add(moveVec);
-			if (movingObject.collides(obstacle))
-				return true;
-		}
-		
-		return  close ? movingObject.collides(obstacle) : false;
+		return movingObject.collides(obstacle) || collides(obstacle) 
+				|| intersects(obstacle.position, obstacle.boundingCircleRadius, lineCenter, 2*this.boundingCircleRadius, dist);
+	}
+	
+	private boolean intersects(Vector2 circleCenter, float circleRadius, Vector2 rectCenter, float width, float height)
+	{
+		Vector2 circleDistance = new Vector2(Math.abs(circleCenter.x-rectCenter.x), Math.abs(circleCenter.y- rectCenter.y));
+
+	    if (circleDistance.x > (width/2 + circleRadius)) { return false; }
+	    if (circleDistance.y > (height/2 + circleRadius)) { return false; }
+
+	    if (circleDistance.x <= (width/2)) { return true; } 
+	    if (circleDistance.y <= (height/2)) { return true; }
+
+	    double cornerDistance_sq = Math.pow((circleDistance.x - width/2),2) +
+	                         Math.pow((circleDistance.y - height/2),2);
+
+	    return (cornerDistance_sq <= Math.pow(circleRadius, 2));
 	}
 
 	/**
