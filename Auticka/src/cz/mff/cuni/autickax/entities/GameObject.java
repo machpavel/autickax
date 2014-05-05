@@ -279,7 +279,9 @@ public abstract class GameObject implements Externalizable {
 
 	public void setPosition(Vector2 position) {
 		this.position = position;
-
+	}
+	public void setPosition(float x, float y) {
+		this.position = new Vector2(x,y);
 	}
 
 	public abstract GameObject copy();

@@ -7,6 +7,7 @@ import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame;
 import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame.ObstaclesType;
 import cz.mff.cuni.autickax.miniGames.Minigame;
+import cz.mff.cuni.autickax.miniGames.SwitchingMinigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class Tornado extends GameObject implements Externalizable {
@@ -46,6 +47,6 @@ public final class Tornado extends GameObject implements Externalizable {
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new AvoidObstaclesMinigame(gameScreen, parent, ObstaclesType.HOLES);
+		return new SwitchingMinigame(gameScreen, parent);
 	}
 }

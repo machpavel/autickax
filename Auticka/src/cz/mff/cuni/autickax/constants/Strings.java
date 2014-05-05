@@ -31,6 +31,9 @@ public final class Strings {
 	public final String TOOLTIP_MINIGAME_AVOID_HOLES_FAIL = " You felt into a hole. You will be punised by speed reduction";
 	public final String TOOLTIP_MINIGAME_AVOID_STONES_FAIL = "You crashed into a stone. Level failed.";
 	public final String TOOLTIP_MINIGAME_AVOID_SUCCESS = "TODO: ";	
+	public final String TOOLTIP_MINIGAME_RACE_WHAT_TO_DO = "Todo:";
+	public final String TOOLTIP_MINIGAME_RACE_FAIL = "TODO:";
+	public final String TOOLTIP_MINIGAME_RACE_SUCCESS = "TODO: ";
 	public final String PHASE_1_FINISH_REACHED = "Finish reached";
 	public final String PHASE_1_FINISH_REACHED_BUT_NOT_CHECKPOINTS = "You have to drive along whole the pathway.";
 	public final String PHASE_1_OUT_OF_LINE = " You went out of the pathway.";
@@ -42,5 +45,6 @@ public final class Strings {
 	public final String PHASE_2_MINIGAME_FAILED = "You failed.";
 
 	public final String GAME_PAUSED = "Game paused";
+	
 
 }

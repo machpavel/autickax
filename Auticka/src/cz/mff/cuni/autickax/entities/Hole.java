@@ -4,6 +4,7 @@ import java.io.Externalizable;
 
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
+import cz.mff.cuni.autickax.miniGames.AnglicakMinigame;
 import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame;
 import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame.ObstaclesType;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -46,7 +47,7 @@ public final class Hole extends GameObject implements Externalizable {
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new AvoidObstaclesMinigame(gameScreen, parent, ObstaclesType.HOLES);
+		return new AnglicakMinigame(gameScreen, parent);
 	}
 
 	@Override
