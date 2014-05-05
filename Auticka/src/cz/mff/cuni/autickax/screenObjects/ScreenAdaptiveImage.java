@@ -2,6 +2,7 @@ package cz.mff.cuni.autickax.screenObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import cz.mff.cuni.autickax.input.Input;
 
@@ -9,6 +10,10 @@ public class ScreenAdaptiveImage extends Image {
 	
 	public ScreenAdaptiveImage(TextureRegion graphics) {
 		super(graphics);
+	}
+	
+	public ScreenAdaptiveImage(Drawable drawableGraphics) {
+		super(drawableGraphics);
 	}
 	
 	@Override
@@ -21,17 +26,40 @@ public class ScreenAdaptiveImage extends Image {
 	}
 	
 	public float getActualWidth() {
-		return super.getWidth() * Input.xStretchFactorInv;
+		return super.getWidth() * Input.xStretchFactor;
 	}
 	
 	public float getActualHeight() {
-		return super.getHeight() * Input.yStretchFactorInv;
+		return super.getHeight() * Input.yStretchFactor;
+	}
+	
+	public float getActualX() {
+		return super.getX() * Input.xStretchFactor;
+	}
+	public float getActualY() {
+		return super.getY() * Input.yStretchFactor;
+	}
+	
+	public void setWidth(float width){
+		super.setWidth(width * Input.xStretchFactorInv);
+	}
+	
+	public void setHeight(float height){
+		super.setHeight(height * Input.yStretchFactorInv);
+	}
+	
+	public void setX(float x){
+		super.setX(x * Input.xStretchFactorInv);
+	}
+	
+	public void setY(float y){
+		super.setY(y * Input.yStretchFactorInv);
 	}
 	
 	public void setCenterPosition(float x, float y) {
 		super.setPosition (
-			x * Input.xStretchFactorInv - this.getActualWidth() / 2,
-			y * Input.yStretchFactorInv - this.getActualHeight() / 2
+			x * Input.xStretchFactorInv - this.getWidth() / 2,
+			y * Input.yStretchFactorInv - this.getHeight() / 2
 		);
 	}
 	
