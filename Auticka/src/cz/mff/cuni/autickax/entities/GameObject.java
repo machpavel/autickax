@@ -8,18 +8,16 @@ import java.io.ObjectOutput;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.XmlWriter;
 import com.badlogic.gdx.utils.XmlReader.Element;
+import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.Minigame;
+import cz.mff.cuni.autickax.scene.GameScreen;
 
 /**
  * Base class for all game entities

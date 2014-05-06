@@ -27,13 +27,15 @@ public final class RaceMinigame extends Minigame {
 	private final float CAR_START_POSITION_X = Constants.minigames.RACE_CAR_START_POSITION_X;
 
 	private String LINE_TEXTURE = Constants.minigames.LINE_TEXTURE;
-	
+
 	private static final float MIN_SPEED_ADDITION = Constants.minigames.MIN_SPEED_ADDITION;
 	private static final float MAX_SPEED_ADDITION = Constants.minigames.MAX_SPEED_ADDITION;
 	private static final float MIN_CAR_DISTANCE = Constants.minigames.MIN_CAR_DISTANCE;
 	private static final float MAX_CAR_DISTANCE = Constants.minigames.MAX_CAR_DISTANCE;
-	private static final float DISTANCE_RAISER = Constants.minigames.DISTANCE_RAISER; // Change in distance
-	
+	private static final float DISTANCE_RAISER = Constants.minigames.DISTANCE_RAISER; // Change
+																						// in
+																						// distance
+
 	private float remainingTime;
 	private float speed;
 
@@ -70,7 +72,7 @@ public final class RaceMinigame extends Minigame {
 		zoneWidth = (float) Constants.dialog.DIALOG_WORLD_HEIGHT / zonesCount;
 
 		initializeArrays(); // it has to be initialized first
-		generateLines();		
+		generateLines();
 		createCars(gameScreen);
 		generateObstacles(cars);
 
@@ -171,13 +173,13 @@ public final class RaceMinigame extends Minigame {
 
 	private void updateInDrivingState(float delta) {
 		remainingTime -= delta;
-		
-		// The time has gone, so player won
-		if(remainingTime < 0 ){
+
+		// The time has gone, so player wins
+		if (remainingTime < 0) {
 			this.state = States.FINISH_STATE;
 			return;
 		}
-		
+
 		// Taking focus of the car again
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());

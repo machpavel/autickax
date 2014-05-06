@@ -17,7 +17,7 @@ import cz.mff.cuni.autickax.miniGames.support.GearShiftMinigameFinish;
 import cz.mff.cuni.autickax.miniGames.support.GearShifter;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
-public final class GearShiftMinigame extends Minigame{	
+public final class GearShiftMinigame extends Minigame {
 	private static final float FAIL_VALUE = Constants.minigames.GEAR_SHIFT_FAIL_VALUE;
 	private static final float ROW_1 = Constants.minigames.GEAR_SHIFT_MINIGAME_ROW_1;
 	private static final float ROW_2 = Constants.minigames.GEAR_SHIFT_MINIGAME_ROW_2;
@@ -26,49 +26,54 @@ public final class GearShiftMinigame extends Minigame{
 	private static final float COLUMN_2 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_2;
 	private static final float COLUMN_3 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_3;
 	private static float MAX_DISTANCE_FROM_LINE;
-	
+
 	private States state = States.BEGINNING_STATE;
 	private GearShifter gearShifter;
 	private GearShiftMinigameFinish finish;
 
 	public GearShiftMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
-		setDifficulty(this.level.getDifficulty());		
-		this.backgroundTexture = new TextureRegionDrawable(Autickax.getInstance().assets.getGraphics(Constants.minigames.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
-				
-		if(Autickax.settings.showTooltips)
-			this.parent.setDialog(new MessageDialog(screen, parent, Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO));
-		
+		setDifficulty(this.level.getDifficulty());
+		this.backgroundTexture = new TextureRegionDrawable(
+				Autickax.getInstance().assets
+						.getGraphics(Constants.minigames.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
+
+		if (Autickax.settings.showTooltips)
+			this.parent.setDialog(new MessageDialog(screen, parent,
+					Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO));
+
 		randomizeStartAndFinish(screen);
 	}
-	
-	public void randomizeStartAndFinish(GameScreen screen){
+
+	public void randomizeStartAndFinish(GameScreen screen) {
 		float[] rows = new float[] { ROW_1, ROW_2, ROW_3 };
 		float[] columns = new float[] { COLUMN_1, COLUMN_2, COLUMN_3 };
-		
+
 		int gearFinishRandomX = 0;
-		int gearFinishRandomY= 0;
+		int gearFinishRandomY = 0;
 		do {
 			gearFinishRandomX = MathUtils.random(2);
 			gearFinishRandomY = MathUtils.random(2);
-		} while (gearFinishRandomY == 1);				
-		this.finish = new GearShiftMinigameFinish(columns[gearFinishRandomX], rows[gearFinishRandomY]);
+		} while (gearFinishRandomY == 1);
+		this.finish = new GearShiftMinigameFinish(columns[gearFinishRandomX],
+				rows[gearFinishRandomY]);
 		this.finish.setScreen(screen);
-		
+
 		int gearShifterRandomX = 0;
-		int gearShifterRandomY = 0;		
+		int gearShifterRandomY = 0;
 		do {
 			gearShifterRandomX = MathUtils.random(2);
 			gearShifterRandomY = MathUtils.random(2);
-		} while (gearShifterRandomY == 1 || (gearShifterRandomX == gearFinishRandomX && gearShifterRandomY == gearFinishRandomY));				
+		} while (gearShifterRandomY == 1
+				|| (gearShifterRandomX == gearFinishRandomX && gearShifterRandomY == gearFinishRandomY));
 		this.gearShifter = new GearShifter(columns[gearShifterRandomX], rows[gearShifterRandomY]);
 		this.gearShifter.setScreen(screen);
-		
+
 	}
 
 	@Override
-	public void update(float delta) {		
-		this.gearShifter.update(delta);			
+	public void update(float delta) {
+		this.gearShifter.update(delta);
 		this.finish.update(delta);
 
 		switch (state) {
@@ -84,52 +89,52 @@ public final class GearShiftMinigame extends Minigame{
 		default:
 			throw new IllegalStateException(state.toString());
 		}
-		
+
 	}
 
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
-		Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-		
-		Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(touchPos.x, touchPos.y);
-		if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {			
-			this.gearShifter.setDragged(true);
-			this.gearShifter.setShift(shift);
-			state = States.DRIVING_STATE;					
+			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
+
+			Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(touchPos.x, touchPos.y);
+			if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {
+				this.gearShifter.setDragged(true);
+				this.gearShifter.setShift(shift);
+				state = States.DRIVING_STATE;
+			}
+
+			if (this.gearShifter.getPosition().dst(touchPos.x, touchPos.y) <= MAX_DISTANCE_FROM_LINE) {
+
+			}
 		}
-		
-		if (this.gearShifter.getPosition().dst(touchPos.x, touchPos.y) <= MAX_DISTANCE_FROM_LINE) {
-			
-		}
-	}
-		
+
 	}
 
 	private void updateInDrivingState(float delta) {
 		// Focus was lost
 		if (!this.gearShifter.isDragged()) {
-			// this.parent.setDialog(new DecisionDialog(this.level, this, "Pustil jsi auto", false));
-			fail();
+			fail(Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WAS_RELEASED);
 		}
-		//Finish reached
+		// Finish reached
 		else if (this.gearShifter.positionCollides(finish)) {
 			this.state = States.FINISH_STATE;
 		}
 		// Out of pathway
 		else if (!isInGrid(this.gearShifter.getPosition().x, this.gearShifter.getPosition().y)) {
-			fail();
-		}		
+			fail(null);
+		}
 	}
-	
 
-	private void fail(){
-		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL;
+	private void fail(String primaryMessage) {
+		if (primaryMessage != null)
+			this.resultMessage = primaryMessage;
+		else
+			this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL;
 		this.result = ResultType.FAILED_WITH_VALUE;
-		this.resultValue = FAIL_VALUE; 
+		this.resultValue = FAIL_VALUE;
 		parent.onMinigameEnded();
 		this.endCommunication();
 	}
-
 
 	private void updateInFinishState(float delta) {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS;
@@ -141,38 +146,37 @@ public final class GearShiftMinigame extends Minigame{
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		super.draw(batch);			
+		super.draw(batch);
 		batch.begin();
 		this.finish.draw(batch);
 		this.gearShifter.draw(batch);
 		batch.end();
 	}
-	
-	private boolean isInGrid(float x, float y){
+
+	private boolean isInGrid(float x, float y) {
 		// Vertical limits
-		if( y > ROW_3 + MAX_DISTANCE_FROM_LINE || y < ROW_1 - MAX_DISTANCE_FROM_LINE)
+		if (y > ROW_3 + MAX_DISTANCE_FROM_LINE || y < ROW_1 - MAX_DISTANCE_FROM_LINE)
 			return false;
-		
+
 		// In first column
 		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE && x < COLUMN_1 + MAX_DISTANCE_FROM_LINE)
 			return true;
-		
+
 		// In second column
 		if (x > COLUMN_2 - MAX_DISTANCE_FROM_LINE && x < COLUMN_2 + MAX_DISTANCE_FROM_LINE)
 			return true;
-		
+
 		// In second column
 		if (x > COLUMN_3 - MAX_DISTANCE_FROM_LINE && x < COLUMN_3 + MAX_DISTANCE_FROM_LINE)
 			return true;
-		
+
 		// Middle row
-		if(x > COLUMN_1 - MAX_DISTANCE_FROM_LINE && x < COLUMN_3 + MAX_DISTANCE_FROM_LINE && 
-				y > ROW_2 - MAX_DISTANCE_FROM_LINE && y < ROW_2 + MAX_DISTANCE_FROM_LINE)
+		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE && x < COLUMN_3 + MAX_DISTANCE_FROM_LINE
+				&& y > ROW_2 - MAX_DISTANCE_FROM_LINE && y < ROW_2 + MAX_DISTANCE_FROM_LINE)
 			return true;
-		
+
 		return false;
 	}
-	
 
 	private void setDifficulty(Difficulty difficulty) {
 		switch (difficulty) {
@@ -197,7 +201,6 @@ public final class GearShiftMinigame extends Minigame{
 		return;
 	}
 
-	
 	private enum States {
 		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
 	}

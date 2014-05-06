@@ -163,9 +163,14 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	}
 
 	private void updateInDrivingState(float delta) {
-		// Focus was lost
-		if (!this.car.isDragged()) {
-			fail(Constants.strings.TOOLTIP_MINIGAME_CAR_WAS_RELEASED);
+		// Taking focus of the car again
+		if (Gdx.input.justTouched()) {
+			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
+			if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {
+				this.car.setDragged(true);
+				this.car.setShift(shift);
+			}
 		}
 		// Car is out of borders
 		else if (!isInWorld(this.car.getPosition())) {
@@ -174,8 +179,9 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		// Finish reached
 		else if (this.car.positionCollides(finish)) {
 			this.state = States.FINISH_STATE;
-		} else {
-			// Collision detection
+		}
+		// Collision detection
+		else {
 			for (GameObject gameObject : gameObjects) {
 				if (this.car.collides(gameObject)) {
 					fail(null);

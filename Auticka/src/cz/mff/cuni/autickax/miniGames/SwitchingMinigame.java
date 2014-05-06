@@ -43,7 +43,7 @@ public final class SwitchingMinigame extends Minigame {
 
 	private void createProgressBar() {
 		SliderStyle style = new SliderStyle();
-		// TODO: Figure out how to show the progress
+		// TODO Figure out how to show the progress
 		style.background = new TextureRegionDrawable(
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_SLIDER_BACKGROUND_TEXTURE));

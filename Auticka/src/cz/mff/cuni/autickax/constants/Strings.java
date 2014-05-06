@@ -6,7 +6,7 @@ public final class Strings {
 	// STRINGS
 	//
 	// TODO Complete strings
-	public final String TOOLTIP_MINIGAME_CAR_WAS_RELEASED = "Car was released. Level failed.";
+	//public final String TOOLTIP_MINIGAME_CAR_WAS_RELEASED = "Car was released. Level failed.";
 	public final String TOOLTIP_MINIGAME_CAR_OUT_OF_BOUNDS = "Car went out of bounds. Level failed.";
 	public final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway with your finger, hurry to finish and avoid nasty objects! ";
 	public final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid this obstacle";
@@ -19,6 +19,7 @@ public final class Strings {
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever to the correct position";
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not enough accurate. You will be punished by speed reduction";
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS = "TODO:";
+	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_WAS_RELEASED = "Gearshift was released.";
 	public final String TOOLTIP_MINIGAME_ANGLICAK_WHAT_TO_DO = "TODO:";
 	public final String TOOLTIP_MINIGAME_ANGLICAK_FAIL = "TODO:";
 	public final String TOOLTIP_MINIGAME_ANGLICAK_SUCCESS = "TODO:";
