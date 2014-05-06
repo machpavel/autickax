@@ -11,12 +11,12 @@ public final class Misc {
 	/** Determines the color of a pathway */
 	public final Color PATHWAY_COLOR = new Color(0.75f, 0.7f, 0.6f, 1f);
 	/** How many pictures should be blended from the border of pathway */
-	public final float PATHWAY_BORDER_BLEND_DISTANCE = 2;
+	public final float PATHWAY_BORDER_BLEND_DISTANCE = 3;
 	/**
 	 * How big should be the circle in front of start and behind finish in the
 	 * picture of pathway
 	 */
-	public final int PATHWAY_START_AND_FINISH_CIRCLE_RADIUS = 20;
+	public final int PATHWAY_START_AND_FINISH_CIRCLE_RADIUS = 30;
 
 	/** Determines where is located start on the curve in percents */
 	public final float START_POSITION_IN_CURVE = 0;
@@ -31,7 +31,7 @@ public final class Misc {
 	 * Determines maximal total distance from pathway (in pixels). Beyond it is
 	 * no pathway.
 	 */
-	public final int MAX_DISTANCE_FROM_PATHWAY = 60;
+	public final int MAX_DISTANCE_FROM_PATHWAY = 65;
 
 	/**
 	 * Determines the distance from user's finger that the car can be
