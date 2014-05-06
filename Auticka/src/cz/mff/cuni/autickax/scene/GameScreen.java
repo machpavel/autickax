@@ -77,6 +77,10 @@ public class GameScreen extends BaseScreen {
 	public void initializeDistanceMap() {
 		level.calculateDistanceMap();
 	}
+	
+	public float getDistanceMapProgress() {
+		return this.level.getDistanceMapProgress();
+	}
 
 	public void initializeGameScreen() {
 		camera = new OrthographicCamera();
