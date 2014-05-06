@@ -16,15 +16,15 @@ public class ScreenAdaptiveImage extends Image {
 		super(drawableGraphics);
 	}
 	
-	@Override
-	public float getPrefHeight() {
-		return super.getPrefHeight() * Input.yStretchFactorInv;
-	}
-	@Override
-	public float getPrefWidth() {
-		return super.getPrefWidth() * Input.xStretchFactorInv;
-	}
-	
+//	@Override
+//	public float getPrefHeight() {
+//		return super.getPrefHeight() * Input.yStretchFactorInv;
+//	}
+//	@Override
+//	public float getPrefWidth() {
+//		return super.getPrefWidth() * Input.xStretchFactorInv;
+//	}
+//	
 	public float getActualWidth() {
 		return super.getWidth() * Input.xStretchFactor;
 	}

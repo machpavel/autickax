@@ -39,11 +39,11 @@ public abstract class ScreenAdaptiveButton extends Button {
 	}
 	
 	public float getActualWidth() {
-		return super.getWidth() * Input.xStretchFactorInv;
+		return super.getWidth() * Input.xStretchFactor;
 	}
 	
 	public float getActualHeight() {
-		return super.getHeight() * Input.yStretchFactorInv;
+		return super.getHeight() * Input.yStretchFactor;
 	}
 	
 	public void setCenterPosition(float x, float y) {
