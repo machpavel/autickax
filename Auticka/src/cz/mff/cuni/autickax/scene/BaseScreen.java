@@ -15,7 +15,11 @@ public abstract class BaseScreen implements Screen {
 	protected final Stage stage;
 	protected SpriteBatch batch;
 
-	public BaseScreen() {
+	public BaseScreen(){
+		this(true);
+	}
+	
+	public BaseScreen(boolean takeFocus) {
 		setGame(Autickax.getInstance());
 		stageWidth = Gdx.graphics.getWidth();
 		stageHeight = Gdx.graphics.getHeight();
@@ -24,7 +28,13 @@ public abstract class BaseScreen implements Screen {
 		stage = new Stage(stageWidth, stageHeight, false); // https://github.com/libgdx/libgdx/wiki/Scene2d
 		
 		this.stage.addListener(new ScreenInputListener(this));
-		Gdx.input.setInputProcessor(stage);
+		
+		if(takeFocus)
+			takeFocus();
+	}
+	
+	public void takeFocus() {
+		Gdx.input.setInputProcessor(this.stage);
 		Gdx.input.setCatchBackKey(true);
 	}
 	

@@ -18,7 +18,7 @@ public class LevelLoadingScreen extends BaseScreen {
 			Autickax.gameScreen = null;
 		}
 
-		Autickax.gameScreen = new GameScreen(levelIndex, levelDifficulty);
+		Autickax.gameScreen = new GameScreen(levelIndex, levelDifficulty, false);
 		
 		Thread distanceMapLoader = new Thread(new Runnable() {
 	         @Override
@@ -30,6 +30,7 @@ public class LevelLoadingScreen extends BaseScreen {
 	    	         public void run() {
 	    				Autickax.gameScreen.initializeGameScreen();
 	    				Autickax.getInstance().setScreen(Autickax.gameScreen);
+	    				Autickax.gameScreen.takeFocus();
 	    	         }
 	    	      });
 	         }
