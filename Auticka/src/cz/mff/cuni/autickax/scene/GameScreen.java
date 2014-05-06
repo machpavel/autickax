@@ -61,10 +61,10 @@ public class GameScreen extends BaseScreen {
 		return pathway;
 	}
 
-	public GameScreen(int levelIndex, Difficulty difficulty){
+	public GameScreen(int levelIndex, Difficulty difficulty) {
 		this(levelIndex, difficulty, true);
 	}
-	
+
 	public GameScreen(int levelIndex, Difficulty difficulty, boolean takeFocus) {
 		super(takeFocus);
 
@@ -190,23 +190,25 @@ public class GameScreen extends BaseScreen {
 	}
 
 	public void goToMainScreen() {
-		this.onBackKeyPressed();
+		getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_CLOSE,
+				Constants.sounds.SOUND_DEFAULT_VOLUME);
+		this.getGame().assets.soundAndMusicManager.stopRaceMusic();
+		this.getGame().assets.soundAndMusicManager.playMenuMusic();
+		Autickax.levelSelectScreen.dispose();
+		Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty,
+				(levelIndex / Constants.menu.DISPLAYED_LEVELS_MAX_COUNT)
+						* Constants.menu.DISPLAYED_LEVELS_MAX_COUNT);
+		this.getGame().setScreen(Autickax.levelSelectScreen);
+		Gdx.input.setInputProcessor(Autickax.levelSelectScreen.getStage());
+
 	}
 
 	@Override
 	protected void onBackKeyPressed() {
-		boolean isAlreadyPaused = !this.currentPhase.pause(); 
-		if (isAlreadyPaused) {
-			getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_CLOSE,
-					Constants.sounds.SOUND_DEFAULT_VOLUME);
-			this.getGame().assets.soundAndMusicManager.stopRaceMusic();
-			this.getGame().assets.soundAndMusicManager.playMenuMusic();
-			Autickax.levelSelectScreen.dispose();
-			Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty,
-					(levelIndex / Constants.menu.DISPLAYED_LEVELS_MAX_COUNT)
-							* Constants.menu.DISPLAYED_LEVELS_MAX_COUNT);
-			this.getGame().setScreen(Autickax.levelSelectScreen);
-			Gdx.input.setInputProcessor(Autickax.levelSelectScreen.getStage());
+		if (this.currentPhase.isPaused()) {
+			this.currentPhase.resume();
+		} else {
+			this.currentPhase.pause();
 		}
 	}
 
@@ -256,6 +258,21 @@ public class GameScreen extends BaseScreen {
 			// System.out.println("The pathway texture was loaded succesfully.");
 		} else {
 			// System.out.println("Loading of pathway texture failed..");
+		}
+	}
+
+	@Override
+	public void takeFocus() {
+		if (this.currentPhase != null) {
+			if (!this.currentPhase.isDialogStackEmpty()) {
+				this.currentPhase.takeDialogFocus();
+			} else if (this.currentPhase.isMinigameRunning()) {
+				this.currentPhase.takeMinigameFocus();
+			} else {
+				this.currentPhase.takeFocus();
+			}
+		} else {
+			super.takeFocus();
 		}
 	}
 }

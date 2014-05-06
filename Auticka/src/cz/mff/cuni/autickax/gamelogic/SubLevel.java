@@ -83,17 +83,37 @@ public abstract class SubLevel {
 	public void onMinigameEnded() {
 	};
 
-	/**
-	 * Show the pause dialog, in the sublevel. Don't show it, when any other dialog is shown. 
-	 * @return
-	 * True if pause dialog was just shown, else if any other dialog is shown (it is already paused).
-	 */
-	public boolean pause() {
-		if (this.dialogStack.isEmpty()) {
-			this.dialogStack.push(new PauseDialog(this.level, this));
-			return true;
-		} else {
+	public void pause() {
+		if (!isPaused())
+			this.dialogStack.push(new PauseDialog(this.level, this));					
+	}
+	
+	public boolean isPaused(){
+		if(!this.dialogStack.isEmpty() && this.dialogStack.peek() instanceof PauseDialog)
+			return true;		
+		else
 			return false;
+	}
+	public void resume() {
+		if(isPaused())
+			this.dialogStack.pop();
+	}
+	
+	public boolean isDialogStackEmpty(){
+		return this.dialogStack.isEmpty();
+	}
+	public void takeDialogFocus(){
+		if(!dialogStack.isEmpty()){
+			dialogStack.peek().takeFocus();
+		}
+	}
+	
+	public boolean isMinigameRunning(){
+		return miniGame != null;
+	}
+	public void takeMinigameFocus(){
+		if(miniGame != null){
+			this.miniGame.takeFocus();
 		}
 	}
 }
