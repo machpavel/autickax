@@ -67,7 +67,7 @@ public final class Minigames {
 	public final int BOOST_MINIGAME_HITS_LIMIT_HARD = 10;
 	public final int BOOST_MINIGAME_HITS_LIMIT_EXTREME = 15;	
 	public final float BOOST_MINIGAME_TIME_GENERATION_LIMIT = 0.5f;
-	public final float BOOST_MINIGAME_WIN_VALUE = 20;
+	public final float BOOST_MINIGAME_WIN_VALUE = 2;
 
 	// Switching
 	public final String SWITCHING_MINIGAME_BACKGROUND_TEXTURE = "SwitchingMinigameBackground";
@@ -107,7 +107,7 @@ public final class Minigames {
 	public String LINE_TEXTURE = "roadLine";	
 	public final float MIN_SPEED_ADDITION = 100;
 	public final float MAX_SPEED_ADDITION = 300;
-	public final float MIN_CAR_DISTANCE = 70;
+	public final float MIN_CAR_DISTANCE = 100;
 	public final float MAX_CAR_DISTANCE = 500;
 	public final float DISTANCE_RAISER = 1.2f; // Change in distance
 	public final int RACE_MINIMAL_DISTANCE_BETWEEN_CAR = 2;
@@ -116,14 +116,14 @@ public final class Minigames {
 	public final int RACE_MINIGAME_ZONES_COUNT_NORMAL = 3;
 	public final int RACE_MINIGAME_ZONES_COUNT_HARD = 4;
 	public final int RACE_MINIGAME_ZONES_COUNT_EXTREME = 5;
-	public final int RACE_MINIGAME_TIME_KIDDIE = 10;
-	public final int RACE_MINIGAME_TIME_BEGINNER = 12;
-	public final int RACE_MINIGAME_TIME_NORMAL = 15;
-	public final int RACE_MINIGAME_TIME_HARD = 20;
-	public final int RACE_MINIGAME_TIME_EXTREME = 30;
-	public final int RACE_MINIGAME_SPEED_KIDDIE = 200;
-	public final int RACE_MINIGAME_SPEED_BEGINNER = 250;
-	public final int RACE_MINIGAME_SPEED_NORMAL = 320;
+	public final int RACE_MINIGAME_TIME_KIDDIE = 20;
+	public final int RACE_MINIGAME_TIME_BEGINNER = 20;
+	public final int RACE_MINIGAME_TIME_NORMAL = 25;
+	public final int RACE_MINIGAME_TIME_HARD = 30;
+	public final int RACE_MINIGAME_TIME_EXTREME = 35;
+	public final int RACE_MINIGAME_SPEED_KIDDIE = 250;
+	public final int RACE_MINIGAME_SPEED_BEGINNER = 300;
+	public final int RACE_MINIGAME_SPEED_NORMAL = 350;
 	public final int RACE_MINIGAME_SPEED_HARD = 400;
 	public final int RACE_MINIGAME_SPEED_EXTREME = 450;
 }

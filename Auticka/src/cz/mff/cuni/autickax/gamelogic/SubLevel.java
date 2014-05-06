@@ -21,65 +21,79 @@ public abstract class SubLevel {
 	protected ShapeRenderer shapeRenderer;
 	protected Stack<Dialog> dialogStack;
 	protected Minigame miniGame = null;
-	
+
 	public SubLevel(GameScreen gameScreen) {
 		this.level = gameScreen;
 		this.stage = gameScreen.getStage();
 		shapeRenderer = new ShapeRenderer();
 		dialogStack = new Stack<Dialog>();
 	}
-	
-	public void setDialog(Dialog dialog){
+
+	public void setDialog(Dialog dialog) {
 		this.dialogStack.push(dialog);
 	}
-	
-	public void takeFocus(){
+
+	public void takeFocus() {
 		Gdx.input.setInputProcessor(this.stage);
 		Gdx.input.setCatchBackKey(true);
 	}
-	
-	protected void eraseDialog(){
-		if(this.dialogStack.size() > 1){
+
+	protected void eraseDialog() {
+		if (this.dialogStack.size() > 1) {
 			this.dialogStack.pop();
 			this.dialogStack.peek().takeFocus();
-		}
-		else if (this.dialogStack.size() == 1){
+		} else if (this.dialogStack.size() == 1) {
 			this.dialogStack.pop();
-			if(this.miniGame != null)
+			if (this.miniGame != null)
 				this.miniGame.takeFocus();
 			else
 				takeFocus();
-		}
-		else
+		} else
 			takeFocus();
-		
+
 	}
-	protected void playSound(GameObject collisionOrigin)
-	{
+
+	protected void playSound(GameObject collisionOrigin) {
 		if (Autickax.settings.playSounds) {
 			String soundName = collisionOrigin.getSoundName();
-			if (!soundName.equals(Constants.sounds.SOUND_NO_SOUND))
-			{
-				this.level.getGame().assets.soundAndMusicManager.playSound(soundName, Constants.sounds.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
+			if (!soundName.equals(Constants.sounds.SOUND_NO_SOUND)) {
+				this.level.getGame().assets.soundAndMusicManager.playSound(soundName,
+						Constants.sounds.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
 			}
 		}
 	}
-	
-	protected void eraseMinigame(){
-		this.miniGame= null;
+
+	protected void eraseMinigame() {
+		this.miniGame = null;
 		takeFocus();
 	}
-	
-	public void update(float delta){};
-	
-	public void draw(SpriteBatch batch){};
-	public void render(){};
-	
-	public void onDialogEnded(){};
-	public void onMinigameEnded(){};
-	
-	public void onPause(){
-		if(this.dialogStack.isEmpty())
+
+	public void update(float delta) {
+	};
+
+	public void draw(SpriteBatch batch) {
+	};
+
+	public void render() {
+	};
+
+	public void onDialogEnded() {
+	};
+
+	public void onMinigameEnded() {
+	};
+
+	/**
+	 * Show the pause dialog, in the sublevel. Don't show it, when any other dialog is shown. 
+	 * @return
+	 * True if pause dialog was just shown, else if any other dialog is shown (it is already paused).
+	 */
+	public boolean pause() {
+		if (this.dialogStack.isEmpty()) {
 			this.dialogStack.push(new PauseDialog(this.level, this));
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
