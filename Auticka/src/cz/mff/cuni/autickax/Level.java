@@ -106,6 +106,14 @@ public class Level implements java.io.Externalizable {
 	public void deleteDistanceMap() {
 		this.pathway.deleteDistanceMap();
 	}
+	
+	public float getDistanceMapProgress() {
+		if (this.pathway.getDistanceMap() != null) {
+			return this.pathway.getDistanceMap().getProgress();
+		} else {
+			return 0;
+		}
+	}
 
 	public void setGameScreen(GameScreen screen) {
 		for (GameObject gameObject : this.gameObjects) {

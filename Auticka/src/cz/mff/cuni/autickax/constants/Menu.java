@@ -8,6 +8,9 @@ public final class Menu {
 	public final String MAIN_MENU_BACKGROUND = "mainMenuBackground";
 	public final String DIFFICULTY_MENU_BACKGROUND = "difficultyMenuBackground";
 	public final String LOADING_LEVEL_MENU_BACKGROUND = "menuLoadingLevelBackground";
+	public final String LOADING_LEVEL_MENU_GRAY = "menuLoadingLevelGrey";
+	public final String LOADING_LEVEL_MENU_GREEN = "menuLoadingLevelGreen";
+	public final String LOADING_LEVEL_MENU_RED = "menuLoadingLevelRed";
 
 	public final String LOADING_SCREEN_BACKGROUND = "loadingScreenBackground";
 	public final String LOADING_SCREEN_CAR = "loadingScreenCar";

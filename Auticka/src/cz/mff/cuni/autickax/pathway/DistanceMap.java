@@ -232,6 +232,9 @@ public class DistanceMap {
 		return new TextureRegion(texture, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 	}
 
+	/*
+	 * Returns progress of creating distance map as a number from 0 to 1  
+	 */
 	public float getProgress() {
 		return this.progress / 100;
 	}
