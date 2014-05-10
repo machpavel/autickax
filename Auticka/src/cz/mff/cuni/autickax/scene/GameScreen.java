@@ -77,7 +77,7 @@ public class GameScreen extends BaseScreen {
 	public void initializeDistanceMap() {
 		level.calculateDistanceMap();
 	}
-	
+
 	public float getDistanceMapProgress() {
 		return this.level.getDistanceMapProgress();
 	}
@@ -115,7 +115,7 @@ public class GameScreen extends BaseScreen {
 
 		// Start Music!
 		if (Autickax.settings.playMusic) {
-			getGame().assets.soundAndMusicManager.playRaceMusic();
+			Autickax.getInstance().assets.soundAndMusicManager.playRaceMusic();
 		}
 	}
 
@@ -191,15 +191,15 @@ public class GameScreen extends BaseScreen {
 	}
 
 	public void goToMainScreen() {
-		getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_CLOSE,
-				Constants.sounds.SOUND_DEFAULT_VOLUME);
-		this.getGame().assets.soundAndMusicManager.stopRaceMusic();
-		this.getGame().assets.soundAndMusicManager.playMenuMusic();
+		Autickax.getInstance().assets.soundAndMusicManager.playSound(
+				Constants.sounds.SOUND_MENU_CLOSE, Constants.sounds.SOUND_DEFAULT_VOLUME);
+		Autickax.getInstance().assets.soundAndMusicManager.stopRaceMusic();
+		Autickax.getInstance().assets.soundAndMusicManager.playMenuMusic();
 		Autickax.levelSelectScreen.dispose();
 		Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty,
 				(levelIndex / Constants.menu.DISPLAYED_LEVELS_MAX_COUNT)
 						* Constants.menu.DISPLAYED_LEVELS_MAX_COUNT);
-		this.getGame().setScreen(Autickax.levelSelectScreen);
+		Autickax.getInstance().setScreen(Autickax.levelSelectScreen);
 		Gdx.input.setInputProcessor(Autickax.levelSelectScreen.getStage());
 
 	}

@@ -6,50 +6,46 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cz.mff.cuni.autickax.Autickax;
-
 public abstract class BaseScreen implements Screen {	
-	protected Autickax game;
 	protected float stageWidth;
 	protected float stageHeight;
 	protected final Stage stage;
 	protected SpriteBatch batch;
 
-	public BaseScreen(){
+	public BaseScreen() {
 		this(true);
 	}
-	
+
 	public BaseScreen(boolean takeFocus) {
-		setGame(Autickax.getInstance());
 		stageWidth = Gdx.graphics.getWidth();
 		stageHeight = Gdx.graphics.getHeight();
 		batch = new SpriteBatch();
 
 		stage = new Stage(stageWidth, stageHeight, false); // https://github.com/libgdx/libgdx/wiki/Scene2d
-		
+
 		this.stage.addListener(new ScreenInputListener(this));
-		
-		if(takeFocus)
+
+		if (takeFocus)
 			takeFocus();
 	}
-	
+
 	public void takeFocus() {
 		Gdx.input.setInputProcessor(this.stage);
 		Gdx.input.setCatchBackKey(true);
 	}
-	
+
 	protected void clearScreenWithColor() {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 	}
-	public Stage getStage(){
+
+	public Stage getStage() {
 		return this.stage;
 	}
-	
 
 	@Override
 	public void render(float delta) {
 		this.clearScreenWithColor();
-		
+
 		stage.act(delta); // don't forget to advance the stage ( input + actions
 							// )
 		stage.draw(); // and also display it :)
@@ -84,16 +80,6 @@ public abstract class BaseScreen implements Screen {
 	public void dispose() {
 		stage.dispose();
 	}
-	
+
 	protected abstract void onBackKeyPressed();
-
-	public Autickax getGame() {
-		return game;
-	}
-
-	public void setGame(Autickax game) {
-		this.game = game;
-	}
-	
-
 }

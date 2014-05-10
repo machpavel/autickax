@@ -83,7 +83,7 @@ public class SubLevel2 extends SubLevel {
 		speedModifiers.add(Constants.misc.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
-		this.level.getGame().assets.soundAndMusicManager.playSound(
+		Autickax.getInstance().assets.soundAndMusicManager.playSound(
 				Constants.sounds.SOUND_SUB2_START, 1);
 
 		// Car positioning
@@ -211,7 +211,7 @@ public class SubLevel2 extends SubLevel {
 			state = SubLevel2States.FINISH_STATE;
 			this.updateScore();
 			this.unlockNewLevel();
-			this.level.getGame().assets.soundAndMusicManager.playSound(
+			Autickax.getInstance().assets.soundAndMusicManager.playSound(
 					Constants.sounds.SOUND_SUB2_CHEER, Constants.sounds.SOUND_BIG_CHEER_VOLUME);
 			dialogStack.push(new CompleteLevelDialog(this.level, this, this.stats, true));
 		} else {
@@ -227,7 +227,8 @@ public class SubLevel2 extends SubLevel {
 
 			for (GameObject gameObject : this.level.getGameObjects()) {
 				if (gameObject.getIsActive() && this.level.getCar().collides(gameObject)) {
-					this.level.getGame().assets.soundAndMusicManager.playCollisionSound(gameObject);
+					Autickax.getInstance().assets.soundAndMusicManager
+							.playCollisionSound(gameObject);
 					gameObject.setIsActive(false);
 					this.objectsInCollision.add(gameObject);
 					stats.increaseCollisions();
@@ -414,7 +415,7 @@ public class SubLevel2 extends SubLevel {
 		Autickax.levelLoadingScreen = new LevelLoadingScreen(this.level.getLevelIndex() + 1,
 				difficulty);
 
-		this.level.getGame().setScreen(Autickax.levelLoadingScreen);
+		Autickax.getInstance().setScreen(Autickax.levelLoadingScreen);
 	}
 
 	private boolean isNextLevelAvaible() {

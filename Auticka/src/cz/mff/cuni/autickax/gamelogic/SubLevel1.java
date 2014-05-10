@@ -78,7 +78,7 @@ public class SubLevel1 extends SubLevel {
 	
 	private void playStartEngineSound()
 	{
-		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_ENGINE_START, Constants.sounds.SOUND_ENGINE_VOLUME);
+		Autickax.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_ENGINE_START, Constants.sounds.SOUND_ENGINE_VOLUME);
 	}
 	
 	public void onDialogEnded() {
@@ -180,7 +180,7 @@ public class SubLevel1 extends SubLevel {
 			{
 				Vector2 formerPosition = checkPoints.getLast().getPosition();
 				if (this.level.getCar().collidesWithinLineSegment(gameObject, formerPosition)) {
-					this.level.getGame().assets.soundAndMusicManager.playCollisionSound(gameObject);
+					Autickax.getInstance().assets.soundAndMusicManager.playCollisionSound(gameObject);
 					switchToMistakeState("You crashed into a " + gameObject.getName()+ "!");
 					return;
 				}
@@ -197,7 +197,7 @@ public class SubLevel1 extends SubLevel {
 				
 				if (wayPoints.isEmpty()){
 					state = SubLevel1States.FINISH_STATE;
-					this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_CHEER, Constants.sounds.SOUND_DEFAULT_VOLUME);
+					Autickax.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_CHEER, Constants.sounds.SOUND_DEFAULT_VOLUME);
 					dialogStack.push(new DecisionDialog(this.level, this, Constants.strings.PHASE_1_FINISH_REACHED, true));
 					timeMeasured = false;
 					this.level.getCar().setDragged(false);
@@ -314,7 +314,7 @@ public class SubLevel1 extends SubLevel {
 	 * Player failed to finish the track
 	 */
 	private void switchToMistakeState(String str) {
-		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
+		Autickax.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
 		this.dialogStack.push(new DecisionDialog(this.level, this, str, false));
 		this.state = SubLevel1States.MISTAKE_STATE;
 		this.level.getCar().setDragged(false);

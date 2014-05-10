@@ -23,8 +23,7 @@ public class LevelLoadingScreen extends BaseScreen {
 	private static final int lightsYposition = (int) (220 * Input.yStretchFactorInv);
 	private final int lightsXposition;
 
-	public LevelLoadingScreen(final int levelIndex,
-			final Difficulty levelDifficulty) {
+	public LevelLoadingScreen(final int levelIndex, final Difficulty levelDifficulty) {
 		super();
 
 		// setup a game screen
@@ -53,13 +52,13 @@ public class LevelLoadingScreen extends BaseScreen {
 
 		distanceMapLoader.start();
 
-		this.background = getGame().assets
+		this.background = Autickax.getInstance().assets
 				.getGraphics(Constants.menu.LOADING_LEVEL_MENU_BACKGROUND);
-		this.greenLight = getGame().assets
+		this.greenLight = Autickax.getInstance().assets
 				.getGraphics(Constants.menu.LOADING_LEVEL_MENU_GREEN);
-		this.redLight = getGame().assets
+		this.redLight = Autickax.getInstance().assets
 				.getGraphics(Constants.menu.LOADING_LEVEL_MENU_RED);
-		this.grayLight = getGame().assets
+		this.grayLight = Autickax.getInstance().assets
 				.getGraphics(Constants.menu.LOADING_LEVEL_MENU_GRAY);
 
 		this.lightsXposition = (int) ((this.getStage().getWidth() / 2) - ((LevelLoadingScreen.lightsCount / 2) * LevelLoadingScreen.lightsXmargin));
@@ -84,14 +83,14 @@ public class LevelLoadingScreen extends BaseScreen {
 			} else {
 				drawnLight = this.redLight;
 			}
-			this.batch.draw(drawnLight, this.lightsXposition + i
-					* LevelLoadingScreen.lightsXmargin,
+			this.batch.draw(drawnLight,
+					this.lightsXposition + i * LevelLoadingScreen.lightsXmargin,
 					LevelLoadingScreen.lightsYposition + LevelLoadingScreen.lightsYmargin,
 					drawnLight.getRegionWidth() * Input.xStretchFactorInv,
 					drawnLight.getRegionHeight() * Input.yStretchFactorInv);
-			
-			this.batch.draw(drawnLight, this.lightsXposition + i
-					* LevelLoadingScreen.lightsXmargin,
+
+			this.batch.draw(drawnLight,
+					this.lightsXposition + i * LevelLoadingScreen.lightsXmargin,
 					LevelLoadingScreen.lightsYposition - LevelLoadingScreen.lightsYmargin,
 					drawnLight.getRegionWidth() * Input.xStretchFactorInv,
 					drawnLight.getRegionHeight() * Input.yStretchFactorInv);
@@ -99,8 +98,7 @@ public class LevelLoadingScreen extends BaseScreen {
 
 		this.batch.end();
 
-		this.shiningLightsCount = (int) (Autickax.gameScreen
-				.getDistanceMapProgress() * LevelLoadingScreen.lightsCount);
+		this.shiningLightsCount = (int) (Autickax.gameScreen.getDistanceMapProgress() * LevelLoadingScreen.lightsCount);
 	}
 
 	@Override
