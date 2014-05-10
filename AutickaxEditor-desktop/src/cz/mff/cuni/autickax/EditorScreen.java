@@ -46,6 +46,8 @@ import cz.mff.cuni.autickax.entities.Hole;
 import cz.mff.cuni.autickax.entities.House;
 import cz.mff.cuni.autickax.entities.Mud;
 import cz.mff.cuni.autickax.entities.ParkingCar;
+import cz.mff.cuni.autickax.entities.Pneu;
+import cz.mff.cuni.autickax.entities.RacingCar;
 import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tornado;
@@ -567,7 +569,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	public enum TypeOfGameObjectButton {
-		HOLE, MUD, STONE, TREE, BOOSTER, FENCE, PARKING_CAR, HOUSE, WALL, HILL, TORNADO
+		HOLE, MUD, STONE, TREE, BOOSTER, FENCE, PARKING_CAR, HOUSE, WALL, HILL, TORNADO, RACING_CAR, PNEU
 	}
 
 	private void createGameObjectsButtons() {
@@ -635,12 +637,27 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Hill.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfGameObjectButton.HILL, i, offsetOnScreen, maxValue);
 		}
-		
+
 		// Tornados
-				for (int i = 1; i <= Constants.gameObjects.TORNADO_TYPES_COUNT; i++) {
-					trd = new TextureRegionDrawable(game.assets.getGraphics(Tornado.GetTextureName(i)));
-					createGameObjectButtons(trd, TypeOfGameObjectButton.TORNADO, i, offsetOnScreen, maxValue);
-				}
+		for (int i = 1; i <= Constants.gameObjects.TORNADO_TYPES_COUNT; i++) {
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Tornado.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfGameObjectButton.TORNADO, i, offsetOnScreen,
+					maxValue);
+		}
+
+		// Racing cars
+		for (int i = 1; i <= Constants.gameObjects.RACING_CAR_TYPES_COUNT; i++) {
+			trd = new TextureRegionDrawable(game.assets.getGraphics(RacingCar
+					.GetStaticTextureName(i)));
+			createGameObjectButtons(trd, TypeOfGameObjectButton.RACING_CAR, i, offsetOnScreen,
+					maxValue);
+		}
+
+		// Pneu
+		for (int i = 1; i <= Constants.gameObjects.PNEU_TYPES_COUNT; i++) {
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Pneu.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfGameObjectButton.PNEU, i, offsetOnScreen, maxValue);
+		}
 	}
 
 	private void createGameObjectButtons(TextureRegionDrawable trd,

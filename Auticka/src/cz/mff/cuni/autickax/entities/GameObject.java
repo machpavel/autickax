@@ -108,6 +108,10 @@ public abstract class GameObject implements Externalizable {
 			retval = new Hill(x, y, type);
 		} else if (objectName.equals(Tornado.name)) {
 			retval = new Tornado(x, y, type);
+		} else if (objectName.equals(Pneu.name)) {
+			retval = new Pneu(x, y, type);
+		} else if (objectName.equals(RacingCar.name)) {
+			retval = new RacingCar(x, y, type);
 		} else {
 			throw new IOException("Loading object failed: Unknown type " + " \"" + objectName
 					+ "\"");
@@ -232,45 +236,58 @@ public abstract class GameObject implements Externalizable {
 		float minimalDistance = this.boundingCircleRadius + object2.boundingCircleRadius;
 		return objectsDistance < minimalDistance;
 	}
-	
-	
+
 	/**
-	 * This method test whether this (a moving game object) collided with another object.
-	 * As a result of possible high velocity it is necessary to interpolate positions
-	 * between current location and last recorded location. Each of this position is test
-	 * for collision against given object. Number of tested positions depends on the bounding
-	 * radius of this object 
-	 * @param obstacle Source of possible collision
-	 * @param formerPosition Last known position of this object before the current one
+	 * This method test whether this (a moving game object) collided with
+	 * another object. As a result of possible high velocity it is necessary to
+	 * interpolate positions between current location and last recorded
+	 * location. Each of this position is test for collision against given
+	 * object. Number of tested positions depends on the bounding radius of this
+	 * object
+	 * 
+	 * @param obstacle
+	 *            Source of possible collision
+	 * @param formerPosition
+	 *            Last known position of this object before the current one
 	 * @return true if there is a collision
 	 */
-	public boolean collidesWithinLineSegment(GameObject obstacle, Vector2 formerPosition)
-	{
+	public boolean collidesWithinLineSegment(GameObject obstacle, Vector2 formerPosition) {
 		GameObject movingObject = copy();
 		movingObject.position = formerPosition;
 		Vector2 dirVec = new Vector2(position).sub(formerPosition);
 		float dist = dirVec.len();
 		Vector2 norm = new Vector2(dirVec).nor();
-		Vector2 lineCenter = new Vector2(formerPosition).add(new Vector2(norm).scl(dist/2));
-		
-		return movingObject.collides(obstacle) || collides(obstacle) 
-				|| intersects(obstacle.position, obstacle.boundingCircleRadius, lineCenter, 2*this.boundingCircleRadius, dist);
+		Vector2 lineCenter = new Vector2(formerPosition).add(new Vector2(norm).scl(dist / 2));
+
+		return movingObject.collides(obstacle)
+				|| collides(obstacle)
+				|| intersects(obstacle.position, obstacle.boundingCircleRadius, lineCenter,
+						2 * this.boundingCircleRadius, dist);
 	}
-	
-	private boolean intersects(Vector2 circleCenter, float circleRadius, Vector2 rectCenter, float width, float height)
-	{
-		Vector2 circleDistance = new Vector2(Math.abs(circleCenter.x-rectCenter.x), Math.abs(circleCenter.y- rectCenter.y));
 
-	    if (circleDistance.x > (width/2 + circleRadius)) { return false; }
-	    if (circleDistance.y > (height/2 + circleRadius)) { return false; }
+	private boolean intersects(Vector2 circleCenter, float circleRadius, Vector2 rectCenter,
+			float width, float height) {
+		Vector2 circleDistance = new Vector2(Math.abs(circleCenter.x - rectCenter.x),
+				Math.abs(circleCenter.y - rectCenter.y));
 
-	    if (circleDistance.x <= (width/2)) { return true; } 
-	    if (circleDistance.y <= (height/2)) { return true; }
+		if (circleDistance.x > (width / 2 + circleRadius)) {
+			return false;
+		}
+		if (circleDistance.y > (height / 2 + circleRadius)) {
+			return false;
+		}
 
-	    double cornerDistance_sq = Math.pow((circleDistance.x - width/2),2) +
-	                         Math.pow((circleDistance.y - height/2),2);
+		if (circleDistance.x <= (width / 2)) {
+			return true;
+		}
+		if (circleDistance.y <= (height / 2)) {
+			return true;
+		}
 
-	    return (cornerDistance_sq <= Math.pow(circleRadius, 2));
+		double cornerDistance_sq = Math.pow((circleDistance.x - width / 2), 2)
+				+ Math.pow((circleDistance.y - height / 2), 2);
+
+		return (cornerDistance_sq <= Math.pow(circleRadius, 2));
 	}
 
 	/**
@@ -320,8 +337,9 @@ public abstract class GameObject implements Externalizable {
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
+
 	public void setPosition(float x, float y) {
-		this.position = new Vector2(x,y);
+		this.position = new Vector2(x, y);
 	}
 
 	public abstract GameObject copy();

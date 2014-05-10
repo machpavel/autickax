@@ -11,6 +11,8 @@ import cz.mff.cuni.autickax.entities.Hole;
 import cz.mff.cuni.autickax.entities.House;
 import cz.mff.cuni.autickax.entities.Mud;
 import cz.mff.cuni.autickax.entities.ParkingCar;
+import cz.mff.cuni.autickax.entities.Pneu;
+import cz.mff.cuni.autickax.entities.RacingCar;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tornado;
 import cz.mff.cuni.autickax.entities.Tree;
@@ -62,6 +64,12 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			break;
 		case TORNADO:
 			this.screen.draggedObject = new Tornado(x ,y, type);
+			break;
+		case RACING_CAR:
+			this.screen.draggedObject = new RacingCar(x ,y, type);
+			break;
+		case PNEU:
+			this.screen.draggedObject = new Pneu(x ,y, type);
 			break;
 		default:
 			throw new IllegalGameObjectException(typeOfClass.toString());

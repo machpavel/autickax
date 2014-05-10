@@ -4,8 +4,6 @@ import java.io.Externalizable;
 
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame;
-import cz.mff.cuni.autickax.miniGames.AvoidObstaclesMinigame.ObstaclesType;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.miniGames.SwitchingMinigame;
 import cz.mff.cuni.autickax.scene.GameScreen;

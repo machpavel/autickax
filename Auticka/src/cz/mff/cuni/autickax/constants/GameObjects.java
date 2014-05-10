@@ -43,6 +43,9 @@ public final class GameObjects {
 	public final int PARKING_CAR_TYPES_COUNT = 4;
 	public final String PARKING_CAR_NAME = "parkingCar";
 	
+	public final int RACING_CAR_TYPES_COUNT = 2;
+	public final String RACING_CAR_NAME = "racingCar";
+	
 	public final int WALL_TYPES_COUNT = 1;
 	public final String WALL_NAME = "wall";
 	
@@ -51,6 +54,10 @@ public final class GameObjects {
 
 	public final int HOLE_TYPES_COUNT = 3;
 	public final String HOLE_NAME = "hole";
+	
+	public final int PNEU_TYPES_COUNT = 1;
+	public final String PNEU_NAME = "pneu";
+	public final float PNEU_SPEED_REDUCTION = 0.3f;
 
 	public final int AVOID_STONE_TYPES_COUNT = 15;
 	public final String AVOID_STONE_NAME = "avoidstone";
