@@ -7,11 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.Dialog;
 import cz.mff.cuni.autickax.dialogs.PauseDialog;
-import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.miniGames.Minigame;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -53,16 +50,6 @@ public abstract class SubLevel {
 
 	}
 
-	protected void playSound(GameObject collisionOrigin) {
-		if (Autickax.settings.playSounds) {
-			String soundName = collisionOrigin.getSoundName();
-			if (!soundName.equals(Constants.sounds.SOUND_NO_SOUND)) {
-				this.level.getGame().assets.soundAndMusicManager.playSound(soundName,
-						Constants.sounds.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
-			}
-		}
-	}
-
 	protected void eraseMinigame() {
 		this.miniGame = null;
 		takeFocus();
@@ -85,34 +72,37 @@ public abstract class SubLevel {
 
 	public void pause() {
 		if (!isPaused())
-			this.dialogStack.push(new PauseDialog(this.level, this));					
+			this.dialogStack.push(new PauseDialog(this.level, this));
 	}
-	
-	public boolean isPaused(){
-		if(!this.dialogStack.isEmpty() && this.dialogStack.peek() instanceof PauseDialog)
-			return true;		
+
+	public boolean isPaused() {
+		if (!this.dialogStack.isEmpty() && this.dialogStack.peek() instanceof PauseDialog)
+			return true;
 		else
 			return false;
 	}
+
 	public void resume() {
-		if(isPaused())
+		if (isPaused())
 			this.dialogStack.pop();
 	}
-	
-	public boolean isDialogStackEmpty(){
+
+	public boolean isDialogStackEmpty() {
 		return this.dialogStack.isEmpty();
 	}
-	public void takeDialogFocus(){
-		if(!dialogStack.isEmpty()){
+
+	public void takeDialogFocus() {
+		if (!dialogStack.isEmpty()) {
 			dialogStack.peek().takeFocus();
 		}
 	}
-	
-	public boolean isMinigameRunning(){
+
+	public boolean isMinigameRunning() {
 		return miniGame != null;
 	}
-	public void takeMinigameFocus(){
-		if(miniGame != null){
+
+	public void takeMinigameFocus() {
+		if (miniGame != null) {
 			this.miniGame.takeFocus();
 		}
 	}

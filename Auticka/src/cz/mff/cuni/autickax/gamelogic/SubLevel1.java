@@ -180,7 +180,7 @@ public class SubLevel1 extends SubLevel {
 			{
 				Vector2 formerPosition = checkPoints.getLast().getPosition();
 				if (this.level.getCar().collidesWithinLineSegment(gameObject, formerPosition)) {
-					playSound(gameObject);
+					this.level.getGame().assets.soundAndMusicManager.playSound(gameObject);
 					switchToMistakeState("You crashed into a " + gameObject.getName()+ "!");
 					return;
 				}
