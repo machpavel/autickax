@@ -19,13 +19,12 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public final class AnglicakMinigame extends Minigame {
 	private static final float CAR_START_POSITION_X = Constants.minigames.ANGLICAK_MINIGAME_CAR_START_POSITION_X;
 	private static final float CONTROL_LINE_POSITION_X = Constants.minigames.ANGLICAK_MINIGAME_CONTROL_LINE_POSITION_X;
-	private static final float FAIL_VALUE = Constants.minigames.ANGLICAK_MINIGAME_FAIL_VALUE;
 	private static final float MAX_WIN_COEF = Constants.minigames.ANGLICAK_MINIGAME_MAX_WIN_VALUE;
 
 	private float numberOfTries = Constants.minigames.ANGLICAK_MINIGAME_TRIES_COUNT;
 	private float uniformDeceleration = Constants.minigames.ANGLICAK_MINIGAME_UNIFORM_DECELERATION;
-	
-	// TODO Modify the wind randomly and show the wind.	
+
+	// TODO Modify the wind randomly and show the wind.
 	private Vector2 wind = new Vector2(0, 2000);
 
 	// From how many changes should be counted a speed
@@ -93,7 +92,6 @@ public final class AnglicakMinigame extends Minigame {
 	@Override
 	public void update(float delta) {
 		this.car.update(delta);
-
 		switch (state) {
 		case BEGINNING_STATE:
 			updateInBeginnigState(delta);
@@ -101,8 +99,8 @@ public final class AnglicakMinigame extends Minigame {
 		case DRIVING_STATE:
 			updateInDrivingState(delta);
 			break;
-		case FINISH_STATE:
-			updateInFinishState(delta);
+		case LEAVING_STATE:
+			updateInLeavingState(delta);
 			break;
 		default:
 			throw new IllegalStateException(state.toString());
@@ -185,8 +183,8 @@ public final class AnglicakMinigame extends Minigame {
 	public void checkEnd() {
 		float distanceFromTargetInPercents = this.target.distanceInPerc(this.car.getPosition());
 		if (distanceFromTargetInPercents > 0) {
-			this.state = States.FINISH_STATE;
 			this.setResultValue(distanceFromTargetInPercents);
+			win();
 		} else {
 			numberOfTries--;
 			if (numberOfTries <= 0) {
@@ -209,42 +207,36 @@ public final class AnglicakMinigame extends Minigame {
 
 	private void setResultValue(float succesInPerc) {
 		if (succesInPerc <= 0) {
-			this.resultValue = FAIL_VALUE;
+			this.resultValue = Constants.minigames.RESULT_VALUE_NOTHING;
 		} else {
 			this.resultValue = succesInPerc * (MAX_WIN_COEF - 1) + 1;
 		}
 	}
 
 	private void fail() {
-		this.status = DialogAbstractStatus.FINISHED;
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_ANGLICAK_FAIL;
-		this.result = ResultType.FAILED_WITH_VALUE; // value is already set
-		parent.onMinigameEnded();
-		this.endCommunication();
+		this.result = ResultType.FAILED;
+		this.state = States.LEAVING_STATE;
 	}
 
-	private void updateInFinishState(float delta) {
+	private void win() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_ANGLICAK_SUCCESS;
-		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED_WITH_VALUE; // value is already set
-		parent.onMinigameEnded();
-		this.endCommunication();
+		this.state = States.LEAVING_STATE;
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
 		super.draw(batch);
 		batch.begin();
-		// this.finish.draw(batch);
 		this.car.draw(batch);
 		batch.end();
 	}
 
 	public enum States {
-		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
+		BEGINNING_STATE, DRIVING_STATE, LEAVING_STATE;
 	}
 
-	
 	private void setDifficulty(Difficulty difficulty) {
 		switch (difficulty) {
 		case Kiddie:

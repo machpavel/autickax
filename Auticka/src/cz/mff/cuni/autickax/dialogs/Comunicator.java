@@ -57,6 +57,7 @@ public abstract class Comunicator extends SubLevel{
 	}
 		
 	protected void endCommunication(){
+		this.status = DialogAbstractStatus.FINISHED;
 		this.stage.dispose();
 	}
 	

@@ -140,8 +140,8 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		case DRIVING_STATE:
 			updateInDrivingState(delta);
 			break;
-		case FINISH_STATE:
-			updateInFinishState(delta);
+		case LEAVING_STATE:
+			updateInLeavingState(delta);
 			break;
 		default:
 			throw new IllegalStateException(state.toString());
@@ -178,7 +178,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		}
 		// Finish reached
 		else if (this.car.positionCollides(finish)) {
-			this.state = States.FINISH_STATE;
+			win();
 		}
 		// Collision detection
 		else {
@@ -201,7 +201,6 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	}
 
 	private void fail(String primaryMessage) {
-		this.status = DialogAbstractStatus.FINISHED;
 		switch (obstaclesType) {
 		case STONES:
 			this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_AVOID_STONES_FAIL;
@@ -217,16 +216,19 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		}
 		if (primaryMessage != null)
 			this.resultMessage = primaryMessage;
-		parent.onMinigameEnded();
-		this.endCommunication();
+		leave();
 	}
 
-	private void updateInFinishState(float delta) {
+	private void win() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_AVOID_SUCCESS;
-		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED;
-		parent.onMinigameEnded();
-		this.endCommunication();
+		leave();
+	}
+	
+	private void leave(){
+		this.car.setDragged(false);
+		this.car.setCanBeDragged(false);
+		this.state = States.LEAVING_STATE;
 	}
 
 	@Override
@@ -242,7 +244,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	}
 
 	public enum States {
-		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
+		BEGINNING_STATE, DRIVING_STATE, LEAVING_STATE;
 	}
 
 	public enum ObstaclesType {

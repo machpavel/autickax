@@ -1,6 +1,5 @@
 package cz.mff.cuni.autickax.miniGames;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -17,10 +16,8 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public final class BoostMinigame extends Minigame {
 
 	private final float RESULT_WIN_VALUE = Constants.minigames.BOOST_MINIGAME_WIN_VALUE;
-	private final float TIME_GENERATION_LIMIT = Constants.minigames.BOOST_MINIGAME_TIME_GENERATION_LIMIT;	
-	
-	
-	
+	private final float TIME_GENERATION_LIMIT = Constants.minigames.BOOST_MINIGAME_TIME_GENERATION_LIMIT;
+
 	private States state = States.BEGINNING_STATE;
 	private int columnCount;
 	private int rowsCount;
@@ -28,9 +25,10 @@ public final class BoostMinigame extends Minigame {
 	private float timeLimit;
 	private int hitCounter = 0;
 	private int hitsLimit;
-	
+
 	private BoostMinigameButton[] buttonsWaiting;
 	private BoostMinigameButton[] buttonsHighlighted;
+	private boolean buttonsAreEnabled = true;
 
 	public BoostMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
@@ -53,44 +51,53 @@ public final class BoostMinigame extends Minigame {
 		Vector2 originPosition = null;
 		for (int row = 0; row < this.rowsCount; row++) {
 			for (int column = 0; column < this.columnCount; column++) {
-				BoostMinigameButton newWaitingButton = new BoostMinigameButton(this.columnCount * row + column, this, 
+				BoostMinigameButton newWaitingButton = new BoostMinigameButton(
+						this.columnCount * row + column,
+						this,
 						Autickax.getInstance().assets
-						.getGraphics(Constants.minigames.BOOST_MINIGAME_WAITING_BUTTON_TEXTURE));
-				buttonsWaiting[this.columnCount * row + column] = newWaitingButton;				
+								.getGraphics(Constants.minigames.BOOST_MINIGAME_WAITING_BUTTON_TEXTURE));
+				buttonsWaiting[this.columnCount * row + column] = newWaitingButton;
 				this.stage.addActor(newWaitingButton);
-				
-				BoostMinigameButton newHighlightedButton = new BoostMinigameButton(this.columnCount * row + column, this, 
+
+				BoostMinigameButton newHighlightedButton = new BoostMinigameButton(
+						this.columnCount * row + column,
+						this,
 						Autickax.getInstance().assets
-						.getGraphics(Constants.minigames.BOOST_MINIGAME_HIGHLIGHTED_BUTTON_TEXTURE));
-				buttonsHighlighted[this.columnCount * row + column] = newHighlightedButton;							
+								.getGraphics(Constants.minigames.BOOST_MINIGAME_HIGHLIGHTED_BUTTON_TEXTURE));
+				buttonsHighlighted[this.columnCount * row + column] = newHighlightedButton;
 				newHighlightedButton.setVisible(false);
 				this.stage.addActor(newHighlightedButton);
-				
-				
-				if(originPosition == null){
-					originPosition = new Vector2(midPosition.x  - newWaitingButton.getActualWidth() * (float)columnCount / 2 ,
-						midPosition.y - newWaitingButton.getActualHeight() * (float)rowsCount / 2 );
+
+				if (originPosition == null) {
+					originPosition = new Vector2(midPosition.x - newWaitingButton.getActualWidth()
+							* (float) columnCount / 2, midPosition.y
+							- newWaitingButton.getActualHeight() * (float) rowsCount / 2);
 				}
-				newHighlightedButton.setPosition(originPosition.x + column * newWaitingButton.getActualWidth(), originPosition.y+ row * newHighlightedButton.getActualHeight());
-				newWaitingButton.setPosition(newHighlightedButton.getActualX(), newHighlightedButton.getActualY());
+				newHighlightedButton.setPosition(
+						originPosition.x + column * newWaitingButton.getActualWidth(),
+						originPosition.y + row * newHighlightedButton.getActualHeight());
+				newWaitingButton.setPosition(newHighlightedButton.getActualX(),
+						newHighlightedButton.getActualY());
 			}
 		}
 	}
 
 	public void buttonPressed(int index) {
-		if(buttonsHighlighted[index].isVisible()){
-			this.state = States.SET_PREPARATION_TIME_STATE;
-			reverseButton(index);
-			this.hitCounter++;
-			if(this.hitCounter >= this.hitsLimit)
-				this.state = States.FINISH_STATE;
-			
-		}	
-		else{
-			fail();
+		if (buttonsAreEnabled) {
+			if (buttonsHighlighted[index].isVisible()) {
+				this.state = States.SET_PREPARATION_TIME_STATE;
+				reverseButton(index);
+				this.hitCounter++;
+				if (this.hitCounter >= this.hitsLimit)
+					win();
+
+			} else {
+				fail();
+			}
 		}
 	}
-	private void reverseButton(int index){
+
+	private void reverseButton(int index) {
 		buttonsHighlighted[index].setVisible(!buttonsHighlighted[index].isVisible());
 		buttonsWaiting[index].setVisible(!buttonsWaiting[index].isVisible());
 	}
@@ -113,8 +120,8 @@ public final class BoostMinigame extends Minigame {
 		case NORMAL_STATE:
 			updateInDrivingState(delta);
 			break;
-		case FINISH_STATE:
-			updateInFinishState(delta);
+		case LEAVING_STATE:
+			updateInLeavingState(delta);
 			break;
 		default:
 			throw new IllegalStateException(state.toString());
@@ -129,54 +136,47 @@ public final class BoostMinigame extends Minigame {
 
 	private void setNormalTime() {
 		this.remainingTime = this.timeLimit;
-		this.state = States.NORMAL_STATE;		
+		this.state = States.NORMAL_STATE;
 	}
 
 	private void updateInBeginnigState(float delta) {
 		this.takeFocus();
-		this.state = States.SET_PREPARATION_TIME_STATE;		
+		this.state = States.SET_PREPARATION_TIME_STATE;
 	}
-	
+
 	private void updateInPreparationState(float delta) {
 		this.remainingTime -= delta;
-		if(this.remainingTime < 0){
+		if (this.remainingTime < 0) {
 			int index = MathUtils.random(buttonsWaiting.length - 1);
-			reverseButton(index);			
+			reverseButton(index);
 			this.state = States.SET_NORMAL_TIME_STATE;
 		}
 	}
 
 	private void updateInDrivingState(float delta) {
 		this.remainingTime -= delta;
-		if(this.remainingTime < 0){			
-		fail();
+		if (this.remainingTime < 0) {
+			fail();
 		}
 	}
 
 	private void fail() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_BOOST_FAIL;
 		this.result = ResultType.FAILED_WITH_VALUE;
-		this.resultValue = 1; // nothing happens
-		parent.onMinigameEnded();
-		this.endCommunication();
+		this.resultValue = Constants.minigames.RESULT_VALUE_NOTHING;
+		leave();
 	}
 
-	private void updateInFinishState(float delta) {
+	private void win() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_BOOST_SUCCESS;
-		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED_WITH_VALUE;
 		this.resultValue = RESULT_WIN_VALUE;
-		parent.onMinigameEnded();
-		this.endCommunication();
+		leave();
 	}
 
-	@Override
-	public void draw(SpriteBatch batch) {
-		super.draw(batch);
-		// batch.begin();
-		// this.finish.draw(batch);
-		// this.gearShifter.draw(batch);
-		// batch.end();
+	private void leave() {
+		this.buttonsAreEnabled = false;
+		this.state = States.LEAVING_STATE;
 	}
 
 	private void setDifficulty(Difficulty difficulty) {
@@ -218,6 +218,6 @@ public final class BoostMinigame extends Minigame {
 	}
 
 	private enum States {
-		BEGINNING_STATE, SET_PREPARATION_TIME_STATE, PREPARATION_STATE , SET_NORMAL_TIME_STATE, NORMAL_STATE, FINISH_STATE;
+		BEGINNING_STATE, SET_PREPARATION_TIME_STATE, PREPARATION_STATE, SET_NORMAL_TIME_STATE, NORMAL_STATE, LEAVING_STATE;
 	}
 }

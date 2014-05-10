@@ -15,6 +15,7 @@ public final class Strings {
 	public final String TOOLTIP_MINIGAME_CRASHED_WALL_RESULT_MESSAGE = "Hey!! You crashed into a wall!";
 	public final String TOOLTIP_MINIGAME_CRASHED_HOUSE_RESULT_MESSAGE = "Hey!! You crashed into a house!";
 	public final String TOOLTIP_MINIGAME_CRASHED_PARKING_CAR_RESULT_MESSAGE = "Hey!! You crashed into a parking car!";
+	public final String TOOLTIP_MINIGAME_CRASHED_PNEU_RESULT_MESSAGE = "You crashed into pneumatics. Be careful, your car is damaged.";
 	public final String TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO = "Avoid obstacles and reach finish";
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO = "Move the gearshift lever to the correct position";
 	public final String TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL = "You were not enough accurate. You will be punished by speed reduction";

@@ -5,6 +5,9 @@ public final class Minigames {
 	//
 	// MINIGAMES
 	//
+	
+	public final float LEAVING_DELAY = 0.5f; // Delay in the end of game if there is no message
+	public final float RESULT_VALUE_NOTHING = 1.f;
 
 	// Avoid obstacles
 	public final String AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE = "AvoidObstaclesMinigameBackground";
@@ -80,6 +83,8 @@ public final class Minigames {
 	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_NORMAL = 10;
 	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_HARD = 20;
 	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_EXTREME = 30;
+	public final float SWITCHING_MINIGAME_WIN_VALUE = 1.5f;
+	public final float SWITCHING_MINIGAME_FAIL_VALUE = 0.8f;
 
 	// Anglicak
 	public final String ANGLICAK_MINIGAME_BACKGROUND_TEXTURE = "AnglicakMinigameBackground";
@@ -94,8 +99,7 @@ public final class Minigames {
 	public final float ANGLICAK_MINIGAME_TARGET_RADIUS_NORMAL = 75;
 	public final float ANGLICAK_MINIGAME_TARGET_RADIUS_HARD = 50;
 	public final float ANGLICAK_MINIGAME_TARGET_RADIUS_EXTREME = 25;
-	public final float ANGLICAK_MINIGAME_UNIFORM_DECELERATION = 5000;
-	public final float ANGLICAK_MINIGAME_FAIL_VALUE = 0.5f;
+	public final float ANGLICAK_MINIGAME_UNIFORM_DECELERATION = 5000;	
 	public final float ANGLICAK_MINIGAME_MAX_WIN_VALUE = 3.f;
 	public float ANGLICAK_MINIGAME_TRIES_COUNT = 3;
 	

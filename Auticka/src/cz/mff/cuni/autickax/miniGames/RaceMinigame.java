@@ -150,8 +150,8 @@ public final class RaceMinigame extends Minigame {
 		case DRIVING_STATE:
 			updateInDrivingState(delta);
 			break;
-		case FINISH_STATE:
-			updateInFinishState(delta);
+		case LEAVING_STATE:
+			updateInLeavingState(delta);
 			break;
 		default:
 			throw new IllegalStateException(state.toString());
@@ -176,7 +176,7 @@ public final class RaceMinigame extends Minigame {
 
 		// The time has gone, so player wins
 		if (remainingTime < 0) {
-			this.state = States.FINISH_STATE;
+			win();
 			return;
 		}
 
@@ -251,17 +251,19 @@ public final class RaceMinigame extends Minigame {
 		else
 			this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_RACE_FAIL;
 		this.result = ResultType.FAILED;
-		parent.onMinigameEnded();
-		this.endCommunication();
+		leave();
 	}
 
-	private void updateInFinishState(float delta) {
+	private void win() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_RACE_SUCCESS;
-		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED;
-		// this.resultValue = 1.f;
-		parent.onMinigameEnded();
-		this.endCommunication();
+		leave();
+	}
+	
+	private void leave(){
+		this.car.setCanBeDragged(false);
+		this.car.setDragged(false);
+		this.state = States.LEAVING_STATE;
 	}
 
 	@Override
@@ -278,7 +280,7 @@ public final class RaceMinigame extends Minigame {
 	}
 
 	public enum States {
-		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
+		BEGINNING_STATE, DRIVING_STATE, LEAVING_STATE;
 	}
 
 	private void setDifficulty(Difficulty difficulty) {

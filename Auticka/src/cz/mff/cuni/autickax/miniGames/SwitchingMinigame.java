@@ -22,6 +22,9 @@ public final class SwitchingMinigame extends Minigame {
 
 	private static final float progressStep = 5.f;
 
+	private static final float RESULT_WIN_VALUE = Constants.minigames.SWITCHING_MINIGAME_WIN_VALUE;
+	private static final float RESULT_FAIL_VALUE = Constants.minigames.SWITCHING_MINIGAME_FAIL_VALUE;
+
 	private States state = States.BEGINNING_STATE;
 	private Button[] buttons = new Button[2];
 	private Slider progressBar;
@@ -85,7 +88,7 @@ public final class SwitchingMinigame extends Minigame {
 		}
 		float nextProgressBarValue = this.progressBar.getValue() + progressStep;
 		if (nextProgressBarValue >= 100)
-			this.state = States.FINISH_STATE;
+			win();
 		this.progressBar.setValue(nextProgressBarValue);
 	}
 
@@ -98,8 +101,8 @@ public final class SwitchingMinigame extends Minigame {
 		case NORMAL_STATE:
 			updateInNormalState(delta);
 			break;
-		case FINISH_STATE:
-			updateInFinishState(delta);
+		case LEAVING_STATE:
+			updateInLeavingState(delta);
 			break;
 		default:
 			throw new IllegalStateException(state.toString());
@@ -124,18 +127,22 @@ public final class SwitchingMinigame extends Minigame {
 	private void fail() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_SWITCHING_FAIL;
 		this.result = ResultType.FAILED;
-		// this.resultValue = 1; // nothing happens
-		parent.onMinigameEnded();
-		this.endCommunication();
+		this.resultValue = RESULT_FAIL_VALUE;
+		leave();
 	}
 
-	private void updateInFinishState(float delta) {
+	private void win() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_SWITCHING_SUCCESS;
-		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED;
-		// this.resultValue = RESULT_WIN_VALUE;
-		parent.onMinigameEnded();
-		this.endCommunication();
+		this.resultValue = RESULT_WIN_VALUE;
+		leave();
+	}
+
+	private void leave() {
+		for (int i = 0; i < buttons.length; i++) {
+			buttons[i].setDisabled(true);
+		}
+		this.state = States.LEAVING_STATE;
 	}
 
 	@Override
@@ -167,6 +174,6 @@ public final class SwitchingMinigame extends Minigame {
 	}
 
 	private enum States {
-		BEGINNING_STATE, NORMAL_STATE, FINISH_STATE;
+		BEGINNING_STATE, NORMAL_STATE, LEAVING_STATE;
 	}
 }

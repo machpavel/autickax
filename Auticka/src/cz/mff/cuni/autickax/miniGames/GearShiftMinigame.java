@@ -83,8 +83,8 @@ public final class GearShiftMinigame extends Minigame {
 		case DRIVING_STATE:
 			updateInDrivingState(delta);
 			break;
-		case FINISH_STATE:
-			updateInFinishState(delta);
+		case LEAVING_STATE:
+			updateInLeavingState(delta);
 			break;
 		default:
 			throw new IllegalStateException(state.toString());
@@ -117,7 +117,7 @@ public final class GearShiftMinigame extends Minigame {
 		}
 		// Finish reached
 		else if (this.gearShifter.positionCollides(finish)) {
-			this.state = States.FINISH_STATE;
+			win();
 		}
 		// Out of pathway
 		else if (!isInGrid(this.gearShifter.getPosition().x, this.gearShifter.getPosition().y)) {
@@ -132,16 +132,19 @@ public final class GearShiftMinigame extends Minigame {
 			this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL;
 		this.result = ResultType.FAILED_WITH_VALUE;
 		this.resultValue = FAIL_VALUE;
-		parent.onMinigameEnded();
-		this.endCommunication();
+		leave();
 	}
 
-	private void updateInFinishState(float delta) {
+	private void win() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS;
-		this.status = DialogAbstractStatus.FINISHED;
 		this.result = ResultType.PROCEEDED;
-		parent.onMinigameEnded();
-		this.endCommunication();
+		leave();
+	}
+	
+	private void leave(){		
+		this.gearShifter.setCanBeDragged(false);
+		this.gearShifter.setDragged(false);
+		this.state = States.LEAVING_STATE;
 	}
 
 	@Override
@@ -202,6 +205,6 @@ public final class GearShiftMinigame extends Minigame {
 	}
 
 	private enum States {
-		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE;
+		BEGINNING_STATE, DRIVING_STATE, LEAVING_STATE;
 	}
 }
