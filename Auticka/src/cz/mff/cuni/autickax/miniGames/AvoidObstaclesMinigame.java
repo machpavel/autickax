@@ -228,6 +228,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	private void leave(){
 		this.car.setDragged(false);
 		this.car.setCanBeDragged(false);
+		this.playResultSound();
 		this.state = States.LEAVING_STATE;
 	}
 

@@ -175,6 +175,7 @@ public final class BoostMinigame extends Minigame {
 	}
 
 	private void leave() {
+		this.playResultSound();
 		this.buttonsAreEnabled = false;
 		this.state = States.LEAVING_STATE;
 	}

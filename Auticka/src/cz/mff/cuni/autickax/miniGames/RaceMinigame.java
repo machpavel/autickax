@@ -32,9 +32,7 @@ public final class RaceMinigame extends Minigame {
 	private static final float MAX_SPEED_ADDITION = Constants.minigames.MAX_SPEED_ADDITION;
 	private static final float MIN_CAR_DISTANCE = Constants.minigames.MIN_CAR_DISTANCE;
 	private static final float MAX_CAR_DISTANCE = Constants.minigames.MAX_CAR_DISTANCE;
-	private static final float DISTANCE_RAISER = Constants.minigames.DISTANCE_RAISER; // Change
-																						// in
-																						// distance
+	private static final float DISTANCE_RAISER = Constants.minigames.DISTANCE_RAISER;
 
 	private float remainingTime;
 	private float speed;
@@ -259,8 +257,9 @@ public final class RaceMinigame extends Minigame {
 		this.result = ResultType.PROCEEDED;
 		leave();
 	}
-	
-	private void leave(){
+
+	private void leave() {
+		this.playResultSound();
 		this.car.setCanBeDragged(false);
 		this.car.setDragged(false);
 		this.state = States.LEAVING_STATE;

@@ -36,38 +36,51 @@ public class SubLevel2 extends SubLevel {
 
 	private CheckPoint from;
 	private CheckPoint to;
-	
+
 	private Vector2 velocity;
 	private float velocityMagnitude;
 	private float penalizationFactor = 1f;
 	private LinkedList<Float> speedModifiers = new LinkedList<Float>();
 	private float speedModifierValue = 1f;
-	
+
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
-	
-	private ArrayList<GameObject> objectsInCollision = new ArrayList<GameObject>(); // Objects which were used in collision but the car haven't left them yet.
+
+	private ArrayList<GameObject> objectsInCollision = new ArrayList<GameObject>(); // Objects
+																					// which
+																					// were
+																					// used
+																					// in
+																					// collision
+																					// but
+																					// the
+																					// car
+																					// haven't
+																					// left
+																					// them
+																					// yet.
 
 	private SubLevel2States state = SubLevel2States.ENGINE_RAGING_STATE;
 	private float elapsedFromEngine = 0.0f;
-	
+
 	private Difficulty difficulty;
-	private boolean playNextLevel = false; //It is for decision in final state. If should be played next level or go to main screen; 
-	
+	private boolean playNextLevel = false; // It is for decision in final state.
+											// If should be played next level or
+											// go to main screen;
+
 	private TimeStatusBar timeStatusBar;
 	private GameStatistics stats;
 
 	public enum SubLevel2States {
-		ENGINE_RAGING_STATE,
-		BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
+		ENGINE_RAGING_STATE, BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
 	}
 
-	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints,
-			DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {
-		
+	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints, DistanceMap map,
+			SubLevel1 lastPhase, GameStatistics stats) {
+
 		super(gameScreen);
 
 		this.timeStatusBar = new TimeStatusBar(gameScreen);
-		
+
 		this.checkpoints = checkpoints;
 		this.phase1 = lastPhase;
 		this.distMap = map;
@@ -76,14 +89,13 @@ public class SubLevel2 extends SubLevel {
 		this.difficulty = gameScreen.getDifficulty();
 		this.from = this.checkpoints.removeFirst();
 		this.to = this.checkpoints.removeFirst();
-								
-
 
 		speedModifiers.add(Constants.misc.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
-		this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB2_START, 1);
-		
+		this.level.getGame().assets.soundAndMusicManager.playSound(
+				Constants.sounds.SOUND_SUB2_START, 1);
+
 		// Car positioning
 		this.level.getCar().reset();
 		this.level.getCar().move(this.from.position);
@@ -117,59 +129,51 @@ public class SubLevel2 extends SubLevel {
 		Minigame miniGameLocal = this.miniGame;
 		eraseMinigame();
 		switch (miniGameLocal.getResult()) {
-		case FAILED:			
-			this.dialogStack.push(new DecisionDialog(this.level, this, miniGameLocal.getResultMessage(), false));
+		case FAILED:
+			this.dialogStack.push(new DecisionDialog(this.level, this, miniGameLocal
+					.getResultMessage(), false));
 			stats.increaseFailed();
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
+			break;
+		case FAILED_WITH_VALUE:
+			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
+				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal
+						.getResultMessage()));
+			stats.increaseFailed();
+			float failResult = miniGameLocal.getResultValue();
+			speedModifiers.add(failResult);
+			computeSpeedModifierValue();
 			break;
 		case PROCEEDED:
 			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
-				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultMessage()));
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_SUCCESS, Constants.sounds.SOUND_DEFAULT_VOLUME);
-
+				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal
+						.getResultMessage()));
 			stats.increaseSucceeded();
 			break;
 		case PROCEEDED_WITH_VALUE:
 			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
-				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultMessage()));
-
+				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal
+						.getResultMessage()));
 			stats.increaseSucceeded();
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_SUCCESS, Constants.sounds.SOUND_DEFAULT_VOLUME);
 			float winResult = miniGameLocal.getResultValue();
-				speedModifiers.add(winResult);
-				computeSpeedModifierValue();
-			break;
-		case FAILED_WITH_VALUE:
-			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
-				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal.getResultMessage()));
-
-			stats.increaseFailed();
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
-			float failResult = miniGameLocal.getResultValue();
-				speedModifiers.add(failResult);
-				computeSpeedModifierValue();
+			speedModifiers.add(winResult);
+			computeSpeedModifierValue();
 			break;
 		default:
 			throw new IllegalStateException(miniGameLocal.getResult().toString());
 		}
 	}
-	
-
-	
-	
 
 	@Override
 	public void update(float delta) {
-		//do not count time in this state
+		// do not count time in this state
 		if (state != SubLevel2States.ENGINE_RAGING_STATE)
 			timeStatusBar.update(this.stats.getPhase2ElapsedTime());
-		
+
 		if (!this.dialogStack.isEmpty()) {
 			this.dialogStack.peek().update(delta);
 		} else if (this.miniGame != null) {
 			this.miniGame.update(delta);
-		}		
-		else{
+		} else {
 			for (GameObject gameObject : this.level.getGameObjects()) {
 				gameObject.update(delta);
 			}
@@ -195,21 +199,20 @@ public class SubLevel2 extends SubLevel {
 				break;
 			default:
 				throw new IllegalStateException(state.toString());
-			}			
+			}
 		}
 	}
-	
-	private void updateInEngineRagingState(float delta)
-	{
+
+	private void updateInEngineRagingState(float delta) {
 		elapsedFromEngine += delta;
 		if (elapsedFromEngine >= Constants.sounds.SOUNDS_ENGINE_DELAY)
 			state = SubLevel2States.BEGINNING_STATE;
 	}
-	
+
 	private void updateInBeginnigState(float delta) {
 		state = SubLevel2States.DRIVING_STATE;
 	}
-	
+
 	private void updateInDrivingState(float delta) {
 
 		this.stats.increasePhase2ElapsedTime(delta);
@@ -218,23 +221,22 @@ public class SubLevel2 extends SubLevel {
 			state = SubLevel2States.FINISH_STATE;
 			this.updateScore();
 			this.unlockNewLevel();
-			this.level.getGame().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB2_CHEER, Constants.sounds.SOUND_BIG_CHEER_VOLUME);
+			this.level.getGame().assets.soundAndMusicManager.playSound(
+					Constants.sounds.SOUND_SUB2_CHEER, Constants.sounds.SOUND_BIG_CHEER_VOLUME);
 			dialogStack.push(new CompleteLevelDialog(this.level, this, this.stats, true));
-		}
-		else{
+		} else {
 			Vector2 newPos = moveCarToNewPosition(delta);
-				
-			
+
 			for (int i = 0; i < objectsInCollision.size(); i++) {
-				if(!this.level.getCar().collides(objectsInCollision.get(i))){
+				if (!this.level.getCar().collides(objectsInCollision.get(i))) {
 					objectsInCollision.get(i).setIsActive(true);
 					objectsInCollision.remove(i);
 					i--;
 				}
 			}
-						
-			for (GameObject gameObject : this.level.getGameObjects()) {			
-				if ( gameObject.getIsActive() && this.level.getCar().collides(gameObject)) {
+
+			for (GameObject gameObject : this.level.getGameObjects()) {
+				if (gameObject.getIsActive() && this.level.getCar().collides(gameObject)) {
 					this.level.getGame().assets.soundAndMusicManager.playCollisionSound(gameObject);
 					gameObject.setIsActive(false);
 					this.objectsInCollision.add(gameObject);
@@ -243,17 +245,14 @@ public class SubLevel2 extends SubLevel {
 					break;
 				}
 			}
-			
+
 			points.add(new Vector2(newPos));
 		}
-		
+
 	}
 
-	
-
-	
 	private void updateInFinishState(float delta) {
-		if(this.playNextLevel) 
+		if (this.playNextLevel)
 			this.playNextLevel();
 		else
 			this.level.goToMainScreen();
@@ -269,19 +268,18 @@ public class SubLevel2 extends SubLevel {
 		for (GameObject gameObject : this.level.getGameObjects()) {
 			gameObject.draw(batch);
 		}
-		
+
 		this.level.getStart().draw(batch);
 		this.level.getFinish().draw(batch);
 		this.level.getCar().draw(batch);
-		
+
 		batch.end();
 
 		timeStatusBar.draw(batch);
-		
+
 		if (!dialogStack.isEmpty()) {
 			dialogStack.peek().draw(batch);
-		}
-		else if (miniGame != null) {
+		} else if (miniGame != null) {
 			miniGame.draw(batch);
 		}
 	}
@@ -290,15 +288,14 @@ public class SubLevel2 extends SubLevel {
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(Color.RED);
 		for (CheckPoint ce : checkpoints) {
-			shapeRenderer.circle((float) ce.position.x
-					* Input.xStretchFactorInv, (float) ce.position.y
-					* Input.yStretchFactorInv, 2);
+			shapeRenderer.circle((float) ce.position.x * Input.xStretchFactorInv,
+					(float) ce.position.y * Input.yStretchFactorInv, 2);
 		}
 
 		shapeRenderer.setColor(Color.BLUE);
 		for (Vector2 vec : points) {
-			shapeRenderer.circle(vec.x * Input.xStretchFactorInv, vec.y
-					* Input.yStretchFactorInv, 2);
+			shapeRenderer.circle(vec.x * Input.xStretchFactorInv, vec.y * Input.yStretchFactorInv,
+					2);
 		}
 		shapeRenderer.end();
 
@@ -313,17 +310,15 @@ public class SubLevel2 extends SubLevel {
 			// >=0
 			Vector2 carPosition = this.level.getCar().getPosition();
 			// compute time necessary to reach checkpoint To
-			float distToTo = new Vector2(carPosition).sub(this.to.position)
-					.len();
+			float distToTo = new Vector2(carPosition).sub(this.to.position).len();
 			float timeNecessaire = distToTo
 					/ (this.velocityMagnitude * this.penalizationFactor * this.speedModifierValue);
 
 			// move only as much as you can
 			if (timeNecessaire > timeAvailable) {
-				float dist = this.velocityMagnitude * timeAvailable
-						* this.penalizationFactor * this.speedModifierValue;
-				Vector2 traslationVec = new Vector2(this.velocity).nor().scl(
-						dist);
+				float dist = this.velocityMagnitude * timeAvailable * this.penalizationFactor
+						* this.speedModifierValue;
+				Vector2 traslationVec = new Vector2(this.velocity).nor().scl(dist);
 				newPosition = new Vector2(carPosition);
 				newPosition.add(traslationVec);
 				timeAvailable = 0;
@@ -339,7 +334,7 @@ public class SubLevel2 extends SubLevel {
 				timeAvailable -= timeNecessaire;
 			}
 		}
-		this.level.getCar().move(newPosition);		
+		this.level.getCar().move(newPosition);
 		return newPosition;
 	}
 
@@ -348,99 +343,96 @@ public class SubLevel2 extends SubLevel {
 	 */
 	private void computeVelocity() {
 		float time = this.to.time - this.from.time;
-		velocity = new Vector2(this.to.position).sub(this.from.position).div(
-				time);
+		velocity = new Vector2(this.to.position).sub(this.from.position).div(time);
 		velocityMagnitude = velocity.len();
 
-		float distanceFromCurveCenter = distMap.At(this.level.getCar()
-				.getPosition());
+		float distanceFromCurveCenter = distMap.At(this.level.getCar().getPosition());
 		if (distanceFromCurveCenter > difficulty.getMaxDistanceFromSurface()) {
 			this.penalizationFactor = Constants.misc.OUT_OF_SURFACE_PENALIZATION_FACTOR
 					/ (float) Math.log(distanceFromCurveCenter + 2);
-		}
-		else
+		} else
 			this.penalizationFactor = 1f;
-			
+
 	}
-	
+
 	/**
 	 * Combine all speed modifiers into a single value - penalizationFactor
 	 */
-	private void computeSpeedModifierValue()
-	{
+	private void computeSpeedModifierValue() {
 		float mod = 1.0f;
-		for (Float fl: speedModifiers)
+		for (Float fl : speedModifiers)
 			mod *= fl;
 		this.speedModifierValue = mod;
 	}
-	
-	
-	public void onLevelComplete(){
+
+	public void onLevelComplete() {
 		Dialog dialogLocal = this.dialogStack.peek();
 		eraseDialog();
-		
+
 		updateScore();
-		
+
 		unlockNewLevel();
-		
+
 		switch (dialogLocal.getDecision()) {
-			case CONTINUE:	
-				if(this.isNextLevelAvaible())
-					this.playNextLevel = true;
-				else
-					this.dialogStack.push(new MessageDialog(this.level, this, this.level.getDifficulty().toString() + Constants.strings.DIFFICULTY_FINISHED));
-				break;
-			case RESTART:
-				this.level.switchToPhase(this.phase1);				
-				break;
-			case GO_TO_MAIN_MENU:
-				this.level.goToMainScreen();
-				break;
-			default:
-				throw new IllegalCommandException(dialogLocal.getDecision().toString());
-		}		
+		case CONTINUE:
+			if (this.isNextLevelAvaible())
+				this.playNextLevel = true;
+			else
+				this.dialogStack.push(new MessageDialog(this.level, this, this.level
+						.getDifficulty().toString() + Constants.strings.DIFFICULTY_FINISHED));
+			break;
+		case RESTART:
+			this.level.switchToPhase(this.phase1);
+			break;
+		case GO_TO_MAIN_MENU:
+			this.level.goToMainScreen();
+			break;
+		default:
+			throw new IllegalCommandException(dialogLocal.getDecision().toString());
+		}
 	}
 
 	private void unlockNewLevel() {
-		if (this.isNextLevelAvaible() &&
-				this.level.getLevelIndex() == this.level.getDifficulty().getPlayedLevels().size() - 1) {
-			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte)0));
-			if(Autickax.settings.showTooltips){
-				this.dialogStack.push(new MessageDialog(this.level, this, Constants.strings.NEW_LEVEL_UNLOCK));	
-			}			
+		if (this.isNextLevelAvaible()
+				&& this.level.getLevelIndex() == this.level.getDifficulty().getPlayedLevels()
+						.size() - 1) {
+			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte) 0));
+			if (Autickax.settings.showTooltips) {
+				this.dialogStack.push(new MessageDialog(this.level, this,
+						Constants.strings.NEW_LEVEL_UNLOCK));
+			}
 		}
 	}
 
 	private void updateScore() {
 		byte numberOfStars = this.stats.getNumberOfStars();
 		if (numberOfStars > this.level.getPlayedLevel().starsNumber)
-		this.level.getPlayedLevel().starsNumber = numberOfStars;
-		
+			this.level.getPlayedLevel().starsNumber = numberOfStars;
+
 		float score = this.stats.getScoreFromTime();
 		if (score > this.level.getPlayedLevel().score)
-		this.level.getPlayedLevel().score = score;
+			this.level.getPlayedLevel().score = score;
 		Autickax.playedLevels.storeLevels();
 	}
-	
-	
-	
-	public void playNextLevel(){
+
+	public void playNextLevel() {
 		if (Autickax.levelLoadingScreen != null) {
 			Autickax.levelLoadingScreen.dispose();
 			Autickax.levelLoadingScreen = null;
 		}
 
-		Autickax.levelLoadingScreen = new LevelLoadingScreen(this.level.getLevelIndex() + 1, difficulty);
+		Autickax.levelLoadingScreen = new LevelLoadingScreen(this.level.getLevelIndex() + 1,
+				difficulty);
 
 		this.level.getGame().setScreen(Autickax.levelLoadingScreen);
 	}
-	
-	private boolean isNextLevelAvaible(){
+
+	private boolean isNextLevelAvaible() {
 		Vector<Level> availableLevels = this.level.getDifficulty().getAvailableLevels();
 		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
-		
-		return this.level.getLevelIndex() < playedLevels.size() &&
-				this.level.getLevelIndex() < availableLevels.size() - 1;
+
+		return this.level.getLevelIndex() < playedLevels.size()
+				&& this.level.getLevelIndex() < availableLevels.size() - 1;
 	}
 
 }

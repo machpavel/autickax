@@ -26,6 +26,7 @@ public class Crash extends Minigame {
 	}
 
 	private void fail() {
+		this.playResultSound();
 		this.endCommunication();
 	}
 

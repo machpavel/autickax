@@ -142,6 +142,7 @@ public final class GearShiftMinigame extends Minigame {
 	}
 	
 	private void leave(){		
+		this.playResultSound();
 		this.gearShifter.setCanBeDragged(false);
 		this.gearShifter.setDragged(false);
 		this.state = States.LEAVING_STATE;

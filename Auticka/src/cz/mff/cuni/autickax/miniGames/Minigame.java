@@ -35,9 +35,31 @@ public abstract class Minigame extends Comunicator {
 		super.endCommunication();
 	}
 
-	protected void updateInLeavingState(float delta) {
+	protected void playResultSound() {
+		switch (result) {
+		case FAILED:
+			this.level.getGame().assets.soundAndMusicManager.playSound(
+					Constants.sounds.SOUND_MINIGAME_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
+			break;
+		case FAILED_WITH_VALUE:
+			this.level.getGame().assets.soundAndMusicManager.playSound(
+					Constants.sounds.SOUND_MINIGAME_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
+			break;
+		case PROCEEDED:
+			this.level.getGame().assets.soundAndMusicManager.playSound(
+					Constants.sounds.SOUND_MINIGAME_SUCCESS, Constants.sounds.SOUND_DEFAULT_VOLUME);
+			break;
+		case PROCEEDED_WITH_VALUE:
+			this.level.getGame().assets.soundAndMusicManager.playSound(
+					Constants.sounds.SOUND_MINIGAME_SUCCESS, Constants.sounds.SOUND_DEFAULT_VOLUME);
+			break;
+		default:
+			throw new IllegalStateException(result.toString());
+		}
+	}
 
-		// Delays the end if there is no message in the end of a game
+	protected void updateInLeavingState(float delta) {
+		// Delays the leaving if there is no message in the end of a game
 		if (!Autickax.settings.showTooltips) {
 			leavingDelay -= delta;
 			if (leavingDelay < 0) {

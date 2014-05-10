@@ -216,13 +216,18 @@ public final class AnglicakMinigame extends Minigame {
 	private void fail() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_ANGLICAK_FAIL;
 		this.result = ResultType.FAILED;
-		this.state = States.LEAVING_STATE;
+		leave();
 	}
 
 	private void win() {
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_ANGLICAK_SUCCESS;
 		this.result = ResultType.PROCEEDED_WITH_VALUE; // value is already set
+		leave();
+	}
+	
+	private void leave(){
 		this.state = States.LEAVING_STATE;
+		this.playResultSound();
 	}
 
 	@Override

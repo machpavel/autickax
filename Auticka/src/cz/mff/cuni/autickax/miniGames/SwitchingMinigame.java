@@ -139,6 +139,7 @@ public final class SwitchingMinigame extends Minigame {
 	}
 
 	private void leave() {
+		this.playResultSound();
 		for (int i = 0; i < buttons.length; i++) {
 			buttons[i].setDisabled(true);
 		}
