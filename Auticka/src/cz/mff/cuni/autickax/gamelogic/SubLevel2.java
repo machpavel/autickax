@@ -235,7 +235,7 @@ public class SubLevel2 extends SubLevel {
 						
 			for (GameObject gameObject : this.level.getGameObjects()) {			
 				if ( gameObject.getIsActive() && this.level.getCar().collides(gameObject)) {
-					this.level.getGame().assets.soundAndMusicManager.playSound(gameObject);
+					this.level.getGame().assets.soundAndMusicManager.playCollisionSound(gameObject);
 					gameObject.setIsActive(false);
 					this.objectsInCollision.add(gameObject);
 					stats.increaseCollisions();

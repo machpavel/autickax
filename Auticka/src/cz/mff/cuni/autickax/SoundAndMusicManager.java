@@ -63,7 +63,7 @@ public class SoundAndMusicManager {
 		this.menuMusic.stop();
 	}
 
-	public void playSound(GameObject collisionOrigin) {
+	public void playCollisionSound(GameObject collisionOrigin) {
 		if (Autickax.settings.playSounds) {
 			String soundName = collisionOrigin.getSoundName();
 			if (!soundName.equals(Constants.sounds.SOUND_NO_SOUND)) {
