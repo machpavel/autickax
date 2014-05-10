@@ -34,6 +34,10 @@ public abstract class Dialog extends Comunicator{
 	
 	public abstract DecisionType getDecision();
 	
+	protected void endCommunication() {
+		parent.onDialogEnded();
+		super.endCommunication();
+	}
 	public enum DecisionType {
 		CONTINUE, RESTART, GO_TO_MAIN_MENU;
 	}

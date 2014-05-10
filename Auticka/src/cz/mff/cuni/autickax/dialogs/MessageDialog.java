@@ -20,9 +20,7 @@ public class MessageDialog extends Dialog {
 						.getGraphics(Constants.dialog.MESSAGE_DIALOG_BUTTON_OK_OVER_TEXTURE)) {
 			@Override
 			public void action() {
-				playButtonSound();
-				status = DialogAbstractStatus.FINISHED;				
-				parent.onDialogEnded();
+				playButtonSound();		
 				endCommunication();
 			}
 		};

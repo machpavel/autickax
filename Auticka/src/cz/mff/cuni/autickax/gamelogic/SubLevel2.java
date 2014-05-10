@@ -45,27 +45,17 @@ public class SubLevel2 extends SubLevel {
 
 	private LinkedList<Vector2> points = new LinkedList<Vector2>();
 
-	private ArrayList<GameObject> objectsInCollision = new ArrayList<GameObject>(); // Objects
-																					// which
-																					// were
-																					// used
-																					// in
-																					// collision
-																					// but
-																					// the
-																					// car
-																					// haven't
-																					// left
-																					// them
-																					// yet.
+	// Objects which were used in collision but the car haven't left them yet.
+	private ArrayList<GameObject> objectsInCollision = new ArrayList<GameObject>();
 
 	private SubLevel2States state = SubLevel2States.ENGINE_RAGING_STATE;
 	private float elapsedFromEngine = 0.0f;
 
 	private Difficulty difficulty;
-	private boolean playNextLevel = false; // It is for decision in final state.
-											// If should be played next level or
-											// go to main screen;
+
+	// It is for decision in final state. If should be played next level or go
+	// to main screen;
+	private boolean playNextLevel = false;
 
 	private TimeStatusBar timeStatusBar;
 	private GameStatistics stats;

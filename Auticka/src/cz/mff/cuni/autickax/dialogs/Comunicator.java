@@ -11,62 +11,54 @@ import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.scene.ScreenInputListener;
 
-public abstract class Comunicator extends SubLevel{
-	protected TextureRegionDrawable backgroundTexture;	
+public abstract class Comunicator extends SubLevel {
+	protected TextureRegionDrawable backgroundTexture;
 	protected DialogAbstractStatus status;
 	protected SubLevel parent;
-	
-	
-	
+
 	public Comunicator(GameScreen gameScreen, SubLevel sublevel) {
 		super(gameScreen);
 		this.parent = sublevel;
 		this.status = DialogAbstractStatus.IN_PROGRESS;
-		this.stage = new Stage(Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
+		this.stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.stage.addListener(new ScreenInputListener(this.level));
 		takeFocus();
 	}
-	
-	public void takeFocus(){
+
+	public void takeFocus() {
 		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCatchBackKey(false);
 	}
-	
+
 	@Override
-	public void update(float delta){
-		stage.act(delta);		
+	public void update(float delta) {
+		stage.act(delta);
 		// scene1 onDialogEnded.
 	}
 
 	@Override
-	public void draw(SpriteBatch batch){
+	public void draw(SpriteBatch batch) {
 		batch.begin();
-		this.backgroundTexture.draw (
-			batch,
-			0,
-			0,
-			Constants.WORLD_WIDTH * Input.xStretchFactorInv,
-			Constants.WORLD_HEIGHT * Input.yStretchFactorInv
-		);
+		this.backgroundTexture.draw(batch, 0, 0, Constants.WORLD_WIDTH * Input.xStretchFactorInv,
+				Constants.WORLD_HEIGHT * Input.yStretchFactorInv);
 		batch.end();
 		stage.draw();
-	};	
-	
-	public DialogAbstractStatus getStatus(){
+	};
+
+	public DialogAbstractStatus getStatus() {
 		return this.status;
 	}
-		
-	protected void endCommunication(){
+
+	protected void endCommunication() {
 		this.status = DialogAbstractStatus.FINISHED;
-		this.stage.dispose();
+		this.dispose();
 	}
-	
-	public boolean isInProgress(){
+
+	public boolean isInProgress() {
 		return getStatus() == DialogAbstractStatus.IN_PROGRESS;
 	}
-	
-	public enum DialogAbstractStatus{
-		IN_PROGRESS,
-		FINISHED
+
+	public enum DialogAbstractStatus {
+		IN_PROGRESS, FINISHED
 	}
 }

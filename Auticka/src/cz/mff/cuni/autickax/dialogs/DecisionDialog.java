@@ -31,10 +31,8 @@ public class DecisionDialog extends Dialog {
 
 			@Override
 			public void action() {
-				playButtonSound();
-				status = DialogAbstractStatus.FINISHED;
-				decision = DecisionType.CONTINUE;				
-				parent.onDialogEnded();
+				playButtonSound();				
+				decision = DecisionType.CONTINUE;								
 				endCommunication();
 			}
 		};
@@ -54,9 +52,7 @@ public class DecisionDialog extends Dialog {
 			@Override
 			public void action() {
 				playButtonSound();
-				status = DialogAbstractStatus.FINISHED;
 				decision = DecisionType.RESTART;				
-				parent.onDialogEnded();
 				endCommunication();
 			}
 		};
@@ -75,9 +71,7 @@ public class DecisionDialog extends Dialog {
 			@Override
 			public void action() {
 				playButtonSound();
-				status = DialogAbstractStatus.FINISHED;
 				decision = DecisionType.GO_TO_MAIN_MENU;
-				parent.onDialogEnded();
 				endCommunication();
 			}
 		};

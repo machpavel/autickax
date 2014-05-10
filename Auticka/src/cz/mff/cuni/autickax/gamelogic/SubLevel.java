@@ -51,7 +51,10 @@ public abstract class SubLevel {
 	}
 
 	protected void eraseMinigame() {
-		this.miniGame = null;
+		if (this.miniGame != null) {
+			this.miniGame.dispose();
+			this.miniGame = null;
+		}
 		takeFocus();
 	}
 
@@ -84,7 +87,7 @@ public abstract class SubLevel {
 
 	public void resume() {
 		if (isPaused())
-			this.dialogStack.pop();
+			this.eraseDialog();
 	}
 
 	public boolean isDialogStackEmpty() {
@@ -105,5 +108,15 @@ public abstract class SubLevel {
 		if (miniGame != null) {
 			this.miniGame.takeFocus();
 		}
+	}
+
+	public void dispose() {
+		if (dialogStack != null)
+			for (Dialog dialog : dialogStack) {
+				dialog.dispose();
+			}
+		if (miniGame != null)
+			miniGame.dispose();
+		this.stage.dispose();
 	}
 }
