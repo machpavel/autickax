@@ -9,7 +9,7 @@ public final class Strings {
 	//public final String TOOLTIP_MINIGAME_CAR_WAS_RELEASED = "Car was released. Level failed.";
 	public final String TOOLTIP_MINIGAME_CAR_OUT_OF_BOUNDS = "Car went out of bounds. Level failed.";
 	public final String TOOLTIP_PHASE_1_WHAT_TO_DO = "Follow the pathway with your finger, hurry to finish and avoid nasty objects! ";
-	public final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid this obstacle";
+	//public final String TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO = "Your can't avoid this obstacle";
 	public final String TOOLTIP_MINIGAME_CRASHED_TREE_RESULT_MESSAGE = "Hey!! You crashed into a tree!";
 	public final String TOOLTIP_MINIGAME_CRASHED_FENCE_RESULT_MESSAGE = "Hey!! You crashed into a fence!";
 	public final String TOOLTIP_MINIGAME_CRASHED_WALL_RESULT_MESSAGE = "Hey!! You crashed into a wall!";

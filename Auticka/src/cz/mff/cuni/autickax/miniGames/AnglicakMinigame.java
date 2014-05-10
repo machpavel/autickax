@@ -224,8 +224,8 @@ public final class AnglicakMinigame extends Minigame {
 		this.result = ResultType.PROCEEDED_WITH_VALUE; // value is already set
 		leave();
 	}
-	
-	private void leave(){
+
+	private void leave() {
 		this.state = States.LEAVING_STATE;
 		this.playResultSound();
 	}

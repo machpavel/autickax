@@ -1,8 +1,7 @@
 package cz.mff.cuni.autickax.miniGames;
 
-import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.dialogs.MessageDialog;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
@@ -19,12 +18,17 @@ public class Crash extends Minigame {
 		this.result = result;
 		this.resultValue = resultValue;
 
-		if (Autickax.settings.showTooltips) {
-			this.parent.setDialog(new MessageDialog(gameScreen, parent,
-					Constants.strings.TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO));
-		}
+		// if (Autickax.settings.showTooltips) {
+		// this.parent.setDialog(new MessageDialog(gameScreen, parent,
+		// Constants.strings.TOOLTIP_MINIGAME_CRASHED_WHAT_TO_DO));
+		// }
 	}
 
+	@Override
+	public void draw(SpriteBatch batch) {
+		// Don't draw anything	
+	}
+	
 	private void fail() {
 		this.playResultSound();
 		this.endCommunication();
