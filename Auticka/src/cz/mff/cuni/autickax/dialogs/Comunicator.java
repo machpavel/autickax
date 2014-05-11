@@ -25,10 +25,6 @@ public abstract class Comunicator extends SubLevel {
 		takeFocus();
 	}
 
-	public void takeFocus() {
-		Gdx.input.setInputProcessor(stage);
-		Gdx.input.setCatchBackKey(false);
-	}
 
 	@Override
 	public void update(float delta) {

@@ -127,7 +127,6 @@ public abstract class SubLevel {
 		try {
 			this.stage.dispose();
 		} catch (Exception e) {
-		}
-		System.out.println("Disposed: " + this.toString());
+		}		
 	}
 }
