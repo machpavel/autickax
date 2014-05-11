@@ -59,7 +59,10 @@ public class SubLevel2 extends SubLevel {
 
 	private TimeStatusBar timeStatusBar;
 	private GameStatistics stats;
-
+	
+	//class supporting calculating and rendering tyre tracks on the road
+	private TyreTracks tyreTracks;
+	
 	public enum SubLevel2States {
 		ENGINE_RAGING_STATE, BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
 	}
@@ -91,7 +94,9 @@ public class SubLevel2 extends SubLevel {
 		this.level.getCar().move(this.from.position);
 		this.level.getCar().setNextPositionIsDirection();
 		this.level.getCar().move(this.to.position);
-
+		
+		this.tyreTracks = new TyreTracks(this.from.position);
+		this.tyreTracks.addPoint(this.to.position);
 	}
 
 	@Override
@@ -276,7 +281,7 @@ public class SubLevel2 extends SubLevel {
 	}
 
 	public void render() {
-		shapeRenderer.begin(ShapeType.Filled);
+		/*shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(Color.RED);
 		for (CheckPoint ce : checkpoints) {
 			shapeRenderer.circle((float) ce.position.x * Input.xStretchFactorInv,
@@ -288,7 +293,8 @@ public class SubLevel2 extends SubLevel {
 			shapeRenderer.circle(vec.x * Input.xStretchFactorInv, vec.y * Input.yStretchFactorInv,
 					2);
 		}
-		shapeRenderer.end();
+		shapeRenderer.end();*/
+		tyreTracks.render(shapeRenderer);
 
 	}
 
@@ -325,6 +331,7 @@ public class SubLevel2 extends SubLevel {
 				timeAvailable -= timeNecessaire;
 			}
 		}
+		this.tyreTracks.addPoint(newPosition);
 		this.level.getCar().move(newPosition);
 		return newPosition;
 	}

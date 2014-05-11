@@ -64,6 +64,11 @@ public class SoundAndMusicManager {
 		}
 	}
 	
+	public void playStartEngineSound()
+	{
+		playSound(Constants.sounds.SOUND_ENGINE_START, Constants.sounds.SOUND_ENGINE_VOLUME);
+	}
+	
 	public void pauseAllMusic()
 	{
 		this.raceMusic.pause();

@@ -76,11 +76,7 @@ public class SubLevel1 extends SubLevel {
 		}
 	}
 	
-	private void playStartEngineSound()
-	{
-		Autickax.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_ENGINE_START, Constants.sounds.SOUND_ENGINE_VOLUME);
-	}
-	
+
 	public void onDialogEnded() {
 		Dialog dialogLocal = this.dialogStack.peek();
 		eraseDialog();
@@ -272,7 +268,7 @@ public class SubLevel1 extends SubLevel {
 	 */
 	public void reset() {
 		takeFocus();
-		playStartEngineSound();
+		Autickax.getInstance().assets.soundAndMusicManager.playStartEngineSound();
 		
 		this.dialogStack.clear(); 
 		eraseMinigame();
@@ -338,30 +334,6 @@ public class SubLevel1 extends SubLevel {
 		}
 	}
 	
-
-
-	@Override
-	public void render() {
-		shapeRenderer.begin(ShapeType.Filled);
-
-		shapeRenderer.setColor(Color.RED);
-		for (CheckPoint ce : checkPoints) {
-			shapeRenderer.circle((float) ce.position.x
-					* Input.xStretchFactorInv, (float) ce.position.y
-					* Input.yStretchFactorInv, 2);
-		}
-		
-		/*shapeRenderer.setColor(new Color(0.1f, 0.1f, 0.9f, 0.5f));
-		//shapeRenderer.circle(this.level.getFinish().getX(), this.level.getFinish().getY(), Constants.FINISH_BOUNDING_RADIUS);
-		
-		shapeRenderer.setColor(new Color(0.5f, 0.5f, 0.5f, 0.5f));
-		for(Vector2 waypoint: wayPoints)
-		{
-			shapeRenderer.circle(waypoint.x, waypoint.y, 20);
-		}*/
-		shapeRenderer.end();
-	}
-
 	/** Player just starts this phase or made a mistake and was moved again */
 	public enum SubLevel1States {
 		BEGINNING_STATE, DRIVING_STATE, // Driving in progress
