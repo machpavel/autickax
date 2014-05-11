@@ -52,7 +52,6 @@ public abstract class SubLevel {
 
 	protected void eraseMinigame() {
 		if (this.miniGame != null) {
-			this.miniGame.dispose();
 			this.miniGame = null;
 		}
 		takeFocus();
@@ -87,7 +86,7 @@ public abstract class SubLevel {
 
 	public void resume() {
 		if (isPaused())
-			this.eraseDialog();
+			this.dialogStack.peek().endCommunication();
 	}
 
 	public boolean isDialogStackEmpty() {
@@ -111,12 +110,24 @@ public abstract class SubLevel {
 	}
 
 	public void dispose() {
+		// Disposes everything. It causes exceptions if something is
+		// already disposed, so it is necessary to have it in try-catch block.
 		if (dialogStack != null)
 			for (Dialog dialog : dialogStack) {
-				dialog.dispose();
+				try {
+					dialog.dispose();
+				} catch (Exception e) {
+				}
 			}
 		if (miniGame != null)
-			miniGame.dispose();
-		this.stage.dispose();
+			try {
+				miniGame.dispose();
+			} catch (Exception e) {
+			}
+		try {
+			this.stage.dispose();
+		} catch (Exception e) {
+		}
+		System.out.println("Disposed: " + this.toString());
 	}
 }

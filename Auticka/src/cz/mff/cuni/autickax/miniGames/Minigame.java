@@ -30,7 +30,7 @@ public abstract class Minigame extends Comunicator {
 	}
 
 	@Override
-	protected void endCommunication() {
+	public void endCommunication() {
 		this.parent.onMinigameEnded();
 		super.endCommunication();
 	}

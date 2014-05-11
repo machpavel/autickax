@@ -14,6 +14,8 @@ public class PauseDialog extends DecisionDialog {
 
 	public PauseDialog(GameScreen gameScreen, SubLevel subLevel) {
 		super(gameScreen, subLevel, Constants.strings.GAME_PAUSED, true);
+		
+		this.decision = DecisionType.CONTINUE;
 
 		// Tooltips Button------------------------------------------------
 		String tooltipsTexture = Autickax.settings.showTooltips ? Constants.menu.BUTTON_MENU_TOOLTIPS_ON

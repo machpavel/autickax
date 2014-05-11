@@ -36,9 +36,9 @@ public abstract class Dialog extends Comunicator {
 				Constants.sounds.SOUND_BUTTON_DIALOG_SOUND, Constants.sounds.SOUND_DEFAULT_VOLUME);
 	}
 
-	public abstract DecisionType getDecision();
+	public abstract DecisionType getDecision();		
 
-	protected void endCommunication() {
+	public void endCommunication() {
 		parent.onDialogEnded();
 		super.endCommunication();
 	}

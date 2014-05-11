@@ -49,7 +49,7 @@ public abstract class Comunicator extends SubLevel {
 		return this.status;
 	}
 
-	protected void endCommunication() {
+	public void endCommunication() {
 		this.status = DialogAbstractStatus.FINISHED;
 		this.dispose();
 	}
