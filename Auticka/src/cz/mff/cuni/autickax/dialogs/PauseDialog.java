@@ -122,7 +122,7 @@ public class PauseDialog extends DecisionDialog {
 									Autickax.getInstance().assets
 											.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_OFF_HOVER));
 					Autickax.getInstance().assets.soundAndMusicManager
-							.stopAllMusic();
+							.pauseAllMusic();
 				}
 			}
 		};

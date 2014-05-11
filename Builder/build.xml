@@ -10,6 +10,7 @@
             </manifest>
             <fileset dir="../Autickax-desktop/bin"/>
             <fileset dir="../Auticka/bin"/>
+            <fileset dir="../Autickax-desktop"/>
             <zipfileset excludes="META-INF/*.SF" src="../Auticka/libs/gdx.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="../Autickax-desktop/libs/gdx-backend-lwjgl.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="../Autickax-desktop/libs/gdx-backend-lwjgl-natives.jar"/>

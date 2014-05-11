@@ -46,16 +46,28 @@ public class SoundAndMusicManager {
 	public void pauseMenuMusic() {
 		menuMusic.pause();
 	}
+	
+	public void pauseRaceMusic()
+	{
+		raceMusic.pause();
+	}
 
 	public void stopRaceMusic() {
 		raceMusic.stop();
 	}
+	
 
 	public void playSound(String soundName, float volume) {
 		if (Autickax.settings.playSounds) {
 			Sound sound = getSound(soundName);
 			sound.play(volume);
 		}
+	}
+	
+	public void pauseAllMusic()
+	{
+		this.raceMusic.pause();
+		this.menuMusic.pause();
 	}
 
 	public void stopAllMusic() {

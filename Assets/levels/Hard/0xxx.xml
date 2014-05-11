@@ -1,26 +1,31 @@
 <AutickaX>
 	<pathway pathwayType="OPENED" typeOfInterpolation="CUBIC_B_SPLINE" textureType="0">
 		<controlPoints>
-			<point X="24.0" Y="256.0"/>
-			<point X="41.0" Y="256.0"/>
-			<point X="752.0" Y="257.0"/>
-			<point X="771.0" Y="255.0"/>
+			<point X="52.0" Y="250.0"/>
+			<point X="52.0" Y="250.0"/>
+			<point X="66.0" Y="250.0"/>
+			<point X="66.0" Y="250.0"/>
+			<point X="641.0" Y="256.0"/>
+			<point X="641.0" Y="256.0"/>
+			<point X="669.0" Y="256.0"/>
+			<point X="669.0" Y="256.0"/>
 		</controlPoints>
 	</pathway>
 	<entities>
-		<tornado X="251.0" Y="212.0" type="2"/>
-		<tornado X="319.0" Y="213.0" type="1"/>
-		<booster X="383.0" Y="212.0" type="1"/>
-		<hill X="450.0" Y="209.0" type="7"/>
-		<mud X="513.0" Y="204.0" type="1"/>
-		<hole X="566.0" Y="203.0" type="2"/>
-		<stone X="207.0" Y="211.0" type="3"/>
+		<pneu X="143.0" Y="305.0" type="1"/>
+		<racingCar X="155.0" Y="190.0" type="2"/>
+		<tornado X="253.0" Y="189.0" type="2"/>
+		<hill X="401.0" Y="187.0" type="11"/>
+		<hole X="293.0" Y="309.0" type="1"/>
+		<mud X="433.0" Y="317.0" type="1"/>
+		<stone X="569.0" Y="304.0" type="5"/>
+		<booster X="571.0" Y="187.0" type="1"/>
 	</entities>
 	<car X="0.0" Y="0.0" type="1"/>
-	<start X="156.66667" Y="256.1667" type="4"/>
-	<finish X="636.6667" Y="256.5" type="2"/>
+	<start X="54.333336" Y="250.00002" type="4"/>
+	<finish X="664.3333" Y="256.0" type="2"/>
 	<background>
-		<textureBackground textureName="background4"/>
+		<constantBackground red="169" green="207" blue="56"/>
 	</background>
-	<timeLimit>20.0</timeLimit>
+	<timeLimit>10.0</timeLimit>
 </AutickaX>
