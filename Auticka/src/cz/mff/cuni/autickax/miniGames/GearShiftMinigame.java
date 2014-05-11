@@ -102,10 +102,6 @@ public final class GearShiftMinigame extends Minigame {
 				this.gearShifter.setShift(shift);
 				state = States.DRIVING_STATE;
 			}
-
-			if (this.gearShifter.getPosition().dst(touchPos.x, touchPos.y) <= MAX_DISTANCE_FROM_LINE) {
-
-			}
 		}
 
 	}

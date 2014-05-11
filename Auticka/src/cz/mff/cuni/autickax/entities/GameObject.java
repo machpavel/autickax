@@ -51,11 +51,14 @@ public abstract class GameObject implements Externalizable {
 		this.canBeDragged = canBeDragged;
 	}
 
-	private transient boolean isDragged = false;
+	protected transient boolean isDragged = false;
 
 	/** Parameterless constructor for the externalization */
 	public GameObject() {
-
+		this.position = new Vector2();
+		this.rotation = 0;
+		this.type = 0;
+		this.texture = null;
 	}
 
 	public GameObject(float startX, float startY, int type) {
@@ -123,6 +126,7 @@ public abstract class GameObject implements Externalizable {
 	public void reset() {
 		this.isActive = true;
 		this.rotation = 0;
+		this.isDragged = false;
 		this.scale = new Vector2(1, 1);
 	}
 
@@ -223,6 +227,16 @@ public abstract class GameObject implements Externalizable {
 		} else
 			return false;
 
+	}
+
+	public void setTexture(TextureRegion texture) {
+		this.texture = texture;
+	}
+
+	public abstract void setTexture(int type);
+
+	public void setTexture() {
+		setTexture(this.type);
 	}
 
 	/**
@@ -344,12 +358,6 @@ public abstract class GameObject implements Externalizable {
 
 	public abstract GameObject copy();
 
-	public abstract void setTexture(int type);
-
-	public void setTexture() {
-		setTexture(this.type);
-	}
-
 	public void setScreen(GameScreen screen) {
 		this.gameScreen = screen;
 	}
@@ -372,10 +380,6 @@ public abstract class GameObject implements Externalizable {
 
 	public TextureRegion getTexture() {
 		return texture;
-	}
-
-	public void setTexture(TextureRegion texture) {
-		this.texture = texture;
 	}
 
 	public int getWidth() {

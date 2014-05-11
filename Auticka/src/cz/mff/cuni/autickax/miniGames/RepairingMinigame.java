@@ -1,9 +1,8 @@
 package cz.mff.cuni.autickax.miniGames;
 
-import com.badlogic.gdx.Gdx;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
@@ -12,78 +11,107 @@ import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.input.Input;
-import cz.mff.cuni.autickax.miniGames.support.GearShiftMinigameFinish;
-import cz.mff.cuni.autickax.miniGames.support.GearShifter;
+import cz.mff.cuni.autickax.miniGames.support.RepairingMinigameObject;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class RepairingMinigame extends Minigame {
 	private static final float FAIL_VALUE = Constants.minigames.GEAR_SHIFT_FAIL_VALUE;
-	private static final float ROW_1 = Constants.minigames.GEAR_SHIFT_MINIGAME_ROW_1;
-	private static final float ROW_2 = Constants.minigames.GEAR_SHIFT_MINIGAME_ROW_2;
-	private static final float ROW_3 = Constants.minigames.GEAR_SHIFT_MINIGAME_ROW_3;
-	private static final float COLUMN_1 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_1;
-	private static final float COLUMN_2 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_2;
-	private static final float COLUMN_3 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_3;
-	private static float MAX_DISTANCE_FROM_LINE;
 
-	private States state = States.BEGINNING_STATE;
-	private GearShifter gearShifter;
-	private GearShiftMinigameFinish finish;
+	private States state = States.JACK_TO_SPANNER;
+
+	private RepairingMinigameObject handJack;
+	private RepairingMinigameObject spanner;
+	private RepairingMinigameObject damagedTire;
+	private RepairingMinigameObject newTire;
+	private ArrayList<RepairingMinigameObject> gameObjects = new ArrayList<RepairingMinigameObject>();
+		
 
 	public RepairingMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
 		setDifficulty(this.level.getDifficulty());
 		this.backgroundTexture = new TextureRegionDrawable(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.minigames.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
+						.getGraphics(Constants.minigames.REPAIRING_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Autickax.settings.showTooltips)
 			this.parent.setDialog(new MessageDialog(screen, parent,
-					Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO));
+					Constants.strings.TOOLTIP_MINIGAME_REPAIRING_WHAT_TO_DO));
 
-		randomizeStartAndFinish(screen);
+		initializeGameObjects();
 	}
 
-	public void randomizeStartAndFinish(GameScreen screen) {
-		float[] rows = new float[] { ROW_1, ROW_2, ROW_3 };
-		float[] columns = new float[] { COLUMN_1, COLUMN_2, COLUMN_3 };
+	private void initializeGameObjects() {
+		handJack = new RepairingMinigameObject(600, 400, 90, 80,
+				Constants.minigames.REPAIRING_MINIGAME_HAND_JACK_TEXTURE, this, false);
+		handJack.setIsActive(true);
+		gameObjects.add(handJack);
 
-		int gearFinishRandomX = 0;
-		int gearFinishRandomY = 0;
-		do {
-			gearFinishRandomX = MathUtils.random(2);
-			gearFinishRandomY = MathUtils.random(2);
-		} while (gearFinishRandomY == 1);
-		this.finish = new GearShiftMinigameFinish(columns[gearFinishRandomX],
-				rows[gearFinishRandomY]);
-		this.finish.setScreen(screen);
+		spanner = new RepairingMinigameObject(600, 300, 90, 80,
+				Constants.minigames.REPAIRING_MINIGAME_SPANNER_TEXTURE, this, false);
+		gameObjects.add(spanner);
 
-		int gearShifterRandomX = 0;
-		int gearShifterRandomY = 0;
-		do {
-			gearShifterRandomX = MathUtils.random(2);
-			gearShifterRandomY = MathUtils.random(2);
-		} while (gearShifterRandomY == 1
-				|| (gearShifterRandomX == gearFinishRandomX && gearShifterRandomY == gearFinishRandomY));
-		this.gearShifter = new GearShifter(columns[gearShifterRandomX], rows[gearShifterRandomY]);
-		this.gearShifter.setScreen(screen);
+		damagedTire = new RepairingMinigameObject(90, 80, 600, 200,
+				Constants.minigames.REPAIRING_MINIGAME_DAMAGED_TIRE_TEXTURE, this, true);
+		gameObjects.add(damagedTire);
 
+		newTire = new RepairingMinigameObject(600, 100, 90, 80,
+				Constants.minigames.REPAIRING_MINIGAME_NEW_TIRE_TEXTURE, this, true);
+		gameObjects.add(newTire);
+
+		//gameObjects.add(new RepairingMinigameObject(400, 400, 1));
+		//gameObjects.add(new RepairingMinigameObject(200, 300, 1));
+		//gameObjects.add(new RepairingMinigameObject(500, 100, 2));
+	}
+
+	public void switchToNextState() {
+		System.out.println(this.state.toString());
+		switch (this.state) {
+		case JACK_TO_SPANNER:
+			this.state = States.SPANNER_TO_TIRE;
+			handJack.setIsActive(false);
+			spanner.setIsActive(true);
+			break;
+		case SPANNER_TO_TIRE:
+			this.state = States.TIRE_TO_TIRE;
+			spanner.setIsActive(false);
+			damagedTire.setIsActive(true);
+			break;
+		case TIRE_TO_TIRE:
+			this.state = States.TIRE_TO_SPANNER;
+			damagedTire.setIsActive(false);
+			newTire.setIsActive(true);
+			break;
+		case TIRE_TO_SPANNER:
+			this.state = States.SPANNER_TO_JACK;
+			newTire.setIsActive(false);
+			spanner.setIsActive(true);
+			break;
+		case SPANNER_TO_JACK:
+			this.state = States.JACK_TO_LEAVING;
+			spanner.setIsActive(false);
+			handJack.setIsActive(true);
+			break;
+		case JACK_TO_LEAVING:
+			handJack.setIsActive(false);
+			win();
+			break;
+		default:
+			throw new IllegalStateException(state.toString());
+		}
 	}
 
 	@Override
 	public void update(float delta) {
-		this.gearShifter.update(delta);
-		this.finish.update(delta);
-
-		switch (state) {
-		case BEGINNING_STATE:
-			updateInBeginnigState(delta);
+		switch (this.state) {
+		case JACK_TO_SPANNER:
+		case SPANNER_TO_TIRE:
+		case TIRE_TO_TIRE:
+		case TIRE_TO_SPANNER:
+		case SPANNER_TO_JACK:
+		case JACK_TO_LEAVING:
+			updateInNormalState(delta);
 			break;
-		case DRIVING_STATE:
-			updateInDrivingState(delta);
-			break;
-		case LEAVING_STATE:
+		case LEAVING:			
 			updateInLeavingState(delta);
 			break;
 		default:
@@ -92,36 +120,9 @@ public final class RepairingMinigame extends Minigame {
 
 	}
 
-	private void updateInBeginnigState(float delta) {
-		if (Gdx.input.justTouched()) {
-			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-
-			Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(touchPos.x, touchPos.y);
-			if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {
-				this.gearShifter.setDragged(true);
-				this.gearShifter.setShift(shift);
-				state = States.DRIVING_STATE;
-			}
-
-			if (this.gearShifter.getPosition().dst(touchPos.x, touchPos.y) <= MAX_DISTANCE_FROM_LINE) {
-
-			}
-		}
-
-	}
-
-	private void updateInDrivingState(float delta) {
-		// Focus was lost
-		if (!this.gearShifter.isDragged()) {
-			fail(Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WAS_RELEASED);
-		}
-		// Finish reached
-		else if (this.gearShifter.positionCollides(finish)) {
-			win();
-		}
-		// Out of pathway
-		else if (!isInGrid(this.gearShifter.getPosition().x, this.gearShifter.getPosition().y)) {
-			fail(null);
+	private void updateInNormalState(float delta) {
+		for (RepairingMinigameObject gameObject : gameObjects) {
+			gameObject.update(delta);
 		}
 	}
 
@@ -129,68 +130,44 @@ public final class RepairingMinigame extends Minigame {
 		if (primaryMessage != null)
 			this.resultMessage = primaryMessage;
 		else
-			this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_FAIL;
+			this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_REPAIRING_FAIL;
 		this.result = ResultType.FAILED_WITH_VALUE;
 		this.resultValue = FAIL_VALUE;
-		this.state = States.LEAVING_STATE;
+		leave();
 	}
 
 	private void win() {
-		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS;
-		this.result = ResultType.PROCEEDED;
-		this.state = States.LEAVING_STATE;
+		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_REPAIRING_SUCCESS;
+		this.result = ResultType.PROCEEDED;		
+		leave();
+	}
+	
+	private void leave() {
+		this.playResultSound();		
+		this.state = States.LEAVING;
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
 		super.draw(batch);
 		batch.begin();
-		this.finish.draw(batch);
-		this.gearShifter.draw(batch);
+		for (RepairingMinigameObject gameObject : gameObjects) {
+			gameObject.draw(batch);
+		}
 		batch.end();
-	}
-
-	private boolean isInGrid(float x, float y) {
-		// Vertical limits
-		if (y > ROW_3 + MAX_DISTANCE_FROM_LINE || y < ROW_1 - MAX_DISTANCE_FROM_LINE)
-			return false;
-
-		// In first column
-		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE && x < COLUMN_1 + MAX_DISTANCE_FROM_LINE)
-			return true;
-
-		// In second column
-		if (x > COLUMN_2 - MAX_DISTANCE_FROM_LINE && x < COLUMN_2 + MAX_DISTANCE_FROM_LINE)
-			return true;
-
-		// In second column
-		if (x > COLUMN_3 - MAX_DISTANCE_FROM_LINE && x < COLUMN_3 + MAX_DISTANCE_FROM_LINE)
-			return true;
-
-		// Middle row
-		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE && x < COLUMN_3 + MAX_DISTANCE_FROM_LINE
-				&& y > ROW_2 - MAX_DISTANCE_FROM_LINE && y < ROW_2 + MAX_DISTANCE_FROM_LINE)
-			return true;
-
-		return false;
 	}
 
 	private void setDifficulty(Difficulty difficulty) {
 		switch (difficulty) {
 		case Kiddie:
-			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_KIDDIE;
 			break;
 		case Beginner:
-			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_BEGINNER;
 			break;
 		case Normal:
-			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_NORMAL;
 			break;
 		case Hard:
-			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD;
 			break;
 		case Extreme:
-			MAX_DISTANCE_FROM_LINE = Constants.minigames.GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME;
 			break;
 		default:
 			throw new IllegalDifficultyException(difficulty.toString());
@@ -199,6 +176,6 @@ public final class RepairingMinigame extends Minigame {
 	}
 
 	private enum States {
-		BEGINNING_STATE, DRIVING_STATE, LEAVING_STATE;
+		JACK_TO_SPANNER, SPANNER_TO_TIRE, TIRE_TO_TIRE, TIRE_TO_SPANNER, SPANNER_TO_JACK, JACK_TO_LEAVING, LEAVING;
 	}
 }

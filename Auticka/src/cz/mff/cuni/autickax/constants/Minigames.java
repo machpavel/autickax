@@ -130,4 +130,13 @@ public final class Minigames {
 	public final int RACE_MINIGAME_SPEED_NORMAL = 350;
 	public final int RACE_MINIGAME_SPEED_HARD = 400;
 	public final int RACE_MINIGAME_SPEED_EXTREME = 450;
+	
+	// Repairing
+	public final String REPAIRING_MINIGAME_BACKGROUND_TEXTURE = "RepairingMinigameBackground";
+	public final String REPAIRING_MINIGAME_HAND_JACK_TEXTURE = "RepairingMinigameHandJack";	
+	public final String REPAIRING_MINIGAME_SPANNER_TEXTURE = "RepairingMinigameSpanner";
+	public final String REPAIRING_MINIGAME_DAMAGED_TIRE_TEXTURE = "RepairingMinigameDamagedTire";
+	public final String REPAIRING_MINIGAME_NEW_TIRE_TEXTURE = "RepairingMinigameNewTire";
+	public final String REPAIRING_MINIGAME_OBJECT= "RepairingMinigameObject";
+	public final float REPAIRING_MINIGAME_TARGET_RADIUS = 80.f;
 }
