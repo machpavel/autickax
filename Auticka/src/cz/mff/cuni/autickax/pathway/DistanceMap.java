@@ -17,7 +17,7 @@ import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
 
 /**
- * @author Shabby Class for representing 2-dimensional field of the closest
+ * Class for representing 2-dimensional field of the closest
  *         distances of a curve.
  */
 

@@ -92,7 +92,7 @@ public final class BoostMinigame extends Minigame {
 					win();
 
 			} else {
-				fail();
+				fail(Constants.strings.TOOLTIP_MINIGAME_BOOST_WRONG_HIT_FAIL);
 			}
 		}
 	}
@@ -156,12 +156,12 @@ public final class BoostMinigame extends Minigame {
 	private void updateInDrivingState(float delta) {
 		this.remainingTime -= delta;
 		if (this.remainingTime < 0) {
-			fail();
+			fail(Constants.strings.TOOLTIP_MINIGAME_BOOST_TIME_LIMIT_FAIL);
 		}
 	}
 
-	private void fail() {
-		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_BOOST_FAIL;
+	private void fail(String message) {
+		this.resultMessage = message;
 		this.result = ResultType.FAILED_WITH_VALUE;
 		this.resultValue = Constants.minigames.RESULT_VALUE_NOTHING;
 		leave();

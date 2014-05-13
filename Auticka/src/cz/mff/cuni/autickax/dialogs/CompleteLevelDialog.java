@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.dialogs.Comunicator.DialogAbstractStatus;
 import cz.mff.cuni.autickax.gamelogic.GameStatistics;
 import cz.mff.cuni.autickax.gamelogic.SubLevel2;
 import cz.mff.cuni.autickax.scene.GameScreen;
