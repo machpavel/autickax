@@ -32,7 +32,6 @@ public abstract class Comunicator extends SubLevel {
 		// scene1 onDialogEnded.
 	}
 
-	@Override
 	public void draw(SpriteBatch batch) {
 		batch.begin();
 		this.backgroundTexture.draw(batch, 0, 0, Constants.WORLD_WIDTH * Input.xStretchFactorInv,

@@ -3,8 +3,6 @@ package cz.mff.cuni.autickax.gamelogic;
 import java.util.Stack;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cz.mff.cuni.autickax.dialogs.Dialog;
@@ -15,19 +13,17 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 public abstract class SubLevel {
 	protected GameScreen level;
 	protected Stage stage;
-	protected ShapeRenderer shapeRenderer;
 	protected Stack<Dialog> dialogStack;
 	protected Minigame miniGame = null;
 
 	public SubLevel(GameScreen gameScreen) {
 		this.level = gameScreen;
 		this.stage = gameScreen.getStage();
-		shapeRenderer = new ShapeRenderer();
-		dialogStack = new Stack<Dialog>();
+		setDialogStack(new Stack<Dialog>());
 	}
 
 	public void setDialog(Dialog dialog) {
-		this.dialogStack.push(dialog);
+		this.getDialogStack().push(dialog);
 	}
 
 	public void takeFocus() {
@@ -36,13 +32,13 @@ public abstract class SubLevel {
 	}
 
 	protected void eraseDialog() {
-		if (this.dialogStack.size() > 1) {
-			this.dialogStack.pop();
-			this.dialogStack.peek().takeFocus();
-		} else if (this.dialogStack.size() == 1) {
-			this.dialogStack.pop();
-			if (this.miniGame != null)
-				this.miniGame.takeFocus();
+		if (this.getDialogStack().size() > 1) {
+			this.getDialogStack().pop();
+			this.getDialogStack().peek().takeFocus();
+		} else if (this.getDialogStack().size() == 1) {
+			this.getDialogStack().pop();
+			if (this.getMiniGame() != null)
+				this.getMiniGame().takeFocus();
 			else
 				takeFocus();
 		} else
@@ -51,20 +47,13 @@ public abstract class SubLevel {
 	}
 
 	protected void eraseMinigame() {
-		if (this.miniGame != null) {
-			this.miniGame = null;
+		if (this.getMiniGame() != null) {
+			this.setMiniGame(null);
 		}
 		takeFocus();
 	}
 
-	public void update(float delta) {
-	};
-
-	public void draw(SpriteBatch batch) {
-	};
-
-	public void render() {
-	};
+	public abstract void update(float delta);
 
 	public void onDialogEnded() {
 	};
@@ -74,11 +63,11 @@ public abstract class SubLevel {
 
 	public void pause() {
 		if (!isPaused())
-			this.dialogStack.push(new PauseDialog(this.level, this));
+			this.getDialogStack().push(new PauseDialog(this.level, this));
 	}
 
 	public boolean isPaused() {
-		if (!this.dialogStack.isEmpty() && this.dialogStack.peek() instanceof PauseDialog)
+		if (!this.getDialogStack().isEmpty() && this.getDialogStack().peek() instanceof PauseDialog)
 			return true;
 		else
 			return false;
@@ -86,26 +75,26 @@ public abstract class SubLevel {
 
 	public void resume() {
 		if (isPaused())
-			this.dialogStack.peek().endCommunication();
+			this.getDialogStack().peek().endCommunication();
 	}
 
 	public boolean isDialogStackEmpty() {
-		return this.dialogStack.isEmpty();
+		return this.getDialogStack().isEmpty();
 	}
 
 	public void takeDialogFocus() {
-		if (!dialogStack.isEmpty()) {
-			dialogStack.peek().takeFocus();
+		if (!getDialogStack().isEmpty()) {
+			getDialogStack().peek().takeFocus();
 		}
 	}
 
 	public boolean isMinigameRunning() {
-		return miniGame != null;
+		return getMiniGame() != null;
 	}
 
 	public void takeMinigameFocus() {
-		if (miniGame != null) {
-			this.miniGame.takeFocus();
+		if (getMiniGame() != null) {
+			this.getMiniGame().takeFocus();
 		}
 	}
 
@@ -119,16 +108,16 @@ public abstract class SubLevel {
 	public void dispose(boolean keepTheMainStage) {
 		// Disposes everything. It causes exceptions if something is
 		// already disposed, so it is necessary to have it in try-catch block.
-		if (dialogStack != null)
-			for (Dialog dialog : dialogStack) {
+		if (getDialogStack() != null)
+			for (Dialog dialog : getDialogStack()) {
 				try {
 					dialog.dispose();
 				} catch (Exception e) {
 				}
 			}
-		if (miniGame != null)
+		if (getMiniGame() != null)
 			try {
-				miniGame.dispose();
+				getMiniGame().dispose();
 			} catch (Exception e) {
 			}
 		if (!keepTheMainStage)
@@ -140,5 +129,21 @@ public abstract class SubLevel {
 
 	public void dispose() {
 		dispose(false);
+	}
+
+	public Stack<Dialog> getDialogStack() {
+		return dialogStack;
+	}
+
+	public void setDialogStack(Stack<Dialog> dialogStack) {
+		this.dialogStack = dialogStack;
+	}
+
+	public Minigame getMiniGame() {
+		return miniGame;
+	}
+
+	public void setMiniGame(Minigame miniGame) {
+		this.miniGame = miniGame;
 	}
 }

@@ -237,7 +237,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		super.draw(batch);
 		batch.begin();
 		for (GameObject gameObject : gameObjects) {
-			gameObject.draw(batch);
+			gameObject.draw(batch, 0);
 		}
 		this.finish.draw(batch);
 		this.car.draw(batch);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -22,7 +23,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 /**
  * Base class for all game entities
  */
-public abstract class GameObject implements Externalizable {
+public abstract class GameObject extends Actor implements Externalizable {
 
 	private static final byte MAGIC_GAME_OBJECT_END = 127;
 
@@ -181,6 +182,11 @@ public abstract class GameObject implements Externalizable {
 	abstract public String getName();
 
 	public void draw(SpriteBatch batch) {
+		this.draw(batch, 0);
+	}
+	
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.draw(this.getTexture(), (this.position.x - this.getWidth() / 2)
 				* Input.xStretchFactorInv, (this.position.y - this.getHeight() / 2)
 				* Input.yStretchFactorInv, (this.getWidth() / 2) * Input.xStretchFactorInv,
@@ -382,7 +388,7 @@ public abstract class GameObject implements Externalizable {
 		return texture;
 	}
 
-	public int getWidth() {
+	/*public int getWidth() {
 		return width;
 	}
 
@@ -396,7 +402,7 @@ public abstract class GameObject implements Externalizable {
 
 	protected void setHeight(int height) {
 		this.height = height;
-	}
+	}*/
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
