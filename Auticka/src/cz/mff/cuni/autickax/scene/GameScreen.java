@@ -143,7 +143,7 @@ public class GameScreen extends BaseScreen {
 	}
 
 	public void switchToPhase(SubLevel1 phase1) {
-		this.currentPhase.dispose();
+		this.currentPhase.dispose(true);
 		phase1.reset();
 		this.currentPhase = phase1;
 	}

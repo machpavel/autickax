@@ -109,7 +109,14 @@ public abstract class SubLevel {
 		}
 	}
 
-	public void dispose() {
+	/**
+	 * Disposes necessary objects. For instance stages.
+	 * 
+	 * @param keepTheMainStage
+	 *            determines if the main stage should be kept. Because in
+	 *            sublebel1 and sublevel2 is shared stage with gameScreen
+	 */
+	public void dispose(boolean keepTheMainStage) {
 		// Disposes everything. It causes exceptions if something is
 		// already disposed, so it is necessary to have it in try-catch block.
 		if (dialogStack != null)
@@ -124,9 +131,14 @@ public abstract class SubLevel {
 				miniGame.dispose();
 			} catch (Exception e) {
 			}
-		try {
-			this.stage.dispose();
-		} catch (Exception e) {
-		}		
+		if (!keepTheMainStage)
+			try {
+				this.stage.dispose();
+			} catch (Exception e) {
+			}
+	}
+
+	public void dispose() {
+		dispose(false);
 	}
 }
