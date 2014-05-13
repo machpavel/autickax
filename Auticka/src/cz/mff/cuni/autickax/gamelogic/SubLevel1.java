@@ -183,8 +183,8 @@ public class SubLevel1 extends SubLevel {
 		
 		// coordinates ok
 		DistanceMap map = pathway.getDistanceMap();
-		if (carPosition.x >= 0 && carPosition.x < map.getWidth()
-				&& carPosition.y >= 0 && carPosition.y < map.getHeight()) {
+		if (carPosition.x >= 0 && carPosition.x < Constants.WORLD_WIDTH
+				&& carPosition.y >= 0 && carPosition.y < Constants.WORLD_HEIGHT) {
 
 			//if(this.level.getCar().positionCollides(this.level.getFinish())){
 			if(this.level.getCar().collides(this.level.getFinish())){
