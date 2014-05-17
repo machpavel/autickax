@@ -88,7 +88,7 @@ public class SubLevel2 extends SubLevel {
 		
 		this.tyreTracks = new TyreTracks(this.from.position);
 		this.level.getStage().addActor(this.tyreTracks);
-		this.tyreTracks.addPoint(this.to.position);
+		this.tyreTracks.addPoint(this.to.position,this.stats.getPhase2ElapsedTime());
 	}
 
 	@Override
@@ -99,8 +99,7 @@ public class SubLevel2 extends SubLevel {
 		case CONTINUE:
 			break;
 		case RESTART:
-			this.level.switchToPhase(this.phase1);
-			this.phase1.reset();
+			restart();
 			break;
 		case GO_TO_MAIN_MENU:
 			this.level.goToMainScreen();
@@ -284,7 +283,7 @@ public class SubLevel2 extends SubLevel {
 				timeAvailable -= timeNecessaire;
 			}
 		}
-		this.tyreTracks.addPoint(newPosition);
+		this.tyreTracks.addPoint(newPosition, this.stats.getPhase2ElapsedTime());
 		this.level.getCar().move(newPosition);
 		return newPosition;
 	}
@@ -353,6 +352,13 @@ public class SubLevel2 extends SubLevel {
 						Constants.strings.NEW_LEVEL_UNLOCK));
 			}
 		}
+	}
+	
+	private void restart()
+	{
+		this.level.switchToPhase(this.phase1);
+		this.phase1.reset();
+		this.tyreTracks.clear();
 	}
 
 	private void updateScore() {
