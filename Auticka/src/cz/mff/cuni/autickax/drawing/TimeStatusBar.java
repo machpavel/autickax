@@ -10,9 +10,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.sun.org.glassfish.external.statistics.Stats;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.constants.TimeStatusBarConsts;
 import cz.mff.cuni.autickax.input.Input;
 
 public class TimeStatusBar extends Actor {
@@ -21,53 +23,59 @@ public class TimeStatusBar extends Actor {
 	private final BitmapFont smallfont = Autickax.getInstance().assets
 			.getTimeStringFont();
 	private final Label timeStrLabel;
-	private Label timeLimitIntLabel;
 	private final Label timeIntLabel;
-	private Label timeLimitStrLabel;
-	// private final TextureRegion line;
-
-	private final int xStringLabels = Constants.WORLD_WIDTH - 150;
-	private final int yLine = Constants.WORLD_HEIGHT - 70;
+	private float timeLimit;
+	
+	private TimeStatusBarConsts consts = Constants.tsb;
 	private ShapeRenderer renderer = new ShapeRenderer();
-	private static final Color black90 = new Color(0.1f, 0.1f, 0.1f, 1f);
-	private static final Color black90alpha = new Color(0.1f, 0.1f, 0.1f, 0.1f);
-
-	private boolean showTimeLimit = true;
+	private boolean countdown = true;
 
 	public TimeStatusBar(float timeLimit) {
 
-		bigfont.setScale(0.46527f);
-		smallfont.setScale(0.3f);
-
-		timeStrLabel = new Label("time:", new LabelStyle(smallfont, black90));
-
-		timeIntLabel = new Label(String.format("%1$,.1f", 0.0f),
-				new LabelStyle(bigfont, black90));
-
-		int distUpDown = 20;
-		int distAdd = 75;
+		bigfont.setScale(consts.BIG_FONT_SCALE*Input.xStretchFactorInv);
+		smallfont.setScale(consts.SMALL_FONT_SCALE*Input.xStretchFactorInv);
 		
-		timeStrLabel.setPosition(xStringLabels, yLine + distUpDown);
+		this.timeLimit = timeLimit;
 
-		timeIntLabel.setPosition(xStringLabels + distAdd, yLine + distUpDown
-				- 5);
+		timeStrLabel = new Label("time:", new LabelStyle(smallfont, consts.black90));
 
-		timeLimitStrLabel = new Label("limit:", new LabelStyle(smallfont,
-				black90));
-		
-		timeLimitIntLabel = new Label(String.format("%1$,.1f", timeLimit),
-				new LabelStyle(bigfont, black90));
-		timeLimitStrLabel.setPosition(xStringLabels, yLine - distUpDown);
-		timeLimitIntLabel.setPosition(xStringLabels + distAdd, yLine
-				- distUpDown - 5);
+		timeIntLabel = new Label(String.format("%1$,.1f", timeLimit),
+				new LabelStyle(bigfont, consts.black90));
+
+		timeStrLabel.setPosition(consts.xTimeStringLabel*Input.xStretchFactorInv, consts.yTimeStringLabel*Input.yStretchFactorInv);
+		timeIntLabel.setPosition(consts.xTimeIntLabel*Input.xStretchFactorInv, consts.yTimeIntLabel*Input.yStretchFactorInv);
 	}
 
 	public void update(float elapsed) {
-		timeIntLabel.setText(String.format("%1$,.1f", elapsed));
+		float time = elapsed;
+		if (countdown)
+		{
+			time = this.timeLimit - elapsed;
+			if (time < 0)
+				time = 0;
+		}
+		setTimeLabel(time);
 	}
 	
-	public void setShowTimeLimit(boolean showTimeLimit) {
-		this.showTimeLimit = showTimeLimit;
+	private void setCountdown(boolean countdown) {
+		this.countdown = countdown;
+	}
+	
+	public void reset()
+	{
+		setTimeLabel(this.timeLimit);
+		setCountdown(true);
+	}
+	
+	public void setPhase2()
+	{
+		setCountdown(false);
+		setTimeLabel(0f);
+	}
+	
+	private void setTimeLabel(float time)
+	{
+		timeIntLabel.setText(String.format("%1$,.1f", time));
 	}
 
 	@Override
@@ -76,10 +84,7 @@ public class TimeStatusBar extends Actor {
 		this.timeIntLabel.draw(batch, parentAlpha);
 		this.timeStrLabel.draw(batch, parentAlpha);
 
-		if (this.showTimeLimit) {
-			this.timeLimitIntLabel.draw(batch, parentAlpha);
-			this.timeLimitStrLabel.draw(batch, parentAlpha);
-		}
+
 
 		batch.end();
 		
@@ -87,15 +92,11 @@ public class TimeStatusBar extends Actor {
 		Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		renderer.begin(ShapeType.Filled);
 		
-		renderer.setColor(black90alpha);
-		renderer.rect((xStringLabels - 10) * Input.xStretchFactorInv,
-				(yLine - 15) * Input.yStretchFactorInv,
-				200 * Input.xStretchFactorInv, 200 * Input.yStretchFactorInv);
-		
-		renderer.setColor(black90);
-		renderer.rect(xStringLabels * Input.xStretchFactorInv, (yLine + 28)
-				* Input.yStretchFactorInv, 150 * Input.xStretchFactorInv,
-				3 * Input.yStretchFactorInv);
+		renderer.setColor(consts.black90alpha);
+		renderer.rect(consts.xRectangle * Input.xStretchFactorInv,
+				consts.yRectangle* Input.yStretchFactorInv,
+				consts.RectWidth * Input.xStretchFactorInv, consts.RectHeight * Input.yStretchFactorInv);
+
 		renderer.end();
 		Gdx.gl.glDisable(GL10.GL_BLEND);
 

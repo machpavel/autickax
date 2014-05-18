@@ -267,7 +267,7 @@ public class SubLevel1 extends SubLevel {
 			this.getDialogStack().push(new MessageDialog(this.level, this, 
 					Constants.strings.TOOLTIP_PHASE_1_WHAT_TO_DO));
 		
-		this.level.getTimeStatusBar().update(0.f);
+		this.level.getTimeStatusBar().reset();
 	}
 
 	public void setCarToStart(){

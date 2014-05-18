@@ -169,7 +169,7 @@ public class GameScreen extends BaseScreen {
 	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map,
 			SubLevel1 lastPhase, GameStatistics stats) {
 		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase, stats);
-		this.timeStatusBar.setShowTimeLimit(false);
+		this.timeStatusBar.setPhase2();
 	}
 
 	public void unproject(Vector3 vector) {

@@ -46,7 +46,7 @@ public class TyreTracks extends Actor {
 	private Vector2 getLeftTyreVector(Vector2 objectCenter) {
 		Vector2 dirVec = new Vector2(objectCenter).sub(previousObjectCenter);
 		Vector2 rotated = new Vector2(dirVec).rotate(90);
-		return rotated.nor().scl(Constants.tyreTracksConstants.WIDTH_HALF);
+		return rotated.nor().scl(Constants.tyreTracksConstants.WIDTH_HALF*Input.xStretchFactorInv);
 	}
 
 	private Vector2 getRightTyreVector(Vector2 leftVector) {
@@ -64,7 +64,7 @@ public class TyreTracks extends Actor {
 		if (!tyrePositions.isEmpty())
 			elapsedInLastPoint = tyrePositions.get(tyrePositions.size()-1).time;
 		
-		Gdx.gl10.glLineWidth(5);
+		Gdx.gl10.glLineWidth(Constants.tyreTracksConstants.LINE_WIDTH*Input.xStretchFactorInv);
 		Gdx.gl.glEnable(GL10.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glEnable(GL10.GL_LINE_SMOOTH);
@@ -88,8 +88,7 @@ public class TyreTracks extends Actor {
 						new Vector2(trackInfo2.rightPosition).scl(stretch));
 			}
 
-			totalDistFromCar += trackInfo1.leftPosition.dst(trackInfo2.leftPosition);
-
+			totalDistFromCar += trackInfo1.distance;
 		}
 
 		shapeRenderer.end();
