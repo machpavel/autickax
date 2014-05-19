@@ -65,7 +65,7 @@ public class Car extends ShiftableGameObject {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch) {
+	public void draw(SpriteBatch batch, float parentAlpha) {
 		while (this.rotation < 0)
 			this.rotation += 360;
 		if (this.rotation > 360)
@@ -89,7 +89,7 @@ public class Car extends ShiftableGameObject {
 				|| (this.rotation >= 0 && this.rotation < 22.5))
 			this.setTexture(positionTextures[0]);
 
-		super.draw(batch);
+		super.draw(batch, parentAlpha);
 	}
 
 	@Override
