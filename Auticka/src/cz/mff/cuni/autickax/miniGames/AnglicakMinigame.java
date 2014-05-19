@@ -66,8 +66,7 @@ public final class AnglicakMinigame extends Minigame {
 		this.target = new AnglicakMinigameTarget(targetLocationX, targetLocationY, targetRadius);
 		this.stage.addActor(this.target);
 
-		this.car = new Car(0, 0, 1);
-		this.car.setScreen(gameScreen);
+		this.car = new Car(0, 0, 1);		
 
 		restartForNewTry();
 	}

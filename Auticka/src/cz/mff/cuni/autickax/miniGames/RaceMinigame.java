@@ -78,8 +78,7 @@ public final class RaceMinigame extends Minigame {
 
 	private void createCars(GameScreen gameScreen) {
 		this.car = new RaceMinigameCar(CAR_START_POSITION_X,
-				zonesCenters[MathUtils.random(zonesCount - 1)], 0);
-		this.car.setScreen(gameScreen);
+				zonesCenters[MathUtils.random(zonesCount - 1)], 0);		
 		this.car.setCanBeDragged(true);
 		this.car.setDragged(false);
 

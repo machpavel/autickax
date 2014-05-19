@@ -37,8 +37,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	private boolean toDispose;
 	protected transient TextureRegion texture;
-
-	protected GameScreen gameScreen;
+	
 	protected int type;
 	protected boolean isActive = true;
 
@@ -77,8 +76,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		this.scale = object.scale;
 		this.boundingCircleRadius = object.boundingCircleRadius;
 		this.toDispose = object.toDispose;
-		this.setTexture(object.getTexture());
-		this.gameScreen = object.gameScreen;
+		this.setTexture(object.getTexture());		
 		this.type = object.type;
 	}
 
@@ -363,10 +361,6 @@ public abstract class GameObject extends Actor implements Externalizable {
 	}
 
 	public abstract GameObject copy();
-
-	public void setScreen(GameScreen screen) {
-		this.gameScreen = screen;
-	}
 
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
 		return null;
