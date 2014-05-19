@@ -12,10 +12,9 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 import cz.mff.cuni.autickax.drawing.LevelBackground;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
-import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.GameObject;
+import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.pathway.Pathway;
-import cz.mff.cuni.autickax.scene.GameScreen;
 
 public class Level implements java.io.Externalizable {
 
@@ -98,14 +97,6 @@ public class Level implements java.io.Externalizable {
 
 		System.out.println("Loading level \"" + file.name() + "\" done.");
 	}
-
-	public void calculateDistanceMap() {
-		this.pathway.CreateDistances();
-	}
-
-	public void deleteDistanceMap() {
-		this.pathway.deleteDistanceMap();
-	}
 	
 	public float getDistanceMapProgress() {
 		if (this.pathway.getDistanceMap() != null) {
@@ -115,15 +106,11 @@ public class Level implements java.io.Externalizable {
 		}
 	}
 
-	public void setGameScreen(GameScreen screen) {
-		for (GameObject gameObject : this.gameObjects) {
-			gameObject.setScreen(screen);
+	public void setTextures() {
+		for (GameObject gameObject : this.gameObjects) {			
 			if(gameObject.getTexture() == null)
 				gameObject.setTexture();
-		}
-		this.car.setScreen(screen);
-		this.start.setScreen(screen);
-		this.finish.setScreen(screen);
+		}		
 		if(this.car.getTexture() == null)
 			this.car.setTexture();
 		if(this.start.getTexture() == null)

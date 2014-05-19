@@ -37,12 +37,11 @@ public class LevelLoadingScreen extends BaseScreen {
 		Thread distanceMapLoader = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Autickax.gameScreen.initializeDistanceMap();
-
+				Autickax.gameScreen.initializeGameScreen();
 				Gdx.app.postRunnable(new Runnable() {
 					@Override
 					public void run() {
-						Autickax.gameScreen.initializeGameScreen();
+						Autickax.gameScreen.initializeTextures();
 						Autickax.getInstance().setScreen(Autickax.gameScreen);
 						Autickax.gameScreen.takeFocus();
 					}
@@ -71,8 +70,7 @@ public class LevelLoadingScreen extends BaseScreen {
 
 		this.batch.begin();
 
-		this.batch.draw(this.background, 0, 0, this.stageWidth,
-				this.stageHeight);
+		this.batch.draw(this.background, 0, 0, this.stageWidth, this.stageHeight);
 
 		for (int i = 0; i < LevelLoadingScreen.lightsCount; ++i) {
 			TextureRegion drawnLight;

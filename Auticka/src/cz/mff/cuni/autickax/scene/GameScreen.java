@@ -57,7 +57,7 @@ public class GameScreen extends BaseScreen {
 
 	// Pathway
 	protected Pathway pathway;
-	
+
 	private final TimeStatusBar timeStatusBar;
 
 	public Pathway getPathWay() {
@@ -75,13 +75,13 @@ public class GameScreen extends BaseScreen {
 		this.levelIndex = levelIndex;
 		this.loadLevels(levelIndex, this.levelDifficulty.getAvailableLevels(),
 				this.levelDifficulty.getPlayedLevels());
-		
+
 		this.timeStatusBar = new TimeStatusBar(this.level.getTimeLimit());
-		
+
 		// Add actors - note that start and finish should be added first
 		this.stage.addActor(this.level.getFinish());
 		this.stage.addActor(this.level.getStart());
-		for (GameObject gameObject: this.level.getGameObjects()) {
+		for (GameObject gameObject : this.level.getGameObjects()) {
 			this.stage.addActor(gameObject);
 		}
 		this.stage.addActor(this.level.getCar());
@@ -92,27 +92,36 @@ public class GameScreen extends BaseScreen {
 		return timeStatusBar;
 	}
 
-	public void initializeDistanceMap() {
-		level.calculateDistanceMap();
-	}
-
 	public float getDistanceMapProgress() {
 		return this.level.getDistanceMapProgress();
 	}
 
+	/**
+	 * Initializes textures. For more details see initializeGameScreen function.
+	 */
+	public void initializeTextures() {
+		level.setTextures();
+		this.pathwayTexture = level.getPathway().getDistanceMap()
+				.generateTexture(this.levelDifficulty);
+	}
+
+	/**
+	 * Initializes main game screen objects except for textures. Textures have
+	 * to be attached from render thread or in postRunnable way because of
+	 * OpenGL context. This is the reason initializeTextures function exist and
+	 * has to be called separately.
+	 */
 	public void initializeGameScreen() {
+		// Camera
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, stageWidth, stageHeight);
 
-		level.calculateDistanceMap();
-		level.setGameScreen(this);
-
-		this.pathwayTexture = level.getPathway().getDistanceMap()
-				.generateTexture(this.levelDifficulty);
-
+		// Pathway
 		this.pathway = level.getPathway();
-		this.gameObjects = level.getGameObjects();
+		this.pathway.CreateDistances();
 
+		// Game objects
+		this.gameObjects = level.getGameObjects();
 		this.car = level.getCar();
 
 		this.start = level.getStart();
@@ -129,8 +138,9 @@ public class GameScreen extends BaseScreen {
 		this.finish.setShift(finishDirection.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 
+		// Sublevel
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
-
+		
 		// Start Music!
 		if (Autickax.settings.playMusic) {
 			Autickax.getInstance().assets.soundAndMusicManager.playRaceMusic();
@@ -196,9 +206,9 @@ public class GameScreen extends BaseScreen {
 
 		batch.draw(this.pathwayTexture, 0, 0, stageWidth, stageHeight);
 		batch.end();
-		
+
 		this.currentPhase.update(delta);
-		
+
 		this.stage.act(delta);
 		this.stage.draw();
 
@@ -241,7 +251,7 @@ public class GameScreen extends BaseScreen {
 	public void dispose() {
 		super.dispose();
 		this.pathwayTexture.getTexture().dispose();
-		this.level.deleteDistanceMap();
+		this.pathway.deleteDistanceMap();
 	}
 
 	public Difficulty getDifficulty() {
