@@ -20,6 +20,7 @@ import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
@@ -56,6 +57,8 @@ public class GameScreen extends BaseScreen {
 
 	// Pathway
 	protected Pathway pathway;
+	
+	private final TimeStatusBar timeStatusBar;
 
 	public Pathway getPathWay() {
 		return pathway;
@@ -72,6 +75,21 @@ public class GameScreen extends BaseScreen {
 		this.levelIndex = levelIndex;
 		this.loadLevels(levelIndex, this.levelDifficulty.getAvailableLevels(),
 				this.levelDifficulty.getPlayedLevels());
+		
+		this.timeStatusBar = new TimeStatusBar(this.level.getTimeLimit());
+		
+		// Add actors - note that start and finish should be added first
+		this.stage.addActor(this.level.getFinish());
+		this.stage.addActor(this.level.getStart());
+		for (GameObject gameObject: this.level.getGameObjects()) {
+			this.stage.addActor(gameObject);
+		}
+		this.stage.addActor(this.level.getCar());
+		this.stage.addActor(this.timeStatusBar);
+	}
+
+	public TimeStatusBar getTimeStatusBar() {
+		return timeStatusBar;
 	}
 
 	public void initializeDistanceMap() {
@@ -151,6 +169,7 @@ public class GameScreen extends BaseScreen {
 	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map,
 			SubLevel1 lastPhase, GameStatistics stats) {
 		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase, stats);
+		this.timeStatusBar.setPhase2();
 	}
 
 	public void unproject(Vector3 vector) {
@@ -177,12 +196,17 @@ public class GameScreen extends BaseScreen {
 
 		batch.draw(this.pathwayTexture, 0, 0, stageWidth, stageHeight);
 		batch.end();
-
+		
 		this.currentPhase.update(delta);
-		this.currentPhase.render();
-		// batch.begin();
-		this.currentPhase.draw(batch);
-		// batch.end();
+		
+		this.stage.act(delta);
+		this.stage.draw();
+
+		if (!this.currentPhase.getDialogStack().isEmpty()) {
+			this.currentPhase.getDialogStack().peek().draw(batch);
+		} else if (currentPhase.getMiniGame() != null) {
+			this.currentPhase.getMiniGame().draw(batch);
+		}
 
 	}
 

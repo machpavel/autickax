@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Autickax;
@@ -16,7 +15,6 @@ import cz.mff.cuni.autickax.dialogs.CompleteLevelDialog;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.Dialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
-import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.exceptions.IllegalCommandException;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -53,8 +51,6 @@ public class SubLevel2 extends SubLevel {
 	// It is for decision in final state. If should be played next level or go
 	// to main screen;
 	private boolean playNextLevel = false;
-
-	private TimeStatusBar timeStatusBar;
 	private GameStatistics stats;
 	
 	//class supporting calculating and rendering tyre tracks on the road
@@ -68,8 +64,6 @@ public class SubLevel2 extends SubLevel {
 			SubLevel1 lastPhase, GameStatistics stats) {
 
 		super(gameScreen);
-
-		this.timeStatusBar = new TimeStatusBar(gameScreen);
 
 		this.checkpoints = checkpoints;
 		this.phase1 = lastPhase;
@@ -93,7 +87,8 @@ public class SubLevel2 extends SubLevel {
 		this.level.getCar().move(this.to.position);
 		
 		this.tyreTracks = new TyreTracks(this.from.position);
-		this.tyreTracks.addPoint(this.to.position);
+		this.level.getStage().addActor(this.tyreTracks);
+		this.tyreTracks.addPoint(this.to.position,this.stats.getPhase2ElapsedTime());
 	}
 
 	@Override
@@ -104,8 +99,7 @@ public class SubLevel2 extends SubLevel {
 		case CONTINUE:
 			break;
 		case RESTART:
-			this.level.switchToPhase(this.phase1);
-			this.phase1.reset();
+			restart();
 			break;
 		case GO_TO_MAIN_MENU:
 			this.level.goToMainScreen();
@@ -158,8 +152,9 @@ public class SubLevel2 extends SubLevel {
 	@Override
 	public void update(float delta) {
 		// do not count time in this state
-		if (state != SubLevel2States.ENGINE_RAGING_STATE)
-			timeStatusBar.update(this.stats.getPhase2ElapsedTime());
+		if (state != SubLevel2States.ENGINE_RAGING_STATE) {
+			this.level.getTimeStatusBar().update(this.stats.getPhase2ElapsedTime());
+		}
 
 		if (!this.dialogStack.isEmpty()) {
 			this.dialogStack.peek().update(delta);
@@ -234,7 +229,7 @@ public class SubLevel2 extends SubLevel {
 					gameObject.setIsActive(false);
 					this.objectsInCollision.add(gameObject);
 					stats.increaseCollisions();
-					this.miniGame = gameObject.getMinigame(this.level, this);
+					this.setMiniGame(gameObject.getMinigame(this.level, this));
 					break;
 				}
 			}
@@ -253,46 +248,6 @@ public class SubLevel2 extends SubLevel {
 
 	private void updateInMistakeState(float delta) {
 		this.dialogStack.push(new MessageDialog(this.level, this, "MISTAKE"));
-	}
-
-	@Override
-	public void draw(SpriteBatch batch) {
-		batch.begin();
-		for (GameObject gameObject : this.level.getGameObjects()) {
-			gameObject.draw(batch);
-		}
-
-		this.level.getStart().draw(batch);
-		this.level.getFinish().draw(batch);
-		this.level.getCar().draw(batch);
-
-		batch.end();
-
-		timeStatusBar.draw(batch);
-
-		if (!dialogStack.isEmpty()) {
-			dialogStack.peek().draw(batch);
-		} else if (miniGame != null) {
-			miniGame.draw(batch);
-		}
-	}
-
-	public void render() {
-		/*shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(Color.RED);
-		for (CheckPoint ce : checkpoints) {
-			shapeRenderer.circle((float) ce.position.x * Input.xStretchFactorInv,
-					(float) ce.position.y * Input.yStretchFactorInv, 2);
-		}
-
-		shapeRenderer.setColor(Color.BLUE);
-		for (Vector2 vec : points) {
-			shapeRenderer.circle(vec.x * Input.xStretchFactorInv, vec.y * Input.yStretchFactorInv,
-					2);
-		}
-		shapeRenderer.end();*/
-		tyreTracks.render(shapeRenderer);
-
 	}
 
 	private Vector2 moveCarToNewPosition(float time) {
@@ -328,7 +283,7 @@ public class SubLevel2 extends SubLevel {
 				timeAvailable -= timeNecessaire;
 			}
 		}
-		this.tyreTracks.addPoint(newPosition);
+		this.tyreTracks.addPoint(newPosition, this.stats.getPhase2ElapsedTime());
 		this.level.getCar().move(newPosition);
 		return newPosition;
 	}
@@ -397,6 +352,13 @@ public class SubLevel2 extends SubLevel {
 						Constants.strings.NEW_LEVEL_UNLOCK));
 			}
 		}
+	}
+	
+	private void restart()
+	{
+		this.level.switchToPhase(this.phase1);
+		this.phase1.reset();
+		this.tyreTracks.clear();
 	}
 
 	private void updateScore() {

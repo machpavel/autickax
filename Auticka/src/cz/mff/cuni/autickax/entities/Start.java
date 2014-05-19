@@ -42,7 +42,7 @@ public class Start extends GameObject implements Externalizable {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch) {
+	public void draw(SpriteBatch batch, float parentAlpha) {
 		batch.draw(this.getTexture(), ((this.position.x - this.getWidth() / 2) + visualShift.x)
 				* Input.xStretchFactorInv,
 				((this.position.y - this.getHeight() / 2) + visualShift.y)

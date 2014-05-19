@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import cz.mff.cuni.autickax.Autickax;
@@ -12,7 +11,6 @@ import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.DecisionDialog;
 import cz.mff.cuni.autickax.dialogs.Dialog;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
-import cz.mff.cuni.autickax.drawing.TimeStatusBar;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.GameTerminatingObject;
 import cz.mff.cuni.autickax.exceptions.IllegalCommandException;
@@ -35,8 +33,6 @@ public class SubLevel1 extends SubLevel {
 	/** Record of movement through the track; */
 	private LinkedList<CheckPoint> checkPoints;
 	
-	private TimeStatusBar timeStatusBar;
-	
 	/** true if time is being measure, false otherwise */
 	private boolean timeMeasured = false;
 	
@@ -47,7 +43,6 @@ public class SubLevel1 extends SubLevel {
 	
 	public SubLevel1(GameScreen gameScreen, float tLimit) {
 		super(gameScreen);
-		timeStatusBar = new TimeStatusBar(gameScreen,tLimit, true);
 		pathway = gameScreen.getPathWay();
 
 
@@ -76,7 +71,7 @@ public class SubLevel1 extends SubLevel {
 	
 
 	public void onDialogEnded() {
-		Dialog dialogLocal = this.dialogStack.peek();
+		Dialog dialogLocal = this.getDialogStack().peek();
 		eraseDialog();
 		switch (dialogLocal.getDecision()) {
 		case CONTINUE:
@@ -100,8 +95,8 @@ public class SubLevel1 extends SubLevel {
 
 	@Override
 	public void update(float delta) {
-		if (!this.dialogStack.isEmpty()) {
-			this.dialogStack.peek().update(delta);			
+		if (!this.getDialogStack().isEmpty()) {
+			this.getDialogStack().peek().update(delta);			
 		} 		
 		else {
 			if (timeMeasured)
@@ -144,7 +139,7 @@ public class SubLevel1 extends SubLevel {
 	}
 
 	private void updateInDrivingState(float delta) {
-		timeStatusBar.update(stats.getPhase1ElapsedTime());
+		this.level.getTimeStatusBar().update(stats.getPhase1ElapsedTime());
 		// stopped dragging
 		if (!this.level.getCar().isDragged()) {
 			switchToMistakeState(Constants.strings.PHASE_1_FINISH_NOT_REACHED);
@@ -192,7 +187,7 @@ public class SubLevel1 extends SubLevel {
 				if (wayPoints.isEmpty()){
 					state = SubLevel1States.FINISH_STATE;
 					Autickax.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_CHEER, Constants.sounds.SOUND_DEFAULT_VOLUME);
-					dialogStack.push(new DecisionDialog(this.level, this, Constants.strings.PHASE_1_FINISH_REACHED, true));
+					getDialogStack().push(new DecisionDialog(this.level, this, Constants.strings.PHASE_1_FINISH_REACHED, true));
 					timeMeasured = false;
 					this.level.getCar().setDragged(false);
 				}
@@ -241,25 +236,6 @@ public class SubLevel1 extends SubLevel {
 		}
 	}
 
-	@Override
-	public void draw(SpriteBatch batch) {
-
-		batch.begin();
-		for (GameObject gameObject : this.level.getGameObjects()) {
-			gameObject.draw(batch);
-		}
-		this.level.getStart().draw(batch);
-		this.level.getFinish().draw(batch);
-		this.level.getCar().draw(batch);
-		
-		batch.end();
-		timeStatusBar.draw(batch);
-		if (!dialogStack.isEmpty()) {
-			dialogStack.peek().draw(batch);
-		}
-		
-	}
-
 	/**
 	 * Sets this game phase to its beginning Called when player leaves the road
 	 * or makes a discontinuous move
@@ -268,7 +244,7 @@ public class SubLevel1 extends SubLevel {
 		takeFocus();
 		Autickax.getInstance().assets.soundAndMusicManager.playStartEngineSound();
 		
-		this.dialogStack.clear(); 
+		this.getDialogStack().clear(); 
 		eraseMinigame();
 		takeFocus();	
 		
@@ -288,10 +264,10 @@ public class SubLevel1 extends SubLevel {
 		setCarToStart();
 					
 		if (Autickax.settings.showTooltips)
-			this.dialogStack.push(new MessageDialog(this.level, this, 
+			this.getDialogStack().push(new MessageDialog(this.level, this, 
 					Constants.strings.TOOLTIP_PHASE_1_WHAT_TO_DO));
 		
-		timeStatusBar.update(0.f);
+		this.level.getTimeStatusBar().reset();
 	}
 
 	public void setCarToStart(){
@@ -309,7 +285,7 @@ public class SubLevel1 extends SubLevel {
 	 */
 	private void switchToMistakeState(String str) {
 		Autickax.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
-		this.dialogStack.push(new DecisionDialog(this.level, this, str, false));
+		this.getDialogStack().push(new DecisionDialog(this.level, this, str, false));
 		this.state = SubLevel1States.MISTAKE_STATE;
 		this.level.getCar().setDragged(false);
 		timeMeasured = false;

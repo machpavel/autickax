@@ -246,7 +246,7 @@ public final class EditorScreen extends BaseScreenEditor {
 					draggedObject.setPosition(new Vector2(Gdx.input.getX(), Constants.WORLD_HEIGHT
 							- Gdx.input.getY()));
 					batch.begin();
-					draggedObject.draw(batch);
+					draggedObject.draw(batch, 0);
 					batch.end();
 				} else {
 					// dragging placed object

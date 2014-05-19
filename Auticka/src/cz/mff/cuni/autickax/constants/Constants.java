@@ -10,6 +10,8 @@ public final class Constants {
 	public static final Strings strings = new Strings(); 
 	public static final GameObjects gameObjects = new GameObjects();
 	public static final Misc misc = new Misc();
+	public static final TyreTracksConstants tyreTracksConstants = new TyreTracksConstants();
+	public static final TimeStatusBarConsts tsb = new TimeStatusBarConsts();
 	
 	
 	/**
