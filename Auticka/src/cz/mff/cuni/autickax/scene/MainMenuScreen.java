@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.Debug;
 import cz.mff.cuni.autickax.constants.Constants;
 //import cz.mff.cuni.autickax.menu.MenuAnimator;
 import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveButton;
@@ -23,7 +24,16 @@ public class MainMenuScreen extends BaseScreen {
 
 	public MainMenuScreen() {
 		super();
-
+		Debug.Log("Pavel smrdi!");
+		Debug.Log("Pavlovi smrdi pero!");
+		Debug.Log("Pavel ma malyho dicka!");
+		Debug.Log("Pavel ma namrdanou prdel!");
+		Debug.Log("Pavel se poti jako prase, a pak si lize prdel!");
+		Debug.Log("Pavel Pavel Pavel, vosukam mu prdel!");
+		Debug.Log("PJ disko trysko...");
+		Debug.Log("Pavel ma chlupaty koule!");
+		Debug.Log("Jo a Mira je borec!");
+		
 		this.playMenuMusic();
 
 		// Background
