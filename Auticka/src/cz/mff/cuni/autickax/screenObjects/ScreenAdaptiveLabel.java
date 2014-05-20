@@ -51,9 +51,19 @@ public class ScreenAdaptiveLabel extends Label {
 			// Propably bug in the libgdx?
 		);
 	}
+		
+	@Override
+	public float getX() {
+		return super.getX() * Input.xStretchFactor; 
+	}
 	
 	@Override
+	public float getY() {
+		return super.getY() * Input.yStretchFactor; 
+	}
+	// TODO why the fuck does it work only if x position is square scaled???? 
+	@Override
 	public void setPosition(float x, float y) {
-		super.setPosition(x * Input.xStretchFactorInv, y * Input.yStretchFactorInv);
+		super.setPosition(x * Input.xStretchFactorInv * Input.xStretchFactorInv, y * Input.yStretchFactorInv);
 	}
 }
