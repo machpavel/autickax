@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.Debug;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.input.Input;
@@ -97,7 +98,7 @@ public class LevelLoadingScreen extends BaseScreen {
 		this.batch.end();
 
 		this.shiningLightsCount = (int) (Autickax.gameScreen.getDistanceMapProgress() * LevelLoadingScreen.lightsCount);
-		
+		Debug.SetValue(Autickax.gameScreen.getDistanceMapProgress());
 		renderDebug(batch);
 	}
 

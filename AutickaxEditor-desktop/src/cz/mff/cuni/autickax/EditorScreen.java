@@ -54,11 +54,11 @@ import cz.mff.cuni.autickax.entities.Tornado;
 import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.entities.Wall;
 import cz.mff.cuni.autickax.myInputListener.ColorBackgroundInputListener;
-import cz.mff.cuni.autickax.myInputListener.TexturedBackgroundInputListener;
+import cz.mff.cuni.autickax.myInputListener.DigitsTextFieldInputListener;
 import cz.mff.cuni.autickax.myInputListener.MyInputListener;
 import cz.mff.cuni.autickax.myInputListener.MyInputListenerForGameObjects;
-import cz.mff.cuni.autickax.myInputListener.DigitsTextFieldInputListener;
 import cz.mff.cuni.autickax.myInputListener.PlacedObjectsInputListener;
+import cz.mff.cuni.autickax.myInputListener.TexturedBackgroundInputListener;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
 import cz.mff.cuni.autickax.pathway.Vector2i;
@@ -347,6 +347,9 @@ public final class EditorScreen extends BaseScreenEditor {
 				xml.attribute("Y", point.y);
 				xml.pop();
 			}
+			xml.pop();
+			xml.element("distanceMap");
+			xml.attribute("nodesCount", pathway.getDistanceMap().getNodesCount());
 			xml.pop();
 			xml.pop();
 

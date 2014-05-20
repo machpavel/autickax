@@ -19,7 +19,7 @@ public final class Debug {
 	private static float ROW_HEIGHT = 30;
 	private static float X0 = 0, X1 = 350, X2 = 700;
 
-	private static float maxLogTime = 5000;
+	private static float maxLogTime = 7000;
 
 	public static void SetMessage(String message) {
 		if (DEBUG) {

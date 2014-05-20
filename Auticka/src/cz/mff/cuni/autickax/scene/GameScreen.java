@@ -116,7 +116,7 @@ public class GameScreen extends BaseScreen {
 		camera.setToOrtho(false, stageWidth, stageHeight);
 
 		// Pathway
-		this.pathway = level.getPathway();
+		this.pathway = level.getPathway();		
 		this.pathway.CreateDistances();
 
 		// Game objects

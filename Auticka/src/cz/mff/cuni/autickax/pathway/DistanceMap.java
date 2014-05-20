@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import cz.mff.cuni.autickax.Debug;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
 
@@ -29,7 +30,10 @@ public class DistanceMap {
 	private int height;
 	private int width;
 
-	private float progress = 0;
+	// Maximal count of nodes used in create distancemap
+	private float nodesCount = 1;
+
+	public float progress = 0;
 
 	private static final int distanceModifier = one;
 	private static final int maxDistanceFromPathway = Constants.misc.MAX_DISTANCE_FROM_PATHWAY
@@ -53,10 +57,19 @@ public class DistanceMap {
 	}
 
 	public DistanceMap(int height, int width) {
+		this(height, width, 1);
+	}
+
+	public DistanceMap(int height, int width, float nodesCount) {
 		this.height = height;
 		this.width = width;
 		this.map = new int[width][height];
+		this.nodesCount = nodesCount;
 		ClearMap();
+	}
+
+	public float getNodesCount() {
+		return this.nodesCount;
 	}
 
 	private void ClearMap() {
@@ -81,21 +94,32 @@ public class DistanceMap {
 		if (controlPoints.size() < 4)
 			return;
 
-		ClearMap();
-
+		long time = System.currentTimeMillis();
+		long lastTime = time;
 		progress = 0;
+		ClearMap();		
+		progress = 5;
+
+		time = System.currentTimeMillis();
+		Debug.Log("Clearing map: " + Long.toString(time - lastTime));
+		lastTime = time;
 
 		// Set line position to zero
 		int totalLines = controlPoints.size() * Constants.misc.LINE_SEGMENTATION;
 		Vector2 point;
 		for (float i = 0; i <= totalLines; i++) {
-			point = Splines.GetPoint(controlPoints, i / totalLines, typeOfInterpolation,
+			float part = i / totalLines;
+			point = Splines.GetPoint(controlPoints, part, typeOfInterpolation,
 					pathwayType);
+			progress = 5 + part * 10;
 			if (point.x >= 0 && point.y > 0 && point.x <= width && point.y <= height)
 				this.map[(int) point.x][(int) point.y] = 0;
 		}
 
-		progress = 10;
+		time = System.currentTimeMillis();
+		Debug.Log("Line to zero: " + Long.toString(time - lastTime));
+		lastTime = time;
+		progress = 15;
 
 		// Start and finish circle positions to zero
 		int CIRCLE_RADIUS_SQR = circleRadius * circleRadius;
@@ -122,29 +146,38 @@ public class DistanceMap {
 			}
 		}
 
-		progress = 30;
+		time = System.currentTimeMillis();
+		Debug.Log("Start and finish: " + Long.toString(time - lastTime));
+		lastTime = time;
+		progress = 20;
 
+		float surface = width * height;
+		float foo = 0;
 		// Prepares for BFS by adding line positions
 		Queue<Vector2i> nodesToSearch = new LinkedList<Vector2i>();
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
+				progress = 20 + foo / surface * 10;
+				foo++;
 				if (map[x][y] == 0) {
 					nodesToSearch.add(new Vector2i(x, y));
 				}
 			}
 		}
 
-		progress = 35;
+		time = System.currentTimeMillis();
+		Debug.Log("Preparing for BFS: " + Long.toString(time - lastTime));
+		lastTime = time;
+		progress = 30;
 
-		float estimatedSurface = 1;// 3.f / 4;
+		// Counting distances with BFS
 		float offset = progress;
 		float range = 100 - offset;
-		float maxNodesCount = width * height / estimatedSurface;
 		float nodeNumber = 0;
-		// Counting distances with BFS
 		Vector2i currentPoint = nodesToSearch.poll();
+		progress = offset + nodeNumber / nodesCount * range;
 		while (currentPoint != null) {
-			progress = offset + (nodeNumber / maxNodesCount) * range;
+			// progress = offset + (nodeNumber / maxNodesCount) * range;
 			for (int x = -1; x <= 1; x++) {
 				for (int y = -1; y <= 1; y++) {
 					if ((x == 0 && y == 0) || !isInWorld(currentPoint.x + x, currentPoint.y + y)
@@ -152,8 +185,6 @@ public class DistanceMap {
 						continue;
 					}
 
-					// /System.out.println(map[currentPoint.x][currentPoint.y] +
-					// " " + map[currentPoint.x + x][currentPoint.y + y]);
 					if (Math.abs(x) == Math.abs(y)) {
 						if (map[currentPoint.x + x][currentPoint.y + y] > map[currentPoint.x][currentPoint.y]
 								+ sqrtOfTwo) {
@@ -173,10 +204,16 @@ public class DistanceMap {
 					}
 				}
 			}
-			currentPoint = nodesToSearch.poll();
+
+			progress = offset + nodeNumber / nodesCount * range;
 			nodeNumber++;
+			currentPoint = nodesToSearch.poll();
 		}
-		progress = 100;
+
+		nodesCount = nodeNumber;
+
+		time = System.currentTimeMillis();
+		Debug.Log("BFS: " + Long.toString(time - lastTime));
 	}
 
 	/**
@@ -187,24 +224,25 @@ public class DistanceMap {
 	 * @return
 	 */
 	public TextureRegion generateTexture(Difficulty difficulty) {
+		long timeAnchor = System.currentTimeMillis();
+
 		Pixmap pixmap = new Pixmap(1024, 512, Pixmap.Format.RGBA8888);
 		Pixmap.setBlending(Pixmap.Blending.None);
-
 		int maxDistanceFromSurface = difficulty.getMaxDistanceFromSurface() * distanceModifier;
 		int borderBlendDistance = Constants.misc.PATHWAY_BORDER_BLEND_DISTANCE * distanceModifier;
 
 		for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
-			for (int column = 0; column < Constants.WORLD_WIDTH; ++column) {
-
-				// distance map is flipped to the bitmap
+			for (int column = 0; column < Constants.WORLD_WIDTH; ++column) { //
 				int distance = map[column][Constants.WORLD_HEIGHT - row - 1];
 
 				if (distance < maxDistanceFromSurface) {
 					pixmap.setColor(Constants.misc.PATHWAY_COLOR);
 					pixmap.drawPixel(column, row);
 				} else if (distance < maxDistanceFromSurface + borderBlendDistance) {
-					float alpha = 1.f - ((float)distance - maxDistanceFromSurface) / borderBlendDistance;
-					Color color = new Color(Constants.misc.PATHWAY_COLOR.r, Constants.misc.PATHWAY_COLOR.g, Constants.misc.PATHWAY_COLOR.b, alpha);
+					float alpha = 1.f - ((float) distance - maxDistanceFromSurface)
+							/ borderBlendDistance;
+					Color color = new Color(Constants.misc.PATHWAY_COLOR.r,
+							Constants.misc.PATHWAY_COLOR.g, Constants.misc.PATHWAY_COLOR.b, alpha);
 
 					pixmap.setColor(color);
 					pixmap.drawPixel(column, row);
@@ -217,17 +255,19 @@ public class DistanceMap {
 		if (Gdx.files.isLocalStorageAvailable()) {
 			textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 					+ ".cim");
-			// System.out.println("Texture of pathway was saved into local memory.");
+			Debug.Log("Texture of pathway was saved into local memory.");
 		} else {
 			textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 					+ ".cim");
-			// System.out.println("Texture of pathway was saved into internal memory.");
+			Debug.Log("Texture of pathway was saved into internal memory.");
 		}
 		PixmapIO.writeCIM(textureFile, pixmap);
 
 		// Texture from pixmap
 		Texture texture = new Texture(pixmap);
 		pixmap.dispose();
+
+		Debug.Log("Texture created: " + Long.toString(System.currentTimeMillis() - timeAnchor));
 		return new TextureRegion(texture, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 	}
 
@@ -237,5 +277,4 @@ public class DistanceMap {
 	public float getProgress() {
 		return this.progress / 100;
 	}
-
 }

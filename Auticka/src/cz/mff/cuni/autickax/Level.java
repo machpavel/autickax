@@ -26,7 +26,7 @@ public class Level implements java.io.Externalizable {
 	private Start start;
 	private Finish finish;
 	private float timeLimit;
-	private LevelBackground background;
+	private LevelBackground background;	
 
 	public Pathway getPathway() {
 		return this.pathway;
@@ -97,7 +97,7 @@ public class Level implements java.io.Externalizable {
 
 		System.out.println("Loading level \"" + file.name() + "\" done.");
 	}
-	
+
 	public float getDistanceMapProgress() {
 		if (this.pathway.getDistanceMap() != null) {
 			return this.pathway.getDistanceMap().getProgress();
@@ -107,22 +107,21 @@ public class Level implements java.io.Externalizable {
 	}
 
 	public void setTextures() {
-		for (GameObject gameObject : this.gameObjects) {			
-			if(gameObject.getTexture() == null)
+		for (GameObject gameObject : this.gameObjects) {
+			if (gameObject.getTexture() == null)
 				gameObject.setTexture();
-		}		
-		if(this.car.getTexture() == null)
+		}
+		if (this.car.getTexture() == null)
 			this.car.setTexture();
-		if(this.start.getTexture() == null)
+		if (this.start.getTexture() == null)
 			this.start.setTexture();
-		if(this.finish.getTexture() == null)
+		if (this.finish.getTexture() == null)
 			this.finish.setTexture();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void readExternal(ObjectInput in) throws IOException,
-			ClassNotFoundException {
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 
 		this.pathway = (Pathway) in.readObject();
 
@@ -135,7 +134,7 @@ public class Level implements java.io.Externalizable {
 		this.timeLimit = in.readFloat();
 
 		byte check = in.readByte();
-		if(check != Level.MAGIC_LEVEL_END)
+		if (check != Level.MAGIC_LEVEL_END)
 			throw new RuntimeException("Level wasn't read correctly");
 	}
 
