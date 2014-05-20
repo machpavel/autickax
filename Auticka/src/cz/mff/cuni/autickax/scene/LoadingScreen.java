@@ -85,6 +85,8 @@ public class LoadingScreen extends BaseScreen {
 				this.carFumePosition = 0;
 			}
 		}
+
+		renderDebug(batch);
 	}
 
 	@Override

@@ -27,7 +27,8 @@ public class MainMenuScreen extends BaseScreen {
 		this.playMenuMusic();
 
 		// Background
-		Image background = new Image(Autickax.getInstance().assets.getGraphics(Constants.menu.MAIN_MENU_BACKGROUND));
+		Image background = new Image(
+				Autickax.getInstance().assets.getGraphics(Constants.menu.MAIN_MENU_BACKGROUND));
 		background.setSize(stageWidth, stageHeight);
 		stage.addActor(background); // stage initialized in superclass
 									// constructor
@@ -164,11 +165,6 @@ public class MainMenuScreen extends BaseScreen {
 
 	private void playMenuMusic() {
 		Autickax.getInstance().assets.soundAndMusicManager.playMenuMusic();
-	}
-
-	@Override
-	public void render(float delta) {
-		super.render(delta);
 	}
 
 	@Override

@@ -184,7 +184,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		restart();
 		Level level = new Level();
 		level.parseLevel(file);
-		level.calculateDistanceMap();
+		level.getPathway().CreateDistances();
 
 		this.car = level.getCar();
 		this.finish = level.getFinish();

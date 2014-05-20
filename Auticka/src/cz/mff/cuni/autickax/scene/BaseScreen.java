@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public abstract class BaseScreen implements Screen {	
+import cz.mff.cuni.autickax.Debug;
+
+public abstract class BaseScreen implements Screen {
 	protected float stageWidth;
 	protected float stageHeight;
 	protected final Stage stage;
@@ -45,10 +47,16 @@ public abstract class BaseScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		this.clearScreenWithColor();
+		stage.act(delta);
+		stage.draw();
+		
+		renderDebug(batch);
+	}
 
-		stage.act(delta); // don't forget to advance the stage ( input + actions
-							// )
-		stage.draw(); // and also display it :)
+	protected void renderDebug(SpriteBatch batch) {
+		batch.begin();
+		Debug.draw(batch);
+		batch.end();
 	}
 
 	@Override

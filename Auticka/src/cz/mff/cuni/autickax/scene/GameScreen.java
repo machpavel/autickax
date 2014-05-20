@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.Debug;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.PlayedLevel;
@@ -140,7 +140,7 @@ public class GameScreen extends BaseScreen {
 
 		// Sublevel
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
-		
+
 		// Start Music!
 		if (Autickax.settings.playMusic) {
 			Autickax.getInstance().assets.soundAndMusicManager.playRaceMusic();
@@ -192,8 +192,7 @@ public class GameScreen extends BaseScreen {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); // This cryptic line clears
-													// the screen
+		clearScreenWithColor(); // This cryptic line clears the screen
 
 		camera.update();
 		batch.setProjectionMatrix(camera.combined); // see
@@ -218,6 +217,7 @@ public class GameScreen extends BaseScreen {
 			this.currentPhase.getMiniGame().draw(batch);
 		}
 
+		renderDebug(batch);
 	}
 
 	public ArrayList<GameObject> getGameObjects() {

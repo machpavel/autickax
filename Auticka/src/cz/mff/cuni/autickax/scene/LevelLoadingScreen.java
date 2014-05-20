@@ -97,6 +97,8 @@ public class LevelLoadingScreen extends BaseScreen {
 		this.batch.end();
 
 		this.shiningLightsCount = (int) (Autickax.gameScreen.getDistanceMapProgress() * LevelLoadingScreen.lightsCount);
+		
+		renderDebug(batch);
 	}
 
 	@Override
