@@ -60,7 +60,7 @@ public abstract class Minigame extends Comunicator {
 
 	protected void updateInLeavingState(float delta) {
 		// Delays the leaving if there is no message in the end of a game
-		if (!Autickax.settings.showTooltips) {
+		if (!Autickax.settings.isShowTooltips()) {
 			leavingDelay -= delta;
 			if (leavingDelay < 0) {
 				this.endCommunication();

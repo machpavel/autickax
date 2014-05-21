@@ -28,7 +28,7 @@ public class SoundAndMusicManager {
 	}
 
 	public void playRaceMusic() {
-		if (Autickax.settings.playMusic) {
+		if (Autickax.settings.isPlayMusic()) {
 			raceMusic.setLooping(true);
 			raceMusic.setVolume(Constants.sounds.MUSIC_DEFAULT_VOLUME);
 			raceMusic.play();
@@ -36,7 +36,7 @@ public class SoundAndMusicManager {
 	}
 
 	public void playMenuMusic() {
-		if (Autickax.settings.playMusic) {
+		if (Autickax.settings.isPlayMusic()) {
 			menuMusic.setLooping(true);
 			menuMusic.setVolume(Constants.sounds.MUSIC_DEFAULT_VOLUME);
 			menuMusic.play();
@@ -58,7 +58,7 @@ public class SoundAndMusicManager {
 	
 
 	public void playSound(String soundName, float volume) {
-		if (Autickax.settings.playSounds) {
+		if (Autickax.settings.isPlaySounds()) {
 			Sound sound = getSound(soundName);
 			sound.play(volume);
 		}
@@ -81,7 +81,7 @@ public class SoundAndMusicManager {
 	}
 
 	public void playCollisionSound(GameObject collisionOrigin) {
-		if (Autickax.settings.playSounds) {
+		if (Autickax.settings.isPlaySounds()) {
 			String soundName = collisionOrigin.getSoundName();
 			if (!soundName.equals(Constants.sounds.SOUND_NO_SOUND)) {
 				playSound(soundName, Constants.sounds.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);

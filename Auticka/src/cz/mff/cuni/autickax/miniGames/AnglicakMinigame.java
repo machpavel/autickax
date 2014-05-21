@@ -59,7 +59,7 @@ public final class AnglicakMinigame extends Minigame {
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.ANGLICAK_MINIGAME_BACKGROUND_TEXTURE));
 
-		if (Autickax.settings.showTooltips)
+		if (Autickax.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(gameScreen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_ANGLICAK_WHAT_TO_DO));
 

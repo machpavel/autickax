@@ -96,12 +96,14 @@ public class GameScreen extends BaseScreen {
 	}
 
 	/**
-	 * Initializes textures. For more details see initializeGameScreen function.
+	 * Initializes stuffs with textures. For more details see initializeGameScreen function.
 	 */
 	public void initializeTextures() {
 		level.setTextures();
 		this.pathwayTexture = level.getPathway().getDistanceMap()
 				.generateTexture(this.levelDifficulty);
+		// If tooltips are turned on, texture in dialog is generated
+		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
 	}
 
 	/**
@@ -136,12 +138,9 @@ public class GameScreen extends BaseScreen {
 				this.finish.getPosition()).nor();
 		this.finish.setShift(finishDirection.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
-
-		// Sublevel
-		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
-
+		
 		// Start Music!
-		if (Autickax.settings.playMusic) {
+		if (Autickax.settings.isPlayMusic()) {
 			Autickax.getInstance().assets.soundAndMusicManager.playRaceMusic();
 		}
 	}

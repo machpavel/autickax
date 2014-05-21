@@ -121,7 +121,7 @@ public class SubLevel2 extends SubLevel {
 			stats.increaseFailed();
 			break;
 		case FAILED_WITH_VALUE:
-			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
+			if (Autickax.settings.isShowTooltips() && miniGameLocal.getResultMessage() != null)
 				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal
 						.getResultMessage()));
 			stats.increaseFailed();
@@ -130,13 +130,13 @@ public class SubLevel2 extends SubLevel {
 			computeSpeedModifierValue();
 			break;
 		case PROCEEDED:
-			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
+			if (Autickax.settings.isShowTooltips() && miniGameLocal.getResultMessage() != null)
 				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal
 						.getResultMessage()));
 			stats.increaseSucceeded();
 			break;
 		case PROCEEDED_WITH_VALUE:
-			if (Autickax.settings.showTooltips && miniGameLocal.getResultMessage() != null)
+			if (Autickax.settings.isShowTooltips() && miniGameLocal.getResultMessage() != null)
 				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal
 						.getResultMessage()));
 			stats.increaseSucceeded();
@@ -347,10 +347,11 @@ public class SubLevel2 extends SubLevel {
 				&& this.level.getLevelIndex() == this.level.getDifficulty().getPlayedLevels()
 						.size() - 1) {
 			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte) 0));
-			if (Autickax.settings.showTooltips) {
+			if (Autickax.settings.isShowTooltips()) {
 				this.dialogStack.push(new MessageDialog(this.level, this,
 						Constants.strings.NEW_LEVEL_UNLOCK));
 			}
+			Autickax.playedLevels.storeLevels();
 		}
 	}
 	
@@ -368,8 +369,7 @@ public class SubLevel2 extends SubLevel {
 
 		float score = this.stats.getScoreFromTime();
 		if (score > this.level.getPlayedLevel().score)
-			this.level.getPlayedLevel().score = score;
-		Autickax.playedLevels.storeLevels();
+			this.level.getPlayedLevel().score = score;		
 	}
 
 	public void playNextLevel() {

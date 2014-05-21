@@ -63,7 +63,7 @@ public final class RaceMinigame extends Minigame {
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.RACE_MINIGAME_BACKGROUND_TEXTURE));
 
-		if (Autickax.settings.showTooltips)
+		if (Autickax.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(gameScreen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_RACE_WHAT_TO_DO));
 

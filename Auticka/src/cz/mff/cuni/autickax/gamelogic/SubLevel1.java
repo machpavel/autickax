@@ -263,7 +263,7 @@ public class SubLevel1 extends SubLevel {
 		this.level.getCar().reset();
 		setCarToStart();
 					
-		if (Autickax.settings.showTooltips)
+		if (Autickax.settings.isShowTooltips())
 			this.getDialogStack().push(new MessageDialog(this.level, this, 
 					Constants.strings.TOOLTIP_PHASE_1_WHAT_TO_DO));
 		

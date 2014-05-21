@@ -37,7 +37,7 @@ public final class BoostMinigame extends Minigame {
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.BOOST_MINIGAME_BACKGROUND_TEXTURE));
 
-		if (Autickax.settings.showTooltips)
+		if (Autickax.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(screen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_BOOST_WHAT_TO_DO));
 

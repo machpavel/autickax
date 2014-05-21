@@ -33,7 +33,7 @@ public final class RepairingMinigame extends Minigame {
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.REPAIRING_MINIGAME_BACKGROUND_TEXTURE));
 
-		if (Autickax.settings.showTooltips)
+		if (Autickax.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(screen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_REPAIRING_WHAT_TO_DO));
 

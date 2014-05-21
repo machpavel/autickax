@@ -65,9 +65,9 @@ public class MainMenuScreen extends BaseScreen {
 		stage.addActor(this.buttonExit);
 
 		// Tooltips Button------------------------------------------------
-		String tooltipsTexture = Autickax.settings.showTooltips ? Constants.menu.BUTTON_MENU_TOOLTIPS_ON
+		String tooltipsTexture = Autickax.settings.isShowTooltips() ? Constants.menu.BUTTON_MENU_TOOLTIPS_ON
 				: Constants.menu.BUTTON_MENU_TOOLTIPS_OFF;
-		String tooltipsHoverTexture = Autickax.settings.showTooltips ? Constants.menu.BUTTON_MENU_TOOLTIPS_ON_HOVER
+		String tooltipsHoverTexture = Autickax.settings.isShowTooltips() ? Constants.menu.BUTTON_MENU_TOOLTIPS_ON_HOVER
 				: Constants.menu.BUTTON_MENU_TOOLTIPS_OFF_HOVER;
 
 		this.buttonTooltips = new ScreenAdaptiveButton(
@@ -76,9 +76,9 @@ public class MainMenuScreen extends BaseScreen {
 			@Override
 			public void action() {
 
-				Autickax.settings.showTooltips = !Autickax.settings.showTooltips;
+				Autickax.settings.setShowTooltips(!Autickax.settings.isShowTooltips());
 
-				if (Autickax.settings.showTooltips) {
+				if (Autickax.settings.isShowTooltips()) {
 					buttonTooltips.setStyle(Autickax.getInstance().assets
 							.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_ON), Autickax
 							.getInstance().assets
@@ -95,9 +95,9 @@ public class MainMenuScreen extends BaseScreen {
 		stage.addActor(this.buttonTooltips);
 
 		// Sounds Button------------------------------------------------
-		String soundsTexture = Autickax.settings.playSounds ? Constants.menu.BUTTON_MENU_SOUNDS_ON
+		String soundsTexture = Autickax.settings.isPlaySounds() ? Constants.menu.BUTTON_MENU_SOUNDS_ON
 				: Constants.menu.BUTTON_MENU_SOUNDS_OFF;
-		String soundsHoverTexture = Autickax.settings.playSounds ? Constants.menu.BUTTON_MENU_SOUNDS_ON_HOVER
+		String soundsHoverTexture = Autickax.settings.isPlaySounds() ? Constants.menu.BUTTON_MENU_SOUNDS_ON_HOVER
 				: Constants.menu.BUTTON_MENU_SOUNDS_OFF_HOVER;
 
 		this.buttonSounds = new ScreenAdaptiveButton(
@@ -106,9 +106,9 @@ public class MainMenuScreen extends BaseScreen {
 			@Override
 			public void action() {
 
-				Autickax.settings.playSounds = !Autickax.settings.playSounds;
+				Autickax.settings.setPlaySounds(!Autickax.settings.isPlaySounds());
 
-				if (Autickax.settings.playSounds) {
+				if (Autickax.settings.isPlaySounds()) {
 					buttonSounds.setStyle(Autickax.getInstance().assets
 							.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_ON), Autickax
 							.getInstance().assets
@@ -125,9 +125,9 @@ public class MainMenuScreen extends BaseScreen {
 		stage.addActor(this.buttonSounds);
 
 		// Music Button------------------------------------------------
-		String musicTexture = Autickax.settings.playMusic ? Constants.menu.BUTTON_MENU_MUSIC_ON
+		String musicTexture = Autickax.settings.isPlayMusic() ? Constants.menu.BUTTON_MENU_MUSIC_ON
 				: Constants.menu.BUTTON_MENU_MUSIC_OFF;
-		String musicHoverTexture = Autickax.settings.playMusic ? Constants.menu.BUTTON_MENU_MUSIC_ON_HOVER
+		String musicHoverTexture = Autickax.settings.isPlayMusic() ? Constants.menu.BUTTON_MENU_MUSIC_ON_HOVER
 				: Constants.menu.BUTTON_MENU_MUSIC_OFF_HOVER;
 
 		this.buttonMusic = new ScreenAdaptiveButton(
@@ -136,9 +136,9 @@ public class MainMenuScreen extends BaseScreen {
 			@Override
 			public void action() {
 
-				Autickax.settings.playMusic = !Autickax.settings.playMusic;
+				Autickax.settings.setPlayMusic(!Autickax.settings.isPlayMusic());
 
-				if (Autickax.settings.playMusic) {
+				if (Autickax.settings.isPlayMusic()) {
 					buttonMusic.setStyle(Autickax.getInstance().assets
 							.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_ON), Autickax
 							.getInstance().assets

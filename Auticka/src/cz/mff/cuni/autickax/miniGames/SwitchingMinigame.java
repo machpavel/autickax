@@ -37,7 +37,7 @@ public final class SwitchingMinigame extends Minigame {
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_BACKGROUND_TEXTURE));
 
-		if (Autickax.settings.showTooltips)
+		if (Autickax.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(screen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_SWITCHING_WHAT_TO_DO));
 		createButtons();
