@@ -4,12 +4,13 @@
 			<point X="52.0" Y="250.0"/>
 			<point X="52.0" Y="250.0"/>
 			<point X="66.0" Y="250.0"/>
-			<point X="66.0" Y="250.0"/>
-			<point X="641.0" Y="256.0"/>
+			
+			
 			<point X="641.0" Y="256.0"/>
 			<point X="669.0" Y="256.0"/>
 			<point X="669.0" Y="256.0"/>
 		</controlPoints>
+		<distanceMap nodesCount="180276.0"/>
 	</pathway>
 	<entities>
 		<pneu X="143.0" Y="305.0" type="1"/>

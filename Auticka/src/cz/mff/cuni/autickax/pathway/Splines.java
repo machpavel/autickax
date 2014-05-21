@@ -66,6 +66,19 @@ public class Splines {
 				* points.get((index + 3) % points.size()).y);
 	}
 
+	public static Vector2 GetPoint(ArrayList<Vector2> points, int index, float localU,
+			TypeOfInterpolation type) {	
+		switch (type) {
+		case CUBIC_B_SPLINE:
+			return GetLocalPointBSpline(points, localU, index);
+		case CUBIC_SPLINE:
+			return GetLocalPointSpline(points, localU, index);
+		default:
+			throw new RuntimeException("Unrecognized spline interpolation type: " + type.toString());
+		}
+
+	}
+	
 	public static Vector2 GetPoint(ArrayList<Vector2> points, float u,
 			TypeOfInterpolation type, Pathway.PathwayType pathwayType) {
 		float part = 0;

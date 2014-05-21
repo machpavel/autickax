@@ -16,12 +16,17 @@ import com.badlogic.gdx.math.Vector2;
 import cz.mff.cuni.autickax.Debug;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.pathway.Pathway.PathwayType;
 
 /**
  * Class for representing 2-dimensional field of the closest distances of a
  * curve.
  */
 
+/**
+ * @author Shabby
+ * 
+ */
 public class DistanceMap {
 
 	private int[][] map;
@@ -65,14 +70,14 @@ public class DistanceMap {
 		this.width = width;
 		this.map = new int[width][height];
 		this.nodesCount = nodesCount;
-		ClearMap();
+		clearMap();
 	}
 
 	public float getNodesCount() {
 		return this.nodesCount;
 	}
 
-	private void ClearMap() {
+	private void clearMap() {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				map[x][y] = Integer.MAX_VALUE;
@@ -88,96 +93,67 @@ public class DistanceMap {
 		return (x >= 0) && (x < width) && (y >= 0) && (y < height);
 	}
 
-	// Creates the main distances structure for given control points.
+	/**
+	 * Creates the main distances structure for the given control points.
+	 * 
+	 * @param controlPoints
+	 * @param pathwayType
+	 * @param typeOfInterpolation
+	 */
 	public void CreateDistances(ArrayList<Vector2> controlPoints, Pathway.PathwayType pathwayType,
 			Splines.TypeOfInterpolation typeOfInterpolation) {
 		if (controlPoints.size() < 4)
 			return;
 
-		long time = System.currentTimeMillis();
-		long lastTime = time;
+		long time, lastTime;
+		lastTime = time = System.currentTimeMillis();
 		progress = 0;
-		ClearMap();		
-		progress = 5;
 
+		clearMap();
+		progress = 5;
 		time = System.currentTimeMillis();
 		Debug.Log("Clearing map: " + Long.toString(time - lastTime));
 		lastTime = time;
 
-		// Set line position to zero
-		int totalLines = controlPoints.size() * Constants.misc.LINE_SEGMENTATION;
-		Vector2 point;
-		for (float i = 0; i <= totalLines; i++) {
-			float part = i / totalLines;
-			point = Splines.GetPoint(controlPoints, part, typeOfInterpolation,
-					pathwayType);
-			progress = 5 + part * 10;
-			if (point.x >= 0 && point.y > 0 && point.x <= width && point.y <= height)
-				this.map[(int) point.x][(int) point.y] = 0;
-		}
-
+		initializeZeroDistances(pathwayType, controlPoints, typeOfInterpolation);
+		progress = 15;
 		time = System.currentTimeMillis();
 		Debug.Log("Line to zero: " + Long.toString(time - lastTime));
 		lastTime = time;
-		progress = 15;
 
-		// Start and finish circle positions to zero
-		int CIRCLE_RADIUS_SQR = circleRadius * circleRadius;
-		int minusCircleRadius = -circleRadius;
-		Vector2 startF = Splines.GetPoint(controlPoints, 0, typeOfInterpolation, pathwayType);
-		Vector2 finishF = Splines.GetPoint(controlPoints, 1, typeOfInterpolation, pathwayType);
-		Vector2i start = new Vector2i((int) startF.x, (int) startF.y);
-		Vector2i finish = new Vector2i((int) finishF.x, (int) finishF.y);
-		int xSqr, ySqr;
-		for (int x = minusCircleRadius; x < circleRadius; x++) {
-			for (int y = minusCircleRadius; y < circleRadius; y++) {
-				xSqr = x * x;
-				ySqr = y * y;
-
-				if (xSqr + ySqr < CIRCLE_RADIUS_SQR) {
-					if (isInWorld(start.x + x, start.y + y)) {
-						map[start.x + x][start.y + y] = 0;
-					}
-
-					if (isInWorld(finish.x + x, finish.y + y)) {
-						map[finish.x + x][finish.y + y] = 0;
-					}
-				}
-			}
-		}
-
+		initializeStartAndFinish(pathwayType, controlPoints, typeOfInterpolation);
 		time = System.currentTimeMillis();
 		Debug.Log("Start and finish: " + Long.toString(time - lastTime));
 		lastTime = time;
 		progress = 20;
 
-		float surface = width * height;
-		float foo = 0;
-		// Prepares for BFS by adding line positions
 		Queue<Vector2i> nodesToSearch = new LinkedList<Vector2i>();
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				progress = 20 + foo / surface * 10;
-				foo++;
-				if (map[x][y] == 0) {
-					nodesToSearch.add(new Vector2i(x, y));
-				}
-			}
-		}
 
+		prepareNodesForBFS(nodesToSearch);
+		progress = 30;
 		time = System.currentTimeMillis();
 		Debug.Log("Preparing for BFS: " + Long.toString(time - lastTime));
 		lastTime = time;
-		progress = 30;
 
-		// Counting distances with BFS
+		BFSCountDistances(nodesToSearch);
+		time = System.currentTimeMillis();
+		Debug.Log("BFS: " + Long.toString(time - lastTime));
+	}
+
+	/**
+	 * Count distances in distance map. Uses BFS. Also sets count of used nodes.
+	 * 
+	 * @param nodesToSearch
+	 *            Queue of positions to be counted with BFS.
+	 * 
+	 */
+	private void BFSCountDistances(Queue<Vector2i> nodesToSearch) {
 		float offset = progress;
 		float range = 100 - offset;
 		float nodeNumber = 0;
 		Vector2i currentPoint = nodesToSearch.poll();
 		progress = offset + nodeNumber / nodesCount * range;
 		while (currentPoint != null) {
-			// progress = offset + (nodeNumber / maxNodesCount) * range;
 			for (int x = -1; x <= 1; x++) {
 				for (int y = -1; y <= 1; y++) {
 					if ((x == 0 && y == 0) || !isInWorld(currentPoint.x + x, currentPoint.y + y)
@@ -209,11 +185,110 @@ public class DistanceMap {
 			nodeNumber++;
 			currentPoint = nodesToSearch.poll();
 		}
-
 		nodesCount = nodeNumber;
+	}
 
-		time = System.currentTimeMillis();
-		Debug.Log("BFS: " + Long.toString(time - lastTime));
+	/**
+	 * Adds points (map positions with zero value) into queue used in BFS.
+	 * 
+	 * @param nodesToSearch
+	 *            Queue of positions. It is used in BFS to count distances.
+	 */
+	private void prepareNodesForBFS(Queue<Vector2i> nodesToSearch) {
+		float surface = width * height;
+		float foo = 0;
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				progress = 20 + foo / surface * 10;
+				foo++;
+				if (map[x][y] == 0) {
+					nodesToSearch.add(new Vector2i(x, y));
+				}
+			}
+		}
+	}
+
+	/**
+	 * Sets zeros in the map on positions close to start and finish
+	 * 
+	 * @param pathwayType
+	 * @param controlPoints
+	 * @param typeOfInterpolation
+	 */
+	private void initializeStartAndFinish(PathwayType pathwayType,
+			ArrayList<Vector2> controlPoints, Splines.TypeOfInterpolation typeOfInterpolation) {
+		int CIRCLE_RADIUS_SQR = circleRadius * circleRadius;
+		int minusCircleRadius = -circleRadius;
+		Vector2 startF = Splines.GetPoint(controlPoints, 0, typeOfInterpolation, pathwayType);
+		Vector2 finishF = Splines.GetPoint(controlPoints, 1, typeOfInterpolation, pathwayType);
+		Vector2i start = new Vector2i((int) startF.x, (int) startF.y);
+		Vector2i finish = new Vector2i((int) finishF.x, (int) finishF.y);
+		int xSqr, ySqr;
+		for (int x = minusCircleRadius; x < circleRadius; x++) {
+			for (int y = minusCircleRadius; y < circleRadius; y++) {
+				xSqr = x * x;
+				ySqr = y * y;
+
+				if (xSqr + ySqr < CIRCLE_RADIUS_SQR) {
+					if (isInWorld(start.x + x, start.y + y)) {
+						map[start.x + x][start.y + y] = 0;
+					}
+
+					if (isInWorld(finish.x + x, finish.y + y)) {
+						map[finish.x + x][finish.y + y] = 0;
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Sets zeros into map on the positions where spline is. Doesn't really work
+	 * with opened curve with redundant points.
+	 * 
+	 * @param pathwayType
+	 *            Type of pathway (opened, closed)
+	 * @param controlPoints
+	 * @param typeOfInterpolation
+	 */
+	private void initializeZeroDistances(PathwayType pathwayType, ArrayList<Vector2> controlPoints,
+			Splines.TypeOfInterpolation typeOfInterpolation) {
+		if (pathwayType == PathwayType.OPENED) {
+			// The calculation is related to how far control points are from
+			// each other.
+
+			float localUCount = 0;
+			localUCount += controlPoints.get(0).dst(controlPoints.get(1));
+			localUCount += controlPoints.get(0).dst(controlPoints.get(1));
+			localUCount += controlPoints.get(1).dst(controlPoints.get(2));
+
+			for (int i = 0; i < controlPoints.size() - 3; i++) {
+				localUCount -= controlPoints.get(i).dst(controlPoints.get(i + 1));
+				localUCount += controlPoints.get(i + 2).dst(controlPoints.get(i + 3));
+				for (float j = 0; j < localUCount; j++) {
+					float localU = j / localUCount;
+					Vector2 point = Splines.GetPoint(controlPoints, i, localU, typeOfInterpolation);
+					if (point.x >= 0 && point.y > 0 && point.x <= width && point.y <= height)
+						this.map[(int) point.x][(int) point.y] = 0;
+				}
+				progress = 5 + (float) i / controlPoints.size() * 10;
+			}
+		} else {
+			// The calculation uses static count of subsections between all
+			// control
+			// points. Doesn't matter how far are from each other.
+
+			int totalLines = controlPoints.size() * Constants.misc.LINE_SEGMENTATION;
+			Vector2 point;
+			for (float i = 0; i <= totalLines; i++) {
+				float part = i / totalLines;
+				point = Splines.GetPoint(controlPoints, part, typeOfInterpolation, pathwayType);
+				progress = 5 + part * 10;
+				if (point.x >= 0 && point.y > 0 && point.x <= width && point.y <= height)
+					this.map[(int) point.x][(int) point.y] = 0;
+			}
+		}
 	}
 
 	/**
