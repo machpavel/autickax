@@ -54,6 +54,7 @@ import cz.mff.cuni.autickax.entities.Tornado;
 import cz.mff.cuni.autickax.entities.Tree;
 import cz.mff.cuni.autickax.entities.Wall;
 import cz.mff.cuni.autickax.myInputListener.ColorBackgroundInputListener;
+import cz.mff.cuni.autickax.myInputListener.DifficultyChangeListerner;
 import cz.mff.cuni.autickax.myInputListener.DigitsTextFieldInputListener;
 import cz.mff.cuni.autickax.myInputListener.MyInputListener;
 import cz.mff.cuni.autickax.myInputListener.MyInputListenerForGameObjects;
@@ -140,7 +141,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 
-		this.font = game.assets.getFont();
+		this.font = game.assets.getMenuFont();
 
 		ColorDrawable textButtonBackground = new ColorDrawable(Color.GREEN);
 		this.textButtonStyle = new TextButtonStyle(textButtonBackground, textButtonBackground,
@@ -148,7 +149,6 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.textFieldStyle = new TextFieldStyle(this.font, new Color(1, 0, 0, 1),
 				new ColorDrawable(Color.GREEN), new ColorDrawable(Color.WHITE), new ColorDrawable(
 						Color.BLUE));
-
 		restart();
 	}
 
@@ -158,13 +158,16 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// This order has to be kept.
 		createGenerateButton();
+		createDifficultyButtons();
+		createTextField();
+		
 		createRestartButton();
 		createSaveButton();
 		createLoadButton();
+		
 		createBackgroundButtons();
 		createGameObjectsButtons();
-		createDifficultyButtons();
-		createTextField();
+		
 
 		this.gameObjects = new ArrayList<GameObject>();
 
@@ -459,8 +462,8 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private void createSaveButton() {
 		buttonSave = new TextButton("Save", this.textButtonStyle);
-		buttonSave.setPosition(Constants.WORLD_WIDTH,
-				buttonRestart.getY() + buttonRestart.getHeight());
+		buttonSave.setPosition(20 + buttonRestart.getX() + buttonRestart.getWidth(),
+				buttonRestart.getY());
 		stage.addActor(buttonSave);
 
 		// Creates listener
@@ -501,7 +504,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private void createLoadButton() {
 		buttonLoad = new TextButton("Load", this.textButtonStyle);
-		buttonLoad.setPosition(Constants.WORLD_WIDTH + 20 + buttonSave.getWidth(),
+		buttonLoad.setPosition(buttonSave.getX() + 20 + buttonSave.getWidth(),
 				buttonSave.getY());
 		stage.addActor(buttonLoad);
 
@@ -689,75 +692,23 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	private void createDifficultyButtons() {
-		int BUTTONS_OFFSET = 10;
-		Button buttonDif1 = new TextButton("1", this.textButtonStyle);
-		buttonDif1.setPosition(Constants.WORLD_WIDTH + BUTTONS_OFFSET, buttonSave.getY()
-				+ buttonSave.getHeight() + BUTTONS_OFFSET);
-		stage.addActor(buttonDif1);
+		int BUTTONS_OFFSET = 25;
+		 
 
-		// Creates listener
-		buttonDif1.addListener(new MyInputListener(this) {
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				difficulty = Difficulty.Kiddie;
-				pathwayTexture = pathway.getDistanceMap().generateTexture(difficulty);
-			}
-		});
-		Button buttonDif2 = new TextButton("2", this.textButtonStyle);
-		buttonDif2.setPosition(buttonDif1.getX() + buttonDif1.getWidth() + BUTTONS_OFFSET,
-				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
-		stage.addActor(buttonDif2);
+		for (int i = 0; i < Difficulty.values().length; i++) {
+			Button button = new TextButton(Integer.toString(i + 1), this.textButtonStyle);
+			button.setPosition(Constants.WORLD_WIDTH + i * BUTTONS_OFFSET + buttonGeneratePoints.getWidth() + BUTTONS_OFFSET, buttonGeneratePoints.getY());
+			stage.addActor(button);
 
-		// Creates listener
-		buttonDif2.addListener(new MyInputListener(this) {
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				difficulty = Difficulty.Beginner;
-				pathwayTexture = pathway.getDistanceMap().generateTexture(difficulty);
-			}
-		});
-		Button buttonDif3 = new TextButton("3", this.textButtonStyle);
-		buttonDif3.setPosition(buttonDif2.getX() + buttonDif2.getWidth() + BUTTONS_OFFSET,
-				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
-		stage.addActor(buttonDif3);
-
-		// Creates listener
-		buttonDif3.addListener(new MyInputListener(this) {
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				difficulty = Difficulty.Normal;
-				pathwayTexture = pathway.getDistanceMap().generateTexture(difficulty);
-			}
-		});
-
-		Button buttonDif4 = new TextButton("4", this.textButtonStyle);
-		buttonDif4.setPosition(buttonDif3.getX() + buttonDif3.getWidth() + BUTTONS_OFFSET,
-				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
-		stage.addActor(buttonDif4);
-
-		// Creates listener
-		buttonDif4.addListener(new MyInputListener(this) {
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				difficulty = Difficulty.Hard;
-				pathwayTexture = pathway.getDistanceMap().generateTexture(difficulty);
-			}
-		});
-
-		Button buttonDif5 = new TextButton("5", this.textButtonStyle);
-		buttonDif5.setPosition(buttonDif4.getX() + buttonDif4.getWidth() + BUTTONS_OFFSET,
-				buttonSave.getY() + buttonSave.getHeight() + BUTTONS_OFFSET);
-		stage.addActor(buttonDif5);
-
-		// Creates listener
-		buttonDif5.addListener(new MyInputListener(this) {
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				difficulty = Difficulty.Extreme;
-				pathwayTexture = pathway.getDistanceMap().generateTexture(difficulty);
-			}
-		});
+			// Creates listener
+			button.addListener(new DifficultyChangeListerner(this, i));
+		}
 	}
 
 	private void createTextField() {
 		timeTextField = new TextField(new DecimalFormat().format(timeLimit), this.textFieldStyle);
-		timeTextField.setPosition(buttonRestart.getX() + buttonRestart.getWidth() + 20,
-				buttonRestart.getHeight());
+		timeTextField.setPosition(buttonGeneratePoints.getX() + buttonGeneratePoints.getWidth() + 170,
+				buttonGeneratePoints.getY());
 		timeTextField.setTextFieldListener(new DigitsTextFieldInputListener(this));
 		timeTextField.addListener(new InputListener() {
 			@Override
@@ -790,4 +741,11 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.timeLimit = timeLimit;
 	}
 
+	public Pathway getPathway() {
+		return this.pathway;
+	}
+
+	public void setPathwayTexture(TextureRegion texture) {
+		this.pathwayTexture = texture;
+	}
 }

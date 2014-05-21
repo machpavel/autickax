@@ -21,8 +21,7 @@ public class Assets {
 
 	private static final String GRAPHICS_DIR = "images";
 	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images";
-	private static final String LOADING_SCREEN_GRAPHICS_FILE = "loadingScreen/images";
-	private static final String FONT_FILE = "fonts/font.fnt";
+	private static final String LOADING_SCREEN_GRAPHICS_FILE = "loadingScreen/images";	
 	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
 	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
 	private static final String FINISH_DIALOG_FONT_FILE = "fonts/finishDialog.fnt";
@@ -136,8 +135,7 @@ public class Assets {
 
 
 
-	private void loadFonts() {
-		assetManager.load(FONT_FILE, BitmapFont.class);
+	private void loadFonts() {		
 		assetManager.load(MENU_FONT_FILE, BitmapFont.class);
 		assetManager.load(DIALOG_FONT_FILE, BitmapFont.class);
 		assetManager.load(FINISH_DIALOG_FONT_FILE, BitmapFont.class);
@@ -149,10 +147,6 @@ public class Assets {
 	private void loadAvailableLevels() {
 		assetManager.setLoader(AvailableLevels.class, new AvailableLevelsLoader(new InternalFileHandleResolver()));
 		assetManager.load(AVAILABLE_LEVELS_FILE, AvailableLevels.class);
-	}
-
-	public BitmapFont getFont() {
-		return assetManager.get(FONT_FILE, BitmapFont.class);
 	}
 
 	public BitmapFont getMenuFont() {
