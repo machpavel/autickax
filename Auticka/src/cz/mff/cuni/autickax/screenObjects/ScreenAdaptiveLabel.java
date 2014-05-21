@@ -52,18 +52,19 @@ public class ScreenAdaptiveLabel extends Label {
 		);
 	}
 		
-	@Override
-	public float getX() {
+	
+	public float getActualX() {
 		return super.getX() * Input.xStretchFactor; 
 	}
 	
-	@Override
-	public float getY() {
+	
+	public float getActualY() {
 		return super.getY() * Input.yStretchFactor; 
 	}
+	
 	// TODO why the fuck does it work only if x position is square scaled???? 
 	@Override
 	public void setPosition(float x, float y) {
-		super.setPosition(x * Input.xStretchFactorInv * Input.xStretchFactorInv, y * Input.yStretchFactorInv);
+		super.setPosition(x * Input.xStretchFactorInv, y * Input.yStretchFactorInv);
 	}
 }

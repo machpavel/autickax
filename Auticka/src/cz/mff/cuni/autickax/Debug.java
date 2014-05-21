@@ -34,7 +34,7 @@ public final class Debug {
 	public static void Log(String message) {
 		if (DEBUG) {
 			for (Log log : logger) {
-				log.label.setPosition(log.label.getX(), log.label.getY() + ROW_HEIGHT);
+				log.label.setPosition(log.label.getActualX(), log.label.getActualY() + ROW_HEIGHT);
 			}
 
 			ScreenAdaptiveLabel label = ScreenAdaptiveLabel.getMenuLabel(message);
