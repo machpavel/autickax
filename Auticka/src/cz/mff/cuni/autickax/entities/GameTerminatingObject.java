@@ -1,6 +1,7 @@
 package cz.mff.cuni.autickax.entities;
 
 import java.io.Externalizable;
+
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.miniGames.Crash;
 import cz.mff.cuni.autickax.miniGames.Minigame;
@@ -27,7 +28,7 @@ public abstract class GameTerminatingObject extends GameObject implements Extern
 	
 	/** Gets the texture name according to a type*/
 	public String GetTextureName(int type){
-		return this.getName() + type;
+		return this.GetStaticTextureName(this.type);
 	}
 	
 	public void setTexture(int type) {
@@ -35,4 +36,6 @@ public abstract class GameTerminatingObject extends GameObject implements Extern
 	}
 	
 	protected abstract String getResultMessage();
+	
+	public abstract String GetStaticTextureName(int type);
 }

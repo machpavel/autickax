@@ -1,7 +1,7 @@
 package cz.mff.cuni.autickax.scene;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cz.mff.cuni.autickax.Autickax;
@@ -67,7 +67,7 @@ public class LevelLoadingScreen extends BaseScreen {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0f, 1f, 0f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		this.batch.begin();
 

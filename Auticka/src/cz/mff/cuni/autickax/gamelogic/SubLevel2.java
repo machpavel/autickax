@@ -293,7 +293,7 @@ public class SubLevel2 extends SubLevel {
 	 */
 	private void computeVelocity() {
 		float time = this.to.time - this.from.time;
-		velocity = new Vector2(this.to.position).sub(this.from.position).div(time);
+		velocity = new Vector2(this.to.position).sub(this.from.position).scl(1 / time);
 		velocityMagnitude = velocity.len();
 
 		float distanceFromCurveCenter = distMap.At(this.level.getCar().getPosition());

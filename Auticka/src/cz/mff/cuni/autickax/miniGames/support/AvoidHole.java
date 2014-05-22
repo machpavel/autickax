@@ -22,7 +22,8 @@ public final class AvoidHole extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.AVOID_HOLES_NAME + type;
+		return Constants.gameObjects.AVOID_HOLES_TEXTURE_PREFIX
+				+ Constants.gameObjects.AVOID_HOLES_NAME + type;
 
 	}
 

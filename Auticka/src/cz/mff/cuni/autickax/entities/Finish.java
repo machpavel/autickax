@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
@@ -31,7 +31,8 @@ public class Finish extends GameObject implements Externalizable {
 	}
 
 	public static Finish parseFinish(Element finish) {
-		return new Finish(finish.getFloat("X"), finish.getFloat("Y"), finish.getInt("type", 1));
+		return new Finish(finish.getFloat("X"), finish.getFloat("Y"),
+				finish.getInt("type", 1));
 	}
 
 	public void setShift(Vector2 shift) {
@@ -39,14 +40,17 @@ public class Finish extends GameObject implements Externalizable {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.draw(this.getTexture(), ((this.position.x - this.getWidth() / 2) + visualShift.x)
-				* Input.xStretchFactorInv,
+	public void draw(Batch batch, float parentAlpha) {
+		batch.draw(this.getTexture(),
+				((this.position.x - this.getWidth() / 2) + visualShift.x)
+						* Input.xStretchFactorInv,
 				((this.position.y - this.getHeight() / 2) + visualShift.y)
-						* Input.yStretchFactorInv, (this.getWidth() / 2) * Input.xStretchFactorInv,
-				(this.getHeight() / 2) * Input.yStretchFactorInv, this.getWidth()
-						* Input.xStretchFactorInv, this.getHeight() * Input.yStretchFactorInv,
-				scale.x, scale.y, this.rotation);
+						* Input.yStretchFactorInv, (this.getWidth() / 2)
+						* Input.xStretchFactorInv, (this.getHeight() / 2)
+						* Input.yStretchFactorInv, this.getWidth()
+						* Input.xStretchFactorInv, this.getHeight()
+						* Input.yStretchFactorInv, scale.x, scale.y,
+				this.rotation);
 	}
 
 	@Override
@@ -56,7 +60,8 @@ public class Finish extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.FINISH_NAME + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
+				+ Constants.gameObjects.FINISH_NAME + type;
 	}
 
 	@Override
@@ -74,7 +79,8 @@ public class Finish extends GameObject implements Externalizable {
 	}
 
 	@Override
-	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
 		super.readExternal(in);
 
 		this.visualShift = (Vector2) in.readObject();

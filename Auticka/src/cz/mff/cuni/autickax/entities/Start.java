@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
@@ -42,7 +42,7 @@ public class Start extends GameObject implements Externalizable {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(this.getTexture(), ((this.position.x - this.getWidth() / 2) + visualShift.x)
 				* Input.xStretchFactorInv,
 				((this.position.y - this.getHeight() / 2) + visualShift.y)
@@ -59,7 +59,8 @@ public class Start extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.START_NAME + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
+				+ Constants.gameObjects.START_NAME + type;
 	}
 
 	@Override

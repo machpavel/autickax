@@ -137,9 +137,9 @@ public final class AnglicakMinigame extends Minigame {
 					averageDelta += carSpeedsDeltas[i];
 				}
 				averageDelta /= carSpeeds.length;
-				carSpeed.div(carSpeeds.length);
+				carSpeed.scl(1/carSpeeds.length);
 
-				carSpeed.div(averageDelta); // Normalization
+				carSpeed.scl(1/averageDelta); // Normalization
 
 				lastCarPosition = newPosition;
 				carSpeedsIndex = carSpeedsIndex % carSpeeds.length;

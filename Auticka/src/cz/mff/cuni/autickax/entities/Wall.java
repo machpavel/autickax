@@ -37,11 +37,13 @@ public final class Wall extends GameTerminatingObject implements Externalizable 
 
 	@Override
 	protected String getResultMessage() {
-		return Constants.strings.TOOLTIP_MINIGAME_CRASHED_WALL_RESULT_MESSAGE;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
+				+ Constants.strings.TOOLTIP_MINIGAME_CRASHED_WALL_RESULT_MESSAGE;
 	}
-	
+
 	/** Gets the texture name according to a type */
-	public static String GetStaticTextureName(int type) {
+	@Override
+	public String GetStaticTextureName(int type) {
 		return Constants.gameObjects.WALL_NAME + type;
 	}
 }

@@ -10,6 +10,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class AvoidStone extends GameObject implements Externalizable {
 	public static String name = Constants.gameObjects.AVOID_STONE_NAME;
+
 	public AvoidStone(float x, float y, int type) {
 		super(x, y, type);
 	}
@@ -29,7 +30,8 @@ public final class AvoidStone extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.AVOID_STONE_NAME + type;
+		return Constants.gameObjects.AVOID_STONE_TEXTURE_PREFIX
+				+ Constants.gameObjects.AVOID_STONE_NAME + type;
 
 	}
 

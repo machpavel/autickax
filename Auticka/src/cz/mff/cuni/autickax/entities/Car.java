@@ -1,6 +1,6 @@
 package cz.mff.cuni.autickax.entities;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader.Element;
@@ -11,10 +11,10 @@ import cz.mff.cuni.autickax.exceptions.IllegalGameObjectException;
 
 public class Car extends ShiftableGameObject {
 	public static final String name = Constants.gameObjects.CAR_NAME;
-	
+
 	private TextureRegion[] positionTextures;
 	private Vector2 lastCarPosition;
-	private float lastRotationDistance = 0;  
+	private float lastRotationDistance = 0;
 
 	/** Parameterless constructor for the externalization */
 	public Car() {
@@ -28,7 +28,8 @@ public class Car extends ShiftableGameObject {
 	}
 
 	public static Car parseCar(Element car) {
-		return new Car(car.getFloat("X"), car.getFloat("Y"), car.getInt("type", 1));
+		return new Car(car.getFloat("X"), car.getFloat("Y"), car.getInt("type",
+				1));
 	}
 
 	public Car(GameObject object) {
@@ -55,7 +56,8 @@ public class Car extends ShiftableGameObject {
 		lastRotationDistance += newPos.dst(lastCarPosition);
 		if (lastRotationDistance > Constants.gameObjects.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION) {
 			lastRotationDistance = 0;
-			this.setRotation(new Vector2(this.lastCarPosition).sub(newPos).scl(-1).angle());
+			this.setRotation(new Vector2(this.lastCarPosition).sub(newPos)
+					.scl(-1).angle());
 			this.lastCarPosition = newPos;
 		}
 	}
@@ -65,7 +67,7 @@ public class Car extends ShiftableGameObject {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(Batch batch, float parentAlpha) {
 		while (this.rotation < 0)
 			this.rotation += 360;
 		if (this.rotation > 360)
@@ -94,8 +96,8 @@ public class Car extends ShiftableGameObject {
 
 	@Override
 	public GameObject copy() {
-		//return new Car(this);
-		Car copied = new Car(this.getX(),this.getY(),this.type);
+		// return new Car(this);
+		Car copied = new Car(this.getX(), this.getY(), this.type);
 		return copied;
 	}
 
@@ -124,10 +126,12 @@ public class Car extends ShiftableGameObject {
 			this.positionTextures[7] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_7_TEXTURE_NAME);
 			super.texture = this.positionTextures[0];
-			super.setMeasurements(texture.getRegionWidth(), texture.getRegionHeight());
+			super.setMeasurements(texture.getRegionWidth(),
+					texture.getRegionHeight());
 			break;
 		default:
-			throw new IllegalGameObjectException("Car type" + Integer.toString(type));
+			throw new IllegalGameObjectException("Car type"
+					+ Integer.toString(type));
 		}
 	}
 }

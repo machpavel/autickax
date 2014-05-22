@@ -1,9 +1,9 @@
 package cz.mff.cuni.autickax.drawing;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -77,7 +77,7 @@ public class TimeStatusBar extends Actor {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(Batch batch, float parentAlpha) {
 
 		this.timeIntLabel.draw(batch, parentAlpha);
 		this.timeStrLabel.draw(batch, parentAlpha);
@@ -86,8 +86,8 @@ public class TimeStatusBar extends Actor {
 
 		batch.end();
 		
-		Gdx.gl.glEnable(GL10.GL_BLEND);
-		Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		renderer.begin(ShapeType.Filled);
 		
 		renderer.setColor(consts.black90alpha);
@@ -96,7 +96,7 @@ public class TimeStatusBar extends Actor {
 				consts.RectWidth * Input.xStretchFactorInv, consts.RectHeight * Input.yStretchFactorInv);
 
 		renderer.end();
-		Gdx.gl.glDisable(GL10.GL_BLEND);
+		Gdx.gl.glDisable(GL20.GL_BLEND);
 
 		batch.begin();
 	}

@@ -31,7 +31,8 @@ public final class Pneu extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.PNEU_NAME + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
+				+ Constants.gameObjects.PNEU_NAME + type;
 	}
 
 	@Override
@@ -46,9 +47,10 @@ public final class Pneu extends GameObject implements Externalizable {
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new Crash(Constants.strings.TOOLTIP_MINIGAME_CRASHED_PNEU_RESULT_MESSAGE,
-				ResultType.FAILED_WITH_VALUE, Constants.gameObjects.PNEU_SPEED_REDUCTION,
-				gameScreen, parent);
+		return new Crash(
+				Constants.strings.TOOLTIP_MINIGAME_CRASHED_PNEU_RESULT_MESSAGE,
+				ResultType.FAILED_WITH_VALUE,
+				Constants.gameObjects.PNEU_SPEED_REDUCTION, gameScreen, parent);
 	}
 
 	@Override

@@ -11,7 +11,6 @@ public class AutickaxAndroid extends AndroidApplication {
         super.onCreate(savedInstanceState);
         
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-        cfg.useGL20 = false;
         
 		
         initialize(new Autickax(), cfg);

@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.XmlWriter;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.constants.Constants;
 
 public class LevelTextureBackground extends LevelBackground implements Externalizable {
 	public static final String xmlName = "textureBackground";
@@ -24,7 +25,7 @@ public class LevelTextureBackground extends LevelBackground implements Externali
 	}
 
 	public LevelTextureBackground(String textureName) {
-		this.textureName = textureName;
+		this.textureName = Constants.levelBackgroundsDirectory + textureName;
 	}
 	
 	public LevelTextureBackground(String textureName, TextureRegion textureRegion){

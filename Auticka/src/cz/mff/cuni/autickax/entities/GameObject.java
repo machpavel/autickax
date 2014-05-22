@@ -6,7 +6,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -179,12 +179,12 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	abstract public String getName();
 
-	public void draw(SpriteBatch batch) {
+	public void draw(Batch batch) {
 		this.draw(batch, 0);
 	}
 	
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(Batch batch, float parentAlpha) {
 		batch.draw(this.getTexture(), (this.position.x - this.getWidth() / 2)
 				* Input.xStretchFactorInv, (this.position.y - this.getHeight() / 2)
 				* Input.yStretchFactorInv, (this.getWidth() / 2) * Input.xStretchFactorInv,

@@ -38,10 +38,12 @@ public final class Tree extends GameTerminatingObject implements Externalizable 
 	protected String getResultMessage() {
 		return Constants.strings.TOOLTIP_MINIGAME_CRASHED_TREE_RESULT_MESSAGE;
 	}
-	
+
 	/** Gets the texture name according to a type */
-	public static String GetStaticTextureName(int type) {
-		return Constants.gameObjects.TREE_NAME + type;
+	@Override
+	public String GetStaticTextureName(int type) {
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
+				+ Constants.gameObjects.TREE_NAME + type;
 	}
 
 }

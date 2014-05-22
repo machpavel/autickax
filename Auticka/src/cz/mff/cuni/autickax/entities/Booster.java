@@ -47,7 +47,8 @@ public final class Booster extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.BOOSTER_NAME + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
+				+ Constants.gameObjects.BOOSTER_NAME + type;
 	}
 
 	@Override

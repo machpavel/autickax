@@ -1,5 +1,5 @@
-import com.badlogic.gdx.tools.imagepacker.TexturePacker.Settings;
-import com.badlogic.gdx.tools.imagepacker.TexturePacker;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 import cz.mff.cuni.autickax.AvailableLevels;
 import cz.mff.cuni.autickax.Difficulty;
@@ -119,6 +119,7 @@ public class AssetsProcessor {
     
     private static void compressImages() {
     	Settings settings = new Settings();
+    	settings.combineSubdirectories = true;
     	
     	TexturePacker.process(
 			settings,

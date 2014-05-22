@@ -31,7 +31,8 @@ public final class Stone extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.STONE_NAME + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
+				+ Constants.gameObjects.STONE_NAME + type;
 	}
 
 	@Override
@@ -46,7 +47,8 @@ public final class Stone extends GameObject implements Externalizable {
 
 	@Override
 	public Minigame getMinigame(GameScreen gameScreen, SubLevel parent) {
-		return new AvoidObstaclesMinigame(gameScreen, parent, ObstaclesType.STONES);
+		return new AvoidObstaclesMinigame(gameScreen, parent,
+				ObstaclesType.STONES);
 	}
 
 	@Override

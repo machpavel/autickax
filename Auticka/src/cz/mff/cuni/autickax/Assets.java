@@ -20,8 +20,8 @@ import cz.mff.cuni.serialization.AvailableLevelsLoader;
 public class Assets {
 
 	private static final String GRAPHICS_DIR = "images";
-	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images";
-	private static final String LOADING_SCREEN_GRAPHICS_FILE = "loadingScreen/images";	
+	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images.atlas";
+	private static final String LOADING_SCREEN_GRAPHICS_FILE = "loadingScreen/images.atlas";	
 	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
 	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
 	private static final String FINISH_DIALOG_FONT_FILE = "fonts/finishDialog.fnt";

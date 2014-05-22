@@ -3,7 +3,7 @@ package cz.mff.cuni.autickax.scene;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
@@ -178,7 +178,7 @@ public class LevelSelectScreen extends BaseScreen {
 	protected void clearScreenWithColor() {
 		Gdx.gl.glClearColor(Constants.menu.LEVELS_MENU_RED, Constants.menu.LEVELS_MENU_GREEN,
 				Constants.menu.LEVELS_MENU_BLUE, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 
 	private enum ShifterDirection {

@@ -10,7 +10,7 @@ public final class Minigames {
 	public final float RESULT_VALUE_NOTHING = 1.f;
 
 	// Avoid obstacles
-	public final String AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE = "AvoidObstaclesMinigameBackground";
+	public final String AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE = "minigames/AvoidObstaclesMinigameBackground";
 	public final float AVOID_OBSTACLES_CAR_START_POSITION_X = Constants.dialog.DIALOG_WORLD_X_OFFSET + 30;
 	public final float AVOID_OBSTACLES_FINISH_START_POSITION_X = Constants.WORLD_WIDTH
 			- Constants.dialog.DIALOG_WORLD_X_OFFSET - 20;
@@ -27,9 +27,9 @@ public final class Minigames {
 	public final float AVOID_OBSTACLES_FAIL_VALUE = 0.6f;
 
 	// Gear shift
-	public final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "GearShiftMinigameBackground";
-	public final String GEAR_SHIFTER_TEXTURE = "gearShifter";	
-	public final String GEAR_SHIFT_MINIGAME_FINISH_TEXTURE = "gearShiftMinigameFinish";
+	public final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "minigames/GearShiftMinigameBackground";
+	public final String GEAR_SHIFTER_TEXTURE = "minigames/gearShifter";	
+	public final String GEAR_SHIFT_MINIGAME_FINISH_TEXTURE = "minigames/gearShiftMinigameFinish";
 	public final float GEAR_SHIFT_MINIGAME_FINISH_RADIUS = 50;
 	public final float GEAR_SHIFT_MINIGAME_ROW_1 = 180;
 	public final float GEAR_SHIFT_MINIGAME_ROW_2 = 245;
@@ -45,9 +45,9 @@ public final class Minigames {
 	public final float GEAR_SHIFT_FAIL_VALUE = 0.7f;
 
 	// Boost
-	public final String BOOST_MINIGAME_BACKGROUND_TEXTURE = "BoostMinigameBackground";
-	public final String BOOST_MINIGAME_WAITING_BUTTON_TEXTURE = "BoostMinigameWaitingButton";
-	public final String BOOST_MINIGAME_HIGHLIGHTED_BUTTON_TEXTURE = "BoostMinigameHighlightButton";
+	public final String BOOST_MINIGAME_BACKGROUND_TEXTURE = "minigames/BoostMinigameBackground";
+	public final String BOOST_MINIGAME_WAITING_BUTTON_TEXTURE = "minigames/boost/BoostMinigameWaitingButton";
+	public final String BOOST_MINIGAME_HIGHLIGHTED_BUTTON_TEXTURE = "minigames/boost/BoostMinigameHighlightButton";
 	public final float BOOST_MINIGAME_BUTTONS_DISTANCE = 60;
 	public final int BOOST_MINIGAME_ROWS_KIDDIE = 1;
 	public final int BOOST_MINIGAME_ROWS_BEGINNER = 2;
@@ -73,11 +73,11 @@ public final class Minigames {
 	public final float BOOST_MINIGAME_WIN_VALUE = 2;
 
 	// Switching
-	public final String SWITCHING_MINIGAME_BACKGROUND_TEXTURE = "SwitchingMinigameBackground";
-	public final String SWITCHING_MINIGAME_BUTTON_TEXTURE = "SwitchingMinigameButton";
-	public final String SWITCHING_MINIGAME_DISABLED_BUTTON_TEXTURE = "SwitchingMinigameButtonDisabled";
-	public final String SWITCHING_MINIGAME_SLIDER_BACKGROUND_TEXTURE = "SwitchingSliderBackground";
-	public final String SWITCHING_MINIGAME_SLIDER_KNOB_TEXTURE = "SwitchingSliderKnob";
+	public final String SWITCHING_MINIGAME_BACKGROUND_TEXTURE = "minigames/SwitchingMinigameBackground";
+	public final String SWITCHING_MINIGAME_BUTTON_TEXTURE = "minigames/switching/SwitchingMinigameButton";
+	public final String SWITCHING_MINIGAME_DISABLED_BUTTON_TEXTURE = "minigames/switching/SwitchingMinigameButtonDisabled";
+	public final String SWITCHING_MINIGAME_SLIDER_BACKGROUND_TEXTURE = "minigames/switching/SwitchingSliderBackground";
+	public final String SWITCHING_MINIGAME_SLIDER_KNOB_TEXTURE = "minigames/switching/SwitchingSliderKnob";
 	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_KIDDIE = 1;
 	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_BEGINNER = 5;
 	public final float SWITCHING_MINIGAME_OPPONENT_SPEED_NORMAL = 10;
@@ -87,8 +87,8 @@ public final class Minigames {
 	public final float SWITCHING_MINIGAME_FAIL_VALUE = 0.8f;
 
 	// Anglicak
-	public final String ANGLICAK_MINIGAME_BACKGROUND_TEXTURE = "AnglicakMinigameBackground";
-	public final String ANGLICAK_MINIGAME_TARGET_TEXTURE = "AnglicakMinigameTarget";
+	public final String ANGLICAK_MINIGAME_BACKGROUND_TEXTURE = "minigames/AnglicakMinigameBackground";
+	public final String ANGLICAK_MINIGAME_TARGET_TEXTURE = "minigames/anglicak/AnglicakMinigameTarget";
 	public final float ANGLICAK_MINIGAME_CAR_START_POSITION_X = Constants.dialog.DIALOG_WORLD_X_OFFSET + 30;
 	public final int ANGLICAK_MINIGAME_TARGET_POSITION_X = 550;
 	public final int ANGLICAK_MINIGAME_TARGET_POSITION_Y = 240; 
@@ -104,11 +104,11 @@ public final class Minigames {
 	public float ANGLICAK_MINIGAME_TRIES_COUNT = 3;
 	
 	// Race
-	public final String RACE_MINIGAME_BACKGROUND_TEXTURE = "RaceMinigameBackground";
+	public final String RACE_MINIGAME_BACKGROUND_TEXTURE = "minigames/RaceMinigameBackground";
 	public final int RACE_MINIGAME_CAR_TYPE_COUNT = 2;
-	public final String RACE_MINIGAME_CAR_TEXTURE = "RaceMinigameCar";
+	public final String RACE_MINIGAME_CAR_TEXTURE = "minigames/race/RaceMinigameCar";
 	public float RACE_CAR_START_POSITION_X = 400;
-	public String LINE_TEXTURE = "roadLine";	
+	public String LINE_TEXTURE = "minigames/race/roadLine";	
 	public final float MIN_SPEED_ADDITION = 100;
 	public final float MAX_SPEED_ADDITION = 300;
 	public final float MIN_CAR_DISTANCE = 100;
@@ -132,11 +132,11 @@ public final class Minigames {
 	public final int RACE_MINIGAME_SPEED_EXTREME = 450;
 	
 	// Repairing
-	public final String REPAIRING_MINIGAME_BACKGROUND_TEXTURE = "RepairingMinigameBackground";
-	public final String REPAIRING_MINIGAME_HAND_JACK_TEXTURE = "RepairingMinigameHandJack";	
-	public final String REPAIRING_MINIGAME_SPANNER_TEXTURE = "RepairingMinigameSpanner";
-	public final String REPAIRING_MINIGAME_DAMAGED_TIRE_TEXTURE = "RepairingMinigameDamagedTire";
-	public final String REPAIRING_MINIGAME_NEW_TIRE_TEXTURE = "RepairingMinigameNewTire";
-	public final String REPAIRING_MINIGAME_OBJECT= "RepairingMinigameObject";
+	public final String REPAIRING_MINIGAME_BACKGROUND_TEXTURE = "minigames/RepairingMinigameBackground";
+	public final String REPAIRING_MINIGAME_HAND_JACK_TEXTURE = "minigames/repairingMinigame/RepairingMinigameHandJack";	
+	public final String REPAIRING_MINIGAME_SPANNER_TEXTURE = "minigames/repairingMinigame/RepairingMinigameSpanner";
+	public final String REPAIRING_MINIGAME_DAMAGED_TIRE_TEXTURE = "minigames/repairingMinigame/RepairingMinigameDamagedTire";
+	public final String REPAIRING_MINIGAME_NEW_TIRE_TEXTURE = "minigames/repairingMinigame/RepairingMinigameNewTire";
+	public final String REPAIRING_MINIGAME_OBJECT= "minigames/repairingMinigame/RepairingMinigameObject";
 	public final float REPAIRING_MINIGAME_TARGET_RADIUS = 80.f;
 }
