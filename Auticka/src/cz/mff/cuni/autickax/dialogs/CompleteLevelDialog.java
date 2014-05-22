@@ -2,6 +2,9 @@ package cz.mff.cuni.autickax.dialogs;
 
 import java.text.DecimalFormat;
 
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.GameStatistics;
@@ -15,39 +18,45 @@ public class CompleteLevelDialog extends DecisionDialog {
 
 	GameStatistics stats;
 	SubLevel2 subLevel2;
+	ScreenAdaptiveLabel scoreLabel, timeLabel;
+
+	float ANIMATION_DURATION = 4;
+	DecimalFormat decimalFormat = new DecimalFormat("0.#");
+	DecimalFormat decimalFormat2 = new DecimalFormat("0.00");
+	int score;
+	ScreenAdaptiveImage[] stars = new ScreenAdaptiveImage[3];
+	Drawable filledStarDrawable;
+	byte starsCount;
 
 	public CompleteLevelDialog(GameScreen gameScreen, SubLevel2 subLevel2, GameStatistics stats,
 			boolean isNextLevelAvailible) {
 		super(gameScreen, subLevel2, null, isNextLevelAvailible);
 		this.stats = stats;
 		this.subLevel2 = subLevel2;
-
 		createLabels();
 
-		drawStars(stats.getNumberOfStars(), Constants.dialog.COMPLETE_DIALOG_STAR_POSITION_X,
+		initializeStars(Constants.dialog.COMPLETE_DIALOG_STAR_POSITION_X,
 				Constants.dialog.COMPLETE_DIALOG_STAR_POSITION_Y);
 	}
 
-	private void drawStars(byte stars, int x, int y) {
-		byte j = 0;
-		for (; j < stars; ++j) {
-			drawStar(x, y, j, Constants.dialog.COMPLETE_DIALOG_STAR_FILLED_TEXTURE);
-		}
-		for (; j < 3; ++j) {
-			drawStar(x, y, j, Constants.dialog.COMPLETE_DIALOG_STAR_EMPTY_TEXTURE);
+	private void initializeStars(int x, int y) {
+		this.starsCount = stats.getNumberOfStars();
+		filledStarDrawable = new TextureRegionDrawable(
+				Autickax.getInstance().assets
+						.getGraphics(Constants.dialog.COMPLETE_DIALOG_STAR_FILLED_TEXTURE));
+		for (byte j = 0; j < 3; ++j) {
+			ScreenAdaptiveImage gainedStar = new ScreenAdaptiveImage(
+					Autickax.getInstance().assets
+							.getGraphics(Constants.dialog.COMPLETE_DIALOG_STAR_EMPTY_TEXTURE));
+			gainedStar.setPosition(x, (y + j * offset));
+			this.stars[j] = gainedStar;
+			stage.addActor(gainedStar);
 		}
 	}
 
 	float starsXStart = 600;
 	float starsY = 200;
 	float offset = 80;
-
-	private void drawStar(int x, int y, byte j, String textureName) {
-		ScreenAdaptiveImage gainedStar = new ScreenAdaptiveImage(
-				Autickax.getInstance().assets.getGraphics(textureName));
-		gainedStar.setPosition(x, (y + j * offset));
-		stage.addActor(gainedStar);
-	}
 
 	private void createLabels() {
 		ScreenAdaptiveLabel[][] labels = new ScreenAdaptiveLabel[6][2];
@@ -64,18 +73,18 @@ public class CompleteLevelDialog extends DecisionDialog {
 		labels[2][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(String.valueOf(stats
 				.getFailed()));
 
-		DecimalFormat decimalFormat = new DecimalFormat("0.#");
 		labels[3][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Time in first part:");
 		labels[3][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(decimalFormat.format(stats
 				.getPhase1ElapsedTime()) + '/' + decimalFormat.format(stats.getPhase1TimeLimit()));
 
 		labels[4][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Time in second part:");
-		labels[4][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(decimalFormat.format(stats
-				.getPhase2ElapsedTime()));
+		timeLabel = labels[4][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(decimalFormat2
+				.format(stats.getPhase2ElapsedTime()));
 
 		labels[5][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Score:");
-		labels[5][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(Integer.toString(stats
-				.getScoreFromTime()));
+		this.score = stats.getScoreFromTime();
+		scoreLabel = labels[5][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(Integer
+				.toString(this.score));
 
 		for (int row = 0; row < labels.length; row++) {
 			labels[row][0]
@@ -113,7 +122,7 @@ public class CompleteLevelDialog extends DecisionDialog {
 			public void action() {
 				status = DialogAbstractStatus.FINISHED;
 				decision = DecisionType.CONTINUE;
-				subLevel2.onLevelComplete();				
+				subLevel2.onLevelComplete();
 				dispose();
 			}
 		};
@@ -121,5 +130,32 @@ public class CompleteLevelDialog extends DecisionDialog {
 				Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_X,
 				Constants.dialog.DECISION_DIALOG_BUTTON_CONTINUE_POSITION_Y);
 		this.stage.addActor(buttonContinue);
+	}
+
+	float dialogElapsedTime = 0;
+	int starIndex = 1;
+
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+
+		this.dialogElapsedTime += delta;
+
+		if (dialogElapsedTime <= ANIMATION_DURATION) {
+			float progress = this.dialogElapsedTime / ANIMATION_DURATION;
+
+			float elapsedTime = progress * stats.getPhase2ElapsedTime();
+			this.timeLabel.setText(decimalFormat2.format(elapsedTime));
+
+			this.scoreLabel.setText(Integer.toString((int) (progress * this.score)));
+
+			if (progress > (float) this.starIndex / (this.starsCount + 1)) {
+				Autickax.getInstance().assets.soundAndMusicManager.playSound(
+						Constants.sounds.SOUND_FINISH_DIALOG_STAR_PREFIX + this.starIndex, 1);
+				this.stars[this.starIndex - 1].setDrawable(this.filledStarDrawable);
+				this.starIndex++;
+			}
+		}
+
 	}
 }

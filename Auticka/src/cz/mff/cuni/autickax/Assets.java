@@ -201,6 +201,10 @@ public class Assets {
 		soundsMap.put(Constants.sounds.SOUND_SUB1_FAIL, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB1_FAIL_PATH)));
 		soundsMap.put(Constants.sounds.SOUND_SUB2_START, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB2_START_PATH)));
 		
+		for (int i = 1; i <= 3; i++) {
+			soundsMap.put(Constants.sounds.SOUND_FINISH_DIALOG_STAR_PREFIX + i, Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_FINISH_DIALOG_STAR_PATH_PREFIX + i + ".mp3")));
+		}
+		
 		Music menuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.sounds.MUSIC_MENU_PATH));
 		Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.sounds.MUSIC_RACE_PATH));
 		this.soundAndMusicManager = new SoundAndMusicManager(soundsMap, raceMusic, menuMusic);

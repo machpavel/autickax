@@ -28,5 +28,5 @@
 	<background>
 		<constantBackground red="169" green="207" blue="56"/>
 	</background>
-	<timeLimit>10.0</timeLimit>
+	<timeLimit>20.0</timeLimit>
 </AutickaX>

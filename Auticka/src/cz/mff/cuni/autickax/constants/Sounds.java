@@ -65,6 +65,10 @@ public final class Sounds {
 	public final String SOUND_SUB2_START_PATH = "sfx/sublevels/auto_car_rev_up_squeal_away.mp3";
 	public final float SOUNDS_ENGINE_DELAY = 1.8f;
 
+	public final String SOUND_FINISH_DIALOG_STAR_PREFIX = "finish_star";
+	public final String SOUND_FINISH_DIALOG_STAR_PATH_PREFIX = "sfx/finishDialog/star";
+	
+	
 	public final String SOUND_BUTTON_DIALOG_SOUND = SOUND_MENU_CLOSE;
 	/** Default value of volume */
 	public final float MUSIC_DEFAULT_VOLUME = 0.5f;
