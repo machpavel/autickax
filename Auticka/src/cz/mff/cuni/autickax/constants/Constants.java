@@ -13,7 +13,7 @@ public final class Constants {
 	public static final TyreTracksConstants tyreTracksConstants = new TyreTracksConstants();
 	public static final TimeStatusBarConsts tsb = new TimeStatusBarConsts();
 	
-	public static final String levelBackgroundsDirectory = "backgrounds";
+	public static final String levelBackgroundsDirectory = "backgrounds/";
 	
 	
 	/**
