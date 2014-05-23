@@ -66,7 +66,7 @@ public final class AnglicakMinigame extends Minigame {
 		this.target = new AnglicakMinigameTarget(targetLocationX, targetLocationY, targetRadius);
 		this.stage.addActor(this.target);
 
-		this.car = new Car(0, 0, 1);		
+		this.car = new Car(0, 0, 1);
 
 		restartForNewTry();
 	}
@@ -137,9 +137,9 @@ public final class AnglicakMinigame extends Minigame {
 					averageDelta += carSpeedsDeltas[i];
 				}
 				averageDelta /= carSpeeds.length;
-				carSpeed.scl(1/carSpeeds.length);
+				carSpeed.scl(1.f / carSpeeds.length);
 
-				carSpeed.scl(1/averageDelta); // Normalization
+				carSpeed.scl(1.f / averageDelta); // Normalization
 
 				lastCarPosition = newPosition;
 				carSpeedsIndex = carSpeedsIndex % carSpeeds.length;
