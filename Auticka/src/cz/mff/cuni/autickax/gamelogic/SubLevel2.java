@@ -52,10 +52,10 @@ public class SubLevel2 extends SubLevel {
 	// to main screen;
 	private boolean playNextLevel = false;
 	private GameStatistics stats;
-	
-	//class supporting calculating and rendering tyre tracks on the road
+
+	// class supporting calculating and rendering tyre tracks on the road
 	private TyreTracks tyreTracks;
-	
+
 	public enum SubLevel2States {
 		ENGINE_RAGING_STATE, BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
 	}
@@ -85,10 +85,10 @@ public class SubLevel2 extends SubLevel {
 		this.level.getCar().move(this.from.position);
 		this.level.getCar().setNextPositionIsDirection();
 		this.level.getCar().move(this.to.position);
-		
+
 		this.tyreTracks = new TyreTracks(this.from.position);
 		this.level.getStage().addActor(this.tyreTracks);
-		this.tyreTracks.addPoint(this.to.position,this.stats.getPhase2ElapsedTime());
+		this.tyreTracks.addPoint(this.to.position, this.stats.getPhase2ElapsedTime());
 	}
 
 	@Override
@@ -293,7 +293,7 @@ public class SubLevel2 extends SubLevel {
 	 */
 	private void computeVelocity() {
 		float time = this.to.time - this.from.time;
-		velocity = new Vector2(this.to.position).sub(this.from.position).scl(1 / time);
+		velocity = new Vector2(this.to.position).sub(this.from.position).scl(1.f / time);
 		velocityMagnitude = velocity.len();
 
 		float distanceFromCurveCenter = distMap.At(this.level.getCar().getPosition());
@@ -354,9 +354,8 @@ public class SubLevel2 extends SubLevel {
 			Autickax.playedLevels.storeLevels();
 		}
 	}
-	
-	private void restart()
-	{
+
+	private void restart() {
 		this.level.switchToPhase(this.phase1);
 		this.phase1.reset();
 		this.tyreTracks.clear();
@@ -369,7 +368,7 @@ public class SubLevel2 extends SubLevel {
 
 		float score = this.stats.getScoreFromTime();
 		if (score > this.level.getPlayedLevel().score)
-			this.level.getPlayedLevel().score = score;		
+			this.level.getPlayedLevel().score = score;
 	}
 
 	public void playNextLevel() {
