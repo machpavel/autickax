@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -160,14 +160,13 @@ public final class EditorScreen extends BaseScreenEditor {
 		createGenerateButton();
 		createDifficultyButtons();
 		createTextField();
-		
+
 		createRestartButton();
 		createSaveButton();
 		createLoadButton();
-		
+
 		createBackgroundButtons();
 		createGameObjectsButtons();
-		
 
 		this.gameObjects = new ArrayList<GameObject>();
 
@@ -292,7 +291,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		// Clears stage - unnecessary step because everything will be rewritten
 		// by the distance map
 		// Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// Background and pathway
 		batch.begin();
@@ -311,11 +310,10 @@ public final class EditorScreen extends BaseScreenEditor {
 		shapeRenderer.end();
 
 		// Renders control points
-		Gdx.gl10.glPointSize(4);
-		shapeRenderer.begin(ShapeType.Point);
+		shapeRenderer.begin(ShapeType.Filled);
 		for (Vector2 point : pathway.getControlPoints()) {
 			shapeRenderer.setColor(1f, 0f, 0f, 1);
-			shapeRenderer.point(point.x, point.y, 0);
+			shapeRenderer.circle(point.x, point.y, 4);
 		}
 		shapeRenderer.end();
 
@@ -504,8 +502,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private void createLoadButton() {
 		buttonLoad = new TextButton("Load", this.textButtonStyle);
-		buttonLoad.setPosition(buttonSave.getX() + 20 + buttonSave.getWidth(),
-				buttonSave.getY());
+		buttonLoad.setPosition(buttonSave.getX() + 20 + buttonSave.getWidth(), buttonSave.getY());
 		stage.addActor(buttonLoad);
 
 		// Creates listener
@@ -693,11 +690,12 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private void createDifficultyButtons() {
 		int BUTTONS_OFFSET = 25;
-		 
 
 		for (int i = 0; i < Difficulty.values().length; i++) {
 			Button button = new TextButton(Integer.toString(i + 1), this.textButtonStyle);
-			button.setPosition(Constants.WORLD_WIDTH + i * BUTTONS_OFFSET + buttonGeneratePoints.getWidth() + BUTTONS_OFFSET, buttonGeneratePoints.getY());
+			button.setPosition(
+					Constants.WORLD_WIDTH + i * BUTTONS_OFFSET + buttonGeneratePoints.getWidth()
+							+ BUTTONS_OFFSET, buttonGeneratePoints.getY());
 			stage.addActor(button);
 
 			// Creates listener
@@ -707,8 +705,8 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private void createTextField() {
 		timeTextField = new TextField(new DecimalFormat().format(timeLimit), this.textFieldStyle);
-		timeTextField.setPosition(buttonGeneratePoints.getX() + buttonGeneratePoints.getWidth() + 170,
-				buttonGeneratePoints.getY());
+		timeTextField.setPosition(buttonGeneratePoints.getX() + buttonGeneratePoints.getWidth()
+				+ 170, buttonGeneratePoints.getY());
 		timeTextField.setTextFieldListener(new DigitsTextFieldInputListener(this));
 		timeTextField.addListener(new InputListener() {
 			@Override

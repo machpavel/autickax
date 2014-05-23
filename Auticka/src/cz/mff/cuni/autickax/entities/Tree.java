@@ -40,10 +40,14 @@ public final class Tree extends GameTerminatingObject implements Externalizable 
 	}
 
 	/** Gets the texture name according to a type */
+	public static String GetStaticTextureName(int type) {
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + Constants.gameObjects.TREE_NAME
+				+ type;
+	}
+
 	@Override
-	public String GetStaticTextureName(int type) {
-		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
-				+ Constants.gameObjects.TREE_NAME + type;
+	public String GetTextureName(int type) {
+		return GetStaticTextureName(type);
 	}
 
 }

@@ -26,16 +26,11 @@ public abstract class GameTerminatingObject extends GameObject implements Extern
 		return new Crash(this.getResultMessage(), gameScreen, parent);
 	}
 	
-	/** Gets the texture name according to a type*/
-	public String GetTextureName(int type){
-		return this.GetStaticTextureName(this.type);
-	}
-	
 	public void setTexture(int type) {
 		super.setTexture(this.GetTextureName(type));		
 	}
 	
 	protected abstract String getResultMessage();
 	
-	public abstract String GetStaticTextureName(int type);
+	public abstract String GetTextureName(int type);
 }
