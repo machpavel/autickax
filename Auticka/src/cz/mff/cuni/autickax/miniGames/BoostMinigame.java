@@ -2,7 +2,7 @@ package cz.mff.cuni.autickax.miniGames;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
@@ -33,9 +33,9 @@ public final class BoostMinigame extends Minigame {
 	public BoostMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
 		setDifficulty(this.level.getDifficulty());
-		this.backgroundTexture = new TextureRegionDrawable(
+		this.backgroundTexture = new NinePatchDrawable(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.minigames.BOOST_MINIGAME_BACKGROUND_TEXTURE));
+						.getNinePatch(Constants.minigames.BOOST_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Autickax.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(screen, parent,

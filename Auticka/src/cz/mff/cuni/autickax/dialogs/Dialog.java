@@ -1,7 +1,7 @@
 package cz.mff.cuni.autickax.dialogs;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
@@ -15,9 +15,9 @@ public abstract class Dialog extends Comunicator {
 
 	public Dialog(GameScreen gameScreen, SubLevel parent, String message) {
 		super(gameScreen, parent);
-		this.backgroundTexture = new TextureRegionDrawable(
+		this.backgroundTexture = new NinePatchDrawable(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.dialog.DIALOG_BACKGROUND_TEXTURE));
+						.getNinePatch(Constants.dialog.DIALOG_BACKGROUND_TEXTURE));
 		this.messageLabel = ScreenAdaptiveLabel.getDialogLabel(message);
 
 		this.messageLabel.setWrap(true);

@@ -2,7 +2,7 @@ package cz.mff.cuni.autickax.dialogs;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
@@ -11,7 +11,7 @@ import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.scene.ScreenInputListener;
 
 public abstract class Comunicator extends SubLevel {
-	protected TextureRegionDrawable backgroundTexture;
+	protected NinePatchDrawable backgroundTexture;
 	protected DialogAbstractStatus status;
 	protected SubLevel parent;
 

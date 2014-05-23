@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
@@ -33,9 +34,9 @@ public final class SwitchingMinigame extends Minigame {
 	public SwitchingMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
 		setDifficulty(this.level.getDifficulty());
-		this.backgroundTexture = new TextureRegionDrawable(
+		this.backgroundTexture = new NinePatchDrawable(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_BACKGROUND_TEXTURE));
+						.getNinePatch(Constants.minigames.SWITCHING_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Autickax.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(screen, parent,

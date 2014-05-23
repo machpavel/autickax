@@ -8,7 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
@@ -59,9 +59,9 @@ public final class RaceMinigame extends Minigame {
 
 		setDifficulty(this.level.getDifficulty());
 
-		this.backgroundTexture = new TextureRegionDrawable(
+		this.backgroundTexture = new NinePatchDrawable(
 				Autickax.getInstance().assets
-						.getGraphics(Constants.minigames.RACE_MINIGAME_BACKGROUND_TEXTURE));
+						.getNinePatch(Constants.minigames.RACE_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Autickax.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(gameScreen, parent,
