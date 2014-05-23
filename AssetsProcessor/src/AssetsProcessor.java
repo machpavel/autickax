@@ -120,6 +120,7 @@ public class AssetsProcessor {
     private static void compressImages() {
     	Settings settings = new Settings();
     	settings.combineSubdirectories = true;
+    	settings.useIndexes = false;
     	
     	TexturePacker.process(
 			settings,
