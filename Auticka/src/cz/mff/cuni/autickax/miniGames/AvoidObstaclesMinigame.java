@@ -55,9 +55,9 @@ public final class AvoidObstaclesMinigame extends Minigame {
 
 		this.gameObjects = new ArrayList<GameObject>();
 
-		this.finish = new Finish(FINISH_START_POSITION_X, Constants.WORLD_HEIGHT / 2, FINISH_TYPE);		
+		this.finish = new Finish(FINISH_START_POSITION_X, Constants.WORLD_HEIGHT / 2, FINISH_TYPE);
 
-		this.car = new Car(CAR_START_POSITION_X, Constants.WORLD_HEIGHT / 2, 1);		
+		this.car = new Car(CAR_START_POSITION_X, Constants.WORLD_HEIGHT / 2, 1);
 		this.car.setDragged(false);
 
 		generateObstacles(gameObjects);
@@ -103,15 +103,15 @@ public final class AvoidObstaclesMinigame extends Minigame {
 				switch (obstaclesType) {
 				case HOLES:
 					int avoidHoleType = MathUtils.random(1,
-							Constants.gameObjects.AVOID_HOLES_TYPES_COUNT);
-					AvoidHole avoidHoleObstacle = new AvoidHole(xPosition, yPosition, avoidHoleType);					
+							Constants.minigames.AVOID_HOLES_TYPES_COUNT);
+					AvoidHole avoidHoleObstacle = new AvoidHole(xPosition, yPosition, avoidHoleType);
 					gameObjects.add(avoidHoleObstacle);
 					break;
 				case STONES:
 					int avoidStoneType = MathUtils.random(1,
-							Constants.gameObjects.AVOID_STONE_TYPES_COUNT);
+							Constants.minigames.AVOID_STONE_TYPES_COUNT);
 					AvoidStone avoidStoneObstacle = new AvoidStone(xPosition, yPosition,
-							avoidStoneType);					
+							avoidStoneType);
 					gameObjects.add(avoidStoneObstacle);
 					break;
 				default:
@@ -220,8 +220,8 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		this.result = ResultType.PROCEEDED;
 		leave();
 	}
-	
-	private void leave(){
+
+	private void leave() {
 		this.car.setDragged(false);
 		this.car.setCanBeDragged(false);
 		this.playResultSound();

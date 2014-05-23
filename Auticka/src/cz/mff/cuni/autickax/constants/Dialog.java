@@ -14,7 +14,7 @@ public final class Dialog {
 	// DIALOG POSITIONING AND TEXTURES
 	//
 
-	public final String DIALOG_BACKGROUND_TEXTURE = "dialog/DialogBackground";
+	public final String DIALOG_BACKGROUND_TEXTURE = "dialog/dialogBackground";
 
 	public final float DIALOG_MESSAGE_POSITION_X = 400;
 	public final float DIALOG_MESSAGE_POSITION_Y = 270;

@@ -6,7 +6,7 @@ import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.entities.GameObject;
 
 public final class AvoidHole extends GameObject implements Externalizable {
-	public static String name = Constants.gameObjects.AVOID_HOLES_NAME;
+	public static String name = Constants.minigames.AVOID_HOLES_NAME;
 
 	public AvoidHole(float x, float y, int type) {
 		super(x, y, type);
@@ -22,8 +22,8 @@ public final class AvoidHole extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.AVOID_HOLES_TEXTURE_PREFIX
-				+ Constants.gameObjects.AVOID_HOLES_NAME + type;
+		return Constants.minigames.AVOID_HOLES_TEXTURE_PREFIX
+				+ Constants.minigames.AVOID_HOLES_NAME + type;
 
 	}
 

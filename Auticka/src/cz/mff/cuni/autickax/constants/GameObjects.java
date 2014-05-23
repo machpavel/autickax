@@ -34,43 +34,35 @@ public final class GameObjects {
 
 	public final int TREE_TYPES_COUNT = 15;
 	public final String TREE_NAME = "tree";
-	
+
 	public final int FENCE_TYPES_COUNT = 2;
 	public final String FENCE_NAME = "fence";
-	
+
 	public final int HOUSE_TYPES_COUNT = 1;
 	public final String HOUSE_NAME = "house";
-	
+
 	public final int PARKING_CAR_TYPES_COUNT = 4;
 	public final String PARKING_CAR_NAME = "parkingCar";
-	
+
 	public final int RACING_CAR_TYPES_COUNT = 2;
 	public final String RACING_CAR_NAME = "racingCar";
-	
+
 	public final int WALL_TYPES_COUNT = 1;
 	public final String WALL_NAME = "wall";
-	
+
 	public final int HILL_TYPES_COUNT = 14;
 	public final String HILL_NAME = "hill";
 
 	public final int HOLE_TYPES_COUNT = 3;
 	public final String HOLE_NAME = "hole";
-	
+
 	public final int PNEU_TYPES_COUNT = 1;
 	public final String PNEU_NAME = "pneu";
 	public final float PNEU_SPEED_REDUCTION = 0.3f;
 
-	public final int AVOID_STONE_TYPES_COUNT = 15;
-	public final String AVOID_STONE_TEXTURE_PREFIX = "minigames/avoidstones/";
-	public final String AVOID_STONE_NAME = "avoidstone";
-
-	public final int AVOID_HOLES_TYPES_COUNT = 18;
-	public final String AVOID_HOLES_TEXTURE_PREFIX = "minigames/avoidholes/";
-	public final String AVOID_HOLES_NAME = "avoidhole";
-
 	public final int BOOSTER_TYPES_COUNT = 1;
 	public final String BOOSTER_NAME = "booster";
-	
+
 	public final int TORNADO_TYPES_COUNT = 2;
 	public final String TORNADO_NAME = "tornado";
 }
