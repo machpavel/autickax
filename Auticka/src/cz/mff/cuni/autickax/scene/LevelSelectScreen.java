@@ -7,12 +7,19 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.Debug;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveTextButton;
 
 public class LevelSelectScreen extends BaseScreen {
@@ -37,12 +44,16 @@ public class LevelSelectScreen extends BaseScreen {
 	private int maximumPage;
 	ScreenAdaptiveTextButton[] buttons;
 
+	Slider slider;
+	private boolean sliderIsOperating = false;
+
 	public LevelSelectScreen(final Difficulty difficulty) {
 		this(difficulty, 0);
 	}
 
-	public LevelSelectScreen(final Difficulty difficulty, final int startingPage) {
+	static float sliderXOffset = 100;
 
+	public LevelSelectScreen(final Difficulty difficulty, final int startingPage) {
 		this.difficulty = difficulty;
 		this.actualPage = startingPage;
 
@@ -66,22 +77,18 @@ public class LevelSelectScreen extends BaseScreen {
 					buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
 					buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
 					break;
-
 				case 1:
 					buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_ONE_STAR;
 					buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_ONE_STAR_HOVER;
 					break;
-
 				case 2:
 					buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_TWO_STARS;
 					buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_TWO_STARS_HOVER;
 					break;
-
 				case 3:
 					buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_THREE_STARS;
 					buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_THREE_STARS_HOVER;
 					break;
-
 				default:
 					throw new RuntimeException("Stars can't be more then three");
 				}
@@ -145,6 +152,37 @@ public class LevelSelectScreen extends BaseScreen {
 		for (ScreenAdaptiveTextButton levelButton : this.buttons) {
 			levelButton.setX(levelButton.getX() - this.actualPage * Gdx.graphics.getWidth());
 		}
+
+		this.createSlider(this.maximumPage, this.actualPage);
+	}
+
+	private void createSlider(float maxPages, float actualPage) {
+		SliderStyle style = new SliderStyle();
+		// TODO Figure out how to show the progress
+		style.background = new TextureRegionDrawable(
+				Autickax.getInstance().assets
+						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_SLIDER_BACKGROUND_TEXTURE));
+		style.knob = new TextureRegionDrawable(
+				Autickax.getInstance().assets
+						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_SLIDER_KNOB_TEXTURE));
+		this.slider = new Slider(0, 100, 0.001f, false, style);
+		this.slider.setWidth(maxPages * sliderXOffset);
+		this.slider.setPosition(400 * Input.xStretchFactorInv - this.slider.getWidth() / 2,
+				20 * Input.yStretchFactorInv);
+		this.slider.setValue(50);
+		this.slider.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				sliderIsOperating = true;
+				return true;
+			}
+
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				sliderIsOperating = false;
+			}
+		});
+		//this.stage.addActor(slider);
 	}
 
 	@Override
@@ -168,36 +206,44 @@ public class LevelSelectScreen extends BaseScreen {
 		GestureDetector gestureDetector = new GestureDetector(new MenuGestureListener() {
 			@Override
 			public boolean touchDown(float x, float y, int pointer, int button) {
-				// Enables stage buttons to load level
-				wasPanned = false;
-				// Stops moving of buttons
-				autoListButtons = false;
+				if (!sliderIsOperating) {
+					// Enables stage buttons to load level
+					wasPanned = false;
+					// Stops moving of buttons
+					autoListButtons = false;
+				}
 				return false;
 			}
 
 			@Override
 			public boolean fling(float velocityX, float velocityY, int button) {
-				// Sets the speed of momentum
-				flingVelocity = velocityX;
+				if (!sliderIsOperating) {
+					// Sets the speed of momentum
+					flingVelocity = velocityX;
+				}
 				return false;
 			}
 
 			@Override
 			public boolean pan(float x, float y, float deltaX, float deltaY) {
-				// Shifts buttons and disables level loading
-				wasPanned = true;
-				for (ScreenAdaptiveTextButton levelButton : buttons) {
-					levelButton.setX(levelButton.getX() + deltaX);
+				if (!sliderIsOperating) {
+					// Shifts buttons and disables level loading
+					wasPanned = true;
+					for (ScreenAdaptiveTextButton levelButton : buttons) {
+						levelButton.setX(levelButton.getX() + deltaX);
+					}
+					buttonsShift += deltaX;
 				}
-				buttonsShift += deltaX;
 				return true;
 			}
 		}) {
 			@Override
 			public boolean touchUp(int x, int y, int pointer, int button) {
-				// Starts buttons animation
-				autoListButtons = true;
-				lastButtonsShift = buttonsShift;
+				if (!sliderIsOperating) {
+					// Starts buttons animation
+					autoListButtons = true;
+					lastButtonsShift = buttonsShift;
+				}
 				return super.touchUp(x, y, pointer, button);
 			}
 		};
@@ -206,6 +252,7 @@ public class LevelSelectScreen extends BaseScreen {
 
 	@Override
 	public void render(float delta) {
+		Debug.SetValue(this.buttonsShift);
 		autoMoveButtons(delta);
 		super.render(delta);
 	}
@@ -213,30 +260,54 @@ public class LevelSelectScreen extends BaseScreen {
 	private void autoMoveButtons(float delta) {
 		boolean isGoingRight = this.flingVelocity < 0;
 		boolean isGoingLeft = this.flingVelocity > 0;
-		if ((this.actualPage == 0 && isGoingLeft)
-				|| (this.actualPage == this.maximumPage && isGoingRight))
-			this.flingVelocity = -this.flingVelocity;
-
 		if (this.autoListButtons) {
-			boolean zeroCrossing = Math.signum(lastButtonsShift) != Math.signum(buttonsShift);
-			boolean limitCrossing = Math.abs(this.buttonsShift) > Gdx.graphics.getWidth();
-			if (!zeroCrossing && !limitCrossing) {
-				for (ScreenAdaptiveTextButton levelButton : this.buttons) {
-					levelButton.setX(levelButton.getX() + delta * this.flingVelocity);
-				}
-				this.lastButtonsShift = this.buttonsShift;
-				this.buttonsShift += delta * this.flingVelocity;
-			} else {
-				for (ScreenAdaptiveTextButton levelButton : this.buttons) {
-					levelButton.setX(levelButton.getX() - this.buttonsShift
-							% Gdx.graphics.getWidth());
-				}
+			// More pages
+			if (this.maximumPage > 0) {
+				if ((this.actualPage == 0 && isGoingLeft)
+						|| (this.actualPage == this.maximumPage && isGoingRight))
+					this.flingVelocity = -this.flingVelocity;
 
-				if (!zeroCrossing)
-					this.actualPage -= Math.signum(this.flingVelocity);
+				boolean zeroCrossing = Math.signum(lastButtonsShift) != Math.signum(buttonsShift);
+				boolean limitCrossing = Math.abs(this.buttonsShift) > Gdx.graphics.getWidth();
+				if (!zeroCrossing && !limitCrossing) {
+					float shift = delta * this.flingVelocity;
+					for (ScreenAdaptiveTextButton levelButton : this.buttons) {
+						levelButton.setX(levelButton.getX() + shift);
+					}
+					this.lastButtonsShift = this.buttonsShift;
+					this.buttonsShift += shift;
+				} else {
+					for (ScreenAdaptiveTextButton levelButton : this.buttons) {
+						levelButton.setX(levelButton.getX() - this.buttonsShift
+								% Gdx.graphics.getWidth());
+					}
 
-				this.buttonsShift = 0;
-				this.autoListButtons = false;
+					if (!zeroCrossing)
+						this.actualPage -= Math.signum(this.flingVelocity);
+
+					this.buttonsShift = 0;
+					this.autoListButtons = false;
+				}
+			}
+			// Only one page
+			else {
+				boolean zeroCrossing = Math.signum(lastButtonsShift) != Math.signum(buttonsShift);
+				if (!zeroCrossing) {
+					float shift = -delta * Math.signum(this.buttonsShift)
+							* Math.abs(this.flingVelocity);
+					for (ScreenAdaptiveTextButton levelButton : this.buttons) {
+						levelButton.setX(levelButton.getX() + shift);
+					}
+					this.lastButtonsShift = this.buttonsShift;
+					this.buttonsShift += shift;
+				} else {
+					for (ScreenAdaptiveTextButton levelButton : this.buttons) {
+						levelButton.setX(levelButton.getX() - this.buttonsShift
+								% Gdx.graphics.getWidth());
+					}
+					this.buttonsShift = 0;
+					this.autoListButtons = false;
+				}
 			}
 		}
 	}
