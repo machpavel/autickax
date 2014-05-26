@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
@@ -37,9 +36,6 @@ public class GameScreen extends BaseScreen {
 
 	// Textures
 	private TextureRegion pathwayTexture;
-
-	// Rendering
-	protected OrthographicCamera camera;
 
 	// Levels
 	private SubLevel currentPhase;
@@ -96,7 +92,8 @@ public class GameScreen extends BaseScreen {
 	}
 
 	/**
-	 * Initializes stuffs with textures. For more details see initializeGameScreen function.
+	 * Initializes stuffs with textures. For more details see
+	 * initializeGameScreen function.
 	 */
 	public void initializeTextures() {
 		level.setTextures();
@@ -113,12 +110,9 @@ public class GameScreen extends BaseScreen {
 	 * has to be called separately.
 	 */
 	public void initializeGameScreen() {
-		// Camera
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, stageWidth, stageHeight);
 
 		// Pathway
-		this.pathway = level.getPathway();		
+		this.pathway = level.getPathway();
 		this.pathway.CreateDistances();
 
 		// Game objects
@@ -138,7 +132,7 @@ public class GameScreen extends BaseScreen {
 				this.finish.getPosition()).nor();
 		this.finish.setShift(finishDirection.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
-		
+
 		// Start Music!
 		if (Autickax.settings.isPlayMusic()) {
 			Autickax.getInstance().assets.soundAndMusicManager.playRaceMusic();
@@ -184,17 +178,12 @@ public class GameScreen extends BaseScreen {
 		this.camera.unproject(vector);
 	}
 
-	protected void update(float delta) {
-		this.currentPhase.update(delta);
-	}
-
 	@Override
 	public void render(float delta) {
 		clearScreenWithColor(); // This cryptic line clears the screen
 
 		camera.update();
-		batch.setProjectionMatrix(camera.combined); // see
-													// https://github.com/libgdx/libgdx/wiki/Orthographic-camera
+		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
 		batch.disableBlending();
@@ -228,11 +217,10 @@ public class GameScreen extends BaseScreen {
 		Autickax.getInstance().assets.soundAndMusicManager.stopRaceMusic();
 		Autickax.getInstance().assets.soundAndMusicManager.playMenuMusic();
 		Autickax.levelSelectScreen.dispose();
-		Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty,
-				(levelIndex / Constants.menu.DISPLAYED_LEVELS_MAX_COUNT)
-						* Constants.menu.DISPLAYED_LEVELS_MAX_COUNT);
+		Autickax.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty, levelIndex
+				/ Constants.menu.DISPLAYED_LEVELS_MAX_COUNT);
 		Autickax.getInstance().setScreen(Autickax.levelSelectScreen);
-		Gdx.input.setInputProcessor(Autickax.levelSelectScreen.getStage());
+		Autickax.levelSelectScreen.takeFocus();
 
 	}
 
@@ -276,11 +264,14 @@ public class GameScreen extends BaseScreen {
 		if (Gdx.files.isLocalStorageAvailable()) {
 			textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 					+ ".cim");
-			// System.out.println("Texture of pathway is loaded from local memory.");
+			//Gdx.app.log("TEXTURE", "Texture of pathway is loaded from local memory.");
+			// Debug.Log("Texture of pathway is loaded from local memory.");
 		} else {
 			textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 					+ ".cim");
-			// System.out.println("Texture of pathway is loaded from internal memory.");
+			// Gdx.app.log("TEXTURE",
+			// "Texture of pathway is loaded from internal memory.");
+			// Debug.Log("Texture of pathway is loaded from internal memory.");
 		}
 
 		if (textureFile.exists()) {
@@ -288,9 +279,12 @@ public class GameScreen extends BaseScreen {
 			this.pathwayTexture = new TextureRegion(new Texture(pixmap), Constants.WORLD_WIDTH,
 					Constants.WORLD_HEIGHT);
 			pixmap.dispose();
-			// System.out.println("The pathway texture was loaded succesfully.");
+			// Gdx.app.log("TEXTURE",
+			// "The pathway texture was loaded succesfully.");
+			// Debug.Log("The pathway texture was loaded succesfully.");
 		} else {
-			// System.out.println("Loading of pathway texture failed..");
+			// Gdx.app.log("TEXTURE", "Reading of saved");
+			// Debug.Log("Reading of saved ");
 		}
 	}
 

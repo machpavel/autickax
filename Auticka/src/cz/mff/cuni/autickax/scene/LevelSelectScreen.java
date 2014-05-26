@@ -3,14 +3,16 @@ package cz.mff.cuni.autickax.scene;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.input.GestureDetector;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.Level;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveButton;
 import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveTextButton;
 
 public class LevelSelectScreen extends BaseScreen {
@@ -20,30 +22,39 @@ public class LevelSelectScreen extends BaseScreen {
 	private static final int buttonsStartXPosition = 20;
 	private static final int buttonsStartYPosition = 330;
 	private static final int buttonsMaxXPosition = 750;
+	private static final int buttonsPageMaximalCount = Constants.menu.DISPLAYED_LEVELS_MAX_COUNT;
 	private static final int buttonsXShift = 150;
 	private static final int buttonsYShift = 150;
-	private static final int maximumCountOfButtons = Constants.menu.DISPLAYED_LEVELS_MAX_COUNT;
 
-	private static final int leftShifterPositionX = 5;
-	private static final int leftShifterPositionY = 200;
-	private static final int rightShifterPositionX = 750;
-	private static final int rightShifterPositionY = 200;
+	// Variable to disable buttons action (loading new level)
+	private boolean wasPanned = false;
+	private float lastButtonsShift = 0;
+	private float buttonsShift = 0;
+	private boolean autoListButtons = false;
+	private float flingVelocity;
+	private float actualPage;
+
+	private int maximumPage;
+	ScreenAdaptiveTextButton[] buttons;
 
 	public LevelSelectScreen(final Difficulty difficulty) {
 		this(difficulty, 0);
 	}
 
-	public LevelSelectScreen(final Difficulty difficulty, final int levelsOffset) {
+	public LevelSelectScreen(final Difficulty difficulty, final int startingPage) {
 
 		this.difficulty = difficulty;
+		this.actualPage = startingPage;
 
 		Vector<Level> levels = this.difficulty.getAvailableLevels();
 		Vector<PlayedLevel> playedLevels = this.difficulty.getPlayedLevels();
 
 		int x = buttonsStartXPosition;
 		int y = buttonsStartYPosition;
-		int numberOfButtons = Math.min(maximumCountOfButtons, levels.size() - levelsOffset);
-		for (int i = levelsOffset; i < levelsOffset + numberOfButtons; ++i) {
+		int page = 0;
+		int numberOfButtons = levels.size();
+		this.buttons = new ScreenAdaptiveTextButton[numberOfButtons];
+		for (int i = 0; i < numberOfButtons; ++i) {
 			final int levelIndex = i;
 
 			String buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
@@ -85,84 +96,55 @@ public class LevelSelectScreen extends BaseScreen {
 					Autickax.getInstance().assets.getLevelNumberFont(), i < playedLevels.size()) {
 				@Override
 				public void action() {
-					Autickax.getInstance().assets.soundAndMusicManager.pauseMenuMusic();
-					Autickax.getInstance().assets.soundAndMusicManager
-							.playSound(Constants.sounds.SOUND_MENU_OPEN,
-									Constants.sounds.SOUND_DEFAULT_VOLUME);
+					if (!wasPanned) {
+						Autickax.getInstance().assets.soundAndMusicManager.pauseMenuMusic();
+						Autickax.getInstance().assets.soundAndMusicManager.playSound(
+								Constants.sounds.SOUND_MENU_OPEN,
+								Constants.sounds.SOUND_DEFAULT_VOLUME);
 
-					if (Autickax.levelLoadingScreen != null) {
-						Autickax.levelLoadingScreen.dispose();
-						Autickax.levelLoadingScreen = null;
+						if (Autickax.levelLoadingScreen != null) {
+							Autickax.levelLoadingScreen.dispose();
+							Autickax.levelLoadingScreen = null;
+						}
+
+						Autickax.levelLoadingScreen = new LevelLoadingScreen(levelIndex, difficulty);
+						Autickax.getInstance().setScreen(Autickax.levelLoadingScreen);
 					}
-
-					Autickax.levelLoadingScreen = new LevelLoadingScreen(levelIndex, difficulty);
-
-					Autickax.getInstance().setScreen(Autickax.levelLoadingScreen);
 				}
 			};
 
 			levelButton.setPosition(x, y);
 			stage.addActor(levelButton);
+			buttons[i] = levelButton;
 
+			// Disables unplayed levels
 			if (i >= playedLevels.size()) {
 				levelButton.setDisabled(true);
 			}
 
-			if (x + LevelSelectScreen.buttonsXShift < LevelSelectScreen.buttonsMaxXPosition) {
-				x += LevelSelectScreen.buttonsXShift;
+			// Moves onto new page
+			if (i + 1 < LevelSelectScreen.buttonsPageMaximalCount * (page + 1)) {
+				// Positioning on a page
+				if (x + LevelSelectScreen.buttonsXShift < LevelSelectScreen.buttonsMaxXPosition
+						+ page * Constants.WORLD_WIDTH) {
+					x += LevelSelectScreen.buttonsXShift;
+				} else {
+
+					x = LevelSelectScreen.buttonsStartXPosition + page * Constants.WORLD_WIDTH;
+					y -= LevelSelectScreen.buttonsYShift;
+				}
 			} else {
-				x = LevelSelectScreen.buttonsStartXPosition;
-				y -= LevelSelectScreen.buttonsYShift;
+				page++;
+				x = LevelSelectScreen.buttonsStartXPosition + page * Constants.WORLD_WIDTH;
+				y = LevelSelectScreen.buttonsStartYPosition;
 			}
-		}
 
-		// Creates shift to the left
-		if (levelsOffset > 0) {
-			createShiftButton(leftShifterPositionX, leftShifterPositionY, ShifterDirection.LEFT,
-					levelsOffset);
 		}
-		// Creates shift to the right
-		if (levelsOffset + maximumCountOfButtons < levels.size()) {
-			createShiftButton(rightShifterPositionX, rightShifterPositionY, ShifterDirection.RIGHT,
-					levelsOffset);
+		this.maximumPage = page;
+
+		for (ScreenAdaptiveTextButton levelButton : this.buttons) {
+			levelButton.setX(levelButton.getX() - this.actualPage * Gdx.graphics.getWidth());
 		}
-	}
-
-	private void createShiftButton(float x, float y, ShifterDirection direction,
-			final int levelsOffset) {
-		final int shiftChange;
-		String buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
-		String buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
-		switch (direction) {
-		case LEFT:
-			shiftChange = -maximumCountOfButtons;
-			buttonTexture = Constants.menu.BUTTON_MENU_LEFT_SHIFTER;
-			buttonTextureHover = Constants.menu.BUTTON_MENU_LEFT_SHIFTER_HOVER;
-			break;
-		case RIGHT:
-			shiftChange = maximumCountOfButtons;
-			buttonTexture = Constants.menu.BUTTON_MENU_RIGHT_SHIFTER;
-			buttonTextureHover = Constants.menu.BUTTON_MENU_RIGHT_SHIFTER_HOVER;
-			break;
-		default:
-			throw new RuntimeException("Unrecognized direction: " + direction.toString());
-		}
-
-		ScreenAdaptiveButton button = new ScreenAdaptiveButton(
-				Autickax.getInstance().assets.getGraphics(buttonTexture),
-				Autickax.getInstance().assets.getGraphics(buttonTextureHover)) {
-
-			@Override
-			public void action() {
-				if (Autickax.levelSelectScreen != null)
-					Autickax.levelSelectScreen.dispose();
-				Autickax.levelSelectScreen = new LevelSelectScreen(difficulty, levelsOffset
-						+ shiftChange);
-				Autickax.getInstance().setScreen(Autickax.levelSelectScreen);
-			}
-		};
-		button.setPosition(x, y);
-		stage.addActor(button);
 	}
 
 	@Override
@@ -181,8 +163,81 @@ public class LevelSelectScreen extends BaseScreen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 
-	private enum ShifterDirection {
-		LEFT, RIGHT
+	@Override
+	protected InputProcessor createInputProcessor() {
+		GestureDetector gestureDetector = new GestureDetector(new MenuGestureListener() {
+			@Override
+			public boolean touchDown(float x, float y, int pointer, int button) {
+				// Enables stage buttons to load level
+				wasPanned = false;
+				// Stops moving of buttons
+				autoListButtons = false;
+				return false;
+			}
+
+			@Override
+			public boolean fling(float velocityX, float velocityY, int button) {
+				// Sets the speed of momentum
+				flingVelocity = velocityX;
+				return false;
+			}
+
+			@Override
+			public boolean pan(float x, float y, float deltaX, float deltaY) {
+				// Shifts buttons and disables level loading
+				wasPanned = true;
+				for (ScreenAdaptiveTextButton levelButton : buttons) {
+					levelButton.setX(levelButton.getX() + deltaX);
+				}
+				buttonsShift += deltaX;
+				return true;
+			}
+		}) {
+			@Override
+			public boolean touchUp(int x, int y, int pointer, int button) {
+				// Starts buttons animation
+				autoListButtons = true;
+				lastButtonsShift = buttonsShift;
+				return super.touchUp(x, y, pointer, button);
+			}
+		};
+		return new InputMultiplexer(gestureDetector, this.stage);
 	}
 
+	@Override
+	public void render(float delta) {
+		autoMoveButtons(delta);
+		super.render(delta);
+	}
+
+	private void autoMoveButtons(float delta) {
+		boolean isGoingRight = this.flingVelocity < 0;
+		boolean isGoingLeft = this.flingVelocity > 0;
+		if ((this.actualPage == 0 && isGoingLeft)
+				|| (this.actualPage == this.maximumPage && isGoingRight))
+			this.flingVelocity = -this.flingVelocity;
+
+		if (this.autoListButtons) {
+			boolean zeroCrossing = Math.signum(lastButtonsShift) != Math.signum(buttonsShift);
+			boolean limitCrossing = Math.abs(this.buttonsShift) > Gdx.graphics.getWidth();
+			if (!zeroCrossing && !limitCrossing) {
+				for (ScreenAdaptiveTextButton levelButton : this.buttons) {
+					levelButton.setX(levelButton.getX() + delta * this.flingVelocity);
+				}
+				this.lastButtonsShift = this.buttonsShift;
+				this.buttonsShift += delta * this.flingVelocity;
+			} else {
+				for (ScreenAdaptiveTextButton levelButton : this.buttons) {
+					levelButton.setX(levelButton.getX() - this.buttonsShift
+							% Gdx.graphics.getWidth());
+				}
+
+				if (!zeroCrossing)
+					this.actualPage -= Math.signum(this.flingVelocity);
+
+				this.buttonsShift = 0;
+				this.autoListButtons = false;
+			}
+		}
+	}
 }
