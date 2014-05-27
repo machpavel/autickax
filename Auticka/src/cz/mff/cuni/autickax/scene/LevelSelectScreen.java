@@ -20,6 +20,7 @@ import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.PlayedLevel;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.input.Input;
+import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveImage;
 import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveTextButton;
 
 public class LevelSelectScreen extends BaseScreen {
@@ -33,7 +34,8 @@ public class LevelSelectScreen extends BaseScreen {
 	private static final int buttonsXShift = 150;
 	private static final int buttonsYShift = 150;
 
-	static float sliderXOffset = 200;
+	static float sliderXOffset = 100;
+	static float sliderYPosition = 20;
 	static float defaultFlingVelocity = 600;
 
 	// Variable to disable buttons action (loading new level)
@@ -68,6 +70,7 @@ public class LevelSelectScreen extends BaseScreen {
 		this.pagesCount = numberOfButtons / buttonsPageMaximalCount + 1;
 		setButtonsPosition(this.actualPage, 0);
 
+		createAnchors(this.pagesCount);
 		this.slider = createSlider(this.pagesCount, this.actualPage);
 		this.stage.addActor(this.slider);
 	}
@@ -169,6 +172,20 @@ public class LevelSelectScreen extends BaseScreen {
 		}
 	}
 
+	private void createAnchors(float maxPages) {
+		float xOffset = Constants.WORLD_WIDTH / 2
+				- ((int) (LevelSelectScreen.sliderXOffset * maxPages) - sliderXOffset) / 2;
+		for (int i = 0; i < maxPages; i++) {
+
+			ScreenAdaptiveImage image = new ScreenAdaptiveImage(
+					Autickax.getInstance().assets
+							.getGraphics(Constants.menu.SLIDER_MENU_LEVEL_ANCHOR));
+			image.setCenterPosition(xOffset + i * LevelSelectScreen.sliderXOffset,
+					LevelSelectScreen.sliderYPosition);
+			this.stage.addActor(image);
+		}
+	}
+
 	private Slider createSlider(float maxPages, float actualPage) {
 		SliderStyle style = new SliderStyle();
 		style.background = new TextureRegionDrawable(
@@ -177,9 +194,12 @@ public class LevelSelectScreen extends BaseScreen {
 		style.knob = new TextureRegionDrawable(
 				Autickax.getInstance().assets.getGraphics(Constants.menu.SLIDER_MENU_LEVEL_KNOB));
 		Slider slider = new Slider(0, 1, 0.001f, false, style);
-		slider.setWidth((maxPages - 1) * sliderXOffset * Input.xStretchFactorInv);
+		slider.setWidth((maxPages - 1) * LevelSelectScreen.sliderXOffset * Input.xStretchFactorInv
+				+ style.knob.getMinWidth());
 		slider.setPosition(Constants.WORLD_WIDTH / 2 * Input.xStretchFactorInv - slider.getWidth()
-				/ 2, 20 * Input.yStretchFactorInv);
+				/ 2,
+				LevelSelectScreen.sliderYPosition * Input.yStretchFactorInv - slider.getHeight()
+						/ 2);
 		if (maxPages > 1)
 			slider.setValue(actualPage / (maxPages - 1));
 		slider.addListener(new InputListener() {
