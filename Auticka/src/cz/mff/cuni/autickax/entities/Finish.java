@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.input.Input;
 
 public class Finish extends GameObject implements Externalizable {
 	public static final String name = Constants.gameObjects.FINISH_NAME;

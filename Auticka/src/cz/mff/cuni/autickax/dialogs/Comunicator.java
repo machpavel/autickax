@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.scene.ScreenInputListener;
 

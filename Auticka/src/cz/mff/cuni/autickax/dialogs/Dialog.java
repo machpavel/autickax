@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.scene.GameScreen;
 import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveLabel;
 

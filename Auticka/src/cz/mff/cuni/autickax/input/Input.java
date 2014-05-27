@@ -25,11 +25,10 @@ public class Input {
 	}
 
 	public static int getX() {
-		return (int) (Gdx.input.getX() * (float) Constants.WORLD_WIDTH / Gdx.graphics.getWidth());
+		return (int) (Gdx.input.getX() * Input.xStretchFactor);
 	}
 
 	public static int getY() {
-		return (int) ((Gdx.graphics.getHeight() - Gdx.input.getY())
-				* (float) Constants.WORLD_HEIGHT / Gdx.graphics.getHeight());
+		return (int) ((Gdx.graphics.getHeight() - Gdx.input.getY()) * Input.yStretchFactor);
 	}
 }
