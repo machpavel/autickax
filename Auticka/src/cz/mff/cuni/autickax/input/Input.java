@@ -4,6 +4,13 @@ import com.badlogic.gdx.Gdx;
 
 import cz.mff.cuni.autickax.constants.Constants;
 
+/**
+ * Main class for coordinate translation. It can be used ONLY for getting
+ * non-scaled positions from screen (and gestures) OR drawing via shapeRenderer.
+ * Note that other scaling is solved by camera and stage so stretching factors
+ * are forbidden to used there.
+ * 
+ */
 public class Input {
 	public static float xStretchFactor;
 	public static float yStretchFactor;
