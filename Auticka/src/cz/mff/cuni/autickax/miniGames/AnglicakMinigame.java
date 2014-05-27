@@ -89,7 +89,7 @@ public final class AnglicakMinigame extends Minigame {
 	}
 
 	@Override
-	public void update(float delta) {
+	public void update(float delta) {		
 		this.car.update(delta);
 		switch (state) {
 		case BEGINNING_STATE:
@@ -189,8 +189,8 @@ public final class AnglicakMinigame extends Minigame {
 			if (numberOfTries <= 0) {
 				this.setResultValue(distanceFromTargetInPercents);
 				fail();
-			}
-			restartForNewTry();
+			} else
+				restartForNewTry();
 		}
 
 	}
