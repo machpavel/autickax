@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -28,7 +28,7 @@ public final class SwitchingMinigame extends Minigame {
 
 	private States state = States.BEGINNING_STATE;
 	private Button[] buttons = new Button[2];
-	private Slider progressBar;
+	private ProgressBar progressBar;
 	private float opponentSpeed;
 
 	public SwitchingMinigame(GameScreen screen, SubLevel parent) {
@@ -54,8 +54,7 @@ public final class SwitchingMinigame extends Minigame {
 		style.knob = new TextureRegionDrawable(
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_SLIDER_KNOB_TEXTURE));
-		progressBar = new Slider(0, 100, 0.001f, false, style);
-		progressBar.setDisabled(true);
+		progressBar = new ProgressBar(0, 100, 0.001f, false, style);
 		progressBar.setPosition(400 * Input.xStretchFactorInv - progressBar.getWidth() / 2,
 				420 * Input.yStretchFactorInv);
 		progressBar.setValue(50);

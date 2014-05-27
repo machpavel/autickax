@@ -35,6 +35,9 @@ public final class Menu {
 	public final String BUTTON_MENU_LEVEL_TWO_STARS_HOVER = "menu/menuLevelTwoStarsHover";
 	public final String BUTTON_MENU_LEVEL_THREE_STARS = "menu/menuLevelThreeStars";
 	public final String BUTTON_MENU_LEVEL_THREE_STARS_HOVER = "menu/menuLevelThreeStarsHover";
+	public final String SLIDER_MENU_LEVEL_BACKGROUND = "menu/menuSelectScreenProgressBar";
+	public final String SLIDER_MENU_LEVEL_KNOB = "menu/menuSelectScreenKnob";
+	public final String SLIDER_MENU_LEVEL_ANCHOR = "menu/menuSelectScreenPageAnchor";
 
 	public final String BUTTON_MENU_DIFFICULTY = "menu/menuDifficulty";
 	public final String BUTTON_MENU_DIFFICULTY_HOVER = "menu/menuDifficultyHover";
