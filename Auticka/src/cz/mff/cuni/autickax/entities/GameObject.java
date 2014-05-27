@@ -37,7 +37,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	private boolean toDispose;
 	protected transient TextureRegion texture;
-	
+
 	protected int type;
 	protected boolean isActive = true;
 
@@ -76,7 +76,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		this.scale = object.scale;
 		this.boundingCircleRadius = object.boundingCircleRadius;
 		this.toDispose = object.toDispose;
-		this.setTexture(object.getTexture());		
+		this.setTexture(object.getTexture());
 		this.type = object.type;
 	}
 
@@ -182,15 +182,13 @@ public abstract class GameObject extends Actor implements Externalizable {
 	public void draw(Batch batch) {
 		this.draw(batch, 0);
 	}
-	
+
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(this.getTexture(), (this.position.x - this.getWidth() / 2)
-				* Input.xStretchFactorInv, (this.position.y - this.getHeight() / 2)
-				* Input.yStretchFactorInv, (this.getWidth() / 2) * Input.xStretchFactorInv,
-				(this.getHeight() / 2) * Input.yStretchFactorInv, this.getWidth()
-						* Input.xStretchFactorInv, this.getHeight() * Input.yStretchFactorInv,
-				scale.x, scale.y, this.rotation);
+		batch.draw(this.getTexture(), (this.position.x - this.getWidth() / 2),
+				(this.position.y - this.getHeight() / 2), (this.getWidth() / 2),
+				(this.getHeight() / 2), this.getWidth(), this.getHeight(), scale.x, scale.y,
+				this.rotation);
 	}
 
 	public String toString() {
@@ -382,21 +380,15 @@ public abstract class GameObject extends Actor implements Externalizable {
 		return texture;
 	}
 
-	/*public int getWidth() {
-		return width;
-	}
-
-	protected void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	protected void setHeight(int height) {
-		this.height = height;
-	}*/
+	/*
+	 * public int getWidth() { return width; }
+	 * 
+	 * protected void setWidth(int width) { this.width = width; }
+	 * 
+	 * public int getHeight() { return height; }
+	 * 
+	 * protected void setHeight(int height) { this.height = height; }
+	 */
 
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {

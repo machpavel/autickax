@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.input.Input;
 
 public class Start extends GameObject implements Externalizable {
 	public static final String name = Constants.gameObjects.START_NAME;
@@ -43,13 +42,10 @@ public class Start extends GameObject implements Externalizable {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(this.getTexture(), ((this.position.x - this.getWidth() / 2) + visualShift.x)
-				* Input.xStretchFactorInv,
-				((this.position.y - this.getHeight() / 2) + visualShift.y)
-						* Input.yStretchFactorInv, (this.getWidth() / 2) * Input.xStretchFactorInv,
-				(this.getHeight() / 2) * Input.yStretchFactorInv, this.getWidth()
-						* Input.xStretchFactorInv, this.getHeight() * Input.yStretchFactorInv,
-				scale.x, scale.y, this.rotation);
+		batch.draw(this.getTexture(), ((this.position.x - this.getWidth() / 2) + visualShift.x),
+				((this.position.y - this.getHeight() / 2) + visualShift.y), (this.getWidth() / 2),
+				(this.getHeight() / 2), this.getWidth(), this.getHeight(), scale.x, scale.y,
+				this.rotation);
 	}
 
 	@Override
@@ -59,8 +55,8 @@ public class Start extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
-				+ Constants.gameObjects.START_NAME + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + Constants.gameObjects.START_NAME
+				+ type;
 	}
 
 	@Override

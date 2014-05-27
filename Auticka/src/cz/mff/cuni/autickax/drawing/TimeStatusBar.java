@@ -16,63 +16,57 @@ import cz.mff.cuni.autickax.constants.TimeStatusBarConsts;
 import cz.mff.cuni.autickax.input.Input;
 
 public class TimeStatusBar extends Actor {
-	private final BitmapFont bigfont = Autickax.getInstance().assets
-			.getTimeIntFont();
-	private final BitmapFont smallfont = Autickax.getInstance().assets
-			.getTimeStringFont();
+	private final BitmapFont bigfont = Autickax.getInstance().assets.getTimeIntFont();
+	private final BitmapFont smallfont = Autickax.getInstance().assets.getTimeStringFont();
 	private final Label timeStrLabel;
 	private final Label timeIntLabel;
 	private float timeLimit;
-	
+
 	private TimeStatusBarConsts consts = Constants.tsb;
 	private ShapeRenderer renderer = new ShapeRenderer();
 	private boolean countdown = true;
 
 	public TimeStatusBar(float timeLimit) {
 
-		bigfont.setScale(consts.BIG_FONT_SCALE*Input.xStretchFactorInv);
-		smallfont.setScale(consts.SMALL_FONT_SCALE*Input.xStretchFactorInv);
-		
+		bigfont.setScale(consts.BIG_FONT_SCALE);
+		smallfont.setScale(consts.SMALL_FONT_SCALE);
+
 		this.timeLimit = timeLimit;
 
 		timeStrLabel = new Label("time:", new LabelStyle(smallfont, consts.black90));
 
-		timeIntLabel = new Label(String.format("%1$,.1f", timeLimit),
-				new LabelStyle(bigfont, consts.black90));
+		timeIntLabel = new Label(String.format("%1$,.1f", timeLimit), new LabelStyle(bigfont,
+				consts.black90));
 
-		timeStrLabel.setPosition(consts.xTimeStringLabel*Input.xStretchFactorInv, consts.yTimeStringLabel*Input.yStretchFactorInv);
-		timeIntLabel.setPosition(consts.xTimeIntLabel*Input.xStretchFactorInv, consts.yTimeIntLabel*Input.yStretchFactorInv);
+		timeStrLabel.setPosition(consts.xTimeStringLabel, consts.yTimeStringLabel);
+		timeIntLabel.setPosition(consts.xTimeIntLabel, consts.yTimeIntLabel);
 	}
 
 	public void update(float elapsed) {
 		float time = elapsed;
-		if (countdown)
-		{
+		if (countdown) {
 			time = this.timeLimit - elapsed;
 			if (time < 0)
 				time = 0;
 		}
 		setTimeLabel(time);
 	}
-	
+
 	private void setCountdown(boolean countdown) {
 		this.countdown = countdown;
 	}
-	
-	public void reset()
-	{
+
+	public void reset() {
 		setTimeLabel(this.timeLimit);
 		setCountdown(true);
 	}
-	
-	public void setPhase2()
-	{
+
+	public void setPhase2() {
 		setCountdown(false);
 		setTimeLabel(0f);
 	}
-	
-	private void setTimeLabel(float time)
-	{
+
+	private void setTimeLabel(float time) {
 		timeIntLabel.setText(String.format("%1$,.1f", time));
 	}
 
@@ -82,18 +76,16 @@ public class TimeStatusBar extends Actor {
 		this.timeIntLabel.draw(batch, parentAlpha);
 		this.timeStrLabel.draw(batch, parentAlpha);
 
-
-
 		batch.end();
-		
+
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		renderer.begin(ShapeType.Filled);
-		
+
 		renderer.setColor(consts.black90alpha);
-		renderer.rect(consts.xRectangle * Input.xStretchFactorInv,
-				consts.yRectangle* Input.yStretchFactorInv,
-				consts.RectWidth * Input.xStretchFactorInv, consts.RectHeight * Input.yStretchFactorInv);
+		renderer.rect(consts.xRectangle * Input.xStretchFactorInv, consts.yRectangle
+				* Input.yStretchFactorInv, consts.RectWidth * Input.xStretchFactorInv,
+				consts.RectHeight * Input.yStretchFactorInv);
 
 		renderer.end();
 		Gdx.gl.glDisable(GL20.GL_BLEND);

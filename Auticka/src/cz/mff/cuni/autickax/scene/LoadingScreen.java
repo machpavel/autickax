@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.input.Input;
 
 public class LoadingScreen extends BaseScreen {
 
@@ -28,8 +27,8 @@ public class LoadingScreen extends BaseScreen {
 	public LoadingScreen() {
 		super();
 
-		this.carYPosition = (int) (50 * Input.yStretchFactorInv);
-		this.fumeYPositon = (int) (70 * Input.yStretchFactorInv);
+		this.carYPosition = 50;
+		this.fumeYPositon = 70;
 
 		Autickax.getInstance().assets.loadLoadingScreenGraphics();
 		while (!Autickax.getInstance().assets.update())
@@ -52,6 +51,8 @@ public class LoadingScreen extends BaseScreen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0f, 1f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
 
 		if (Autickax.getInstance().assets.update()) {
 			Autickax.getInstance().assets.disposeLoadingScreenGraphics();
@@ -65,13 +66,11 @@ public class LoadingScreen extends BaseScreen {
 
 			this.batch.draw(this.background, 0, 0, this.stageWidth, this.stageHeight);
 			this.batch.draw(this.car, this.carXPosition, this.carYPosition,
-					this.car.getRegionWidth() * Input.xStretchFactorInv, this.car.getRegionHeight()
-							* Input.yStretchFactorInv);
+					this.car.getRegionWidth(), this.car.getRegionHeight());
 
 			for (int x : this.fumeXPositions) {
-				this.batch.draw(this.fume, x, this.fumeYPositon, this.fume.getRegionWidth()
-						* Input.xStretchFactorInv, this.fume.getRegionHeight()
-						* Input.yStretchFactorInv);
+				this.batch.draw(this.fume, x, this.fumeYPositon, this.fume.getRegionWidth(),
+						this.fume.getRegionHeight());
 			}
 
 			this.batch.end();

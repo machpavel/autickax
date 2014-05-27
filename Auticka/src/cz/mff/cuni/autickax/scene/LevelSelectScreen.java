@@ -194,12 +194,9 @@ public class LevelSelectScreen extends BaseScreen {
 		style.knob = new TextureRegionDrawable(
 				Autickax.getInstance().assets.getGraphics(Constants.menu.SLIDER_MENU_LEVEL_KNOB));
 		Slider slider = new Slider(0, 1, 0.001f, false, style);
-		slider.setWidth((maxPages - 1) * LevelSelectScreen.sliderXOffset * Input.xStretchFactorInv
-				+ style.knob.getMinWidth());
-		slider.setPosition(Constants.WORLD_WIDTH / 2 * Input.xStretchFactorInv - slider.getWidth()
-				/ 2,
-				LevelSelectScreen.sliderYPosition * Input.yStretchFactorInv - slider.getHeight()
-						/ 2);
+		slider.setWidth((maxPages - 1) * LevelSelectScreen.sliderXOffset + style.knob.getMinWidth());
+		slider.setPosition(Constants.WORLD_WIDTH / 2 - slider.getWidth() / 2,
+				LevelSelectScreen.sliderYPosition - slider.getHeight() / 2);
 		if (maxPages > 1)
 			slider.setValue(actualPage / (maxPages - 1));
 		slider.addListener(new InputListener() {

@@ -15,12 +15,13 @@ import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.dialogs.MessageDialog;
 import cz.mff.cuni.autickax.exceptions.IllegalDifficultyException;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
-import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.miniGames.support.SwitchingMinigameButton;
 import cz.mff.cuni.autickax.scene.GameScreen;
 
 public final class SwitchingMinigame extends Minigame {
 
+	private static final float progressBarXPosition = 400;
+	private static final float progressBarYPosition = 420;
 	private static final float progressStep = 5.f;
 
 	private static final float RESULT_WIN_VALUE = Constants.minigames.SWITCHING_MINIGAME_WIN_VALUE;
@@ -55,8 +56,8 @@ public final class SwitchingMinigame extends Minigame {
 				Autickax.getInstance().assets
 						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_SLIDER_KNOB_TEXTURE));
 		progressBar = new ProgressBar(0, 100, 0.001f, false, style);
-		progressBar.setPosition(400 * Input.xStretchFactorInv - progressBar.getWidth() / 2,
-				420 * Input.yStretchFactorInv);
+		progressBar.setPosition(progressBarXPosition - progressBar.getWidth() / 2,
+				progressBarYPosition);
 		progressBar.setValue(50);
 		this.stage.addActor(progressBar);
 	}

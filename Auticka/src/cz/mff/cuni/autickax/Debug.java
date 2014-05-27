@@ -5,7 +5,6 @@ import java.util.LinkedList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import cz.mff.cuni.autickax.input.Input;
 import cz.mff.cuni.autickax.screenObjects.ScreenAdaptiveLabel;
 
 public final class Debug {
@@ -25,8 +24,6 @@ public final class Debug {
 		if (DEBUG) {
 			ScreenAdaptiveLabel label = ScreenAdaptiveLabel.getMenuLabel(message);
 			label.setPosition(X1, 0);
-			label.setFontScaleX(Input.xStretchFactorInv);
-			label.setFontScaleY(Input.yStretchFactorInv);
 			messageLabel = new Log(label, System.currentTimeMillis());
 		}
 	}
@@ -34,13 +31,11 @@ public final class Debug {
 	public static void Log(String message) {
 		if (DEBUG) {
 			for (Log log : logger) {
-				log.label.setPosition(log.label.getActualX(), log.label.getActualY() + ROW_HEIGHT);
+				log.label.setPosition(log.label.getX(), log.label.getY() + ROW_HEIGHT);
 			}
 
 			ScreenAdaptiveLabel label = ScreenAdaptiveLabel.getMenuLabel(message);
 			label.setPosition(X0, 0);
-			label.setFontScaleX(Input.xStretchFactorInv);
-			label.setFontScaleY(Input.yStretchFactorInv);
 			logger.addLast(new Log(ScreenAdaptiveLabel.getMenuLabel(message), System
 					.currentTimeMillis()));
 		}
@@ -50,8 +45,6 @@ public final class Debug {
 		if (DEBUG) {
 			ScreenAdaptiveLabel label = ScreenAdaptiveLabel.getMenuLabel(value);
 			label.setPosition(X2, 0);
-			label.setFontScaleX(Input.xStretchFactorInv);
-			label.setFontScaleY(Input.yStretchFactorInv);
 			valueLabel = new Log(label, System.currentTimeMillis());
 		}
 	}

@@ -31,8 +31,7 @@ public class Finish extends GameObject implements Externalizable {
 	}
 
 	public static Finish parseFinish(Element finish) {
-		return new Finish(finish.getFloat("X"), finish.getFloat("Y"),
-				finish.getInt("type", 1));
+		return new Finish(finish.getFloat("X"), finish.getFloat("Y"), finish.getInt("type", 1));
 	}
 
 	public void setShift(Vector2 shift) {
@@ -41,15 +40,9 @@ public class Finish extends GameObject implements Externalizable {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(this.getTexture(),
-				((this.position.x - this.getWidth() / 2) + visualShift.x)
-						* Input.xStretchFactorInv,
-				((this.position.y - this.getHeight() / 2) + visualShift.y)
-						* Input.yStretchFactorInv, (this.getWidth() / 2)
-						* Input.xStretchFactorInv, (this.getHeight() / 2)
-						* Input.yStretchFactorInv, this.getWidth()
-						* Input.xStretchFactorInv, this.getHeight()
-						* Input.yStretchFactorInv, scale.x, scale.y,
+		batch.draw(this.getTexture(), ((this.position.x - this.getWidth() / 2) + visualShift.x),
+				((this.position.y - this.getHeight() / 2) + visualShift.y), (this.getWidth() / 2),
+				(this.getHeight() / 2), this.getWidth(), this.getHeight(), scale.x, scale.y,
 				this.rotation);
 	}
 
@@ -79,8 +72,7 @@ public class Finish extends GameObject implements Externalizable {
 	}
 
 	@Override
-	public void readExternal(ObjectInput in) throws IOException,
-			ClassNotFoundException {
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 		super.readExternal(in);
 
 		this.visualShift = (Vector2) in.readObject();

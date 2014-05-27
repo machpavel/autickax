@@ -8,7 +8,6 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.Debug;
 import cz.mff.cuni.autickax.Difficulty;
 import cz.mff.cuni.autickax.constants.Constants;
-import cz.mff.cuni.autickax.input.Input;
 
 public class LevelLoadingScreen extends BaseScreen {
 
@@ -19,9 +18,9 @@ public class LevelLoadingScreen extends BaseScreen {
 
 	private static final int lightsCount = 6;
 	private int shiningLightsCount = 0;
-	private static final int lightsXmargin = (int) (100 * Input.xStretchFactorInv);
-	private static final int lightsYmargin = (int) (60 * Input.xStretchFactorInv);
-	private static final int lightsYposition = (int) (220 * Input.yStretchFactorInv);
+	private static final int lightsXmargin = 100;
+	private static final int lightsYmargin = 60;
+	private static final int lightsYposition = 220;
 	private final int lightsXposition;
 
 	public LevelLoadingScreen(final int levelIndex, final Difficulty levelDifficulty) {
@@ -68,6 +67,8 @@ public class LevelLoadingScreen extends BaseScreen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0f, 1f, 0f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
 
 		this.batch.begin();
 
@@ -85,14 +86,12 @@ public class LevelLoadingScreen extends BaseScreen {
 			this.batch.draw(drawnLight,
 					this.lightsXposition + i * LevelLoadingScreen.lightsXmargin,
 					LevelLoadingScreen.lightsYposition + LevelLoadingScreen.lightsYmargin,
-					drawnLight.getRegionWidth() * Input.xStretchFactorInv,
-					drawnLight.getRegionHeight() * Input.yStretchFactorInv);
+					drawnLight.getRegionWidth(), drawnLight.getRegionHeight());
 
 			this.batch.draw(drawnLight,
 					this.lightsXposition + i * LevelLoadingScreen.lightsXmargin,
 					LevelLoadingScreen.lightsYposition - LevelLoadingScreen.lightsYmargin,
-					drawnLight.getRegionWidth() * Input.xStretchFactorInv,
-					drawnLight.getRegionHeight() * Input.yStretchFactorInv);
+					drawnLight.getRegionWidth(), drawnLight.getRegionHeight());
 		}
 
 		this.batch.end();

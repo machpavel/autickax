@@ -22,11 +22,10 @@ public abstract class Dialog extends Comunicator {
 
 		this.messageLabel.setWrap(true);
 		this.messageLabel.setAlignment(0, 0);
-		this.messageLabel.setFontScaleX(Input.xStretchFactorInv);
-		this.messageLabel.setFontScaleY(Input.yStretchFactorInv);
+
 		Table table = new Table();
-		table.setPosition(Constants.dialog.DIALOG_MESSAGE_POSITION_X * Input.xStretchFactorInv,
-				Constants.dialog.DIALOG_MESSAGE_POSITION_Y * Input.yStretchFactorInv);
+		table.setPosition(Constants.dialog.DIALOG_MESSAGE_POSITION_X,
+				Constants.dialog.DIALOG_MESSAGE_POSITION_Y);
 		table.add(messageLabel).width(Constants.dialog.DIALOG_MESSAGE_WIDTH);
 		this.stage.addActor(table);
 	}
@@ -36,7 +35,7 @@ public abstract class Dialog extends Comunicator {
 				Constants.sounds.SOUND_BUTTON_DIALOG_SOUND, Constants.sounds.SOUND_DEFAULT_VOLUME);
 	}
 
-	public abstract DecisionType getDecision();		
+	public abstract DecisionType getDecision();
 
 	public void endCommunication() {
 		parent.onDialogEnded();

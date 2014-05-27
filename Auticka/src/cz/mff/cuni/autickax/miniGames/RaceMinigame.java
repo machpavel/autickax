@@ -78,13 +78,12 @@ public final class RaceMinigame extends Minigame {
 
 	private void createCars(GameScreen gameScreen) {
 		this.car = new RaceMinigameCar(CAR_START_POSITION_X,
-				zonesCenters[MathUtils.random(zonesCount - 1)], 0);		
+				zonesCenters[MathUtils.random(zonesCount - 1)], 0);
 		this.car.setCanBeDragged(true);
 		this.car.setDragged(false);
 
 		RaceMinigameCar raceCar = new RaceMinigameCar(0, 0, 1);
-		carsMaxYShift = zoneWidth / 2 - raceCar.getHeight() / 2
-				- lineImages[0][0].getActualHeight() / 2;
+		carsMaxYShift = zoneWidth / 2 - raceCar.getHeight() / 2 - lineImages[0][0].getHeight() / 2;
 		carsXShift = raceCar.getWidth() / 2;
 	}
 
@@ -317,8 +316,8 @@ public final class RaceMinigame extends Minigame {
 	public void moveLines(float delta) {
 		for (int offsetX = 0; offsetX < lineImages.length; offsetX++) {
 			for (int i = 0; i < lineImages[offsetX].length; i++) {
-				lineImages[offsetX][i].setX(lineImages[offsetX][i].getActualX() - speed * delta);
-				if (lineImages[offsetX][i].getActualX() < -Constants.WORLD_WIDTH) {
+				lineImages[offsetX][i].setX(lineImages[offsetX][i].getX() - speed * delta);
+				if (lineImages[offsetX][i].getX() < -Constants.WORLD_WIDTH) {
 					lineImages[offsetX][i].setX(Constants.WORLD_WIDTH);
 				}
 

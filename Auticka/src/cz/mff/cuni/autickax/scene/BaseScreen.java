@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 import cz.mff.cuni.autickax.Debug;
+import cz.mff.cuni.autickax.constants.Constants;
 
 public abstract class BaseScreen implements Screen {
 	protected float stageWidth;
@@ -25,15 +27,16 @@ public abstract class BaseScreen implements Screen {
 	}
 
 	public BaseScreen(boolean takeFocus) {
-		stageWidth = Gdx.graphics.getWidth();
-		stageHeight = Gdx.graphics.getHeight();
-		batch = new SpriteBatch();
+		this.stageWidth = Constants.WORLD_WIDTH;
+		this.stageHeight = Constants.WORLD_HEIGHT;
+		this.batch = new SpriteBatch();
 
 		// Camera
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, stageWidth, stageHeight);
+		this.camera = new OrthographicCamera();
+		this.camera.setToOrtho(false, this.stageWidth, this.stageHeight);
 
-		stage = new Stage(new ScreenViewport(camera), batch);
+		this.stage = new Stage(new ScalingViewport(Scaling.stretch, this.stageWidth,
+				this.stageHeight, this.camera), batch);
 
 		this.stage.addListener(new ScreenInputListener(this));
 
@@ -41,6 +44,10 @@ public abstract class BaseScreen implements Screen {
 
 		if (takeFocus)
 			takeFocus();
+	}
+
+	public SpriteBatch getBatch() {
+		return this.batch;
 	}
 
 	protected InputProcessor createInputProcessor() {
@@ -52,20 +59,18 @@ public abstract class BaseScreen implements Screen {
 		Gdx.input.setCatchBackKey(true);
 	}
 
-	protected void clearScreenWithColor() {
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	}
-
 	public Stage getStage() {
 		return this.stage;
 	}
 
+	protected void clearScreenWithColor() {
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	}
+
 	@Override
 	public void render(float delta) {
-		this.clearScreenWithColor();
-
+		clearScreenWithColor();
 		camera.update();
-		// see https://github.com/libgdx/libgdx/wiki/Orthographic-camera
 		batch.setProjectionMatrix(camera.combined);
 
 		stage.act(delta);

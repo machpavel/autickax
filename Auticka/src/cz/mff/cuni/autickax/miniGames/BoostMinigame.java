@@ -69,15 +69,15 @@ public final class BoostMinigame extends Minigame {
 				this.stage.addActor(newHighlightedButton);
 
 				if (originPosition == null) {
-					originPosition = new Vector2(midPosition.x - newWaitingButton.getActualWidth()
-							* (float) columnCount / 2, midPosition.y
-							- newWaitingButton.getActualHeight() * (float) rowsCount / 2);
+					originPosition = new Vector2(midPosition.x - newWaitingButton.getWidth()
+							* (float) columnCount / 2, midPosition.y - newWaitingButton.getHeight()
+							* (float) rowsCount / 2);
 				}
 				newHighlightedButton.setPosition(
-						originPosition.x + column * newWaitingButton.getActualWidth(),
-						originPosition.y + row * newHighlightedButton.getActualHeight());
-				newWaitingButton.setPosition(newHighlightedButton.getActualX(),
-						newHighlightedButton.getActualY());
+						originPosition.x + column * newWaitingButton.getWidth(), originPosition.y
+								+ row * newHighlightedButton.getHeight());
+				newWaitingButton.setPosition(newHighlightedButton.getX(),
+						newHighlightedButton.getY());
 			}
 		}
 	}

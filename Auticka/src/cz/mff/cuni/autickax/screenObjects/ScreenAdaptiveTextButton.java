@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.input.Input;
 
 public abstract class ScreenAdaptiveTextButton extends TextButton {
 
@@ -51,32 +50,8 @@ public abstract class ScreenAdaptiveTextButton extends TextButton {
 		this(text, image, imageHover, null, Autickax.getInstance().assets.getMenuFont(), true);
 	}
 
-	@Override
-	public float getPrefHeight() {
-		return super.getPrefHeight() * Input.yStretchFactorInv;
-	}
-
-	@Override
-	public float getPrefWidth() {
-		return super.getPrefWidth() * Input.xStretchFactorInv;
-	}
-
-	public float getActualWidth() {
-		return super.getWidth() * Input.xStretchFactor;
-	}
-
-	public float getActualHeight() {
-		return super.getHeight() * Input.yStretchFactor;
-	}
-
 	public void setCenterPosition(float x, float y) {
-		super.setPosition(x * Input.xStretchFactorInv - this.getWidth() / 2, y
-				* Input.yStretchFactorInv - this.getHeight() / 2);
-	}
-
-	@Override
-	public void setPosition(float x, float y) {
-		super.setPosition(x * Input.xStretchFactorInv, y * Input.yStretchFactorInv);
+		super.setPosition(x - this.getWidth() / 2, y - this.getHeight() / 2);
 	}
 
 	@Override

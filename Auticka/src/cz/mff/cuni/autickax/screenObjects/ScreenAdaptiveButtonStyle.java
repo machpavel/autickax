@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.input.Input;
 
 public class ScreenAdaptiveButtonStyle extends TextButtonStyle {
 	ScreenAdaptiveButtonStyle(TextureRegion image, TextureRegion imageHover, TextureRegion disabled, BitmapFont font) {
@@ -18,8 +17,7 @@ public class ScreenAdaptiveButtonStyle extends TextButtonStyle {
 			this.disabled = new TextureRegionDrawable(disabled);
 		}
 		
-		this.font = font;
-		this.font.setScale(Input.xStretchFactorInv, Input.yStretchFactorInv);
+		this.font = font;		
 	}
 	
 	ScreenAdaptiveButtonStyle(TextureRegion image, TextureRegion imageHover) {

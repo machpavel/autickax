@@ -3,6 +3,8 @@ package cz.mff.cuni.autickax.dialogs;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
@@ -17,13 +19,14 @@ public abstract class Comunicator extends SubLevel {
 
 	public Comunicator(GameScreen gameScreen, SubLevel sublevel) {
 		super(gameScreen);
+
 		this.parent = sublevel;
 		this.status = DialogAbstractStatus.IN_PROGRESS;
-		this.stage = new Stage();
+		this.stage = new Stage(new ScalingViewport(Scaling.stretch, Constants.WORLD_WIDTH,
+				Constants.WORLD_HEIGHT), this.level.getBatch());
 		this.stage.addListener(new ScreenInputListener(this.level));
 		takeFocus();
 	}
-
 
 	@Override
 	public void update(float delta) {
@@ -33,8 +36,7 @@ public abstract class Comunicator extends SubLevel {
 
 	public void draw(SpriteBatch batch) {
 		batch.begin();
-		this.backgroundTexture.draw(batch, 0, 0, Constants.WORLD_WIDTH * Input.xStretchFactorInv,
-				Constants.WORLD_HEIGHT * Input.yStretchFactorInv);
+		this.backgroundTexture.draw(batch, 0, 0, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 		batch.end();
 		stage.draw();
 	};
