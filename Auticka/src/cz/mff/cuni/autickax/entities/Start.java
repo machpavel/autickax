@@ -45,7 +45,7 @@ public class Start extends GameObject implements Externalizable {
 		batch.draw(this.getTexture(), ((this.position.x - this.getWidth() / 2) + visualShift.x),
 				((this.position.y - this.getHeight() / 2) + visualShift.y), (this.getWidth() / 2),
 				(this.getHeight() / 2), this.getWidth(), this.getHeight(), scale.x, scale.y,
-				this.rotation);
+				this.getRotation());
 	}
 
 	@Override

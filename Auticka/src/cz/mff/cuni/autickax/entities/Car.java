@@ -28,8 +28,7 @@ public class Car extends ShiftableGameObject {
 	}
 
 	public static Car parseCar(Element car) {
-		return new Car(car.getFloat("X"), car.getFloat("Y"), car.getInt("type",
-				1));
+		return new Car(car.getFloat("X"), car.getFloat("Y"), car.getInt("type", 1));
 	}
 
 	public Car(GameObject object) {
@@ -56,8 +55,7 @@ public class Car extends ShiftableGameObject {
 		lastRotationDistance += newPos.dst(lastCarPosition);
 		if (lastRotationDistance > Constants.gameObjects.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION) {
 			lastRotationDistance = 0;
-			this.setRotation(new Vector2(this.lastCarPosition).sub(newPos)
-					.scl(-1).angle());
+			this.setRotation(new Vector2(this.lastCarPosition).sub(newPos).scl(-1).angle());
 			this.lastCarPosition = newPos;
 		}
 	}
@@ -68,27 +66,29 @@ public class Car extends ShiftableGameObject {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		while (this.rotation < 0)
-			this.rotation += 360;
-		if (this.rotation > 360)
-			this.rotation = this.rotation % 360;
+		float rotation = this.getRotation();
+		while (rotation < 0) {
+			this.setRotation(rotation + 360);
+			rotation = this.getRotation();
+		}
+		if (rotation > 360)
+			this.setRotation(rotation % 360);
 
-		if (this.rotation >= 22.5 && this.rotation < 67.5)
+		if (rotation >= 22.5 && rotation < 67.5)
 			this.setTexture(positionTextures[1]);
-		else if (this.rotation >= 67.5 && this.rotation < 112.5)
+		else if (rotation >= 67.5 && rotation < 112.5)
 			this.setTexture(positionTextures[2]);
-		else if (this.rotation >= 112.5 && this.rotation < 157.5)
+		else if (rotation >= 112.5 && rotation < 157.5)
 			this.setTexture(positionTextures[3]);
-		else if (this.rotation >= 157.5 && this.rotation < 202.5)
+		else if (rotation >= 157.5 && rotation < 202.5)
 			this.setTexture(positionTextures[4]);
-		else if (this.rotation >= 202.5 && this.rotation < 247.5)
+		else if (rotation >= 202.5 && rotation < 247.5)
 			this.setTexture(positionTextures[5]);
-		else if (this.rotation >= 247.5 && this.rotation < 292.5)
+		else if (rotation >= 247.5 && rotation < 292.5)
 			this.setTexture(positionTextures[6]);
-		else if (this.rotation >= 292.5 && this.rotation < 337.5)
+		else if (rotation >= 292.5 && rotation < 337.5)
 			this.setTexture(positionTextures[7]);
-		else if ((this.rotation >= 337.5 && this.rotation < 360)
-				|| (this.rotation >= 0 && this.rotation < 22.5))
+		else if ((rotation >= 337.5 && rotation < 360) || (rotation >= 0 && rotation < 22.5))
 			this.setTexture(positionTextures[0]);
 
 		super.draw(batch, parentAlpha);
@@ -126,12 +126,10 @@ public class Car extends ShiftableGameObject {
 			this.positionTextures[7] = Autickax.getInstance().assets
 					.getGraphics(Constants.gameObjects.CAR_TYPE_1_POSITION_7_TEXTURE_NAME);
 			super.texture = this.positionTextures[0];
-			super.setMeasurements(texture.getRegionWidth(),
-					texture.getRegionHeight());
+			super.setMeasurements(texture.getRegionWidth(), texture.getRegionHeight());
 			break;
 		default:
-			throw new IllegalGameObjectException("Car type"
-					+ Integer.toString(type));
+			throw new IllegalGameObjectException("Car type" + Integer.toString(type));
 		}
 	}
 }

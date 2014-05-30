@@ -27,7 +27,7 @@ public final class Booster extends GameObject implements Externalizable {
 
 	@Override
 	public void update(float delta) {
-		this.rotation += delta * 100;
+		this.setRotation(this.getRotation() + delta * 100);
 		this.scale.add(adder * delta, adder * delta);
 		if (this.scale.x > 1.1f) {
 			this.scale.x = 1.1f;

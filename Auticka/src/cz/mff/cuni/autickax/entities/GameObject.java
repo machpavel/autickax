@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
@@ -31,7 +32,6 @@ public abstract class GameObject extends Actor implements Externalizable {
 	protected Vector2 position;
 	private int width;
 	private int height;
-	protected float rotation;
 	protected Vector2 scale = new Vector2(1, 1);
 	protected float boundingCircleRadius;
 
@@ -56,14 +56,14 @@ public abstract class GameObject extends Actor implements Externalizable {
 	/** Parameterless constructor for the externalization */
 	public GameObject() {
 		this.position = new Vector2();
-		this.rotation = 0;
+		this.setRotation(0);
 		this.type = 0;
 		this.texture = null;
 	}
 
 	public GameObject(float startX, float startY, int type) {
 		this.position = new Vector2(startX, startY);
-		this.rotation = 0;
+		this.setRotation(0);
 		this.type = type;
 		setTexture(type);
 	}
@@ -72,7 +72,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		this.position = object.position;
 		this.setWidth(object.getWidth());
 		this.setHeight(object.getHeight());
-		this.rotation = object.rotation;
+		this.setRotation(object.getRotation());
 		this.scale = object.scale;
 		this.boundingCircleRadius = object.boundingCircleRadius;
 		this.toDispose = object.toDispose;
@@ -124,7 +124,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	public void reset() {
 		this.isActive = true;
-		this.rotation = 0;
+		this.setRotation(0);
 		this.isDragged = false;
 		this.scale = new Vector2(1, 1);
 	}
@@ -188,7 +188,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		batch.draw(this.getTexture(), (this.position.x - this.getWidth() / 2),
 				(this.position.y - this.getHeight() / 2), (this.getWidth() / 2),
 				(this.getHeight() / 2), this.getWidth(), this.getHeight(), scale.x, scale.y,
-				this.rotation);
+				this.getRotation());
 	}
 
 	public String toString() {
@@ -332,30 +332,20 @@ public abstract class GameObject extends Actor implements Externalizable {
 		// Every object can write its own values in writer
 	}
 
-	/**
-	 * Sets the rotation of object in degrees (counterclockwise).
-	 * 
-	 * @param rotation
-	 */
-	public void setRotation(float rotation) {
-		this.rotation = rotation % 360;
-	}
-
-	/**
-	 * Gets the rotation of object in degrees (counterclockwise).
-	 * 
-	 * @return
-	 */
-	public float getRotation() {
-		return this.rotation;
-	}
-
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
 
 	public void setPosition(float x, float y) {
 		this.position = new Vector2(x, y);
+	}
+
+	@Override
+	public Actor hit(float x, float y, boolean touchable) {
+		if (touchable && this.getTouchable() != Touchable.enabled)
+			return null;
+		Vector2 point = new Vector2(x * Input.xStretchFactor, y * Input.yStretchFactor);		
+		return includePosition(point) ? this : null;
 	}
 
 	public abstract GameObject copy();
@@ -395,7 +385,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		this.position = (Vector2) in.readObject();
 		this.width = in.readInt();
 		this.height = in.readInt();
-		this.rotation = in.readFloat();
+		this.setRotation(in.readFloat());
 		this.scale = (Vector2) in.readObject();
 		this.boundingCircleRadius = in.readFloat();
 		this.type = in.readInt();
@@ -410,7 +400,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		out.writeObject(this.position);
 		out.writeInt(this.width);
 		out.writeInt(this.height);
-		out.writeFloat(this.rotation);
+		out.writeFloat(this.getRotation());
 		out.writeObject(this.scale);
 		out.writeFloat(this.boundingCircleRadius);
 		out.writeInt(this.type);
