@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 import cz.mff.cuni.autickax.EditorScreen;
 import cz.mff.cuni.autickax.constants.Constants;
+import cz.mff.cuni.autickax.pathway.Arrow;
 
 public class PlacedObjectsInputListener extends MyInputListener {
 	private final Object representedObject;
@@ -16,6 +17,9 @@ public class PlacedObjectsInputListener extends MyInputListener {
 	@Override
 	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 		this.screen.draggedObject = representedObject;
+		if(representedObject instanceof Arrow){
+			this.screen.lastArrowMoved = (Arrow)representedObject;
+		}
 		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer, button);
 	}
 }
