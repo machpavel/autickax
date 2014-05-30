@@ -266,8 +266,27 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 	}
 
+	public void printHepl() {
+		for (int i = 0; i < 100; i++) {
+			//Clrscr
+			Debug.Log("");
+		}		
+		Debug.Log("Keys:");
+		Debug.Log("A, D: Rotate an arrow image");
+		Debug.Log("W, S: Rosize an arrow image");
+		Debug.Log("Numbers: Modify time limit");
+		Debug.Log("Arrows, +, -: Modify time limit");
+		Debug.Log("");
+		Debug.Log("How to draw a pathway:");
+		Debug.Log("By clicking into scene add points.");
+		Debug.Log("Then click on generate button.");		
+	}
+
 	@Override
 	public void render(float delta) {
+		if (Gdx.input.isKeyPressed(Keys.F1))
+			printHepl();
+
 		stage.act(delta);
 		if (anyButtonTouched) {
 			anyButtonTouched = false;
