@@ -18,6 +18,7 @@ import cz.mff.cuni.autickax.entities.RacingCar;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tornado;
 import cz.mff.cuni.autickax.entities.Tree;
+import cz.mff.cuni.autickax.entities.UniversalGameObject;
 import cz.mff.cuni.autickax.entities.Wall;
 import cz.mff.cuni.autickax.exceptions.IllegalGameObjectException;
 import cz.mff.cuni.autickax.pathway.Arrow;
@@ -77,6 +78,9 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			break;
 		case ARROW:
 			this.screen.draggedObject = new Arrow(type);
+			break;
+		case UNIVERSAL:
+			this.screen.draggedObject = new UniversalGameObject(x, y, type);
 			break;
 		default:
 			throw new IllegalGameObjectException(typeOfClass.toString());

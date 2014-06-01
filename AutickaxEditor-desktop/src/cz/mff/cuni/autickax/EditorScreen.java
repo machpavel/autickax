@@ -53,6 +53,7 @@ import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tornado;
 import cz.mff.cuni.autickax.entities.Tree;
+import cz.mff.cuni.autickax.entities.UniversalGameObject;
 import cz.mff.cuni.autickax.entities.Wall;
 import cz.mff.cuni.autickax.myInputListener.ColorBackgroundInputListener;
 import cz.mff.cuni.autickax.myInputListener.DifficultyChangeListerner;
@@ -95,6 +96,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	// Entities
 	private ArrayList<GameObject> gameObjects;
+	private ArrayList<GameObject> universalObjects;
 	private Car car = new Car(0, 0, CAR_TYPE);
 	private Start start;
 	private Finish finish;
@@ -178,6 +180,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		createArrowController();
 
 		this.gameObjects = new ArrayList<GameObject>();
+		this.universalObjects = new ArrayList<GameObject>();
 		this.arrows = new ArrayList<Arrow>();
 
 		// Pathway
@@ -201,6 +204,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.car = level.getCar();
 		this.finish = level.getFinish();
 		this.gameObjects = level.getGameObjects();
+		this.universalObjects = level.getUniversalObjects();
 		this.arrows = level.getArrows();
 		this.pathway = level.getPathway();
 		this.pathwayTexture = this.pathway.getDistanceMap().generateTexture(this.difficulty);
@@ -209,6 +213,13 @@ public final class EditorScreen extends BaseScreenEditor {
 		timeTextField.setText(new DecimalFormat().format(timeLimit));
 
 		this.background = level.getLevelBackground();
+
+		for (GameObject universalObject : this.universalObjects) {
+			universalObject.setTexture();
+			universalObject.setPosition(universalObject.getX(), universalObject.getY());
+			universalObject.addListener(new PlacedObjectsInputListener(universalObject, this));
+			stage.addActor(universalObject);
+		}
 
 		for (GameObject gameObject : this.gameObjects) {
 			gameObject.setTexture();
@@ -268,9 +279,9 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	public void printHepl() {
 		for (int i = 0; i < 100; i++) {
-			//Clrscr
+			// Clrscr
 			Debug.Log("");
-		}		
+		}
 		Debug.Log("Keys:");
 		Debug.Log("A, D: Rotate an arrow image");
 		Debug.Log("W, S: Rosize an arrow image");
@@ -279,7 +290,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		Debug.Log("");
 		Debug.Log("How to draw a pathway:");
 		Debug.Log("By clicking into scene add points.");
-		Debug.Log("Then click on generate button.");		
+		Debug.Log("Then click on generate button.");
 	}
 
 	@Override
@@ -339,11 +350,18 @@ public final class EditorScreen extends BaseScreenEditor {
 					}
 				}
 			} else {
+				// Just released
 				float x = Gdx.input.getX();
 				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
 				if (this.draggedNewObject && x > 0 && x < Constants.WORLD_WIDTH && y > 0
 						&& y < Constants.WORLD_HEIGHT) {
-					if (this.draggedObject instanceof GameObject) {
+					if (this.draggedObject instanceof UniversalGameObject) {
+						GameObject draggedUniversalObject = (GameObject) this.draggedObject;
+						draggedUniversalObject.addListener(new PlacedObjectsInputListener(
+								draggedUniversalObject, this));
+						this.universalObjects.add(draggedUniversalObject);
+						this.stage.addActor(draggedUniversalObject);
+					} else if (this.draggedObject instanceof GameObject) {
 						GameObject draggedGameObject = (GameObject) this.draggedObject;
 						draggedGameObject.addListener(new PlacedObjectsInputListener(
 								draggedGameObject, this));
@@ -437,6 +455,12 @@ public final class EditorScreen extends BaseScreenEditor {
 			xml.element("entities");
 			for (GameObject gameObject : gameObjects) {
 				gameObject.toXml(xml);
+			}
+			xml.pop();
+
+			xml.element("drawings");
+			for (GameObject universalObject : universalObjects) {
+				universalObject.toXml(xml);
 			}
 			xml.pop();
 
@@ -652,7 +676,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	public enum TypeOfObjectToDrag {
-		HOLE, MUD, STONE, TREE, BOOSTER, FENCE, PARKING_CAR, HOUSE, WALL, HILL, TORNADO, RACING_CAR, PNEU, ARROW
+		HOLE, MUD, STONE, TREE, BOOSTER, FENCE, PARKING_CAR, HOUSE, WALL, HILL, TORNADO, RACING_CAR, PNEU, ARROW, UNIVERSAL
 	}
 
 	private void createArrowController() {
@@ -749,6 +773,13 @@ public final class EditorScreen extends BaseScreenEditor {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Pneu.GetTextureName(i)));
 			createGameObjectButtons(trd, TypeOfObjectToDrag.PNEU, i, offsetOnScreen, maxValue);
 		}
+
+		// Universal
+		for (int i = 1; i <= Constants.gameObjects.UNIVERSAL_TYPES_COUNT; i++) {
+			trd = new TextureRegionDrawable(game.assets.getGraphics(UniversalGameObject
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.UNIVERSAL, i, offsetOnScreen, maxValue);
+		}
 	}
 
 	private void createGameObjectButtons(TextureRegionDrawable trd, TypeOfObjectToDrag typeOfClass,
@@ -756,6 +787,8 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		int HEIGHT_OFFSET = 50;
 		Button button = new ImageButton(trd);
+		button.setWidth(30);
+		button.setHeight(30);
 		float objectWidth = button.getWidth();
 		float objectHeight = button.getHeight();
 

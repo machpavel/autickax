@@ -110,6 +110,8 @@ public abstract class GameObject extends Actor implements Externalizable {
 			retval = new Hill(x, y, type);
 		} else if (objectName.equals(Tornado.name)) {
 			retval = new Tornado(x, y, type);
+		} else if (objectName.equals(UniversalGameObject.name)) {
+			retval = new UniversalGameObject(x, y, type);
 		} else if (objectName.equals(Pneu.name)) {
 			retval = new Pneu(x, y, type);
 		} else if (objectName.equals(RacingCar.name)) {
@@ -118,7 +120,6 @@ public abstract class GameObject extends Actor implements Externalizable {
 			throw new IOException("Loading object failed: Unknown type " + " \"" + objectName
 					+ "\"");
 		}
-
 		return retval;
 	}
 
@@ -344,7 +345,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 	public Actor hit(float x, float y, boolean touchable) {
 		if (touchable && this.getTouchable() != Touchable.enabled)
 			return null;
-		Vector2 point = new Vector2(x * Input.xStretchFactor, y * Input.yStretchFactor);		
+		Vector2 point = new Vector2(x * Input.xStretchFactor, y * Input.yStretchFactor);
 		return includePosition(point) ? this : null;
 	}
 

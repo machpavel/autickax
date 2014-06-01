@@ -65,4 +65,7 @@ public final class GameObjects {
 
 	public final int TORNADO_TYPES_COUNT = 2;
 	public final String TORNADO_NAME = "tornado";
+	
+	public final int UNIVERSAL_TYPES_COUNT = 1;
+	public final String UNIVERSAL_NAME = "universal";
 }

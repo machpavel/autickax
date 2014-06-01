@@ -74,11 +74,14 @@ public class GameScreen extends BaseScreen {
 
 		this.timeStatusBar = new TimeStatusBar(this.level.getTimeLimit());
 
-		// Add actors - note that start and finish should be added first		
+		// Add actors - note that start and finish should be added first
 		this.stage.addActor(this.level.getFinish());
 		this.stage.addActor(this.level.getStart());
 		for (Arrow arrow : this.level.getArrows()) {
 			this.stage.addActor(arrow);
+		}
+		for (GameObject universalObject : this.level.getUniversalObjects()) {
+			this.stage.addActor(universalObject);
 		}
 		for (GameObject gameObject : this.level.getGameObjects()) {
 			this.stage.addActor(gameObject);
