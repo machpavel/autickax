@@ -28,6 +28,7 @@ import cz.mff.cuni.autickax.gamelogic.GameStatistics;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.gamelogic.SubLevel1;
 import cz.mff.cuni.autickax.gamelogic.SubLevel2;
+import cz.mff.cuni.autickax.pathway.Arrow;
 import cz.mff.cuni.autickax.pathway.DistanceMap;
 import cz.mff.cuni.autickax.pathway.Pathway;
 
@@ -76,6 +77,12 @@ public class GameScreen extends BaseScreen {
 		// Add actors - note that start and finish should be added first
 		this.stage.addActor(this.level.getFinish());
 		this.stage.addActor(this.level.getStart());
+		for (Arrow arrow : this.level.getArrows()) {
+			this.stage.addActor(arrow);
+		}
+		for (GameObject universalObject : this.level.getUniversalObjects()) {
+			this.stage.addActor(universalObject);
+		}
 		for (GameObject gameObject : this.level.getGameObjects()) {
 			this.stage.addActor(gameObject);
 		}
@@ -110,7 +117,6 @@ public class GameScreen extends BaseScreen {
 	 * has to be called separately.
 	 */
 	public void initializeGameScreen() {
-
 		// Pathway
 		this.pathway = level.getPathway();
 		this.pathway.CreateDistances();
@@ -264,7 +270,8 @@ public class GameScreen extends BaseScreen {
 		if (Gdx.files.isLocalStorageAvailable()) {
 			textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
 					+ ".cim");
-			//Gdx.app.log("TEXTURE", "Texture of pathway is loaded from local memory.");
+			// Gdx.app.log("TEXTURE",
+			// "Texture of pathway is loaded from local memory.");
 			// Debug.Log("Texture of pathway is loaded from local memory.");
 		} else {
 			textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME

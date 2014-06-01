@@ -8,6 +8,10 @@ public final class Misc {
 	// PATHWAY
 	//
 
+	
+	/** Helping arrow texture */
+	public final String ARROW_NAME = "arrow";	
+	
 	/** Determines the color of a pathway */
 	public final Color PATHWAY_COLOR = new Color(0.75f, 0.7f, 0.6f, 1f);
 	/** How many pictures should be blended from the border of pathway */
@@ -37,7 +41,7 @@ public final class Misc {
 	 * Determines the distance from user's finger that the car can be
 	 * controlled.
 	 */
-	public final int CAR_CAPABLE_DISTANCE = 60;
+	public final int SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE = 60;
 
 	/** Determines maximal distance of proper surface from pathway (in pixels) */
 	// public final int MAX_SURFACE_DISTANCE_FROM_PATHWAY = 30;	

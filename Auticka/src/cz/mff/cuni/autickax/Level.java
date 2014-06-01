@@ -14,6 +14,7 @@ import cz.mff.cuni.autickax.entities.Car;
 import cz.mff.cuni.autickax.entities.Finish;
 import cz.mff.cuni.autickax.entities.GameObject;
 import cz.mff.cuni.autickax.entities.Start;
+import cz.mff.cuni.autickax.pathway.Arrow;
 import cz.mff.cuni.autickax.pathway.Pathway;
 
 public class Level implements java.io.Externalizable {
@@ -22,11 +23,13 @@ public class Level implements java.io.Externalizable {
 
 	private Pathway pathway;
 	private ArrayList<GameObject> gameObjects;
+	private ArrayList<GameObject> universalObjects;
+	private ArrayList<Arrow> arrows;
 	private Car car;
 	private Start start;
 	private Finish finish;
 	private float timeLimit;
-	private LevelBackground background;	
+	private LevelBackground background;
 
 	public Pathway getPathway() {
 		return this.pathway;
@@ -38,6 +41,10 @@ public class Level implements java.io.Externalizable {
 
 	public ArrayList<GameObject> getGameObjects() {
 		return this.gameObjects;
+	}
+
+	public ArrayList<GameObject> getUniversalObjects() {
+		return this.universalObjects;
 	}
 
 	public Start getStart() {
@@ -60,20 +67,42 @@ public class Level implements java.io.Externalizable {
 		return this.pathway.getTextureType();
 	}
 
+	public ArrayList<Arrow> getArrows() {
+		return this.arrows;
+	}
+
 	public void parseLevel(FileHandle file) throws Exception {
 
 		Element root = new XmlReader().parse(file);
 
 		this.pathway = Pathway.parsePathway(root);
 
+		this.arrows = new ArrayList<Arrow>();
+		Element arrows = root.getChildByName("arrows");
+		if (arrows != null)
+			for (int i = 0; i < arrows.getChildCount(); i++) {
+				Element arrow = arrows.getChild(i);
+				this.arrows.add(Arrow.parseArrow(arrow));
+			}
+
 		// Loading game objects
 		Element entities = root.getChildByName("entities");
-
 		this.gameObjects = new ArrayList<GameObject>();
-		for (int i = 0; i < entities.getChildCount(); i++) {
-			Element gameObject = entities.getChild(i);
+		if (entities != null) {
+			for (int i = 0; i < entities.getChildCount(); i++) {
+				Element gameObject = entities.getChild(i);
+				this.gameObjects.add(GameObject.parseGameObject(gameObject));
+			}
+		}
 
-			this.gameObjects.add(GameObject.parseGameObject(gameObject));
+		// Loading universal objects
+		Element universalObjects = root.getChildByName("drawings");
+		this.universalObjects = new ArrayList<GameObject>();
+		if (universalObjects != null) {
+			for (int i = 0; i < universalObjects.getChildCount(); i++) {
+				Element universalObject = universalObjects.getChild(i);
+				this.universalObjects.add(GameObject.parseGameObject(universalObject));
+			}
 		}
 
 		// Loading car
@@ -111,6 +140,12 @@ public class Level implements java.io.Externalizable {
 			if (gameObject.getTexture() == null)
 				gameObject.setTexture();
 		}
+		for (Arrow arrow : this.arrows) {
+			arrow.setTexture();
+		}
+		for (GameObject universalObject : this.universalObjects) {
+			universalObject.setTexture();
+		}
 		if (this.car.getTexture() == null)
 			this.car.setTexture();
 		if (this.start.getTexture() == null)
@@ -126,6 +161,8 @@ public class Level implements java.io.Externalizable {
 		this.pathway = (Pathway) in.readObject();
 
 		this.gameObjects = (ArrayList<GameObject>) in.readObject();
+		this.universalObjects = (ArrayList<GameObject>) in.readObject();
+		this.arrows = (ArrayList<Arrow>) in.readObject();
 
 		this.car = (Car) in.readObject();
 		this.background = (LevelBackground) in.readObject();
@@ -144,6 +181,8 @@ public class Level implements java.io.Externalizable {
 		out.writeObject(this.pathway);
 
 		out.writeObject(this.gameObjects);
+		out.writeObject(this.universalObjects);
+		out.writeObject(this.arrows);
 
 		out.writeObject(this.car);
 		out.writeObject(this.background);

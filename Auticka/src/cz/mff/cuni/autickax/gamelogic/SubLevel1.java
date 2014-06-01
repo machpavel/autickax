@@ -227,7 +227,7 @@ public class SubLevel1 extends SubLevel {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
 			Vector2 shift = new Vector2(this.level.getCar().getPosition()).sub(touchPos.x, touchPos.y);
-			if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {
+			if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
 				this.level.getCar().setDragged(true);
 				this.level.getCar().setShift(shift);
 				state = SubLevel1States.DRIVING_STATE;

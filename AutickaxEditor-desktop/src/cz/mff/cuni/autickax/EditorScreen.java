@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -52,6 +53,7 @@ import cz.mff.cuni.autickax.entities.Start;
 import cz.mff.cuni.autickax.entities.Stone;
 import cz.mff.cuni.autickax.entities.Tornado;
 import cz.mff.cuni.autickax.entities.Tree;
+import cz.mff.cuni.autickax.entities.UniversalGameObject;
 import cz.mff.cuni.autickax.entities.Wall;
 import cz.mff.cuni.autickax.myInputListener.ColorBackgroundInputListener;
 import cz.mff.cuni.autickax.myInputListener.DifficultyChangeListerner;
@@ -60,12 +62,15 @@ import cz.mff.cuni.autickax.myInputListener.MyInputListener;
 import cz.mff.cuni.autickax.myInputListener.MyInputListenerForGameObjects;
 import cz.mff.cuni.autickax.myInputListener.PlacedObjectsInputListener;
 import cz.mff.cuni.autickax.myInputListener.TexturedBackgroundInputListener;
+import cz.mff.cuni.autickax.pathway.Arrow;
 import cz.mff.cuni.autickax.pathway.Pathway;
 import cz.mff.cuni.autickax.pathway.Splines;
 import cz.mff.cuni.autickax.pathway.Vector2i;
 
 public final class EditorScreen extends BaseScreenEditor {
+	// ***********************************************
 	// Constants
+	// ***********************************************
 	private static final int CAR_TYPE = 1;
 	private static final Pathway.PathwayType pathwayType = Pathway.PathwayType.OPENED;
 	private static final Splines.TypeOfInterpolation typeOfInterpolation = Splines.TypeOfInterpolation.CUBIC_B_SPLINE;
@@ -74,6 +79,10 @@ public final class EditorScreen extends BaseScreenEditor {
 	protected static final int FINISH_TYPE = 2;
 	protected static final int START_TYPE = 4;
 	protected static final float TIME_LIMIT_DEFAULT = 10;
+
+	private static final float rotationSpeed = 60;
+	private static final float prolongingSpeed = 40;
+	// ***********************************************
 
 	private final TextButtonStyle textButtonStyle;
 	private final TextFieldStyle textFieldStyle;
@@ -87,6 +96,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	// Entities
 	private ArrayList<GameObject> gameObjects;
+	private ArrayList<GameObject> universalObjects;
 	private Car car = new Car(0, 0, CAR_TYPE);
 	private Start start;
 	private Finish finish;
@@ -96,6 +106,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	private BitmapFont font;
 	// Pathway
 	private Pathway pathway;
+	private ArrayList<Arrow> arrows;
 
 	// Background
 	private LevelBackground background;
@@ -115,10 +126,9 @@ public final class EditorScreen extends BaseScreenEditor {
 	public Difficulty difficulty = Difficulty.Normal;
 
 	// Variables for dragging new object values
-	public boolean objectIsDragging = false;
-	public boolean newObjectIsDragging = false;
-	public GameObject draggedObject = null;
-	public Button draggedButton = null;
+	public boolean draggedNewObject = false;
+	public Object draggedObject = null;
+	public Arrow lastArrowMoved = null;
 
 	public void SetAnyButtonTouched(boolean value) {
 		this.anyButtonTouched = value;
@@ -167,22 +177,25 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		createBackgroundButtons();
 		createGameObjectsButtons();
+		createArrowController();
 
 		this.gameObjects = new ArrayList<GameObject>();
+		this.universalObjects = new ArrayList<GameObject>();
+		this.arrows = new ArrayList<Arrow>();
 
 		// Pathway
 		pathway = new Pathway(pathwayType, typeOfInterpolation);
 		start = null;
 		finish = null;
 
-		objectIsDragging = false;
+		draggedNewObject = false;
 		draggedObject = null;
 		timeLimit = TIME_LIMIT_DEFAULT;
 		timeTextField.setText(new DecimalFormat().format(timeLimit));
 		stage.setKeyboardFocus(timeTextField);
 	}
 
-	public void LoadLevel(FileHandle file) throws Exception {
+	public void loadLevel(FileHandle file) throws Exception {
 		restart();
 		Level level = new Level();
 		level.parseLevel(file);
@@ -191,6 +204,8 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.car = level.getCar();
 		this.finish = level.getFinish();
 		this.gameObjects = level.getGameObjects();
+		this.universalObjects = level.getUniversalObjects();
+		this.arrows = level.getArrows();
 		this.pathway = level.getPathway();
 		this.pathwayTexture = this.pathway.getDistanceMap().generateTexture(this.difficulty);
 		this.start = level.getStart();
@@ -199,17 +214,25 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		this.background = level.getLevelBackground();
 
+		for (GameObject universalObject : this.universalObjects) {
+			universalObject.setTexture();
+			universalObject.setPosition(universalObject.getX(), universalObject.getY());
+			universalObject.addListener(new PlacedObjectsInputListener(universalObject, this));
+			stage.addActor(universalObject);
+		}
+
 		for (GameObject gameObject : this.gameObjects) {
 			gameObject.setTexture();
+			gameObject.setPosition(gameObject.getX(), gameObject.getY());
+			gameObject.addListener(new PlacedObjectsInputListener(gameObject, this));
+			stage.addActor(gameObject);
+		}
 
-			Button button = new ImageButton(new TextureRegionDrawable(gameObject.getTexture()),
-					new TextureRegionDrawable(gameObject.getTexture()));
-
-			button.setPosition(gameObject.getPosition().x - gameObject.getWidth() / 2,
-					gameObject.getPosition().y - gameObject.getHeight() / 2);
-
-			button.addListener(new PlacedObjectsInputListener(gameObject, button, this));
-			stage.addActor(button);
+		for (Arrow arrow : this.arrows) {
+			arrow.setTexture();
+			arrow.setPosition(arrow.getX(), arrow.getY());
+			arrow.addListener(new PlacedObjectsInputListener(arrow, this));
+			stage.addActor(arrow);
 		}
 
 		this.start.setTexture();
@@ -229,68 +252,138 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 	}
 
+	private void doArrowKayboardModification(float delta) {
+		if (this.lastArrowMoved != null) {
+			if (Gdx.input.isKeyPressed(Keys.A)) {
+				this.lastArrowMoved.setRotation(this.lastArrowMoved.getRotation() + rotationSpeed
+						* delta);
+				// Debug.SetValue(this.lastArrowMoved.getRotation());
+			}
+			if (Gdx.input.isKeyPressed(Keys.D)) {
+				this.lastArrowMoved.setRotation(this.lastArrowMoved.getRotation() - rotationSpeed
+						* delta);
+				// Debug.SetValue(this.lastArrowMoved.getRotation());
+			}
+			if (Gdx.input.isKeyPressed(Keys.W)) {
+				this.lastArrowMoved.setLength(this.lastArrowMoved.getLength() + prolongingSpeed
+						* delta);
+				// Debug.SetValue(this.lastArrowMoved.getLength());
+			}
+			if (Gdx.input.isKeyPressed(Keys.S)) {
+				this.lastArrowMoved.setLength(this.lastArrowMoved.getLength() - prolongingSpeed
+						* delta);
+				// Debug.SetValue(this.lastArrowMoved.getLength());
+			}
+		}
+	}
+
+	public void printHepl() {
+		for (int i = 0; i < 100; i++) {
+			// Clrscr
+			Debug.Log("");
+		}
+		Debug.Log("Keys:");
+		Debug.Log("A, D: Rotate an arrow image");
+		Debug.Log("W, S: Rosize an arrow image");
+		Debug.Log("Numbers: Modify time limit");
+		Debug.Log("Arrows, +, -: Modify time limit");
+		Debug.Log("");
+		Debug.Log("How to draw a pathway:");
+		Debug.Log("By clicking into scene add points.");
+		Debug.Log("Then click on generate button.");
+	}
+
 	@Override
 	public void render(float delta) {
-		stage.act(delta);
+		if (Gdx.input.isKeyPressed(Keys.F1))
+			printHepl();
 
+		stage.act(delta);
 		if (anyButtonTouched) {
-			SetAnyButtonTouched(false);
+			anyButtonTouched = false;
 		} else {
 			update(delta);
 		}
 
 		renderScene();
+		dragObject();
 
+		doArrowKayboardModification(delta);
+
+		batch.begin();
+		Debug.draw(batch);
+		batch.end();
+	}
+
+	private void dragObject() {
+		boolean objectIsDragging = this.draggedObject != null;
 		if (objectIsDragging) {
 			if (Gdx.input.isTouched()) {
-				if (this.draggedObject != null) {
+				if (this.draggedNewObject) {
 					// dragging new object
-					draggedObject.setPosition(new Vector2(Gdx.input.getX(), Constants.WORLD_HEIGHT
-							- Gdx.input.getY()));
-					batch.begin();
-					draggedObject.draw(batch, 0);
-					batch.end();
+					if (draggedObject instanceof GameObject) {
+						GameObject draggedGameObject = (GameObject) draggedObject;
+						draggedGameObject.setPosition(new Vector2(Gdx.input.getX(),
+								Constants.WORLD_HEIGHT - Gdx.input.getY()));
+						batch.begin();
+						draggedGameObject.draw(batch, 1);
+						batch.end();
+					} else if (draggedObject instanceof Arrow) {
+						Arrow draggedGameObject = (Arrow) draggedObject;
+						draggedGameObject.setCenterPosition(Gdx.input.getX(),
+								Constants.WORLD_HEIGHT - Gdx.input.getY());
+						batch.begin();
+						draggedGameObject.draw(batch, 1);
+						batch.end();
+					}
+
 				} else {
 					// dragging placed object
-					this.draggedButton.setPosition(
-							Gdx.input.getX() - this.draggedButton.getWidth() / 2,
-							Constants.WORLD_HEIGHT - Gdx.input.getY()
-									- this.draggedButton.getHeight() / 2);
-
+					if (this.draggedObject instanceof GameObject) {
+						GameObject draggedGameObject = (GameObject) this.draggedObject;
+						draggedGameObject.setPosition(new Vector2(Gdx.input.getX(),
+								Constants.WORLD_HEIGHT - Gdx.input.getY()));
+					} else if (this.draggedObject instanceof Arrow) {
+						Arrow draggedGameObject = (Arrow) this.draggedObject;
+						draggedGameObject.setCenterPosition(Gdx.input.getX(),
+								Constants.WORLD_HEIGHT - Gdx.input.getY());
+					}
 				}
 			} else {
+				// Just released
 				float x = Gdx.input.getX();
 				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
-
-				if (this.newObjectIsDragging && x > 0 && x < Constants.WORLD_WIDTH && y > 0
+				if (this.draggedNewObject && x > 0 && x < Constants.WORLD_WIDTH && y > 0
 						&& y < Constants.WORLD_HEIGHT) {
+					if (this.draggedObject instanceof UniversalGameObject) {
+						GameObject draggedUniversalObject = (GameObject) this.draggedObject;
+						draggedUniversalObject.addListener(new PlacedObjectsInputListener(
+								draggedUniversalObject, this));
+						this.universalObjects.add(draggedUniversalObject);
+						this.stage.addActor(draggedUniversalObject);
+					} else if (this.draggedObject instanceof GameObject) {
+						GameObject draggedGameObject = (GameObject) this.draggedObject;
+						draggedGameObject.addListener(new PlacedObjectsInputListener(
+								draggedGameObject, this));
+						this.gameObjects.add(draggedGameObject);
+						this.stage.addActor(draggedGameObject);
 
-					Button button = new ImageButton(new TextureRegionDrawable(
-							this.draggedObject.getTexture()), new TextureRegionDrawable(
-							this.draggedObject.getTexture()));
-
-					button.setPosition(
-							this.draggedObject.getPosition().x - this.draggedObject.getWidth() / 2,
-							this.draggedObject.getPosition().y - this.draggedObject.getHeight() / 2);
-
-					this.gameObjects.add(this.draggedObject.copy());
-
-					button.addListener(new PlacedObjectsInputListener(draggedObject, button, this));
-					stage.addActor(button);
+					} else if (this.draggedObject instanceof Arrow) {
+						Arrow arrow = (Arrow) this.draggedObject;
+						arrow.addListener(new PlacedObjectsInputListener(arrow, this));
+						this.arrows.add(arrow);
+						this.stage.addActor(arrow);
+					}
 				}
 
-				objectIsDragging = false;
-				draggedObject = null;
+				this.draggedObject = null;
+				this.draggedNewObject = false;
 			}
 
 		}
-
 	}
 
 	private void renderScene() {
-		// Clears stage - unnecessary step because everything will be rewritten
-		// by the distance map
-		// Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// Background and pathway
@@ -324,7 +417,6 @@ public final class EditorScreen extends BaseScreenEditor {
 		if (finish != null)
 			finish.draw(batch);
 		batch.end();
-
 		stage.draw();
 	}
 
@@ -354,9 +446,21 @@ public final class EditorScreen extends BaseScreenEditor {
 			xml.pop();
 			xml.pop();
 
+			xml.element("arrows");
+			for (Arrow arrow : arrows) {
+				arrow.toXml(xml);
+			}
+			xml.pop();
+
 			xml.element("entities");
 			for (GameObject gameObject : gameObjects) {
 				gameObject.toXml(xml);
+			}
+			xml.pop();
+
+			xml.element("drawings");
+			for (GameObject universalObject : universalObjects) {
+				universalObject.toXml(xml);
 			}
 			xml.pop();
 
@@ -523,7 +627,7 @@ public final class EditorScreen extends BaseScreenEditor {
 						fileToBeLoad = chooser.getSelectedFile();
 
 					try {
-						LoadLevel(new FileHandle(fileToBeLoad));
+						loadLevel(new FileHandle(fileToBeLoad));
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(null, "Unable to load the file", "Warning: ",
 								JOptionPane.INFORMATION_MESSAGE);
@@ -571,8 +675,19 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 	}
 
-	public enum TypeOfGameObjectButton {
-		HOLE, MUD, STONE, TREE, BOOSTER, FENCE, PARKING_CAR, HOUSE, WALL, HILL, TORNADO, RACING_CAR, PNEU
+	public enum TypeOfObjectToDrag {
+		HOLE, MUD, STONE, TREE, BOOSTER, FENCE, PARKING_CAR, HOUSE, WALL, HILL, TORNADO, RACING_CAR, PNEU, ARROW, UNIVERSAL
+	}
+
+	private void createArrowController() {
+		Arrow arrow = new Arrow();
+		arrow.setTexture();
+		Button button = new ImageButton(arrow.getDrawable());
+
+		button.setPosition(Constants.WORLD_WIDTH + 300, 80);
+		button.addListener(new MyInputListenerForGameObjects(TypeOfObjectToDrag.ARROW, 1, this));
+		stage.addActor(button);
+
 	}
 
 	private void createGameObjectsButtons() {
@@ -584,90 +699,96 @@ public final class EditorScreen extends BaseScreenEditor {
 		// Holes
 		for (int i = 1; i <= Constants.gameObjects.HOLE_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Hole.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.HOLE, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.HOLE, i, offsetOnScreen, maxValue);
 		}
 
 		// Muds
 		for (int i = 1; i <= Constants.gameObjects.MUD_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Mud.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.MUD, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.MUD, i, offsetOnScreen, maxValue);
 		}
 
 		// Stones
 		for (int i = 1; i <= Constants.gameObjects.STONE_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Stone.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.STONE, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.STONE, i, offsetOnScreen, maxValue);
 		}
 
 		// Trees
 		for (int i = 1; i <= Constants.gameObjects.TREE_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Tree.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.TREE, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.TREE, i, offsetOnScreen, maxValue);
 		}
 
 		// Boosts
 		for (int i = 1; i <= Constants.gameObjects.BOOSTER_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Booster.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.BOOSTER, i, offsetOnScreen,
-					maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.BOOSTER, i, offsetOnScreen, maxValue);
 		}
 
 		// Fences
 		for (int i = 1; i <= Constants.gameObjects.FENCE_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Fence.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.FENCE, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.FENCE, i, offsetOnScreen, maxValue);
 		}
 
 		// Houses
 		for (int i = 1; i <= Constants.gameObjects.HOUSE_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(House.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.HOUSE, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.HOUSE, i, offsetOnScreen, maxValue);
 		}
 		// Parking cars
 		for (int i = 1; i <= Constants.gameObjects.PARKING_CAR_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(ParkingCar
 					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.PARKING_CAR, i, offsetOnScreen,
+			createGameObjectButtons(trd, TypeOfObjectToDrag.PARKING_CAR, i, offsetOnScreen,
 					maxValue);
 		}
 		// Walls
 		for (int i = 1; i <= Constants.gameObjects.WALL_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Wall.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.WALL, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.WALL, i, offsetOnScreen, maxValue);
 		}
 		// Hills
 		for (int i = 1; i <= Constants.gameObjects.HILL_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Hill.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.HILL, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.HILL, i, offsetOnScreen, maxValue);
 		}
 
 		// Tornados
 		for (int i = 1; i <= Constants.gameObjects.TORNADO_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Tornado.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.TORNADO, i, offsetOnScreen,
-					maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.TORNADO, i, offsetOnScreen, maxValue);
 		}
 
 		// Racing cars
 		for (int i = 1; i <= Constants.gameObjects.RACING_CAR_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(RacingCar
 					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.RACING_CAR, i, offsetOnScreen,
-					maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.RACING_CAR, i, offsetOnScreen, maxValue);
 		}
 
 		// Pneu
 		for (int i = 1; i <= Constants.gameObjects.PNEU_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(Pneu.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfGameObjectButton.PNEU, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.PNEU, i, offsetOnScreen, maxValue);
+		}
+
+		// Universal
+		for (int i = 1; i <= Constants.gameObjects.UNIVERSAL_TYPES_COUNT; i++) {
+			trd = new TextureRegionDrawable(game.assets.getGraphics(UniversalGameObject
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.UNIVERSAL, i, offsetOnScreen, maxValue);
 		}
 	}
 
-	private void createGameObjectButtons(TextureRegionDrawable trd,
-			TypeOfGameObjectButton typeOfClass, int type, Vector2i offsetOnScreen, Vector2i maxValue) {
+	private void createGameObjectButtons(TextureRegionDrawable trd, TypeOfObjectToDrag typeOfClass,
+			int type, Vector2i offsetOnScreen, Vector2i maxValue) {
 
 		int HEIGHT_OFFSET = 50;
 		Button button = new ImageButton(trd);
+		button.setWidth(30);
+		button.setHeight(30);
 		float objectWidth = button.getWidth();
 		float objectHeight = button.getHeight();
 
@@ -725,7 +846,7 @@ public final class EditorScreen extends BaseScreenEditor {
 					timeTextField.setText(new DecimalFormat().format(timeLimit));
 				}
 				timeTextField.setCursorPosition(timeTextField.getText().length());
-				return super.keyTyped(event, character);
+				return true;
 			}
 		});
 		stage.addActor(timeTextField);
