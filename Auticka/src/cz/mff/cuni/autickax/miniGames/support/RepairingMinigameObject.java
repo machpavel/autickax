@@ -65,7 +65,7 @@ public class RepairingMinigameObject extends ShiftableGameObject {
 			else if (Gdx.input.justTouched()) {
 				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 				Vector2 shift = new Vector2(this.getPosition()).sub(touchPos.x, touchPos.y);
-				if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {
+				if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
 					this.setDragged(true);
 					this.setShift(shift);
 				}

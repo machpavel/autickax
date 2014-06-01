@@ -41,7 +41,7 @@ public final class Misc {
 	 * Determines the distance from user's finger that the car can be
 	 * controlled.
 	 */
-	public final int CAR_CAPABLE_DISTANCE = 60;
+	public final int SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE = 60;
 
 	/** Determines maximal distance of proper surface from pathway (in pixels) */
 	// public final int MAX_SURFACE_DISTANCE_FROM_PATHWAY = 30;	

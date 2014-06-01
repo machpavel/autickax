@@ -95,7 +95,7 @@ public final class GearShiftMinigame extends Minigame {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
 			Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(touchPos.x, touchPos.y);
-			if (shift.len() <= Constants.misc.CAR_CAPABLE_DISTANCE) {
+			if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
 				this.gearShifter.setDragged(true);
 				this.gearShifter.setShift(shift);
 				state = States.DRIVING_STATE;
