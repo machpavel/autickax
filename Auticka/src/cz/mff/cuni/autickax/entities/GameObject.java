@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Autickax;
-import cz.mff.cuni.autickax.Debug;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
@@ -29,12 +28,8 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	private static final byte MAGIC_GAME_OBJECT_END = 127;
 
-	private int width;
-	private int height;
-	protected Vector2 scale = new Vector2(1, 1);
 	protected float boundingCircleRadius;
 
-	private boolean toDispose;
 	protected transient TextureRegion texture;
 
 	protected int type;
@@ -71,9 +66,8 @@ public abstract class GameObject extends Actor implements Externalizable {
 		this.setWidth(object.getWidth());
 		this.setHeight(object.getHeight());
 		this.setRotation(object.getRotation());
-		this.scale = object.scale;
+		this.setScale(object.getScaleX(), object.getScaleY());
 		this.boundingCircleRadius = object.boundingCircleRadius;
-		this.toDispose = object.toDispose;
 		this.setTexture(object.getTexture());
 		this.type = object.type;
 	}
@@ -126,20 +120,12 @@ public abstract class GameObject extends Actor implements Externalizable {
 		this.isActive = true;
 		this.setRotation(0);
 		this.isDragged = false;
-		this.scale = new Vector2(1, 1);
+		this.setScale(1);
 	}
 
 	/** Returns position of the objects center. */
 	public Vector2 getPosition() {
 		return new Vector2(this.getX(), this.getY());
-	}
-
-	public boolean isToDispose() {
-		return toDispose;
-	}
-
-	public void setToDispose(boolean toDispose) {
-		this.toDispose = toDispose;
 	}
 
 	/**
@@ -155,6 +141,9 @@ public abstract class GameObject extends Actor implements Externalizable {
 	}
 
 	public void update(float delta) {
+	}
+	
+	protected void updateDragging(float delta) {
 		if (this.canBeDragged) {
 			if (this.isDragged) {
 				if (Gdx.input.isTouched()) {
@@ -178,7 +167,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		batch.draw(this.getTexture(), (this.getX() - this.getWidth() / 2),
 				(this.getY() - this.getHeight() / 2), (this.getWidth() / 2),
 				(this.getHeight() / 2), this.getWidth(), this.getHeight(),
-				scale.x, scale.y, this.getRotation());
+				this.getScaleX(), this.getScaleY(), this.getRotation());
 	}
 
 	public String toString() {
@@ -333,8 +322,10 @@ public abstract class GameObject extends Actor implements Externalizable {
 	public Actor hit(float x, float y, boolean touchable) {
 		if (touchable && this.getTouchable() != Touchable.enabled)
 			return null;
-		Vector2 point = new Vector2(x * Input.xStretchFactor, y * Input.yStretchFactor);
-		return point.dst(Vector2.Zero) < this.boundingCircleRadius ? this : null;
+		Vector2 point = new Vector2(x * Input.xStretchFactor, y
+				* Input.yStretchFactor);
+		return point.dst(Vector2.Zero) < this.boundingCircleRadius ? this
+				: null;
 	}
 
 	public abstract GameObject copy();
@@ -359,26 +350,17 @@ public abstract class GameObject extends Actor implements Externalizable {
 		return texture;
 	}
 
-	/*
-	 * public int getWidth() { return width; }
-	 * 
-	 * protected void setWidth(int width) { this.width = width; }
-	 * 
-	 * public int getHeight() { return height; }
-	 * 
-	 * protected void setHeight(int height) { this.height = height; }
-	 */
-
 	@Override
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
 		float x = in.readFloat();
 		float y = in.readFloat();
 		this.setPosition(x, y);
-		this.width = in.readInt();
-		this.height = in.readInt();
+		this.setWidth(in.readInt());
+		this.setHeight(in.readInt());
 		this.setRotation(in.readFloat());
-		this.scale = (Vector2) in.readObject();
+		this.setScaleX(in.readFloat());
+		this.setScaleY(in.readFloat());
 		this.boundingCircleRadius = in.readFloat();
 		this.type = in.readInt();
 
@@ -391,10 +373,11 @@ public abstract class GameObject extends Actor implements Externalizable {
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeFloat(this.getX());
 		out.writeFloat(this.getY());
-		out.writeInt(this.width);
-		out.writeInt(this.height);
+		out.writeFloat(this.getWidth());
+		out.writeFloat(this.getHeight());
 		out.writeFloat(this.getRotation());
-		out.writeObject(this.scale);
+		out.writeFloat(this.getScaleX());
+		out.writeFloat(this.getScaleY());
 		out.writeFloat(this.boundingCircleRadius);
 		out.writeInt(this.type);
 		out.writeByte(GameObject.MAGIC_GAME_OBJECT_END);

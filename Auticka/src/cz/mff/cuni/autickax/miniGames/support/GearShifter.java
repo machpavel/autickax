@@ -17,6 +17,11 @@ public final class GearShifter extends ShiftableGameObject implements Externaliz
 		super(object);
 		this.setCanBeDragged(true);
 	}
+	
+	@Override
+	public void update(float delta) {
+		this.updateDragging(delta);
+	}
 
 	@Override
 	public String getName() {

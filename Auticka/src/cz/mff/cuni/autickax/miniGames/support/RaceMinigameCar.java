@@ -18,6 +18,11 @@ public final class RaceMinigameCar extends ShiftableGameObject {
 	public void reset() {
 		super.reset();
 	}
+	
+	@Override
+	public void update(float delta) {
+		this.updateDragging(delta);
+	}
 
 	@Override
 	public String getName() {
