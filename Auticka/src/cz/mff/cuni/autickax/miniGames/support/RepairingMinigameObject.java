@@ -24,7 +24,7 @@ public class RepairingMinigameObject extends ShiftableGameObject {
 	public RepairingMinigameObject(float originX, float originY, float targetX, float targetY,
 			String textureName, RepairingMinigame game, boolean stickWithTarget) {
 		super();
-		this.position = new Vector2(originX, originY);
+		this.setPosition(originX, originY);
 		this.origin = new Vector2(originX, originY);
 		this.target = new Vector2(targetX, targetY);
 		this.setTexture(textureName);
@@ -74,7 +74,7 @@ public class RepairingMinigameObject extends ShiftableGameObject {
 	}
 
 	private boolean isInTarget() {
-		return this.position.dst(target) <= targetRadius;
+		return this.getPosition().dst(target) <= targetRadius;
 	}
 
 	protected void doInTargetAction(){

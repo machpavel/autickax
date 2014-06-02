@@ -323,8 +323,8 @@ public final class EditorScreen extends BaseScreenEditor {
 					// dragging new object
 					if (draggedObject instanceof GameObject) {
 						GameObject draggedGameObject = (GameObject) draggedObject;
-						draggedGameObject.setPosition(new Vector2(Gdx.input.getX(),
-								Constants.WORLD_HEIGHT - Gdx.input.getY()));
+						draggedGameObject.setPosition(Gdx.input.getX(),
+								Constants.WORLD_HEIGHT - Gdx.input.getY());
 						batch.begin();
 						draggedGameObject.draw(batch, 1);
 						batch.end();
@@ -341,8 +341,8 @@ public final class EditorScreen extends BaseScreenEditor {
 					// dragging placed object
 					if (this.draggedObject instanceof GameObject) {
 						GameObject draggedGameObject = (GameObject) this.draggedObject;
-						draggedGameObject.setPosition(new Vector2(Gdx.input.getX(),
-								Constants.WORLD_HEIGHT - Gdx.input.getY()));
+						draggedGameObject.setPosition(Gdx.input.getX(),
+								Constants.WORLD_HEIGHT - Gdx.input.getY());
 					} else if (this.draggedObject instanceof Arrow) {
 						Arrow draggedGameObject = (Arrow) this.draggedObject;
 						draggedGameObject.setCenterPosition(Gdx.input.getX(),

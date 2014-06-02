@@ -73,7 +73,7 @@ public final class AnglicakMinigame extends Minigame {
 
 	private void restartForNewTry() {
 		this.car.reset();
-		this.car.setPosition(new Vector2(CAR_START_POSITION_X, Constants.WORLD_HEIGHT / 2));
+		this.car.setPosition(CAR_START_POSITION_X, Constants.WORLD_HEIGHT / 2);
 		carWasDragged = false;
 
 		this.state = States.BEGINNING_STATE;

@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.XmlReader.Element;
 import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.mff.cuni.autickax.Autickax;
+import cz.mff.cuni.autickax.Debug;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.gamelogic.SubLevel;
 import cz.mff.cuni.autickax.input.Input;
@@ -177,7 +178,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		batch.draw(this.getTexture(), (this.getX() - this.getWidth() / 2),
 				(this.getY() - this.getHeight() / 2), (this.getWidth() / 2),
 				(this.getHeight() / 2), this.getWidth(), this.getHeight(),
-				scale.x, scale.y, this.rotation);
+				scale.x, scale.y, this.getRotation());
 	}
 
 	public String toString() {
@@ -333,7 +334,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		if (touchable && this.getTouchable() != Touchable.enabled)
 			return null;
 		Vector2 point = new Vector2(x * Input.xStretchFactor, y * Input.yStretchFactor);
-		return includePosition(point) ? this : null;
+		return point.dst(Vector2.Zero) < this.boundingCircleRadius ? this : null;
 	}
 
 	public abstract GameObject copy();
