@@ -9,7 +9,7 @@ import cz.mff.cuni.autickax.Autickax;
 import cz.mff.cuni.autickax.constants.Constants;
 import cz.mff.cuni.autickax.exceptions.IllegalGameObjectException;
 
-public class Car extends ShiftableGameObject {
+public class Car extends ShiftableGameObject  {
 	public static final String name = Constants.gameObjects.CAR_NAME;
 
 	private TextureRegion[] positionTextures;
@@ -34,6 +34,11 @@ public class Car extends ShiftableGameObject {
 	public Car(GameObject object) {
 		super(object);
 		setCanBeDragged(true);
+	}
+	
+	@Override
+	public void update(float delta) {
+		this.updateDragging(delta);
 	}
 
 	public void reset() {
