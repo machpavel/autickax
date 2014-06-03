@@ -1,4 +1,4 @@
-package cz.cuni.mff.serialization;
+package cz.cuni.mff.xcars.serialization;
 
 import java.io.IOException;
 import java.io.InputStream;
