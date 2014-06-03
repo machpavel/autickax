@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>SampleGDXgame-desktop</name>
+	<name>x-cars-desktop</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -18,7 +18,7 @@
 		<link>
 			<name>assets</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Autickax-android/assets</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/x-cars-android/assets</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

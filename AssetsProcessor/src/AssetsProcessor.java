@@ -22,7 +22,7 @@ public class AssetsProcessor {
 	private static final Path ASSETS_SFX_PATH = Paths.get(ASSETS_PATH + "sfx");
 	private static final Path ASSETS_LEVELS_PATH = Paths.get(ASSETS_PATH + "levels");
 	
-	private static final String ANDROID_PATH = "../Autickax-android/assets/";
+	private static final String ANDROID_PATH = "../x-cars-android/assets/";
 	private static final Path ANDROID_IMAGES_PATH = Paths.get(ANDROID_PATH + "images");
 	private static final Path ANDROID_LOADING_SCREEN_IMAGES_PATH = Paths.get(ANDROID_PATH + "loadingScreen");
 	private static final Path ANDROID_FONTS_PATH = Paths.get(ANDROID_PATH + "fonts");
