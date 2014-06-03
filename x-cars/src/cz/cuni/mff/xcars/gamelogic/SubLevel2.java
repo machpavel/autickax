@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.math.Vector2;
 
+import cz.cuni.mff.xcars.Debug;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Level;
@@ -89,6 +90,8 @@ public class SubLevel2 extends SubLevel {
 		this.tyreTracks = new TyreTracks(this.from.position);
 		this.level.getStage().addActor(this.tyreTracks);
 		this.tyreTracks.addPoint(this.to.position, this.stats.getPhase2ElapsedTime());
+		System.out.println("LAST POSITION " + this.checkpoints.getLast().getPosition().x + ", " + 
+				this.checkpoints.getLast().getPosition().y);
 	}
 
 	@Override
@@ -205,6 +208,8 @@ public class SubLevel2 extends SubLevel {
 		this.stats.increasePhase2ElapsedTime(delta);
 		// finish reached
 		if (checkpoints.isEmpty()) {
+			System.out.println("CURRENT POSITION " + this.level.getCar().getPosition().x + ", " + 
+					this.level.getCar().getPosition().y);
 			state = SubLevel2States.FINISH_STATE;
 			this.updateScore();
 			this.unlockNewLevel();
@@ -275,6 +280,7 @@ public class SubLevel2 extends SubLevel {
 			// move to checkpoint to and subtract the time, recalculate
 			// velocity, and checkpoints
 			else {
+
 				this.level.getCar().move(this.to.position);
 				newPosition = to.position;
 				this.from = this.to;
@@ -283,6 +289,11 @@ public class SubLevel2 extends SubLevel {
 				timeAvailable -= timeNecessaire;
 			}
 		}
+		
+		//last point not reached yet, return it to the list
+		if (this.checkpoints.isEmpty() && this.level.getCar().getPosition().dst(to.getPosition()) > 0.5f)
+			this.checkpoints.add(to);
+		
 		this.tyreTracks.addPoint(newPosition, this.stats.getPhase2ElapsedTime());
 		this.level.getCar().move(newPosition);
 		return newPosition;
