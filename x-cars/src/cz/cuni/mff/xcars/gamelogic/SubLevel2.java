@@ -90,8 +90,6 @@ public class SubLevel2 extends SubLevel {
 		this.tyreTracks = new TyreTracks(this.from.position);
 		this.level.getStage().addActor(this.tyreTracks);
 		this.tyreTracks.addPoint(this.to.position, this.stats.getPhase2ElapsedTime());
-		System.out.println("LAST POSITION " + this.checkpoints.getLast().getPosition().x + ", " + 
-				this.checkpoints.getLast().getPosition().y);
 	}
 
 	@Override
@@ -208,8 +206,6 @@ public class SubLevel2 extends SubLevel {
 		this.stats.increasePhase2ElapsedTime(delta);
 		// finish reached
 		if (checkpoints.isEmpty()) {
-			System.out.println("CURRENT POSITION " + this.level.getCar().getPosition().x + ", " + 
-					this.level.getCar().getPosition().y);
 			state = SubLevel2States.FINISH_STATE;
 			this.updateScore();
 			this.unlockNewLevel();
