@@ -1,10 +1,10 @@
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
-import cz.cuni.mff.autickax.AvailableLevels;
-import cz.cuni.mff.autickax.Difficulty;
-import cz.cuni.mff.autickax.Level;
-import cz.cuni.mff.autickax.exceptions.IllegalDifficultyException;
+import cz.cuni.mff.xcars.AvailableLevels;
+import cz.cuni.mff.xcars.Difficulty;
+import cz.cuni.mff.xcars.Level;
+import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
 
 import java.io.File;
 import java.io.FileOutputStream;

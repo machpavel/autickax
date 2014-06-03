@@ -2,7 +2,7 @@ import java.io.File;
 
 import com.badlogic.gdx.files.FileHandle;
 
-import cz.cuni.mff.autickax.Level;
+import cz.cuni.mff.xcars.Level;
 
 public class LevelPath {
 

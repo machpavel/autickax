@@ -12,7 +12,7 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 
-import cz.cuni.mff.autickax.AvailableLevels;
+import cz.cuni.mff.xcars.AvailableLevels;
 
 public class AvailableLevelsLoader extends AsynchronousAssetLoader<AvailableLevels, AvailableLevelsLoader.AvailableLevelsParameter> {
 
