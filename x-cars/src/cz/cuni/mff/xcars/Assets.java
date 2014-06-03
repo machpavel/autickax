@@ -15,8 +15,8 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import cz.cuni.mff.serialization.AvailableLevelsLoader;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.serialization.AvailableLevelsLoader;
 
 public class Assets {
 
