@@ -749,7 +749,7 @@ public final class EditorScreen extends BaseScreenEditor {
 			String name = EditorConstants.LEVEL_BACKGROUND_TEXTURE_PREFIX
 					+ Integer.toString(i);
 			Button button = new Button(new TextureRegionDrawable(
-					AutickaxEditor.getInstance().assets.getGraphics(name)));
+					XcarsEditor.getInstance().assets.getGraphics(name)));
 			button.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset,
 					Constants.WORLD_HEIGHT - heightOffset - height);
 			button.setWidth(width);

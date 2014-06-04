@@ -16,7 +16,7 @@ public class ColorBackgroundInputListener extends MyInputListener {
 	@Override
 	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 		// this.screen.SetBackground(new LevelTextureBackground(name,
-		// AutickaxEditor.getInstance().assets.getGraphics(name)));
+		// XcarsEditor.getInstance().assets.getGraphics(name)));
 
 		String result = (String) JOptionPane.showInputDialog(null,
 				"Write color. Three integer values (0-255) separated with empty spaces.  ",

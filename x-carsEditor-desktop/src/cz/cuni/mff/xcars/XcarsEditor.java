@@ -8,13 +8,13 @@ import cz.cuni.mff.xcars.Assets;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.input.Input;
 
-public class AutickaxEditor extends Game {
+public class XcarsEditor extends Game {
 
-	private static AutickaxEditor _instance;
+	private static XcarsEditor _instance;
 
 	public Assets assets;
 
-	public AutickaxEditor() {
+	public XcarsEditor() {
 		_instance = this;
 		assets = new Assets();
 	}
@@ -25,7 +25,7 @@ public class AutickaxEditor extends Game {
 		Input.InitDimensionsInEditor();
 	}
 
-	public static AutickaxEditor getInstance() {
+	public static XcarsEditor getInstance() {
 		return _instance; // will get created when app starts
 	}
 
@@ -41,6 +41,6 @@ public class AutickaxEditor extends Game {
 		cfg.height = (int) Constants.WORLD_HEIGHT;
 		cfg.resizable = false;
 
-		new LwjglApplication(new AutickaxEditor(), cfg);
+		new LwjglApplication(new XcarsEditor(), cfg);
 	}
 }

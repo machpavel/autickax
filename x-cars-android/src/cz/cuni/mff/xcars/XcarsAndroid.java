@@ -8,7 +8,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
 import cz.cuni.mff.xcars.Xcars;
 
-public class AutickaxAndroid extends AndroidApplication {
+public class XcarsAndroid extends AndroidApplication {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

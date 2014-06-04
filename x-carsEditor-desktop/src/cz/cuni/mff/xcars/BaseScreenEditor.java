@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class BaseScreenEditor implements Screen {
 
-	protected AutickaxEditor game;
+	protected XcarsEditor game;
 	protected float stageWidth;
 	protected float stageHeight;
 	protected Stage stage;
@@ -21,7 +21,7 @@ public class BaseScreenEditor implements Screen {
 	}*/
 
 	public BaseScreenEditor() {
-		game = AutickaxEditor.getInstance();
+		game = XcarsEditor.getInstance();
 		stageWidth = Gdx.graphics.getWidth();
 		stageHeight = Gdx.graphics.getHeight();
 	}
