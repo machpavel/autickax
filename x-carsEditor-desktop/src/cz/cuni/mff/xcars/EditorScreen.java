@@ -123,6 +123,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	Button buttonRestart;
 	Button buttonSave;
 	Button buttonLoad;
+	Button buttonUnpoint;
 	TextField timeTextField;
 	ArrayList<Button> backgroundButtons = new ArrayList<Button>();
 	private boolean anyButtonTouched = false;
@@ -194,6 +195,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		createRestartButton();
 		createSaveButton();
 		createLoadButton();
+		createUnpointButton();
 
 		createBackgroundButtons();
 		createGameObjectsButtons();
@@ -686,6 +688,22 @@ public final class EditorScreen extends BaseScreenEditor {
 					}
 
 				}
+			}
+		});
+	}
+
+	private void createUnpointButton() {
+		buttonUnpoint = new TextButton("Unpoint", this.textButtonStyle);
+		buttonUnpoint.setPosition(buttonLoad.getX() + 20 + buttonLoad.getWidth(),
+				buttonLoad.getY());
+		stage.addActor(buttonUnpoint);
+
+		// Creates listener
+		buttonUnpoint.addListener(new MyInputListener(this) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
+				if(pathway.getControlPoints().size() > 0)
+					pathway.getControlPoints().remove(pathway.getControlPoints().size() - 1);
 			}
 		});
 	}
