@@ -368,46 +368,64 @@ public final class EditorScreen extends BaseScreenEditor {
 						draggedGameObject.setPosition(Gdx.input.getX(),
 								Constants.WORLD_HEIGHT - Gdx.input.getY());
 					} else if (this.draggedObject instanceof Arrow) {
-						Arrow draggedGameObject = (Arrow) this.draggedObject;
-						draggedGameObject.setCenterPosition(Gdx.input.getX(),
+						Arrow draggedArrow = (Arrow) this.draggedObject;
+						draggedArrow.setCenterPosition(Gdx.input.getX(),
 								Constants.WORLD_HEIGHT - Gdx.input.getY());
 					}
 				}
 			} else {
 				// Just released
-				float x = Gdx.input.getX();
-				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
-				if (this.draggedNewObject && x > 0 && x < Constants.WORLD_WIDTH
-						&& y > 0 && y < Constants.WORLD_HEIGHT) {
-					if (this.draggedObject instanceof UniversalGameObject) {
-						GameObject draggedUniversalObject = (GameObject) this.draggedObject;
-						draggedUniversalObject
-								.addListener(new PlacedObjectsInputListener(
-										draggedUniversalObject, this));
-						this.universalObjects.add(draggedUniversalObject);
-						this.stage.addActor(draggedUniversalObject);
-					} else if (this.draggedObject instanceof GameObject) {
+				if (this.draggedNewObject) {
+					if (this.draggedObject instanceof GameObject) {
 						GameObject draggedGameObject = (GameObject) this.draggedObject;
-						draggedGameObject
-								.addListener(new PlacedObjectsInputListener(
-										draggedGameObject, this));
-						this.gameObjects.add(draggedGameObject);
-						this.stage.addActor(draggedGameObject);
-
+						if (isInWorld(draggedGameObject)) {
+							if (draggedGameObject instanceof UniversalGameObject) {
+								draggedGameObject
+										.addListener(new PlacedObjectsInputListener(
+												draggedGameObject, this));
+								this.universalObjects.add(draggedGameObject);
+								this.stage.addActor(draggedGameObject);
+							} else {
+								draggedGameObject
+										.addListener(new PlacedObjectsInputListener(
+												draggedGameObject, this));
+								this.gameObjects.add(draggedGameObject);
+								this.stage.addActor(draggedGameObject);
+							}
+						}
 					} else if (this.draggedObject instanceof Arrow) {
 						Arrow arrow = (Arrow) this.draggedObject;
-						arrow.addListener(new PlacedObjectsInputListener(arrow,
-								this));
-						this.arrows.add(arrow);
-						this.stage.addActor(arrow);
+						if (isInWorld(arrow)) {
+							arrow.addListener(new PlacedObjectsInputListener(
+									arrow, this));
+							this.arrows.add(arrow);
+							this.stage.addActor(arrow);
+						}
 					}
 				}
-
 				this.draggedObject = null;
 				this.draggedNewObject = false;
 			}
 
 		}
+	}
+
+	public boolean isInWorld(GameObject gameObject) {
+		float x = gameObject.getX();
+		float y = gameObject.getY();
+		float bounding = gameObject.getBoundingRadius();
+		return x > -bounding && x < Constants.WORLD_WIDTH + bounding
+				&& y > -bounding && y < Constants.WORLD_HEIGHT + bounding;
+	}
+
+	public boolean isInWorld(Arrow arrow) {
+		float x = arrow.getX();
+		float y = arrow.getY();
+		float widthBounding = arrow.getWidth() / 2;
+		float heightBounding = arrow.getHeight() / 2;
+		return x > -widthBounding && x < Constants.WORLD_WIDTH + widthBounding
+				&& y > -heightBounding
+				&& y < Constants.WORLD_HEIGHT + heightBounding;
 	}
 
 	private void renderScene() {
@@ -694,7 +712,8 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private void createUnpointButton() {
 		buttonUnpoint = new TextButton("Unpoint", this.textButtonStyle);
-		buttonUnpoint.setPosition(buttonLoad.getX() + 20 + buttonLoad.getWidth(),
+		buttonUnpoint.setPosition(
+				buttonLoad.getX() + 20 + buttonLoad.getWidth(),
 				buttonLoad.getY());
 		stage.addActor(buttonUnpoint);
 
@@ -702,8 +721,9 @@ public final class EditorScreen extends BaseScreenEditor {
 		buttonUnpoint.addListener(new MyInputListener(this) {
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if(pathway.getControlPoints().size() > 0)
-					pathway.getControlPoints().remove(pathway.getControlPoints().size() - 1);
+				if (pathway.getControlPoints().size() > 0)
+					pathway.getControlPoints().remove(
+							pathway.getControlPoints().size() - 1);
 			}
 		});
 	}

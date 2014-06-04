@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 import cz.cuni.mff.xcars.EditorScreen;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.entities.GameObject;
 import cz.cuni.mff.xcars.pathway.Arrow;
 
 public class PlacedObjectsInputListener extends MyInputListener {
@@ -21,5 +22,21 @@ public class PlacedObjectsInputListener extends MyInputListener {
 			this.screen.lastArrowMoved = (Arrow)representedObject;
 		}
 		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer, button);
+	}
+	
+	@Override
+	public void touchUp(InputEvent event, float x, float y, int pointer,
+			int button) {
+		if (this.representedObject instanceof GameObject) {
+			GameObject draggedGameObject = (GameObject) this.representedObject;
+			if (!this.screen.isInWorld(draggedGameObject))
+				draggedGameObject.remove();
+
+		} else if (this.representedObject instanceof Arrow) {
+			Arrow draggedArrow = (Arrow) this.representedObject;
+			if (!this.screen.isInWorld(draggedArrow))
+				draggedArrow.remove();
+		}
+		super.touchUp(event, x, y, pointer, button);
 	}
 }

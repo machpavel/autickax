@@ -142,7 +142,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	public void update(float delta) {
 	}
-	
+
 	protected void updateDragging(float delta) {
 		if (this.canBeDragged) {
 			if (this.isDragged) {
@@ -389,5 +389,9 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	public void setDragged(boolean isDragged) {
 		this.isDragged = isDragged;
+	}
+
+	public float getBoundingRadius() {
+		return this.boundingCircleRadius;
 	}
 }
