@@ -22,7 +22,8 @@ public final class Debug {
 
 	public static void SetMessage(String message) {
 		if (DEBUG) {
-			ScreenAdaptiveLabel label = ScreenAdaptiveLabel.getMenuLabel(message);
+			ScreenAdaptiveLabel label = ScreenAdaptiveLabel
+					.getMenuLabel(message);
 			label.setPosition(X1, 0);
 			messageLabel = new Log(label, System.currentTimeMillis());
 		}
@@ -31,13 +32,15 @@ public final class Debug {
 	public static void Log(String message) {
 		if (DEBUG) {
 			for (Log log : logger) {
-				log.label.setPosition(log.label.getX(), log.label.getY() + ROW_HEIGHT);
+				log.label.setPosition(log.label.getX(), log.label.getY()
+						+ ROW_HEIGHT);
 			}
 
-			ScreenAdaptiveLabel label = ScreenAdaptiveLabel.getMenuLabel(message);
+			ScreenAdaptiveLabel label = ScreenAdaptiveLabel
+					.getMenuLabel(message);
 			label.setPosition(X0, 0);
-			logger.addLast(new Log(ScreenAdaptiveLabel.getMenuLabel(message), System
-					.currentTimeMillis()));
+			logger.addLast(new Log(ScreenAdaptiveLabel.getMenuLabel(message),
+					System.currentTimeMillis()));
 		}
 	}
 
@@ -120,5 +123,11 @@ public final class Debug {
 			this.label = label;
 			this.timeStamp = timeStamp;
 		}
+	}
+
+	public static void clear() {
+		logger.clear();
+		messageLabel = null;
+		valueLabel = null;
 	}
 }

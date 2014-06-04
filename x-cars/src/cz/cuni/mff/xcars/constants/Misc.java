@@ -10,7 +10,8 @@ public final class Misc {
 
 	
 	/** Helping arrow texture */
-	public final String ARROW_NAME = "arrow";	
+	public final String ARROW_NAME = "arrow";
+	public final int ARROW_TYPE_COUNT= 3;	
 	
 	/** Determines the color of a pathway */
 	public final Color PATHWAY_COLOR = new Color(0.75f, 0.7f, 0.6f, 1f);

@@ -10,7 +10,7 @@ public class BaseScreenEditor implements Screen {
 	protected AutickaxEditor game;
 	protected float stageWidth;
 	protected float stageHeight;
-	protected final Stage stage;
+	protected Stage stage;
 	
 	/*public float getStageWidth() {
 		return this.stageWidth;
@@ -24,11 +24,10 @@ public class BaseScreenEditor implements Screen {
 		game = AutickaxEditor.getInstance();
 		stageWidth = Gdx.graphics.getWidth();
 		stageHeight = Gdx.graphics.getHeight();
-
-		stage = new Stage(); // https://github.com/libgdx/libgdx/wiki/Scene2d
-		Gdx.input.setInputProcessor(stage);
 	}
 
+	public void printHepl(){};
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

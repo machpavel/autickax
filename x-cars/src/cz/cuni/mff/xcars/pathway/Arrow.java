@@ -45,6 +45,15 @@ public class Arrow extends ScreenAdaptiveImage implements Externalizable {
 		writer.attribute("type", this.type);
 		writer.pop();
 	}
+	
+	public void setType(int type){
+		this.type = type;
+		this.setTexture();
+	}
+	
+	public int getType(){
+		return this.type;
+	}
 
 	public static Arrow parseArrow(Element arrow) {
 		return new Arrow(arrow.getFloat("X"), arrow.getFloat("Y"), arrow.getFloat("rotation"),

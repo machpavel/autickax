@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -147,6 +148,22 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	public EditorScreen() {
 		super();
+		stage = new Stage() {
+			@Override
+			public boolean keyDown(int keyCode) {
+				if (keyCode == Keys.F1)
+					printHepl();
+
+				if (keyCode == Keys.Q)
+					changeArrowType(false);
+
+				if (keyCode == Keys.E)
+					changeArrowType(true);
+
+				return super.keyDown(keyCode);
+			}
+		};
+		Gdx.input.setInputProcessor(stage);
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
@@ -157,11 +174,11 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.font = game.assets.getMenuFont();
 
 		ColorDrawable textButtonBackground = new ColorDrawable(Color.GREEN);
-		this.textButtonStyle = new TextButtonStyle(textButtonBackground, textButtonBackground,
-				textButtonBackground, this.font);
-		this.textFieldStyle = new TextFieldStyle(this.font, new Color(1, 0, 0, 1),
-				new ColorDrawable(Color.GREEN), new ColorDrawable(Color.WHITE), new ColorDrawable(
-						Color.BLUE));
+		this.textButtonStyle = new TextButtonStyle(textButtonBackground,
+				textButtonBackground, textButtonBackground, this.font);
+		this.textFieldStyle = new TextFieldStyle(this.font, new Color(1, 0, 0,
+				1), new ColorDrawable(Color.GREEN), new ColorDrawable(
+				Color.WHITE), new ColorDrawable(Color.BLUE));
 		restart();
 	}
 
@@ -210,7 +227,8 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.universalObjects = level.getUniversalObjects();
 		this.arrows = level.getArrows();
 		this.pathway = level.getPathway();
-		this.pathwayTexture = this.pathway.getDistanceMap().generateTexture(this.difficulty);
+		this.pathwayTexture = this.pathway.getDistanceMap().generateTexture(
+				this.difficulty);
 		this.start = level.getStart();
 		timeLimit = level.getTimeLimit();
 		timeTextField.setText(new DecimalFormat().format(timeLimit));
@@ -219,15 +237,18 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		for (GameObject universalObject : this.universalObjects) {
 			universalObject.setTexture();
-			universalObject.setPosition(universalObject.getX(), universalObject.getY());
-			universalObject.addListener(new PlacedObjectsInputListener(universalObject, this));
+			universalObject.setPosition(universalObject.getX(),
+					universalObject.getY());
+			universalObject.addListener(new PlacedObjectsInputListener(
+					universalObject, this));
 			stage.addActor(universalObject);
 		}
 
 		for (GameObject gameObject : this.gameObjects) {
 			gameObject.setTexture();
 			gameObject.setPosition(gameObject.getX(), gameObject.getY());
-			gameObject.addListener(new PlacedObjectsInputListener(gameObject, this));
+			gameObject.addListener(new PlacedObjectsInputListener(gameObject,
+					this));
 			stage.addActor(gameObject);
 		}
 
@@ -248,8 +269,10 @@ public final class EditorScreen extends BaseScreenEditor {
 		if (Gdx.input.justTouched()) {
 			int x = Gdx.input.getX();
 			int y = Gdx.input.getY();
-			if (x > 0 && x < Constants.WORLD_WIDTH && y > 0 && y < Constants.WORLD_HEIGHT) {
-				Vector2 point = new Vector2(Gdx.input.getX(), stageHeight - Gdx.input.getY());
+			if (x > 0 && x < Constants.WORLD_WIDTH && y > 0
+					&& y < Constants.WORLD_HEIGHT) {
+				Vector2 point = new Vector2(Gdx.input.getX(), stageHeight
+						- Gdx.input.getY());
 				pathway.getControlPoints().add(point);
 			}
 		}
@@ -258,36 +281,34 @@ public final class EditorScreen extends BaseScreenEditor {
 	private void doArrowKayboardModification(float delta) {
 		if (this.lastArrowMoved != null) {
 			if (Gdx.input.isKeyPressed(Keys.A)) {
-				this.lastArrowMoved.setRotation(this.lastArrowMoved.getRotation() + rotationSpeed
-						* delta);
+				this.lastArrowMoved.setRotation(this.lastArrowMoved
+						.getRotation() + rotationSpeed * delta);
 				// Debug.SetValue(this.lastArrowMoved.getRotation());
 			}
 			if (Gdx.input.isKeyPressed(Keys.D)) {
-				this.lastArrowMoved.setRotation(this.lastArrowMoved.getRotation() - rotationSpeed
-						* delta);
+				this.lastArrowMoved.setRotation(this.lastArrowMoved
+						.getRotation() - rotationSpeed * delta);
 				// Debug.SetValue(this.lastArrowMoved.getRotation());
 			}
 			if (Gdx.input.isKeyPressed(Keys.W)) {
-				this.lastArrowMoved.setLength(this.lastArrowMoved.getLength() + prolongingSpeed
-						* delta);
+				this.lastArrowMoved.setLength(this.lastArrowMoved.getLength()
+						+ prolongingSpeed * delta);
 				// Debug.SetValue(this.lastArrowMoved.getLength());
 			}
 			if (Gdx.input.isKeyPressed(Keys.S)) {
-				this.lastArrowMoved.setLength(this.lastArrowMoved.getLength() - prolongingSpeed
-						* delta);
+				this.lastArrowMoved.setLength(this.lastArrowMoved.getLength()
+						- prolongingSpeed * delta);
 				// Debug.SetValue(this.lastArrowMoved.getLength());
 			}
 		}
 	}
 
 	public void printHepl() {
-		for (int i = 0; i < 100; i++) {
-			// Clrscr
-			Debug.Log("");
-		}
+		Debug.clear();
 		Debug.Log("Keys:");
 		Debug.Log("A, D: Rotate an arrow image");
-		Debug.Log("W, S: Rosize an arrow image");
+		Debug.Log("W, S: Resize an arrow image");
+		Debug.Log("Q, E: Change an arrow type");
 		Debug.Log("Numbers: Modify time limit");
 		Debug.Log("Arrows, +, -: Modify time limit");
 		Debug.Log("");
@@ -298,8 +319,6 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	@Override
 	public void render(float delta) {
-		if (Gdx.input.isKeyPressed(Keys.F1))
-			printHepl();
 
 		stage.act(delta);
 		if (anyButtonTouched) {
@@ -356,24 +375,27 @@ public final class EditorScreen extends BaseScreenEditor {
 				// Just released
 				float x = Gdx.input.getX();
 				float y = Constants.WORLD_HEIGHT - Gdx.input.getY();
-				if (this.draggedNewObject && x > 0 && x < Constants.WORLD_WIDTH && y > 0
-						&& y < Constants.WORLD_HEIGHT) {
+				if (this.draggedNewObject && x > 0 && x < Constants.WORLD_WIDTH
+						&& y > 0 && y < Constants.WORLD_HEIGHT) {
 					if (this.draggedObject instanceof UniversalGameObject) {
 						GameObject draggedUniversalObject = (GameObject) this.draggedObject;
-						draggedUniversalObject.addListener(new PlacedObjectsInputListener(
-								draggedUniversalObject, this));
+						draggedUniversalObject
+								.addListener(new PlacedObjectsInputListener(
+										draggedUniversalObject, this));
 						this.universalObjects.add(draggedUniversalObject);
 						this.stage.addActor(draggedUniversalObject);
 					} else if (this.draggedObject instanceof GameObject) {
 						GameObject draggedGameObject = (GameObject) this.draggedObject;
-						draggedGameObject.addListener(new PlacedObjectsInputListener(
-								draggedGameObject, this));
+						draggedGameObject
+								.addListener(new PlacedObjectsInputListener(
+										draggedGameObject, this));
 						this.gameObjects.add(draggedGameObject);
 						this.stage.addActor(draggedGameObject);
 
 					} else if (this.draggedObject instanceof Arrow) {
 						Arrow arrow = (Arrow) this.draggedObject;
-						arrow.addListener(new PlacedObjectsInputListener(arrow, this));
+						arrow.addListener(new PlacedObjectsInputListener(arrow,
+								this));
 						this.arrows.add(arrow);
 						this.stage.addActor(arrow);
 					}
@@ -392,17 +414,19 @@ public final class EditorScreen extends BaseScreenEditor {
 		// Background and pathway
 		batch.begin();
 		batch.disableBlending();
-		this.background.draw(batch, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+		this.background.draw(batch, Constants.WORLD_WIDTH,
+				Constants.WORLD_HEIGHT);
 		batch.enableBlending();
 		if (pathway != null && pathway.getDistanceMap() != null)
-			batch.draw(this.pathwayTexture, 0, 0, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+			batch.draw(this.pathwayTexture, 0, 0, Constants.WORLD_WIDTH,
+					Constants.WORLD_HEIGHT);
 		batch.end();
 
 		// Control panel
 		shapeRenderer.begin(ShapeType.Filled);
 		shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1);
-		shapeRenderer.rect(Constants.WORLD_WIDTH, 0, EditorConstants.CONTROL_PANEL_WIDTH,
-				Constants.WORLD_HEIGHT);
+		shapeRenderer.rect(Constants.WORLD_WIDTH, 0,
+				EditorConstants.CONTROL_PANEL_WIDTH, Constants.WORLD_HEIGHT);
 		shapeRenderer.end();
 
 		// Renders control points
@@ -434,7 +458,8 @@ public final class EditorScreen extends BaseScreenEditor {
 
 			xml.element("pathway");
 			xml.attribute("pathwayType", pathway.getType().toString());
-			xml.attribute("typeOfInterpolation", pathway.getTypeOfInterpolation().toString());
+			xml.attribute("typeOfInterpolation", pathway
+					.getTypeOfInterpolation().toString());
 			xml.attribute("textureType", PATHWAY_TEXTURE_TYPE);
 			xml.element("controlPoints");
 			for (Vector2 point : pathway.getControlPoints()) {
@@ -445,7 +470,8 @@ public final class EditorScreen extends BaseScreenEditor {
 			}
 			xml.pop();
 			xml.element("distanceMap");
-			xml.attribute("nodesCount", pathway.getDistanceMap().getNodesCount());
+			xml.attribute("nodesCount", pathway.getDistanceMap()
+					.getNodesCount());
 			xml.pop();
 			xml.pop();
 
@@ -497,16 +523,20 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	public void generateStartAndFinish() {
 		float delta = 0.01f;
-		start = new Start(pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).x,
-				pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).y, START_TYPE);
+		start = new Start(
+				pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).x,
+				pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).y,
+				START_TYPE);
 		start.setTexture();
 		Vector2 startTo = pathway.GetPosition(delta);
 		Vector2 startFrom = pathway.GetPosition(0);
 		float startAngle = startTo.sub(startFrom).angle();
 		start.setRotation((startAngle + 270) % 360);
 
-		finish = new Finish(pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).x,
-				pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).y, FINISH_TYPE);
+		finish = new Finish(
+				pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).x,
+				pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).y,
+				FINISH_TYPE);
 		finish.setTexture();
 		Vector2 finishTo = pathway.GetPosition(1 - delta);
 		Vector2 finishFrom = pathway.GetPosition(1);
@@ -521,16 +551,21 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Creates listener
 		buttonGeneratePoints.addListener(new MyInputListener(this) {
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
 				if (pathway.getControlPoints().size() < 4) {
-					JOptionPane.showMessageDialog(null,
-							"You have to set at least 4 points to generate the pathway.",
-							"Warning: ", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane
+							.showMessageDialog(
+									null,
+									"You have to set at least 4 points to generate the pathway.",
+									"Warning: ",
+									JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 
 				pathway.CreateDistances();
-				pathwayTexture = pathway.getDistanceMap().generateTexture(difficulty);
+				pathwayTexture = pathway.getDistanceMap().generateTexture(
+						difficulty);
 				generateStartAndFinish();
 			}
 		});
@@ -538,16 +573,17 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private void createRestartButton() {
 		buttonRestart = new TextButton("Restart", this.textButtonStyle);
-		buttonRestart.setPosition(Constants.WORLD_WIDTH, buttonGeneratePoints.getY()
-				+ buttonGeneratePoints.getHeight());
+		buttonRestart.setPosition(Constants.WORLD_WIDTH,
+				buttonGeneratePoints.getY() + buttonGeneratePoints.getHeight());
 		stage.addActor(buttonRestart);
 
 		// Creates listener
 		buttonRestart.addListener(new MyInputListener(this) {
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
 				if (JOptionPane.showConfirmDialog(null,
-						"Are you sure that you want to reset this level?", "Question: ",
-						JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION)
+						"Are you sure that you want to reset this level?",
+						"Question: ", JOptionPane.INFORMATION_MESSAGE) == JOptionPane.YES_OPTION)
 					restart();
 			}
 		});
@@ -567,17 +603,20 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private void createSaveButton() {
 		buttonSave = new TextButton("Save", this.textButtonStyle);
-		buttonSave.setPosition(20 + buttonRestart.getX() + buttonRestart.getWidth(),
+		buttonSave.setPosition(
+				20 + buttonRestart.getX() + buttonRestart.getWidth(),
 				buttonRestart.getY());
 		stage.addActor(buttonSave);
 
 		// Creates listener
 		buttonSave.addListener(new MyInputListener(this) {
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
 
 				if (!isReadyForSaving()) {
-					JOptionPane.showMessageDialog(null, "Level is not ready for saving",
-							"Warning: ", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Level is not ready for saving", "Warning: ",
+							JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 
@@ -589,15 +628,18 @@ public final class EditorScreen extends BaseScreenEditor {
 
 				if (chooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 					File fileToBeSaved;
-					if (!chooser.getSelectedFile().getAbsolutePath().endsWith(".xml"))
-						fileToBeSaved = new File(chooser.getSelectedFile() + ".xml");
+					if (!chooser.getSelectedFile().getAbsolutePath()
+							.endsWith(".xml"))
+						fileToBeSaved = new File(chooser.getSelectedFile()
+								+ ".xml");
 					else
 						fileToBeSaved = chooser.getSelectedFile();
 
 					try {
 						generateXml(fileToBeSaved);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Unable to save the file", "Warning: ",
+						JOptionPane.showMessageDialog(null,
+								"Unable to save the file", "Warning: ",
 								JOptionPane.INFORMATION_MESSAGE);
 						e.printStackTrace();
 					}
@@ -609,12 +651,14 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private void createLoadButton() {
 		buttonLoad = new TextButton("Load", this.textButtonStyle);
-		buttonLoad.setPosition(buttonSave.getX() + 20 + buttonSave.getWidth(), buttonSave.getY());
+		buttonLoad.setPosition(buttonSave.getX() + 20 + buttonSave.getWidth(),
+				buttonSave.getY());
 		stage.addActor(buttonLoad);
 
 		// Creates listener
 		buttonLoad.addListener(new MyInputListener(this) {
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
 
 				JFileChooser chooser = new JFileChooser();
 				chooser.setCurrentDirectory(new java.io.File("."));
@@ -624,15 +668,18 @@ public final class EditorScreen extends BaseScreenEditor {
 
 				if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					File fileToBeLoad;
-					if (!chooser.getSelectedFile().getAbsolutePath().endsWith(".xml"))
-						fileToBeLoad = new File(chooser.getSelectedFile() + ".xml");
+					if (!chooser.getSelectedFile().getAbsolutePath()
+							.endsWith(".xml"))
+						fileToBeLoad = new File(chooser.getSelectedFile()
+								+ ".xml");
 					else
 						fileToBeLoad = chooser.getSelectedFile();
 
 					try {
 						loadLevel(new FileHandle(fileToBeLoad));
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Unable to load the file", "Warning: ",
+						JOptionPane.showMessageDialog(null,
+								"Unable to load the file", "Warning: ",
 								JOptionPane.INFORMATION_MESSAGE);
 						System.out.println(e.getMessage());
 						restart();
@@ -649,9 +696,10 @@ public final class EditorScreen extends BaseScreenEditor {
 		int width = 30;
 		int height = 18;
 
-		Button colorButton = new Button(new ColorDrawable(new Color(1, 0, 0, 0.5f)));
-		colorButton.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset, Constants.WORLD_HEIGHT
-				- heightOffset - height);
+		Button colorButton = new Button(new ColorDrawable(new Color(1, 0, 0,
+				0.5f)));
+		colorButton.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset,
+				Constants.WORLD_HEIGHT - heightOffset - height);
 		colorButton.setWidth(2 * width);
 		;
 		colorButton.setHeight(height);
@@ -660,11 +708,12 @@ public final class EditorScreen extends BaseScreenEditor {
 		widthOffset += 2 * width;
 
 		for (int i = 1; i <= EditorConstants.LEVEL_BACKGROUND_TEXTURE_TYPES_COUNT; i++) {
-			String name = EditorConstants.LEVEL_BACKGROUND_TEXTURE_PREFIX + Integer.toString(i);
+			String name = EditorConstants.LEVEL_BACKGROUND_TEXTURE_PREFIX
+					+ Integer.toString(i);
 			Button button = new Button(new TextureRegionDrawable(
 					AutickaxEditor.getInstance().assets.getGraphics(name)));
-			button.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset, Constants.WORLD_HEIGHT
-					- heightOffset - height);
+			button.setPosition(Constants.WORLD_WIDTH + 5 + widthOffset,
+					Constants.WORLD_HEIGHT - heightOffset - height);
 			button.setWidth(width);
 			button.setHeight(height);
 			button.addListener(new TexturedBackgroundInputListener(name, this));
@@ -688,7 +737,8 @@ public final class EditorScreen extends BaseScreenEditor {
 		Button button = new ImageButton(arrow.getDrawable());
 
 		button.setPosition(Constants.WORLD_WIDTH + 300, 80);
-		button.addListener(new MyInputListenerForGameObjects(TypeOfObjectToDrag.ARROW, 1, this));
+		button.addListener(new MyInputListenerForGameObjects(
+				TypeOfObjectToDrag.ARROW, 1, this));
 		stage.addActor(button);
 
 	}
@@ -701,92 +751,118 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Holes
 		for (int i = 1; i <= Constants.gameObjects.HOLE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Hole.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.HOLE, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Hole
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.HOLE, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Muds
 		for (int i = 1; i <= Constants.gameObjects.MUD_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Mud.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.MUD, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Mud
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.MUD, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Stones
 		for (int i = 1; i <= Constants.gameObjects.STONE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Stone.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.STONE, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Stone
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.STONE, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Trees
 		for (int i = 1; i <= Constants.gameObjects.TREE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Tree.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.TREE, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Tree
+					.GetStaticTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.TREE, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Boosts
 		for (int i = 1; i <= Constants.gameObjects.BOOSTER_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Booster.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.BOOSTER, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Booster
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.BOOSTER, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Fences
 		for (int i = 1; i <= Constants.gameObjects.FENCE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Fence.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.FENCE, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Fence
+					.GetStaticTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.FENCE, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Houses
 		for (int i = 1; i <= Constants.gameObjects.HOUSE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(House.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.HOUSE, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(House
+					.GetStaticTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.HOUSE, i,
+					offsetOnScreen, maxValue);
 		}
 		// Parking cars
 		for (int i = 1; i <= Constants.gameObjects.PARKING_CAR_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(ParkingCar
 					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.PARKING_CAR, i, offsetOnScreen,
-					maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.PARKING_CAR, i,
+					offsetOnScreen, maxValue);
 		}
 		// Walls
 		for (int i = 1; i <= Constants.gameObjects.WALL_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Wall.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.WALL, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Wall
+					.GetStaticTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.WALL, i,
+					offsetOnScreen, maxValue);
 		}
 		// Hills
 		for (int i = 1; i <= Constants.gameObjects.HILL_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Hill.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.HILL, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Hill
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.HILL, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Tornados
 		for (int i = 1; i <= Constants.gameObjects.TORNADO_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Tornado.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.TORNADO, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Tornado
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.TORNADO, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Racing cars
 		for (int i = 1; i <= Constants.gameObjects.RACING_CAR_TYPES_COUNT; i++) {
 			trd = new TextureRegionDrawable(game.assets.getGraphics(RacingCar
 					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.RACING_CAR, i, offsetOnScreen, maxValue);
+			createGameObjectButtons(trd, TypeOfObjectToDrag.RACING_CAR, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Pneu
 		for (int i = 1; i <= Constants.gameObjects.PNEU_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Pneu.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.PNEU, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(game.assets.getGraphics(Pneu
+					.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.PNEU, i,
+					offsetOnScreen, maxValue);
 		}
 
 		// Universal
 		for (int i = 1; i <= Constants.gameObjects.UNIVERSAL_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(UniversalGameObject
-					.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.UNIVERSAL, i, offsetOnScreen, maxValue);
+			trd = new TextureRegionDrawable(
+					game.assets.getGraphics(UniversalGameObject
+							.GetTextureName(i)));
+			createGameObjectButtons(trd, TypeOfObjectToDrag.UNIVERSAL, i,
+					offsetOnScreen, maxValue);
 		}
 	}
 
-	private void createGameObjectButtons(TextureRegionDrawable trd, TypeOfObjectToDrag typeOfClass,
-			int type, Vector2i offsetOnScreen, Vector2i maxValue) {
+	private void createGameObjectButtons(TextureRegionDrawable trd,
+			TypeOfObjectToDrag typeOfClass, int type, Vector2i offsetOnScreen,
+			Vector2i maxValue) {
 
 		int HEIGHT_OFFSET = 50;
 		Button button = new ImageButton(trd);
@@ -804,9 +880,10 @@ public final class EditorScreen extends BaseScreenEditor {
 			maxValue.y = (int) objectHeight;
 		}
 
-		button.setPosition(Constants.WORLD_WIDTH + 5 + offsetOnScreen.x, Constants.WORLD_HEIGHT
-				- HEIGHT_OFFSET - offsetOnScreen.y);
-		button.addListener(new MyInputListenerForGameObjects(typeOfClass, type, this));
+		button.setPosition(Constants.WORLD_WIDTH + 5 + offsetOnScreen.x,
+				Constants.WORLD_HEIGHT - HEIGHT_OFFSET - offsetOnScreen.y);
+		button.addListener(new MyInputListenerForGameObjects(typeOfClass, type,
+				this));
 		stage.addActor(button);
 
 		offsetOnScreen.x += objectWidth;
@@ -816,10 +893,11 @@ public final class EditorScreen extends BaseScreenEditor {
 		int BUTTONS_OFFSET = 25;
 
 		for (int i = 0; i < Difficulty.values().length; i++) {
-			Button button = new TextButton(Integer.toString(i + 1), this.textButtonStyle);
-			button.setPosition(
-					Constants.WORLD_WIDTH + i * BUTTONS_OFFSET + buttonGeneratePoints.getWidth()
-							+ BUTTONS_OFFSET, buttonGeneratePoints.getY());
+			Button button = new TextButton(Integer.toString(i + 1),
+					this.textButtonStyle);
+			button.setPosition(Constants.WORLD_WIDTH + i * BUTTONS_OFFSET
+					+ buttonGeneratePoints.getWidth() + BUTTONS_OFFSET,
+					buttonGeneratePoints.getY());
 			stage.addActor(button);
 
 			// Creates listener
@@ -828,10 +906,13 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	private void createTextField() {
-		timeTextField = new TextField(new DecimalFormat().format(timeLimit), this.textFieldStyle);
-		timeTextField.setPosition(buttonGeneratePoints.getX() + buttonGeneratePoints.getWidth()
-				+ 170, buttonGeneratePoints.getY());
-		timeTextField.setTextFieldListener(new DigitsTextFieldInputListener(this));
+		timeTextField = new TextField(new DecimalFormat().format(timeLimit),
+				this.textFieldStyle);
+		timeTextField.setPosition(buttonGeneratePoints.getX()
+				+ buttonGeneratePoints.getWidth() + 170,
+				buttonGeneratePoints.getY());
+		timeTextField.setTextFieldListener(new DigitsTextFieldInputListener(
+				this));
 		timeTextField.addListener(new InputListener() {
 			@Override
 			public boolean keyTyped(InputEvent event, char character) {
@@ -841,14 +922,15 @@ public final class EditorScreen extends BaseScreenEditor {
 					if (timeLimit > 99)
 						timeLimit = 99;
 					timeTextField.setText(new DecimalFormat().format(timeLimit));
-				} else if (event.getCharacter() == '-' || event.getKeyCode() == 20
-						|| event.getKeyCode() == 21) {
+				} else if (event.getCharacter() == '-'
+						|| event.getKeyCode() == 20 || event.getKeyCode() == 21) {
 					timeLimit--;
 					if (timeLimit < 0)
 						timeLimit = 0;
 					timeTextField.setText(new DecimalFormat().format(timeLimit));
 				}
-				timeTextField.setCursorPosition(timeTextField.getText().length());
+				timeTextField.setCursorPosition(timeTextField.getText()
+						.length());
 				return true;
 			}
 		});
@@ -869,5 +951,17 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	public void setPathwayTexture(TextureRegion texture) {
 		this.pathwayTexture = texture;
+	}
+
+	protected void changeArrowType(boolean toRight) {
+		if (this.lastArrowMoved != null) {
+			int type = this.lastArrowMoved.getType();
+			type = toRight ? type + 1 : type - 1;
+			if (type > Constants.misc.ARROW_TYPE_COUNT)
+				type = 1;
+			else if (type < 1)
+				type = Constants.misc.ARROW_TYPE_COUNT;
+			this.lastArrowMoved.setType(type);
+		}
 	}
 }
