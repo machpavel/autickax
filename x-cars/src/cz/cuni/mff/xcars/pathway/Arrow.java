@@ -48,6 +48,7 @@ public class Arrow extends ScreenAdaptiveImage implements Externalizable {
 	
 	public void setType(int type){
 		this.type = type;
+		this.length = 0;
 		this.setTexture();
 	}
 	
