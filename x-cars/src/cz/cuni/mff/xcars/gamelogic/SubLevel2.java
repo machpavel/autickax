@@ -6,7 +6,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.math.Vector2;
 
-import cz.cuni.mff.xcars.Debug;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Level;
@@ -87,7 +86,7 @@ public class SubLevel2 extends SubLevel {
 		this.level.getCar().setNextPositionIsDirection();
 		this.level.getCar().move(this.to.position);
 
-		this.tyreTracks = new TyreTracks(this.from.position);
+		this.tyreTracks = new TyreTracks(this.from.position,this.level.getCar());
 		this.level.getStage().addActor(this.tyreTracks);
 		this.tyreTracks.addPoint(this.to.position, this.stats.getPhase2ElapsedTime());
 	}
