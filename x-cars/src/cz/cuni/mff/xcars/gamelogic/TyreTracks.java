@@ -155,7 +155,6 @@ public class TyreTracks extends Actor {
 	class TyreTrackInfo {
 		public Vector2 leftPosition;
 		public Vector2 rightPosition;
-		public Vector2 originalVector;
 		public float time;
 
 		public TyreTrackInfo(Vector2 leftPos,Vector2 rightPos, float time) {
