@@ -22,7 +22,7 @@ import cz.cuni.mff.xcars.pathway.DistanceMap;
 import cz.cuni.mff.xcars.scene.GameScreen;
 import cz.cuni.mff.xcars.scene.LevelLoadingScreen;
 
-public class SubLevel2 extends SubLevel {
+public class SubLevel2 extends SubLevel  implements IElapsed{
 
 	private LinkedList<CheckPoint> checkpoints;
 	private SubLevel1 phase1;
@@ -54,7 +54,6 @@ public class SubLevel2 extends SubLevel {
 	private GameStatistics stats;
 
 	// class supporting calculating and rendering tyre tracks on the road
-	private TyreTracks tyreTracks;
 
 	public enum SubLevel2States {
 		ENGINE_RAGING_STATE, BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
@@ -86,7 +85,7 @@ public class SubLevel2 extends SubLevel {
 		this.level.getCar().setNextPositionIsDirection();
 		this.level.getCar().move(this.to.position);
 
-		this.tyreTracks = new TyreTracks(this.from.position,this.level.getCar());
+		this.tyreTracks = new TyreTracks(this.from.position,this.level.getCar(),this);
 		this.level.getStage().addActor(this.tyreTracks);
 		this.tyreTracks.addPoint(this.to.position, this.stats.getPhase2ElapsedTime());
 	}
@@ -395,6 +394,11 @@ public class SubLevel2 extends SubLevel {
 
 		return this.level.getLevelIndex() < playedLevels.size()
 				&& this.level.getLevelIndex() < availableLevels.size() - 1;
+	}
+
+	@Override
+	public float getElapsed() {
+		return stats.getPhase2ElapsedTime();
 	}
 
 }

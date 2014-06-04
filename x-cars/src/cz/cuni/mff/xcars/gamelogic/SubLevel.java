@@ -10,11 +10,12 @@ import cz.cuni.mff.xcars.dialogs.PauseDialog;
 import cz.cuni.mff.xcars.miniGames.Minigame;
 import cz.cuni.mff.xcars.scene.GameScreen;
 
-public abstract class SubLevel {
+public abstract class SubLevel{
 	protected GameScreen level;
 	protected Stage stage;
 	protected Stack<Dialog> dialogStack;
 	protected Minigame miniGame = null;
+	protected TyreTracks tyreTracks;
 
 	public SubLevel(GameScreen gameScreen) {
 		this.level = gameScreen;

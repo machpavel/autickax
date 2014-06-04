@@ -22,13 +22,15 @@ public class TyreTracks extends Actor {
 
 	private final ShapeRenderer shapeRenderer;
 	private Car car;
+	private IElapsed elapsed;
 	
 
-	public TyreTracks(Vector2 objectPosition, Car car) {
+	public TyreTracks(Vector2 objectPosition, Car car, IElapsed elapsed) {
 		previousObjectCenter = objectPosition;
 		tyrePositions = new ArrayList<TyreTracks.TyreTrackInfo>();
 		this.shapeRenderer = new ShapeRenderer();
 		this.car = car;
+		this.elapsed = elapsed;
 	}
 	
 
@@ -106,9 +108,8 @@ public class TyreTracks extends Actor {
 		shapeRenderer.begin(ShapeType.Line);
 
 		float distSquaredFromCenter;
-		float elapsedInLastPoint = 0.0f;
-		if (!tyrePositions.isEmpty())
-			elapsedInLastPoint = tyrePositions.get(tyrePositions.size()-1).time;
+		float elapsedInLastPoint = elapsed.getElapsed();
+		
 		
 		Gdx.gl20.glLineWidth(Constants.tyreTracksConstants.LINE_WIDTH*Input.xStretchFactorInv);
 		Gdx.gl.glEnable(GL20.GL_BLEND);

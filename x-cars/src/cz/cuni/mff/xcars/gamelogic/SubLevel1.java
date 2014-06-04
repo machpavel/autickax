@@ -19,7 +19,7 @@ import cz.cuni.mff.xcars.pathway.DistanceMap;
 import cz.cuni.mff.xcars.pathway.Pathway;
 import cz.cuni.mff.xcars.scene.GameScreen;
 
-public class SubLevel1 extends SubLevel {
+public class SubLevel1 extends SubLevel  implements IElapsed{
 
 		/** Path representation */
 	private Pathway pathway;
@@ -55,6 +55,9 @@ public class SubLevel1 extends SubLevel {
 		initTerminatingGameObjects();
 		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
 				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
+		this.tyreTracks = new TyreTracks(this.level.getCar().getPosition(),this.level.getCar(),this);
+		this.level.getStage().addActor(this.tyreTracks);
+
 		
 		reset();
 	}
@@ -135,6 +138,7 @@ public class SubLevel1 extends SubLevel {
 	}
 
 	private void updateInFinishState(float delta) {
+		this.tyreTracks.clear();
 		this.level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this, this.stats);
 	}
 
@@ -204,6 +208,7 @@ public class SubLevel1 extends SubLevel {
 
 			} else {				
 				checkPoints.add(new CheckPoint(stats.getPhase1ElapsedTime(), carPosition));
+				this.tyreTracks.addPoint(carPosition, this.stats.getPhase1ElapsedTime());
 
 				if (!wayPoints.isEmpty()) {
 					boolean canRemove = true;
@@ -268,6 +273,8 @@ public class SubLevel1 extends SubLevel {
 					Constants.strings.TOOLTIP_PHASE_1_WHAT_TO_DO));
 		
 		this.level.getTimeStatusBar().reset();
+		this.tyreTracks.clear();
+		this.tyreTracks.setPreviousObject(this.level.getCar().getPosition());
 	}
 
 	public void setCarToStart(){
@@ -323,6 +330,10 @@ public class SubLevel1 extends SubLevel {
 		public String getMistakeMsg() {
 			return mistakeMsg;
 		}
+	}
+
+	public float getElapsed() {
+		return stats.getPhase1ElapsedTime();
 	}
 
 
