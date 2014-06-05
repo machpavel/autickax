@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.dialogs.MessageDialog;
 import cz.cuni.mff.xcars.entities.GameObject;
 import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
@@ -83,7 +84,8 @@ public final class RaceMinigame extends Minigame {
 		this.car.setDragged(false);
 
 		RaceMinigameCar raceCar = new RaceMinigameCar(0, 0, 1);
-		carsMaxYShift = zoneWidth / 2 - raceCar.getHeight() / 2 - lineImages[0][0].getHeight() / 2;
+		carsMaxYShift = zoneWidth / 2 - raceCar.getHeight() / 2
+				- lineImages[0][0].getHeight() / 2;
 		carsXShift = raceCar.getWidth() / 2;
 	}
 
@@ -98,9 +100,10 @@ public final class RaceMinigame extends Minigame {
 		cars = new LinkedList[zonesCount];
 
 		for (int zoneIndex = 0; zoneIndex < zonesCount; zoneIndex++) {
-			zonesCenters[zoneIndex] = (float) Constants.dialog.DIALOG_WORLD_Y_OFFSET + zoneWidth
-					/ 2 + zoneWidth * zoneIndex;
-			zonesSpeeds[zoneIndex] = speed - (MAX_SPEED_ADDITION - MIN_SPEED_ADDITION) * zoneIndex
+			zonesCenters[zoneIndex] = (float) Constants.dialog.DIALOG_WORLD_Y_OFFSET
+					+ zoneWidth / 2 + zoneWidth * zoneIndex;
+			zonesSpeeds[zoneIndex] = speed
+					- (MAX_SPEED_ADDITION - MIN_SPEED_ADDITION) * zoneIndex
 					/ zonesCount - MIN_SPEED_ADDITION;
 			cars[zoneIndex] = new LinkedList<RaceMinigameCar>();
 		}
@@ -108,8 +111,10 @@ public final class RaceMinigame extends Minigame {
 		minDistances[zonesCount - 1] = MIN_CAR_DISTANCE;
 		maxDistances[zonesCount - 1] = MAX_CAR_DISTANCE;
 		for (int zoneIndex = zonesCount - 2; zoneIndex >= 0; zoneIndex--) {
-			minDistances[zoneIndex] = minDistances[zoneIndex + 1] * DISTANCE_RAISER;
-			maxDistances[zoneIndex] = maxDistances[zoneIndex + 1] * DISTANCE_RAISER;
+			minDistances[zoneIndex] = minDistances[zoneIndex + 1]
+					* DISTANCE_RAISER;
+			maxDistances[zoneIndex] = maxDistances[zoneIndex + 1]
+					* DISTANCE_RAISER;
 		}
 	}
 
@@ -125,7 +130,8 @@ public final class RaceMinigame extends Minigame {
 				this.stage.addActor(lineImages[offsetX][i]);
 			}
 			lineImages[offsetX][0].setPosition(0, positionY);
-			lineImages[offsetX][1].setPosition(-Constants.WORLD_WIDTH, positionY);
+			lineImages[offsetX][1].setPosition(-Constants.WORLD_WIDTH,
+					positionY);
 			positionY += zoneWidth;
 		}
 	}
@@ -158,7 +164,8 @@ public final class RaceMinigame extends Minigame {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
-			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
+					touchPos.y);
 			if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
 				this.car.setDragged(true);
 				this.car.setShift(shift);
@@ -179,7 +186,8 @@ public final class RaceMinigame extends Minigame {
 		// Taking focus of the car again
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
+					touchPos.y);
 			if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
 				this.car.setDragged(true);
 				this.car.setShift(shift);
@@ -209,8 +217,9 @@ public final class RaceMinigame extends Minigame {
 		for (int zoneIndex = 0; zoneIndex < zonesCount; zoneIndex++) {
 			// Moves cars
 			for (RaceMinigameCar car : cars[zoneIndex]) {
-				Vector2 position = car.getPosition();
-				position.x -= zonesSpeeds[zoneIndex] * delta;
+				float x = car.getX();
+				x -= zonesSpeeds[zoneIndex] * delta;
+				car.setX(x);
 			}
 
 			// Removes cars which are gone
@@ -223,10 +232,13 @@ public final class RaceMinigame extends Minigame {
 			// Adds new car
 			RaceMinigameCar lastCar = cars[zoneIndex].peekLast();
 			if (lastCar == null || lastCar.getX() < rightBorder) {
-				float x = rightBorder + (maxDistances[zoneIndex] - minDistances[zoneIndex])
+				float x = rightBorder
+						+ (maxDistances[zoneIndex] - minDistances[zoneIndex])
 						* MathUtils.random(1.f) + minDistances[zoneIndex];
-				float y = zonesCenters[zoneIndex] + MathUtils.random(-1, 1) * carsMaxYShift;
-				int type = MathUtils.random(1, Constants.minigames.RACE_MINIGAME_CAR_TYPE_COUNT);
+				float y = zonesCenters[zoneIndex] + MathUtils.random(-1, 1)
+						* carsMaxYShift;
+				int type = MathUtils.random(1,
+						Constants.minigames.RACE_MINIGAME_CAR_TYPE_COUNT);
 				cars[zoneIndex].add(new RaceMinigameCar(x, y, type));
 			}
 		}
@@ -316,7 +328,8 @@ public final class RaceMinigame extends Minigame {
 	public void moveLines(float delta) {
 		for (int offsetX = 0; offsetX < lineImages.length; offsetX++) {
 			for (int i = 0; i < lineImages[offsetX].length; i++) {
-				lineImages[offsetX][i].setX(lineImages[offsetX][i].getX() - speed * delta);
+				lineImages[offsetX][i].setX(lineImages[offsetX][i].getX()
+						- speed * delta);
 				if (lineImages[offsetX][i].getX() < -Constants.WORLD_WIDTH) {
 					lineImages[offsetX][i].setX(Constants.WORLD_WIDTH);
 				}
