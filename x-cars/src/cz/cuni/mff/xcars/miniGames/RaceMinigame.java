@@ -11,10 +11,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 
-import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
+import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
-import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.dialogs.MessageDialog;
 import cz.cuni.mff.xcars.entities.GameObject;
 import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
