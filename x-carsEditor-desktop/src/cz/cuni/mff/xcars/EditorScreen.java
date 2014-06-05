@@ -410,22 +410,27 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 	}
 
-	public boolean isInWorld(GameObject gameObject) {
-		float x = gameObject.getX();
-		float y = gameObject.getY();
-		float bounding = gameObject.getBoundingRadius();
-		return x > -bounding && x < Constants.WORLD_WIDTH + bounding
-				&& y > -bounding && y < Constants.WORLD_HEIGHT + bounding;
-	}
+	public boolean isInWorld(Object object) {
+		if (object instanceof GameObject) {
+			GameObject gameObject = (GameObject) object;
+			float x = gameObject.getX();
+			float y = gameObject.getY();
+			float bounding = gameObject.getBoundingRadius();
+			return x > -bounding && x < Constants.WORLD_WIDTH + bounding
+					&& y > -bounding && y < Constants.WORLD_HEIGHT + bounding;
+		} else if (object instanceof Arrow) {
+			Arrow arrow = (Arrow) object;
+			float x = arrow.getX();
+			float y = arrow.getY();
+			float widthBounding = arrow.getWidth() / 2;
+			float heightBounding = arrow.getHeight() / 2;
+			return x > -widthBounding
+					&& x < Constants.WORLD_WIDTH + widthBounding
+					&& y > -heightBounding
+					&& y < Constants.WORLD_HEIGHT + heightBounding;
+		} else
+			return false;
 
-	public boolean isInWorld(Arrow arrow) {
-		float x = arrow.getX();
-		float y = arrow.getY();
-		float widthBounding = arrow.getWidth() / 2;
-		float heightBounding = arrow.getHeight() / 2;
-		return x > -widthBounding && x < Constants.WORLD_WIDTH + widthBounding
-				&& y > -heightBounding
-				&& y < Constants.WORLD_HEIGHT + heightBounding;
 	}
 
 	private void renderScene() {
@@ -1002,4 +1007,22 @@ public final class EditorScreen extends BaseScreenEditor {
 			this.lastArrowMoved.setType(type);
 		}
 	}
+
+	public void removeObject(Object object) {
+		if (object instanceof GameObject) {
+			GameObject gameObject = (GameObject) object;
+			if (gameObject instanceof UniversalGameObject) {
+				universalObjects.remove(gameObject);
+			} else {
+				gameObjects.remove(gameObject);
+			}
+			gameObject.remove();
+		} else if (object instanceof Arrow) {
+			Arrow arrow = (Arrow) object;
+			arrows.remove(arrow);
+			arrow.remove();
+		}
+
+	}
+
 }
