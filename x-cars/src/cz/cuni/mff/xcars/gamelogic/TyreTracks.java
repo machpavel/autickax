@@ -36,12 +36,16 @@ public class TyreTracks extends Actor {
 
 	public void addPoint(Vector2 objectCenter, float time) {
 		float dist = previousObjectCenter.dst(objectCenter);
+		//too little distance may cause line crossing
+		if (dist < Constants.tyreTracksConstants.MIN_DISTANCE_BETWEEN_POINTS)
+			return;
 		Vector2 leftVec = getLeftTyreVector(objectCenter);
 		Vector2 leftPos = new Vector2(previousObjectCenter).add(leftVec);
 
 
 		Vector2 rightPos = new Vector2(previousObjectCenter)
 				.add(getRightTyreVector(leftVec));
+
 		
 		if (dist <= Constants.tyreTracksConstants.MAX_SEGMENT_LENGTH || tyrePositions.isEmpty())
 			tyrePositions.add(new TyreTrackInfo(leftPos,rightPos,  time));
