@@ -10,8 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
-import cz.cuni.mff.xcars.Debug;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 
 public abstract class BaseScreen implements Screen {
 	protected float stageWidth;
@@ -35,8 +35,8 @@ public abstract class BaseScreen implements Screen {
 		this.camera = new OrthographicCamera();
 		this.camera.setToOrtho(false, this.stageWidth, this.stageHeight);
 
-		this.stage = new Stage(new ScalingViewport(Scaling.stretch, this.stageWidth,
-				this.stageHeight, this.camera), batch);
+		this.stage = new Stage(new ScalingViewport(Scaling.stretch,
+				this.stageWidth, this.stageHeight, this.camera), batch);
 
 		this.stage.addListener(new ScreenInputListener(this));
 
@@ -76,12 +76,12 @@ public abstract class BaseScreen implements Screen {
 		stage.act(delta);
 		stage.draw();
 
-		renderDebug(batch);
+		renderDebug(batch, delta);
 	}
 
-	protected void renderDebug(SpriteBatch batch) {
+	protected void renderDebug(SpriteBatch batch, float delta) {
 		batch.begin();
-		Debug.draw(batch);
+		Debug.render(batch, delta);
 		batch.end();
 	}
 

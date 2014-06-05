@@ -85,7 +85,7 @@ public class LoadingScreen extends BaseScreen {
 			}
 		}
 
-		renderDebug(batch);
+		renderDebug(batch, delta);
 	}
 
 	@Override

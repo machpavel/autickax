@@ -34,11 +34,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlWriter;
 
-import cz.cuni.mff.xcars.Debug;
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Level;
 import cz.cuni.mff.xcars.colorDrawable.ColorDrawable;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.drawing.LevelBackground;
 import cz.cuni.mff.xcars.drawing.LevelConstantBackground;
 import cz.cuni.mff.xcars.entities.Booster;
@@ -149,6 +149,9 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	public EditorScreen() {
 		super();
+
+		Debug.DRAW_FPS = false;
+
 		stage = new Stage() {
 			@Override
 			public boolean keyDown(int keyCode) {
@@ -335,7 +338,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		doArrowKayboardModification(delta);
 
 		batch.begin();
-		Debug.draw(batch);
+		Debug.render(batch, delta);
 		batch.end();
 	}
 

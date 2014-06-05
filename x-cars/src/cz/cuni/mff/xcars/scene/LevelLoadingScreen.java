@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cz.cuni.mff.xcars.Xcars;
-import cz.cuni.mff.xcars.Debug;
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 
 public class LevelLoadingScreen extends BaseScreen {
 
@@ -23,7 +23,8 @@ public class LevelLoadingScreen extends BaseScreen {
 	private static final int lightsYposition = 220;
 	private final int lightsXposition;
 
-	public LevelLoadingScreen(final int levelIndex, final Difficulty levelDifficulty) {
+	public LevelLoadingScreen(final int levelIndex,
+			final Difficulty levelDifficulty) {
 		super();
 
 		// setup a game screen
@@ -72,7 +73,8 @@ public class LevelLoadingScreen extends BaseScreen {
 
 		this.batch.begin();
 
-		this.batch.draw(this.background, 0, 0, this.stageWidth, this.stageHeight);
+		this.batch.draw(this.background, 0, 0, this.stageWidth,
+				this.stageHeight);
 
 		for (int i = 0; i < LevelLoadingScreen.lightsCount; ++i) {
 			TextureRegion drawnLight;
@@ -83,22 +85,25 @@ public class LevelLoadingScreen extends BaseScreen {
 			} else {
 				drawnLight = this.redLight;
 			}
-			this.batch.draw(drawnLight,
-					this.lightsXposition + i * LevelLoadingScreen.lightsXmargin,
-					LevelLoadingScreen.lightsYposition + LevelLoadingScreen.lightsYmargin,
+			this.batch.draw(drawnLight, this.lightsXposition + i
+					* LevelLoadingScreen.lightsXmargin,
+					LevelLoadingScreen.lightsYposition
+							+ LevelLoadingScreen.lightsYmargin,
 					drawnLight.getRegionWidth(), drawnLight.getRegionHeight());
 
-			this.batch.draw(drawnLight,
-					this.lightsXposition + i * LevelLoadingScreen.lightsXmargin,
-					LevelLoadingScreen.lightsYposition - LevelLoadingScreen.lightsYmargin,
+			this.batch.draw(drawnLight, this.lightsXposition + i
+					* LevelLoadingScreen.lightsXmargin,
+					LevelLoadingScreen.lightsYposition
+							- LevelLoadingScreen.lightsYmargin,
 					drawnLight.getRegionWidth(), drawnLight.getRegionHeight());
 		}
 
 		this.batch.end();
 
-		this.shiningLightsCount = (int) (Xcars.gameScreen.getDistanceMapProgress() * LevelLoadingScreen.lightsCount);
+		this.shiningLightsCount = (int) (Xcars.gameScreen
+				.getDistanceMapProgress() * LevelLoadingScreen.lightsCount);
 		Debug.SetValue(Xcars.gameScreen.getDistanceMapProgress());
-		renderDebug(batch);
+		renderDebug(batch, delta);
 	}
 
 	@Override

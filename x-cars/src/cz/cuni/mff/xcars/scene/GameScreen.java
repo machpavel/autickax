@@ -210,7 +210,7 @@ public class GameScreen extends BaseScreen {
 			this.currentPhase.getMiniGame().draw(batch);
 		}
 
-		renderDebug(batch);
+		renderDebug(batch, delta);
 	}
 
 	public ArrayList<GameObject> getGameObjects() {
