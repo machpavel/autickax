@@ -127,16 +127,20 @@ public class GameScreen extends BaseScreen {
 
 		this.start = level.getStart();
 		Vector2 startDirection = new Vector2(
-				this.pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE + EPSILON_F)).sub(
-				this.start.getPosition()).nor();
-		this.start.setShift(startDirection.scl(Constants.misc.CAR_DISTANCE_FROM_START));
+				this.pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE
+						+ EPSILON_F)).sub(this.start.getPosition()).nor();
+		this.start.setShift(startDirection
+				.scl(Constants.misc.CAR_DISTANCE_FROM_START));
 		this.start.setRotation((startDirection.angle() + 270) % 360);
 
 		this.finish = level.getFinish();
 		Vector2 finishDirection = new Vector2(
-				this.pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE - EPSILON_F)).sub(
-				this.finish.getPosition()).nor();
-		this.finish.setShift(finishDirection.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
+				this.pathway
+						.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE
+								- EPSILON_F)).sub(this.finish.getPosition())
+				.nor();
+		this.finish.setShift(finishDirection
+				.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 
 		// Start Music!
@@ -145,13 +149,19 @@ public class GameScreen extends BaseScreen {
 		}
 	}
 
+	public void stopInitialization() {
+		if (this.pathway != null)
+			this.pathway.stopInitialization();
+	}
+
 	/**
 	 * Load level information and playedLevel information. If the playedLevel
 	 * information is not preset, adds a blank one.
 	 * 
 	 * @param levelIndex
 	 */
-	private void loadLevels(int levelIndex, Vector<Level> levels, Vector<PlayedLevel> playedLevels) {
+	private void loadLevels(int levelIndex, Vector<Level> levels,
+			Vector<PlayedLevel> playedLevels) {
 		this.level = levels.get(levelIndex);
 		this.playedLevel = playedLevels.get(levelIndex);
 	}
@@ -174,9 +184,10 @@ public class GameScreen extends BaseScreen {
 		this.currentPhase = phase1;
 	}
 
-	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map,
-			SubLevel1 lastPhase, GameStatistics stats) {
-		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase, stats);
+	public void switchToPhase2(LinkedList<CheckPoint> checkpoints,
+			DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {
+		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase,
+				stats);
 		this.timeStatusBar.setPhase2();
 	}
 
@@ -219,12 +230,13 @@ public class GameScreen extends BaseScreen {
 
 	public void goToMainScreen() {
 		Xcars.getInstance().assets.soundAndMusicManager.playSound(
-				Constants.sounds.SOUND_MENU_CLOSE, Constants.sounds.SOUND_DEFAULT_VOLUME);
+				Constants.sounds.SOUND_MENU_CLOSE,
+				Constants.sounds.SOUND_DEFAULT_VOLUME);
 		Xcars.getInstance().assets.soundAndMusicManager.stopRaceMusic();
 		Xcars.getInstance().assets.soundAndMusicManager.playMenuMusic();
 		Xcars.levelSelectScreen.dispose();
-		Xcars.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty, levelIndex
-				/ Constants.menu.DISPLAYED_LEVELS_MAX_COUNT);
+		Xcars.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty,
+				levelIndex);
 		Xcars.getInstance().setScreen(Xcars.levelSelectScreen);
 		Xcars.levelSelectScreen.takeFocus();
 
@@ -242,8 +254,10 @@ public class GameScreen extends BaseScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
-		this.pathwayTexture.getTexture().dispose();
-		this.pathway.deleteDistanceMap();
+		if (this.pathwayTexture != null)
+			this.pathwayTexture.getTexture().dispose();
+		if (this.pathway != null)
+			this.pathway.deleteDistanceMap();
 	}
 
 	public Difficulty getDifficulty() {
@@ -268,14 +282,16 @@ public class GameScreen extends BaseScreen {
 	public void resume() {
 		FileHandle textureFile = null;
 		if (Gdx.files.isLocalStorageAvailable()) {
-			textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
-					+ ".cim");
+			textureFile = Gdx.files
+					.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
+							+ ".cim");
 			// Gdx.app.log("TEXTURE",
 			// "Texture of pathway is loaded from local memory.");
 			// Debug.Log("Texture of pathway is loaded from local memory.");
 		} else {
-			textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
-					+ ".cim");
+			textureFile = Gdx.files
+					.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
+							+ ".cim");
 			// Gdx.app.log("TEXTURE",
 			// "Texture of pathway is loaded from internal memory.");
 			// Debug.Log("Texture of pathway is loaded from internal memory.");
@@ -283,8 +299,8 @@ public class GameScreen extends BaseScreen {
 
 		if (textureFile.exists()) {
 			Pixmap pixmap = PixmapIO.readCIM(textureFile);
-			this.pathwayTexture = new TextureRegion(new Texture(pixmap), Constants.WORLD_WIDTH,
-					Constants.WORLD_HEIGHT);
+			this.pathwayTexture = new TextureRegion(new Texture(pixmap),
+					Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 			pixmap.dispose();
 			// Gdx.app.log("TEXTURE",
 			// "The pathway texture was loaded succesfully.");

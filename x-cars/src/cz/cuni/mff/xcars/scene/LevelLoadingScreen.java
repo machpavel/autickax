@@ -23,10 +23,18 @@ public class LevelLoadingScreen extends BaseScreen {
 	private static final int lightsYposition = 220;
 	private final int lightsXposition;
 
+	// Helping variables to stop a loading
+	private final int levelIndex;
+	private final Difficulty levelDifficulty;
+	private boolean isInitializationStopped = false;
+
 	public LevelLoadingScreen(final int levelIndex,
 			final Difficulty levelDifficulty) {
 		super();
-		if(Xcars.adsHandler != null){
+		this.levelIndex = levelIndex;
+		this.levelDifficulty = levelDifficulty;
+
+		if (Xcars.adsHandler != null) {
 			Xcars.adsHandler.showBanner(true);
 		}
 
@@ -34,7 +42,7 @@ public class LevelLoadingScreen extends BaseScreen {
 		if (Xcars.gameScreen != null) {
 			Xcars.gameScreen.dispose();
 			Xcars.gameScreen = null;
-		}		
+		}
 
 		Xcars.gameScreen = new GameScreen(levelIndex, levelDifficulty, false);
 
@@ -45,14 +53,15 @@ public class LevelLoadingScreen extends BaseScreen {
 				Gdx.app.postRunnable(new Runnable() {
 					@Override
 					public void run() {
-						Xcars.gameScreen.initializeTextures();
-						Xcars.getInstance().setScreen(Xcars.gameScreen);
-						Xcars.gameScreen.takeFocus();	
-						
-						if(Xcars.adsHandler != null){
-							Xcars.adsHandler.showBanner(false);
+						if (!LevelLoadingScreen.this.isInitializationStopped) {
+							Xcars.gameScreen.initializeTextures();
+							Xcars.getInstance().setScreen(Xcars.gameScreen);
+							Xcars.gameScreen.takeFocus();
+
+							if (Xcars.adsHandler != null) {
+								Xcars.adsHandler.showBanner(false);
+							}
 						}
-						
 					}
 				});
 			}
@@ -116,6 +125,20 @@ public class LevelLoadingScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
-		// Rewrites the base method with doing nothing
+		this.isInitializationStopped = true;
+		Xcars.gameScreen.stopInitialization();
+
+		Debug.Log("Exit loading screen");
+
+		Xcars.getInstance().assets.soundAndMusicManager.playSound(
+				Constants.sounds.SOUND_MENU_CLOSE,
+				Constants.sounds.SOUND_DEFAULT_VOLUME);
+		Xcars.getInstance().assets.soundAndMusicManager.stopRaceMusic();
+		Xcars.getInstance().assets.soundAndMusicManager.playMenuMusic();
+		Xcars.levelSelectScreen.dispose();
+		Xcars.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty,
+				levelIndex);
+		Xcars.getInstance().setScreen(Xcars.levelSelectScreen);
+		Xcars.levelSelectScreen.takeFocus();
 	}
 }

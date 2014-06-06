@@ -54,14 +54,15 @@ public class LevelSelectScreen extends BaseScreen {
 
 	public LevelSelectScreen(final Difficulty difficulty) {
 		this(difficulty, 0);
-		if(Xcars.adsHandler != null){
+		if (Xcars.adsHandler != null) {
 			Xcars.adsHandler.showBanner(false);
 		}
 	}
 
-	public LevelSelectScreen(final Difficulty difficulty, final int startingPage) {
+	public LevelSelectScreen(final Difficulty difficulty, final int levelIndex) {
 		this.difficulty = difficulty;
-		this.actualPage = startingPage;
+		this.actualPage = levelIndex
+				/ Constants.menu.DISPLAYED_LEVELS_MAX_COUNT;
 		int numberOfButtons = this.difficulty.getAvailableLevels().size();
 		this.buttons = new ScreenAdaptiveTextButton[numberOfButtons];
 		for (int i = 0; i < numberOfButtons; ++i) {
@@ -126,15 +127,17 @@ public class LevelSelectScreen extends BaseScreen {
 			@Override
 			public void action() {
 				if (!wasPanned) {
-					Xcars.getInstance().assets.soundAndMusicManager.pauseMenuMusic();
 					Xcars.getInstance().assets.soundAndMusicManager
-							.playSound(Constants.sounds.SOUND_MENU_OPEN,
-									Constants.sounds.SOUND_DEFAULT_VOLUME);
+							.pauseMenuMusic();
+					Xcars.getInstance().assets.soundAndMusicManager.playSound(
+							Constants.sounds.SOUND_MENU_OPEN,
+							Constants.sounds.SOUND_DEFAULT_VOLUME);
 					if (Xcars.levelLoadingScreen != null) {
 						Xcars.levelLoadingScreen.dispose();
 						Xcars.levelLoadingScreen = null;
 					}
-					Xcars.levelLoadingScreen = new LevelLoadingScreen(levelIndex, difficulty);
+					Xcars.levelLoadingScreen = new LevelLoadingScreen(
+							levelIndex, difficulty);
 					Xcars.getInstance().setScreen(Xcars.levelLoadingScreen);
 				}
 			}
@@ -154,7 +157,8 @@ public class LevelSelectScreen extends BaseScreen {
 
 		for (int i = 0; i < this.buttons.length; i++) {
 			levelButton = this.buttons[i];
-			levelButton.setPosition(x - pageNumber * Constants.WORLD_WIDTH + offset, y);
+			levelButton.setPosition(x - pageNumber * Constants.WORLD_WIDTH
+					+ offset, y);
 
 			// Moves onto new page
 			if (i + 1 < LevelSelectScreen.buttonsPageMaximalCount * (page + 1)) {
@@ -164,26 +168,31 @@ public class LevelSelectScreen extends BaseScreen {
 					x += LevelSelectScreen.buttonsXShift;
 				} else {
 
-					x = LevelSelectScreen.buttonsStartXPosition + page * Constants.WORLD_WIDTH;
+					x = LevelSelectScreen.buttonsStartXPosition + page
+							* Constants.WORLD_WIDTH;
 					y -= LevelSelectScreen.buttonsYShift;
 				}
 			} else {
 				page++;
-				x = LevelSelectScreen.buttonsStartXPosition + page * Constants.WORLD_WIDTH;
+				x = LevelSelectScreen.buttonsStartXPosition + page
+						* Constants.WORLD_WIDTH;
 				y = LevelSelectScreen.buttonsStartYPosition;
 			}
 		}
 	}
 
 	private void createAnchors(float maxPages) {
-		float xOffset = Constants.WORLD_WIDTH / 2
-				- ((int) (LevelSelectScreen.sliderXOffset * maxPages) - sliderXOffset) / 2;
+		float xOffset = Constants.WORLD_WIDTH
+				/ 2
+				- ((int) (LevelSelectScreen.sliderXOffset * maxPages) - sliderXOffset)
+				/ 2;
 		for (int i = 0; i < maxPages; i++) {
 
 			ScreenAdaptiveImage image = new ScreenAdaptiveImage(
 					Xcars.getInstance().assets
 							.getGraphics(Constants.menu.SLIDER_MENU_LEVEL_ANCHOR));
-			image.setCenterPosition(xOffset + i * LevelSelectScreen.sliderXOffset,
+			image.setCenterPosition(xOffset + i
+					* LevelSelectScreen.sliderXOffset,
 					LevelSelectScreen.sliderYPosition);
 			this.stage.addActor(image);
 		}
@@ -195,16 +204,19 @@ public class LevelSelectScreen extends BaseScreen {
 				Xcars.getInstance().assets
 						.getGraphics(Constants.menu.SLIDER_MENU_LEVEL_BACKGROUND));
 		style.knob = new TextureRegionDrawable(
-				Xcars.getInstance().assets.getGraphics(Constants.menu.SLIDER_MENU_LEVEL_KNOB));
+				Xcars.getInstance().assets
+						.getGraphics(Constants.menu.SLIDER_MENU_LEVEL_KNOB));
 		Slider slider = new Slider(0, 1, 0.001f, false, style);
-		slider.setWidth((maxPages - 1) * LevelSelectScreen.sliderXOffset + style.knob.getMinWidth());
+		slider.setWidth((maxPages - 1) * LevelSelectScreen.sliderXOffset
+				+ style.knob.getMinWidth());
 		slider.setPosition(Constants.WORLD_WIDTH / 2 - slider.getWidth() / 2,
 				LevelSelectScreen.sliderYPosition - slider.getHeight() / 2);
 		if (maxPages > 1)
 			slider.setValue(actualPage / (maxPages - 1));
 		slider.addListener(new InputListener() {
 			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
 				LevelSelectScreen.this.isSliderOperating = true;
 				LevelSelectScreen.this.flingVelocity = LevelSelectScreen.defaultFlingVelocity;
 				LevelSelectScreen.this.doSliderChange();
@@ -212,7 +224,8 @@ public class LevelSelectScreen extends BaseScreen {
 			}
 
 			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			public void touchUp(InputEvent event, float x, float y,
+					int pointer, int button) {
 				LevelSelectScreen.this.startAnimation();
 				LevelSelectScreen.this.isSliderOperating = false;
 			}
@@ -236,13 +249,15 @@ public class LevelSelectScreen extends BaseScreen {
 		this.buttonsShift = offset;
 		setButtonsPosition(pageNumber, offset);
 		if (offset != 0)
-			this.flingVelocity = -Math.abs(this.flingVelocity) * Math.signum(offset);
+			this.flingVelocity = -Math.abs(this.flingVelocity)
+					* Math.signum(offset);
 	}
 
 	@Override
 	protected void onBackKeyPressed() {
 		Xcars.getInstance().assets.soundAndMusicManager.playSound(
-				Constants.sounds.SOUND_MENU_CLOSE, Constants.sounds.SOUND_DEFAULT_VOLUME);
+				Constants.sounds.SOUND_MENU_CLOSE,
+				Constants.sounds.SOUND_DEFAULT_VOLUME);
 		Xcars.difficultySelectScreen.dispose();
 		Xcars.difficultySelectScreen = new DifficultySelectScreen();
 		Xcars.getInstance().setScreen(Xcars.difficultySelectScreen);
@@ -250,46 +265,54 @@ public class LevelSelectScreen extends BaseScreen {
 
 	@Override
 	protected void clearScreenWithColor() {
-		Gdx.gl.glClearColor(Constants.menu.LEVELS_MENU_RED, Constants.menu.LEVELS_MENU_GREEN,
+		Gdx.gl.glClearColor(Constants.menu.LEVELS_MENU_RED,
+				Constants.menu.LEVELS_MENU_GREEN,
 				Constants.menu.LEVELS_MENU_BLUE, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 
 	@Override
 	protected InputProcessor createInputProcessor() {
-		GestureDetector gestureDetector = new GestureDetector(new MenuGestureListener() {
-			@Override
-			public boolean touchDown(float x, float y, int pointer, int button) {
-				if (!LevelSelectScreen.this.isSliderOperating) {
-					// Enables stage buttons to load level
-					LevelSelectScreen.this.wasPanned = false;
-					// Stops moving of buttons
-					LevelSelectScreen.this.isAnimationInProgress = false;
-				}
-				return false;
-			}
+		GestureDetector gestureDetector = new GestureDetector(
+				new MenuGestureListener() {
+					@Override
+					public boolean touchDown(float x, float y, int pointer,
+							int button) {
+						if (!LevelSelectScreen.this.isSliderOperating) {
+							// Enables stage buttons to load level
+							LevelSelectScreen.this.wasPanned = false;
+							// Stops moving of buttons
+							LevelSelectScreen.this.isAnimationInProgress = false;
+						}
+						return false;
+					}
 
-			@Override
-			public boolean fling(float velocityX, float velocityY, int button) {
-				if (!LevelSelectScreen.this.isSliderOperating) {
-					LevelSelectScreen.this.flingVelocity = velocityX * Input.xStretchFactor;
-				}
-				return false;
-			}
+					@Override
+					public boolean fling(float velocityX, float velocityY,
+							int button) {
+						if (!LevelSelectScreen.this.isSliderOperating) {
+							LevelSelectScreen.this.flingVelocity = velocityX
+									* Input.xStretchFactor;
+						}
+						return false;
+					}
 
-			@Override
-			public boolean pan(float x, float y, float deltaX, float deltaY) {
-				if (!LevelSelectScreen.this.isSliderOperating) {
-					// Shifts buttons and disables level loading
-					LevelSelectScreen.this.wasPanned = true;
-					LevelSelectScreen.this.buttonsShift += deltaX * Input.xStretchFactor;
-					LevelSelectScreen.this.setButtonsPosition(actualPage, buttonsShift);
-					LevelSelectScreen.this.moveSlider();
+					@Override
+					public boolean pan(float x, float y, float deltaX,
+							float deltaY) {
+						if (!LevelSelectScreen.this.isSliderOperating) {
+							// Shifts buttons and disables level loading
+							LevelSelectScreen.this.wasPanned = true;
+							LevelSelectScreen.this.buttonsShift += deltaX
+									* Input.xStretchFactor;
+							LevelSelectScreen.this.setButtonsPosition(
+									actualPage, buttonsShift);
+							LevelSelectScreen.this.moveSlider();
 
-				}
-				return false;
-			}
-		}) {
+						}
+						return false;
+					}
+				}) {
 			@Override
 			public boolean touchUp(int x, int y, int pointer, int button) {
 				if (!LevelSelectScreen.this.isSliderOperating) {
@@ -323,8 +346,8 @@ public class LevelSelectScreen extends BaseScreen {
 				if (this.pagesCount > 1) {
 					if (this.actualPage == 0 && isGoingLeft && areButtonsRight) {
 						this.flingVelocity = -Math.abs(this.flingVelocity);
-					} else if (this.actualPage == this.pagesCount - 1 && isGoingRight
-							&& areButtonsLeft)
+					} else if (this.actualPage == this.pagesCount - 1
+							&& isGoingRight && areButtonsLeft)
 						this.flingVelocity = Math.abs(this.flingVelocity);
 				} else {
 					this.flingVelocity = -Math.abs(this.flingVelocity)
@@ -355,7 +378,8 @@ public class LevelSelectScreen extends BaseScreen {
 
 	private void moveSlider() {
 		if (this.pagesCount > 1)
-			this.slider.setValue(actualPage / (this.pagesCount - 1) - this.buttonsShift
-					/ Constants.WORLD_WIDTH / (this.pagesCount - 1));
+			this.slider.setValue(actualPage / (this.pagesCount - 1)
+					- this.buttonsShift / Constants.WORLD_WIDTH
+					/ (this.pagesCount - 1));
 	}
 }

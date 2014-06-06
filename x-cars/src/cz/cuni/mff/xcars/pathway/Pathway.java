@@ -74,6 +74,11 @@ public class Pathway implements java.io.Externalizable {
 				distanceMapNodesCount);
 		this.distanceMap.CreateDistances(getControlPoints(), pathwayType, typeOfInterpolation);
 	}
+	
+	public void stopInitialization(){
+		if (this.distanceMap != null)
+			this.distanceMap.stopInitialization();
+	}
 
 	/**
 	 * @param u
