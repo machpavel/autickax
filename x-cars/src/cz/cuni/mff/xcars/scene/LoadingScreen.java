@@ -26,6 +26,10 @@ public class LoadingScreen extends BaseScreen {
 
 	public LoadingScreen() {
 		super();
+		
+		if(Xcars.adsHandler != null){
+			Xcars.adsHandler.showBanner(true);
+		}
 
 		this.carYPosition = 50;
 		this.fumeYPositon = 70;

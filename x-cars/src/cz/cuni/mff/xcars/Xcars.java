@@ -16,7 +16,7 @@ import cz.cuni.mff.xcars.scene.MainMenuScreen;
 public class Xcars extends Game {
 
 	private static Xcars _instance;
-	
+
 	public static LoadingScreen loadingScreen;
 	public static MainMenuScreen mainMenuScreen;
 	public static DifficultySelectScreen difficultySelectScreen;
@@ -25,47 +25,50 @@ public class Xcars extends Game {
 	public static GameScreen gameScreen;
 	public static Settings settings;
 	public static PlayedLevels playedLevels;
-	
+	public static IAdsHandler adsHandler;
+
 	public final Assets assets;
 
-	public Xcars() {
+	public Xcars(IAdsHandler adsHandler) {
 		_instance = this;
-		assets = new Assets();
+		this.assets = new Assets();
+		Xcars.adsHandler = adsHandler;
 	}
-	
 
 	@Override
 	public void create() {
 		Input.InitDimensions();
-		
+
 		Xcars.loadingScreen = new LoadingScreen();
-		
+
 		settings = new Settings();
 		settings.loadSettings();
-		
+
 		playedLevels = new PlayedLevels();
 		playedLevels.loadLevels();
-		
+
 		setScreen(Xcars.loadingScreen);
 	}
 
 	public static Xcars getInstance() {
 		return _instance; // will get created when app starts
 	}
-	
-	
+
 	@Override
 	public void dispose() {
 		assets.disposeGameScreenGraphic();
-		
-		
+
 		// Deletes the temporary pathway texture file
 		FileHandle textureFile = null;
-    	if(Gdx.files.isLocalStorageAvailable())
-    		textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
-    	else
-    		textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");    	
-		if(textureFile.exists())
+		if (Gdx.files.isLocalStorageAvailable())
+			textureFile = Gdx.files
+					.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
+							+ ".cim");
+		else
+			textureFile = Gdx.files
+					.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
+							+ ".cim");
+		if (textureFile.exists())
 			textureFile.delete();
 		super.dispose();
 	}

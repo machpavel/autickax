@@ -18,6 +18,9 @@ public class DifficultySelectScreen extends BaseScreen {
 
 	public DifficultySelectScreen() {
 		super();
+		if(Xcars.adsHandler != null){
+			Xcars.adsHandler.showBanner(true);
+		}
 
 		// Background
 		Image background = new Image(

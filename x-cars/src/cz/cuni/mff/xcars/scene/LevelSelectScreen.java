@@ -54,6 +54,9 @@ public class LevelSelectScreen extends BaseScreen {
 
 	public LevelSelectScreen(final Difficulty difficulty) {
 		this(difficulty, 0);
+		if(Xcars.adsHandler != null){
+			Xcars.adsHandler.showBanner(false);
+		}
 	}
 
 	public LevelSelectScreen(final Difficulty difficulty, final int startingPage) {

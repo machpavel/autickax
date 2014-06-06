@@ -26,12 +26,15 @@ public class LevelLoadingScreen extends BaseScreen {
 	public LevelLoadingScreen(final int levelIndex,
 			final Difficulty levelDifficulty) {
 		super();
+		if(Xcars.adsHandler != null){
+			Xcars.adsHandler.showBanner(true);
+		}
 
 		// setup a game screen
 		if (Xcars.gameScreen != null) {
 			Xcars.gameScreen.dispose();
 			Xcars.gameScreen = null;
-		}
+		}		
 
 		Xcars.gameScreen = new GameScreen(levelIndex, levelDifficulty, false);
 
@@ -44,7 +47,12 @@ public class LevelLoadingScreen extends BaseScreen {
 					public void run() {
 						Xcars.gameScreen.initializeTextures();
 						Xcars.getInstance().setScreen(Xcars.gameScreen);
-						Xcars.gameScreen.takeFocus();
+						Xcars.gameScreen.takeFocus();	
+						
+						if(Xcars.adsHandler != null){
+							Xcars.adsHandler.showBanner(false);
+						}
+						
 					}
 				});
 			}

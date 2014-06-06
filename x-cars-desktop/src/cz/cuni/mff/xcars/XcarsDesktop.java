@@ -26,6 +26,6 @@ public class XcarsDesktop {
 		cfg.addIcon("icons/32.png", FileType.Internal);
 		cfg.addIcon("icons/16.png", FileType.Internal);
 		
-		new LwjglApplication(new Xcars(), cfg);
+		new LwjglApplication(new Xcars(null), cfg);
 	}
 }

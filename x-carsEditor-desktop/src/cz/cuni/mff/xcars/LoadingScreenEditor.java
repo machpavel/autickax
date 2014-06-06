@@ -10,7 +10,7 @@ public class LoadingScreenEditor extends BaseScreenEditor {
 
 	public LoadingScreenEditor() {
 		super();		
-		new Xcars();
+		new Xcars(null);
 		Xcars.getInstance().assets.load();
 		game.assets.load();
 	}

@@ -23,6 +23,9 @@ public class MainMenuScreen extends BaseScreen {
 
 	public MainMenuScreen() {
 		super();
+		if(Xcars.adsHandler != null){
+			Xcars.adsHandler.showBanner(true);
+		}
 
 		this.playMenuMusic();
 
