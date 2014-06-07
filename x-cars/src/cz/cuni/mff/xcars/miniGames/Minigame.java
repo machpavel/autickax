@@ -38,19 +38,19 @@ public abstract class Minigame extends Comunicator {
 	protected void playResultSound() {
 		switch (result) {
 		case FAILED:
-			Xcars.getInstance().assets.soundAndMusicManager.playSound(
+			this.soundsManager.playSound(
 					Constants.sounds.SOUND_MINIGAME_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
 			break;
 		case FAILED_WITH_VALUE:
-			Xcars.getInstance().assets.soundAndMusicManager.playSound(
+			this.soundsManager.playSound(
 					Constants.sounds.SOUND_MINIGAME_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
 			break;
 		case PROCEEDED:
-			Xcars.getInstance().assets.soundAndMusicManager.playSound(
+			this.soundsManager.playSound(
 					Constants.sounds.SOUND_MINIGAME_SUCCESS, Constants.sounds.SOUND_DEFAULT_VOLUME);
 			break;
 		case PROCEEDED_WITH_VALUE:
-			Xcars.getInstance().assets.soundAndMusicManager.playSound(
+			this.soundsManager.playSound(
 					Constants.sounds.SOUND_MINIGAME_SUCCESS, Constants.sounds.SOUND_DEFAULT_VOLUME);
 			break;
 		default:

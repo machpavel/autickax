@@ -30,7 +30,7 @@ public abstract class Dialog extends Comunicator {
 	}
 
 	protected void playButtonSound() {
-		Xcars.getInstance().assets.soundAndMusicManager.playSound(
+		this.soundsManager.playSound(
 				Constants.sounds.SOUND_BUTTON_DIALOG_SOUND, Constants.sounds.SOUND_DEFAULT_VOLUME);
 	}
 

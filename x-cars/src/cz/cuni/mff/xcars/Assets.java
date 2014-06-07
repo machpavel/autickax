@@ -230,9 +230,7 @@ public class Assets {
 		for (FileHandle fileHandle : handles) {
 			String name = fileHandle.path();
 			name = name.substring(prefix.length());
-			soundsMap.put(name,
-					Gdx.audio.newSound(Gdx.files.internal(name)));
-			System.out.println(fileHandle.path());
+			soundsMap.put(name, Gdx.audio.newSound(Gdx.files.internal(name)));
 		}
 
 		soundAndMusicManager.assignSounds(soundsMap);

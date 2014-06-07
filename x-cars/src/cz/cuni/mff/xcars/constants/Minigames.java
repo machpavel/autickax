@@ -150,9 +150,9 @@ public final class Minigames {
 	public final String REPAIRING_MINIGAME_OBJECT = "minigames/Repairing/object";
 	public final float REPAIRING_MINIGAME_TARGET_RADIUS = 80.f;
 	public final float REPAIRING_MINIGAME_FAIL_VALUE = 0.4f;
-	public final float REPAIRING_MINIGAME_TIME_KIDDIE = 20;
-	public final float REPAIRING_MINIGAME_TIME_BEGINNER = 15;
-	public final float REPAIRING_MINIGAME_TIME_NORMAL = 10;
-	public final float REPAIRING_MINIGAME_TIME_HARD = 5;
-	public final float REPAIRING_MINIGAME_TIME_EXTREME = 3;
+	public final float REPAIRING_MINIGAME_TIME_KIDDIE = 40;
+	public final float REPAIRING_MINIGAME_TIME_BEGINNER = 30;
+	public final float REPAIRING_MINIGAME_TIME_NORMAL = 20;
+	public final float REPAIRING_MINIGAME_TIME_HARD = 10;
+	public final float REPAIRING_MINIGAME_TIME_EXTREME = 5;
 }

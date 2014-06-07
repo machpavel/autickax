@@ -173,7 +173,7 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 			{
 				Vector2 formerPosition = checkPoints.getLast().getPosition();
 				if (this.level.getCar().collidesWithinLineSegment(gameObject, formerPosition)) {
-					Xcars.getInstance().assets.soundAndMusicManager.playCollisionSound(gameObject);
+					this.soundsManager.playCollisionSound(gameObject);
 					switchToMistakeState("You crashed into a " + gameObject.getName()+ "!");
 					return;
 				}
@@ -190,7 +190,7 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 				
 				if (wayPoints.isEmpty()){
 					state = SubLevel1States.FINISH_STATE;
-					Xcars.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_CHEER, Constants.sounds.SOUND_DEFAULT_VOLUME);
+					this.soundsManager.playSound(Constants.sounds.SOUND_SUB1_CHEER, Constants.sounds.SOUND_DEFAULT_VOLUME);
 					getDialogStack().push(new DecisionDialog(this.level, this, Constants.strings.PHASE_1_FINISH_REACHED, true));
 					timeMeasured = false;
 					this.level.getCar().setDragged(false);
@@ -247,7 +247,7 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 	 */
 	public void reset() {
 		takeFocus();
-		Xcars.getInstance().assets.soundAndMusicManager.playStartEngineSound();
+		this.soundsManager.playStartEngineSound();
 		
 		this.getDialogStack().clear(); 
 		eraseMinigame();
@@ -291,7 +291,7 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 	 * Player failed to finish the track
 	 */
 	private void switchToMistakeState(String str) {
-		Xcars.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_SUB1_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
+		this.soundsManager.playSound(Constants.sounds.SOUND_SUB1_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
 		this.getDialogStack().push(new DecisionDialog(this.level, this, str, false));
 		this.state = SubLevel1States.MISTAKE_STATE;
 		this.level.getCar().setDragged(false);

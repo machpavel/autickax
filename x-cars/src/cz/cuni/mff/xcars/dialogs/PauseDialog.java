@@ -29,22 +29,28 @@ public class PauseDialog extends DecisionDialog {
 			@Override
 			public void action() {
 
-				Xcars.settings.setShowTooltips(!Xcars.settings.isShowTooltips());
+				Xcars.settings
+						.setShowTooltips(!Xcars.settings.isShowTooltips());
 
 				if (Xcars.settings.isShowTooltips()) {
-					buttonTooltips.setStyle(Xcars.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_ON), Xcars
-							.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_ON_HOVER));
+					buttonTooltips
+							.setStyle(
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_ON),
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_ON_HOVER));
 				} else {
-					buttonTooltips.setStyle(Xcars.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_OFF), Xcars
-							.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_OFF_HOVER));
+					buttonTooltips
+							.setStyle(
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_OFF),
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_TOOLTIPS_OFF_HOVER));
 				}
 			}
 		};
-		this.buttonTooltips.setPosition(Constants.dialog.PAUSE_DIALOG_TOOLTIPS_POSITION_X,
+		this.buttonTooltips.setPosition(
+				Constants.dialog.PAUSE_DIALOG_TOOLTIPS_POSITION_X,
 				Constants.dialog.PAUSE_DIALOG_TOOLTIPS_POSITION_Y);
 		stage.addActor(this.buttonTooltips);
 
@@ -62,19 +68,24 @@ public class PauseDialog extends DecisionDialog {
 				Xcars.settings.setPlaySounds(!Xcars.settings.isPlaySounds());
 
 				if (Xcars.settings.isPlaySounds()) {
-					buttonSounds.setStyle(Xcars.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_ON), Xcars
-							.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_ON_HOVER));
+					buttonSounds
+							.setStyle(
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_ON),
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_ON_HOVER));
 				} else {
-					buttonSounds.setStyle(Xcars.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_OFF), Xcars
-							.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_OFF_HOVER));
+					buttonSounds
+							.setStyle(
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_OFF),
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_SOUNDS_OFF_HOVER));
 				}
 			}
 		};
-		this.buttonSounds.setPosition(Constants.dialog.PAUSE_DIALOG_SOUNDS_POSITION_X,
+		this.buttonSounds.setPosition(
+				Constants.dialog.PAUSE_DIALOG_SOUNDS_POSITION_X,
 				Constants.dialog.PAUSE_DIALOG_SOUNDS_POSITION_Y);
 		stage.addActor(this.buttonSounds);
 
@@ -93,21 +104,26 @@ public class PauseDialog extends DecisionDialog {
 				Xcars.settings.setPlayMusic(!Xcars.settings.isPlayMusic());
 
 				if (Xcars.settings.isPlayMusic()) {
-					buttonMusic.setStyle(Xcars.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_ON), Xcars
-							.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_ON_HOVER));
-					Xcars.getInstance().assets.soundAndMusicManager.playRaceMusic();
+					buttonMusic
+							.setStyle(
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_ON),
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_ON_HOVER));
+					PauseDialog.this.soundsManager.playRaceMusic();
 				} else {
-					buttonMusic.setStyle(Xcars.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_OFF), Xcars
-							.getInstance().assets
-							.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_OFF_HOVER));
-					Xcars.getInstance().assets.soundAndMusicManager.pauseAllMusic();
+					buttonMusic
+							.setStyle(
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_OFF),
+									Xcars.getInstance().assets
+											.getGraphics(Constants.menu.BUTTON_MENU_MUSIC_OFF_HOVER));
+					PauseDialog.this.soundsManager.pauseAllMusic();
 				}
 			}
 		};
-		this.buttonMusic.setPosition(Constants.dialog.PAUSE_DIALOG_MUSIC_POSITION_X,
+		this.buttonMusic.setPosition(
+				Constants.dialog.PAUSE_DIALOG_MUSIC_POSITION_X,
 				Constants.dialog.PAUSE_DIALOG_MUSIC_POSITION_Y);
 		stage.addActor(this.buttonMusic);
 

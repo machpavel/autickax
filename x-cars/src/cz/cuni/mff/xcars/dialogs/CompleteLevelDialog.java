@@ -28,8 +28,8 @@ public class CompleteLevelDialog extends DecisionDialog {
 	Drawable filledStarDrawable;
 	byte starsCount;
 
-	public CompleteLevelDialog(GameScreen gameScreen, SubLevel2 subLevel2, GameStatistics stats,
-			boolean isNextLevelAvailible) {
+	public CompleteLevelDialog(GameScreen gameScreen, SubLevel2 subLevel2,
+			GameStatistics stats, boolean isNextLevelAvailible) {
 		super(gameScreen, subLevel2, null, isNextLevelAvailible);
 		this.stats = stats;
 		this.subLevel2 = subLevel2;
@@ -61,50 +61,62 @@ public class CompleteLevelDialog extends DecisionDialog {
 	private void createLabels() {
 		ScreenAdaptiveLabel[][] labels = new ScreenAdaptiveLabel[6][2];
 
-		labels[0][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Difficulty:");
-		labels[0][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(stats.getDifficulty()
-				.toString());
+		labels[0][0] = ScreenAdaptiveLabel
+				.getCompleteLevelDialogLabel("Difficulty:");
+		labels[0][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(stats
+				.getDifficulty().toString());
 
-		labels[1][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Succeeded collisions:");
-		labels[1][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(String.valueOf(stats
-				.getSucceeded()));
+		labels[1][0] = ScreenAdaptiveLabel
+				.getCompleteLevelDialogLabel("Succeeded collisions:");
+		labels[1][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(String
+				.valueOf(stats.getSucceeded()));
 
-		labels[2][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Failed collisions:");
-		labels[2][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(String.valueOf(stats
-				.getFailed()));
+		labels[2][0] = ScreenAdaptiveLabel
+				.getCompleteLevelDialogLabel("Failed collisions:");
+		labels[2][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(String
+				.valueOf(stats.getFailed()));
 
-		labels[3][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Time in first part:");
-		labels[3][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(decimalFormat.format(stats
-				.getPhase1ElapsedTime()) + '/' + decimalFormat.format(stats.getPhase1TimeLimit()));
+		labels[3][0] = ScreenAdaptiveLabel
+				.getCompleteLevelDialogLabel("Time in first part:");
+		labels[3][1] = ScreenAdaptiveLabel
+				.getCompleteLevelDialogLabel(decimalFormat.format(stats
+						.getPhase1ElapsedTime())
+						+ '/'
+						+ decimalFormat.format(stats.getPhase1TimeLimit()));
 
-		labels[4][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Time in second part:");
-		timeLabel = labels[4][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(decimalFormat2
-				.format(stats.getPhase2ElapsedTime()));
+		labels[4][0] = ScreenAdaptiveLabel
+				.getCompleteLevelDialogLabel("Time in second part:");
+		timeLabel = labels[4][1] = ScreenAdaptiveLabel
+				.getCompleteLevelDialogLabel(decimalFormat2.format(stats
+						.getPhase2ElapsedTime()));
 
-		labels[5][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel("Score:");
+		labels[5][0] = ScreenAdaptiveLabel
+				.getCompleteLevelDialogLabel("Score:");
 		this.score = stats.getScoreFromTime();
-		scoreLabel = labels[5][1] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(Integer
-				.toString(this.score));
+		scoreLabel = labels[5][1] = ScreenAdaptiveLabel
+				.getCompleteLevelDialogLabel(Integer.toString(this.score));
 
 		for (int row = 0; row < labels.length; row++) {
-			labels[row][0]
-					.setPosition(Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X
-							- Constants.dialog.COMPLETE_DIALOG_MESSAGE_WIDTH / 2,
-							Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y
-									+ Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT / 2
-									- Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT
-									/ labels.length * row);
+			labels[row][0].setPosition(
+					Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X
+							- Constants.dialog.COMPLETE_DIALOG_MESSAGE_WIDTH
+							/ 2,
+					Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y
+							+ Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT
+							/ 2
+							- Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT
+							/ labels.length * row);
 			this.stage.addActor(labels[row][0]);
 
-			labels[row][1]
-					.setPosition(
-							Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X
-									+ Constants.dialog.COMPLETE_DIALOG_MESSAGE_WIDTH / 2
-									- labels[row][1].getWidth(),
-							Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y
-									+ Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT / 2
-									- Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT
-									/ labels.length * row);
+			labels[row][1].setPosition(
+					Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X
+							+ Constants.dialog.COMPLETE_DIALOG_MESSAGE_WIDTH
+							/ 2 - labels[row][1].getWidth(),
+					Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_Y
+							+ Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT
+							/ 2
+							- Constants.dialog.COMPLETE_DIALOG_MESSAGE_HEIGHT
+							/ labels.length * row);
 			this.stage.addActor(labels[row][1]);
 		}
 
@@ -147,12 +159,16 @@ public class CompleteLevelDialog extends DecisionDialog {
 			float elapsedTime = progress * stats.getPhase2ElapsedTime();
 			this.timeLabel.setText(decimalFormat2.format(elapsedTime));
 
-			this.scoreLabel.setText(Integer.toString((int) (progress * this.score)));
+			this.scoreLabel.setText(Integer
+					.toString((int) (progress * this.score)));
 
 			if (progress > (float) this.starIndex / (this.starsCount + 1)) {
-				Xcars.getInstance().assets.soundAndMusicManager.playSound(
-						Constants.sounds.SOUND_FINISH_DIALOG_STAR_PREFIX + this.starIndex, 1);
-				this.stars[this.starIndex - 1].setDrawable(this.filledStarDrawable);
+				this.soundsManager
+						.playSound(Constants.sounds.SOUND_FINISH_DIALOG_STAR_PREFIX
+								+ this.starIndex
+								+ Constants.sounds.SOUND_FINISH_DIALOG_STAR_POSTFIX);
+				this.stars[this.starIndex - 1]
+						.setDrawable(this.filledStarDrawable);
 				this.starIndex++;
 			}
 		}

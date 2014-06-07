@@ -3,6 +3,7 @@ package cz.cuni.mff.xcars.miniGames.support;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
+import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.entities.GameObject;
 import cz.cuni.mff.xcars.entities.ShiftableGameObject;
@@ -57,6 +58,7 @@ public class RepairingMinigameObject extends ShiftableGameObject {
 					if (isActive && isInTarget() ) {						
 						doInTargetAction();
 					} else {
+						Xcars.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MINIGAME_REPAIRING_WRONG);
 						this.reset();				
 					}
 				}

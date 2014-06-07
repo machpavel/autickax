@@ -5,6 +5,8 @@ import java.util.Stack;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import cz.cuni.mff.xcars.SoundAndMusicManager;
+import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.dialogs.Dialog;
 import cz.cuni.mff.xcars.dialogs.PauseDialog;
 import cz.cuni.mff.xcars.miniGames.Minigame;
@@ -16,11 +18,13 @@ public abstract class SubLevel{
 	protected Stack<Dialog> dialogStack;
 	protected Minigame miniGame = null;
 	protected TyreTracks tyreTracks;
+	protected SoundAndMusicManager soundsManager;
 
 	public SubLevel(GameScreen gameScreen) {
 		this.level = gameScreen;
 		this.stage = gameScreen.getStage();
 		setDialogStack(new Stack<Dialog>());
+		this.soundsManager = Xcars.getInstance().assets.soundAndMusicManager;
 	}
 
 	public void setDialog(Dialog dialog) {

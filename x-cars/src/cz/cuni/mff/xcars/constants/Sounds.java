@@ -50,6 +50,7 @@ public final class Sounds {
 	// DIALOGS
 	public final String SOUND_BUTTON_DIALOG_SOUND = SOUND_MENU_CLOSE;
 	public final String SOUND_FINISH_DIALOG_STAR_PREFIX = "sfx/sounds/finishDialog/star";
+	public final String SOUND_FINISH_DIALOG_STAR_POSTFIX = ".mp3";
 
 	//
 	// MINIGAMES
@@ -61,11 +62,11 @@ public final class Sounds {
 	public final String SOUND_MINIGAME_FAIL = "sfx/sounds/minigames/wizard_says_no.mp3";
 
 	// Repairing
-	public final String SOUND_MINIGAME_REPAIRING_FAIL = "sfx/minigames/Repairing/fail.mp3";
-	public final String SOUND_MINIGAME_REPAIRING_SUCCESS = "sfx/minigames/Repairing/success.mp3";
-	public final String SOUND_MINIGAME_REPAIRING_JACK = "sfx/minigames/Repairing/jack.mp3";
-	public final String SOUND_MINIGAME_REPAIRING_SPANNER = "sfx/minigames/Repairing/spanner.mp3";
-	public final String SOUND_MINIGAME_REPAIRING_TIRE_OUT = "sfx/minigames/Repairing/tireOut.mp3";
-	public final String SOUND_MINIGAME_REPAIRING_TIRE_IN = "sfx/minigames/Repairing/tireIn.mp3";
-	public final String SOUND_MINIGAME_REPAIRING_WRONG = "sfx/minigames/Repairing/wrong.mp3";
+	public final String SOUND_MINIGAME_REPAIRING_FAIL = "sfx/sounds/minigames/Repairing/fail.mp3";
+	public final String SOUND_MINIGAME_REPAIRING_SUCCESS = "sfx/sounds/minigames/Repairing/success.mp3";
+	public final String SOUND_MINIGAME_REPAIRING_JACK = "sfx/sounds/minigames/Repairing/jack.mp3";
+	public final String SOUND_MINIGAME_REPAIRING_SPANNER = "sfx/sounds/minigames/Repairing/spanner.mp3";
+	public final String SOUND_MINIGAME_REPAIRING_TIRE_OUT = "sfx/sounds/minigames/Repairing/tireOut.mp3";
+	public final String SOUND_MINIGAME_REPAIRING_TIRE_IN = "sfx/sounds/minigames/Repairing/tireIn.mp3";
+	public final String SOUND_MINIGAME_REPAIRING_WRONG = "sfx/sounds/minigames/Repairing/wrong.mp3";
 }

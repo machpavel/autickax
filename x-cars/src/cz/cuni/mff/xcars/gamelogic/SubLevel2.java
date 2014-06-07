@@ -22,7 +22,7 @@ import cz.cuni.mff.xcars.pathway.DistanceMap;
 import cz.cuni.mff.xcars.scene.GameScreen;
 import cz.cuni.mff.xcars.scene.LevelLoadingScreen;
 
-public class SubLevel2 extends SubLevel  implements IElapsed{
+public class SubLevel2 extends SubLevel implements IElapsed {
 
 	private LinkedList<CheckPoint> checkpoints;
 	private SubLevel1 phase1;
@@ -59,8 +59,8 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 		ENGINE_RAGING_STATE, BEGINNING_STATE, DRIVING_STATE, FINISH_STATE, MISTAKE_STATE
 	}
 
-	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints, DistanceMap map,
-			SubLevel1 lastPhase, GameStatistics stats) {
+	public SubLevel2(GameScreen gameScreen, LinkedList<CheckPoint> checkpoints,
+			DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {
 
 		super(gameScreen);
 
@@ -76,8 +76,7 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 		speedModifiers.add(Constants.misc.GLOBAL_SPEED_REGULATOR);
 		computeSpeedModifierValue();
 		computeVelocity();
-		Xcars.getInstance().assets.soundAndMusicManager.playSound(
-				Constants.sounds.SOUND_SUB2_START, 1);
+		this.soundsManager.playSound(Constants.sounds.SOUND_SUB2_START, 1);
 
 		// Car positioning
 		this.level.getCar().reset();
@@ -85,9 +84,11 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 		this.level.getCar().setNextPositionIsDirection();
 		this.level.getCar().move(this.to.position);
 
-		this.tyreTracks = new TyreTracks(this.from.position,this.level.getCar(),this);
+		this.tyreTracks = new TyreTracks(this.from.position,
+				this.level.getCar(), this);
 		this.level.getStage().addActor(this.tyreTracks);
-		this.tyreTracks.addPoint(this.to.position, this.stats.getPhase2ElapsedTime());
+		this.tyreTracks.addPoint(this.to.position,
+				this.stats.getPhase2ElapsedTime());
 	}
 
 	@Override
@@ -104,7 +105,8 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 			this.level.goToMainScreen();
 			break;
 		default:
-			throw new IllegalCommandException(dialogLocal.getDecision().toString());
+			throw new IllegalCommandException(dialogLocal.getDecision()
+					.toString());
 		}
 
 	}
@@ -115,36 +117,40 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 		eraseMinigame();
 		switch (miniGameLocal.getResult()) {
 		case FAILED:
-			this.dialogStack.push(new DecisionDialog(this.level, this, miniGameLocal
-					.getResultMessage(), false));
+			this.dialogStack.push(new DecisionDialog(this.level, this,
+					miniGameLocal.getResultMessage(), false));
 			stats.increaseFailed();
 			break;
 		case FAILED_WITH_VALUE:
-			if (Xcars.settings.isShowTooltips() && miniGameLocal.getResultMessage() != null)
-				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal
-						.getResultMessage()));
+			if (Xcars.settings.isShowTooltips()
+					&& miniGameLocal.getResultMessage() != null)
+				this.dialogStack.push(new MessageDialog(this.level, this,
+						miniGameLocal.getResultMessage()));
 			stats.increaseFailed();
 			float failResult = miniGameLocal.getResultValue();
 			speedModifiers.add(failResult);
 			computeSpeedModifierValue();
 			break;
 		case PROCEEDED:
-			if (Xcars.settings.isShowTooltips() && miniGameLocal.getResultMessage() != null)
-				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal
-						.getResultMessage()));
+			if (Xcars.settings.isShowTooltips()
+					&& miniGameLocal.getResultMessage() != null)
+				this.dialogStack.push(new MessageDialog(this.level, this,
+						miniGameLocal.getResultMessage()));
 			stats.increaseSucceeded();
 			break;
 		case PROCEEDED_WITH_VALUE:
-			if (Xcars.settings.isShowTooltips() && miniGameLocal.getResultMessage() != null)
-				this.dialogStack.push(new MessageDialog(this.level, this, miniGameLocal
-						.getResultMessage()));
+			if (Xcars.settings.isShowTooltips()
+					&& miniGameLocal.getResultMessage() != null)
+				this.dialogStack.push(new MessageDialog(this.level, this,
+						miniGameLocal.getResultMessage()));
 			stats.increaseSucceeded();
 			float winResult = miniGameLocal.getResultValue();
 			speedModifiers.add(winResult);
 			computeSpeedModifierValue();
 			break;
 		default:
-			throw new IllegalStateException(miniGameLocal.getResult().toString());
+			throw new IllegalStateException(miniGameLocal.getResult()
+					.toString());
 		}
 	}
 
@@ -152,7 +158,8 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 	public void update(float delta) {
 		// do not count time in this state
 		if (state != SubLevel2States.ENGINE_RAGING_STATE) {
-			this.level.getTimeStatusBar().update(this.stats.getPhase2ElapsedTime());
+			this.level.getTimeStatusBar().update(
+					this.stats.getPhase2ElapsedTime());
 		}
 
 		if (!this.dialogStack.isEmpty()) {
@@ -207,9 +214,10 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 			state = SubLevel2States.FINISH_STATE;
 			this.updateScore();
 			this.unlockNewLevel();
-			Xcars.getInstance().assets.soundAndMusicManager.playSound(
-					Constants.sounds.SOUND_SUB2_CHEER, Constants.sounds.SOUND_BIG_CHEER_VOLUME);
-			dialogStack.push(new CompleteLevelDialog(this.level, this, this.stats, true));
+			this.soundsManager.playSound(Constants.sounds.SOUND_SUB2_CHEER,
+					Constants.sounds.SOUND_SUB2_CHEER_VOLUME);
+			dialogStack.push(new CompleteLevelDialog(this.level, this,
+					this.stats, true));
 		} else {
 			Vector2 newPos = moveCarToNewPosition(delta);
 
@@ -222,9 +230,9 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 			}
 
 			for (GameObject gameObject : this.level.getGameObjects()) {
-				if (gameObject.getIsActive() && this.level.getCar().collides(gameObject)) {
-					Xcars.getInstance().assets.soundAndMusicManager
-							.playCollisionSound(gameObject);
+				if (gameObject.getIsActive()
+						&& this.level.getCar().collides(gameObject)) {
+					this.soundsManager.playCollisionSound(gameObject);
 					gameObject.setIsActive(false);
 					this.objectsInCollision.add(gameObject);
 					stats.increaseCollisions();
@@ -258,15 +266,17 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 			// >=0
 			Vector2 carPosition = this.level.getCar().getPosition();
 			// compute time necessary to reach checkpoint To
-			float distToTo = new Vector2(carPosition).sub(this.to.position).len();
+			float distToTo = new Vector2(carPosition).sub(this.to.position)
+					.len();
 			float timeNecessaire = distToTo
 					/ (this.velocityMagnitude * this.penalizationFactor * this.speedModifierValue);
 
 			// move only as much as you can
 			if (timeNecessaire > timeAvailable) {
-				float dist = this.velocityMagnitude * timeAvailable * this.penalizationFactor
-						* this.speedModifierValue;
-				Vector2 traslationVec = new Vector2(this.velocity).nor().scl(dist);
+				float dist = this.velocityMagnitude * timeAvailable
+						* this.penalizationFactor * this.speedModifierValue;
+				Vector2 traslationVec = new Vector2(this.velocity).nor().scl(
+						dist);
 				newPosition = new Vector2(carPosition);
 				newPosition.add(traslationVec);
 				timeAvailable = 0;
@@ -283,12 +293,14 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 				timeAvailable -= timeNecessaire;
 			}
 		}
-		
-		//last point not reached yet, return it to the list
-		if (this.checkpoints.isEmpty() && this.level.getCar().getPosition().dst(to.getPosition()) > 0.5f)
+
+		// last point not reached yet, return it to the list
+		if (this.checkpoints.isEmpty()
+				&& this.level.getCar().getPosition().dst(to.getPosition()) > 0.5f)
 			this.checkpoints.add(to);
-		
-		this.tyreTracks.addPoint(newPosition, this.stats.getPhase2ElapsedTime());
+
+		this.tyreTracks
+				.addPoint(newPosition, this.stats.getPhase2ElapsedTime());
 		this.level.getCar().move(newPosition);
 		return newPosition;
 	}
@@ -298,10 +310,12 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 	 */
 	private void computeVelocity() {
 		float time = this.to.time - this.from.time;
-		velocity = new Vector2(this.to.position).sub(this.from.position).scl(1.f / time);
+		velocity = new Vector2(this.to.position).sub(this.from.position).scl(
+				1.f / time);
 		velocityMagnitude = velocity.len();
 
-		float distanceFromCurveCenter = distMap.At(this.level.getCar().getPosition());
+		float distanceFromCurveCenter = distMap.At(this.level.getCar()
+				.getPosition());
 		if (distanceFromCurveCenter > difficulty.getMaxDistanceFromSurface()) {
 			this.penalizationFactor = Constants.misc.OUT_OF_SURFACE_PENALIZATION_FACTOR
 					/ (float) Math.log(distanceFromCurveCenter + 2);
@@ -333,8 +347,9 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 			if (this.isNextLevelAvaible())
 				this.playNextLevel = true;
 			else
-				this.dialogStack.push(new MessageDialog(this.level, this, this.level
-						.getDifficulty().toString() + Constants.strings.DIFFICULTY_FINISHED));
+				this.dialogStack.push(new MessageDialog(this.level, this,
+						this.level.getDifficulty().toString()
+								+ Constants.strings.DIFFICULTY_FINISHED));
 			break;
 		case RESTART:
 			this.level.switchToPhase(this.phase1);
@@ -343,15 +358,17 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 			this.level.goToMainScreen();
 			break;
 		default:
-			throw new IllegalCommandException(dialogLocal.getDecision().toString());
+			throw new IllegalCommandException(dialogLocal.getDecision()
+					.toString());
 		}
 	}
 
 	private void unlockNewLevel() {
 		if (this.isNextLevelAvaible()
-				&& this.level.getLevelIndex() == this.level.getDifficulty().getPlayedLevels()
-						.size() - 1) {
-			this.level.getDifficulty().getPlayedLevels().add(new PlayedLevel(0, (byte) 0));
+				&& this.level.getLevelIndex() == this.level.getDifficulty()
+						.getPlayedLevels().size() - 1) {
+			this.level.getDifficulty().getPlayedLevels()
+					.add(new PlayedLevel(0, (byte) 0));
 			if (Xcars.settings.isShowTooltips()) {
 				this.dialogStack.push(new MessageDialog(this.level, this,
 						Constants.strings.NEW_LEVEL_UNLOCK));
@@ -382,15 +399,17 @@ public class SubLevel2 extends SubLevel  implements IElapsed{
 			Xcars.levelLoadingScreen = null;
 		}
 
-		Xcars.levelLoadingScreen = new LevelLoadingScreen(this.level.getLevelIndex() + 1,
-				difficulty);
+		Xcars.levelLoadingScreen = new LevelLoadingScreen(
+				this.level.getLevelIndex() + 1, difficulty);
 
 		Xcars.getInstance().setScreen(Xcars.levelLoadingScreen);
 	}
 
 	private boolean isNextLevelAvaible() {
-		Vector<Level> availableLevels = this.level.getDifficulty().getAvailableLevels();
-		Vector<PlayedLevel> playedLevels = this.level.getDifficulty().getPlayedLevels();
+		Vector<Level> availableLevels = this.level.getDifficulty()
+				.getAvailableLevels();
+		Vector<PlayedLevel> playedLevels = this.level.getDifficulty()
+				.getPlayedLevels();
 
 		return this.level.getLevelIndex() < playedLevels.size()
 				&& this.level.getLevelIndex() < availableLevels.size() - 1;
