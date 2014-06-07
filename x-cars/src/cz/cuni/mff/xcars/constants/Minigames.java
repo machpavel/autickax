@@ -124,22 +124,22 @@ public final class Minigames {
 	public final float MIN_CAR_DISTANCE = 100;
 	public final float MAX_CAR_DISTANCE = 500;
 	public final float DISTANCE_RAISER = 1.2f; // Change in distance
-	public final int RACE_MINIMAL_DISTANCE_BETWEEN_CAR = 2;
+	public final float RACE_MINIMAL_DISTANCE_BETWEEN_CAR = 2;
 	public final int RACE_MINIGAME_ZONES_COUNT_KIDDIE = 1;
 	public final int RACE_MINIGAME_ZONES_COUNT_BEGINNER = 2;
 	public final int RACE_MINIGAME_ZONES_COUNT_NORMAL = 3;
 	public final int RACE_MINIGAME_ZONES_COUNT_HARD = 4;
 	public final int RACE_MINIGAME_ZONES_COUNT_EXTREME = 5;
-	public final int RACE_MINIGAME_TIME_KIDDIE = 20;
-	public final int RACE_MINIGAME_TIME_BEGINNER = 20;
-	public final int RACE_MINIGAME_TIME_NORMAL = 25;
-	public final int RACE_MINIGAME_TIME_HARD = 30;
-	public final int RACE_MINIGAME_TIME_EXTREME = 35;
-	public final int RACE_MINIGAME_SPEED_KIDDIE = 250;
-	public final int RACE_MINIGAME_SPEED_BEGINNER = 300;
-	public final int RACE_MINIGAME_SPEED_NORMAL = 350;
-	public final int RACE_MINIGAME_SPEED_HARD = 400;
-	public final int RACE_MINIGAME_SPEED_EXTREME = 450;
+	public final float RACE_MINIGAME_TIME_KIDDIE = 20;
+	public final float RACE_MINIGAME_TIME_BEGINNER = 20;
+	public final float RACE_MINIGAME_TIME_NORMAL = 25;
+	public final float RACE_MINIGAME_TIME_HARD = 30;
+	public final float RACE_MINIGAME_TIME_EXTREME = 35;
+	public final float RACE_MINIGAME_SPEED_KIDDIE = 250;
+	public final float RACE_MINIGAME_SPEED_BEGINNER = 300;
+	public final float RACE_MINIGAME_SPEED_NORMAL = 350;
+	public final float RACE_MINIGAME_SPEED_HARD = 400;
+	public final float RACE_MINIGAME_SPEED_EXTREME = 450;
 
 	// Repairing
 	public final String REPAIRING_MINIGAME_BACKGROUND_TEXTURE = "minigames/Repairing/background";
@@ -149,4 +149,10 @@ public final class Minigames {
 	public final String REPAIRING_MINIGAME_NEW_TIRE_TEXTURE = "minigames/Repairing/newTire";
 	public final String REPAIRING_MINIGAME_OBJECT = "minigames/Repairing/object";
 	public final float REPAIRING_MINIGAME_TARGET_RADIUS = 80.f;
+	public final float REPAIRING_MINIGAME_FAIL_VALUE = 0.4f;
+	public final float REPAIRING_MINIGAME_TIME_KIDDIE = 20;
+	public final float REPAIRING_MINIGAME_TIME_BEGINNER = 15;
+	public final float REPAIRING_MINIGAME_TIME_NORMAL = 10;
+	public final float REPAIRING_MINIGAME_TIME_HARD = 5;
+	public final float REPAIRING_MINIGAME_TIME_EXTREME = 3;
 }
