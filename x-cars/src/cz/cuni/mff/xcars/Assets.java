@@ -1,8 +1,10 @@
 package cz.cuni.mff.xcars;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
@@ -20,8 +22,8 @@ import cz.cuni.mff.xcars.serialization.AvailableLevelsLoader;
 
 public class Assets {
 
-	private static final String GRAPHICS_DIR = "images";
-	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "/images.atlas";
+	private static final String GRAPHICS_DIR = "images/";
+	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "images.atlas";
 	private static final String LOADING_SCREEN_GRAPHICS_FILE = "loadingScreen/images.atlas";
 	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
 	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
@@ -30,6 +32,8 @@ public class Assets {
 	private static final String TIME_INT_FONT = "fonts/timeInt.fnt";
 	private static final String LEVEL_NUMBER_FONT = "fonts/levels.fnt";
 	private static final String AVAILABLE_LEVELS_FILE = "availableLevels.bin";
+	private static final String SOUNDS_DIR = "sfx/sounds/";
+	private static final String MUSIC_DIR = "sfx/music/";
 
 	public AssetManager assetManager = new AssetManager();;
 	private Map<String, TextureRegion> graphicsCacheMap = new HashMap<String, TextureRegion>();
@@ -56,7 +60,7 @@ public class Assets {
 	public void load() {
 		this.loadGraphics();
 		this.loadFonts();
-		this.loadSounds();
+		this.loadSfx();
 		this.loadAvailableLevels();
 		// loadLevels(); it has to be loaded manually after loading whole assets
 		// because levels uses these assets
@@ -71,15 +75,18 @@ public class Assets {
 			return this.ninePatchCacheMap.get(name);
 		}
 		if (this.graphicsAtlas == null) {
-			this.graphicsAtlas = this.assetManager.get(GRAPHICS_FILE, TextureAtlas.class);
+			this.graphicsAtlas = this.assetManager.get(GRAPHICS_FILE,
+					TextureAtlas.class);
 		}
 		NinePatch retVal = this.graphicsAtlas.createPatch(name);
 
 		if (retVal == null) {
-			throw new RuntimeException("Graphic " + name + " not found it atlas");
+			throw new RuntimeException("Graphic " + name
+					+ " not found it atlas");
 		}
 
-		retVal.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		retVal.getTexture().setFilter(TextureFilter.Linear,
+				TextureFilter.Linear);
 		this.ninePatchCacheMap.put(name, retVal);
 		return retVal;
 	}
@@ -93,27 +100,31 @@ public class Assets {
 		TextureRegion retVal = atlas.findRegion(name);
 
 		if (retVal == null) {
-			throw new RuntimeException("Graphic " + name + " not found it atlas");
+			throw new RuntimeException("Graphic " + name
+					+ " not found it atlas");
 		}
 
-		retVal.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		retVal.getTexture().setFilter(TextureFilter.Linear,
+				TextureFilter.Linear);
 		cacheMap.put(name, retVal); // cache the result
 		return retVal;
 	}
 
 	public TextureRegion getGraphics(String name) {
 		if (this.graphicsAtlas == null) {
-			this.graphicsAtlas = this.assetManager.get(GRAPHICS_FILE, TextureAtlas.class);
+			this.graphicsAtlas = this.assetManager.get(GRAPHICS_FILE,
+					TextureAtlas.class);
 		}
 		return getAnyGraphic(name, this.graphicsAtlas, this.graphicsCacheMap);
 	}
 
 	public TextureRegion getLoadingScreenGraphics(String name) {
 		if (this.loadingGraphicsAtlas == null) {
-			this.loadingGraphicsAtlas = this.assetManager.get(LOADING_SCREEN_GRAPHICS_FILE,
-					TextureAtlas.class);
+			this.loadingGraphicsAtlas = this.assetManager.get(
+					LOADING_SCREEN_GRAPHICS_FILE, TextureAtlas.class);
 		}
-		return getAnyGraphic(name, this.loadingGraphicsAtlas, this.loadingGraphicsCacheMap);
+		return getAnyGraphic(name, this.loadingGraphicsAtlas,
+				this.loadingGraphicsCacheMap);
 	}
 
 	public void disposeGameScreenGraphic() {
@@ -157,8 +168,8 @@ public class Assets {
 	}
 
 	private void loadAvailableLevels() {
-		assetManager.setLoader(AvailableLevels.class, new AvailableLevelsLoader(
-				new InternalFileHandleResolver()));
+		assetManager.setLoader(AvailableLevels.class,
+				new AvailableLevelsLoader(new InternalFileHandleResolver()));
 		assetManager.load(AVAILABLE_LEVELS_FILE, AvailableLevels.class);
 	}
 
@@ -178,10 +189,6 @@ public class Assets {
 		return assetManager.get(AVAILABLE_LEVELS_FILE, AvailableLevels.class);
 	}
 
-	public FileHandle loadLevel(String name, Difficulty difficulty) {
-		return Gdx.files.internal("levels\\" + difficulty.toString() + "\\" + name + ".xml");
-	}
-
 	public BitmapFont getTimeStringFont() {
 		return assetManager.get(TIME_STRINGS_FONT, BitmapFont.class);
 	}
@@ -194,47 +201,52 @@ public class Assets {
 		return assetManager.get(LEVEL_NUMBER_FONT, BitmapFont.class);
 	}
 
-	private void loadSounds() {
-		Map<String, Sound> soundsMap = new HashMap<String, Sound>();
-		soundsMap.put(Constants.sounds.SOUND_EDITOR,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_EDITOR_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_MUD,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_MUD_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_TREE,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_TREE_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_HOLE,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_HOLE_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_STONE,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_STONE_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_ENGINE_START,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_ENGINE_START_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_MENU_OPEN,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_MENU_OPEN_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_MENU_CLOSE,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_MENU_CLOSE_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_MINIGAME_FAIL,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_MINIGAME_FAIL_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_MINIGAME_SUCCESS, Gdx.audio.newSound(Gdx.files
-				.internal(Constants.sounds.SOUND_MINIGAME_SUCCESS_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_SUB1_CHEER,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB1_CHEER_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_SUB2_CHEER,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB2_CHEER_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_SUB1_FAIL,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB1_FAIL_PATH)));
-		soundsMap.put(Constants.sounds.SOUND_SUB2_START,
-				Gdx.audio.newSound(Gdx.files.internal(Constants.sounds.SOUND_SUB2_START_PATH)));
+	private void loadSfx() {
+		this.soundAndMusicManager = new SoundAndMusicManager();
+		loadMusic(this.soundAndMusicManager);
+		loadSounds(this.soundAndMusicManager);
+	}
 
-		for (int i = 1; i <= 3; i++) {
-			soundsMap.put(Constants.sounds.SOUND_FINISH_DIALOG_STAR_PREFIX + i, Gdx.audio
-					.newSound(Gdx.files
-							.internal(Constants.sounds.SOUND_FINISH_DIALOG_STAR_PATH_PREFIX + i
-									+ ".mp3")));
+	private void loadMusic(SoundAndMusicManager soundAndMusicManager) {
+		Music menuMusic = Gdx.audio.newMusic(Gdx.files.internal(MUSIC_DIR
+				+ Constants.sounds.MUSIC_MENU));
+		Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal(MUSIC_DIR
+				+ Constants.sounds.MUSIC_RACE));
+		soundAndMusicManager.assignMusic(raceMusic, menuMusic);
+	}
+
+	private void loadSounds(SoundAndMusicManager soundAndMusicManager) {
+		FileHandle dirHandle;
+		String prefix;
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			prefix = "";
+		} else {
+			prefix = "./bin/";
+		}
+		dirHandle = Gdx.files.internal(prefix + SOUNDS_DIR);
+		LinkedList<FileHandle> handles = new LinkedList<FileHandle>();
+		getHandles(dirHandle, handles);
+		Map<String, Sound> soundsMap = new HashMap<String, Sound>();
+		for (FileHandle fileHandle : handles) {
+			String name = fileHandle.path();
+			name = name.substring(prefix.length());
+			soundsMap.put(name,
+					Gdx.audio.newSound(Gdx.files.internal(name)));
+			System.out.println(fileHandle.path());
 		}
 
-		Music menuMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.sounds.MUSIC_MENU_PATH));
-		Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal(Constants.sounds.MUSIC_RACE_PATH));
-		this.soundAndMusicManager = new SoundAndMusicManager(soundsMap, raceMusic, menuMusic);
+		soundAndMusicManager.assignSounds(soundsMap);
+	}
+
+	public void getHandles(FileHandle begin, LinkedList<FileHandle> handles) {
+		FileHandle[] newHandles = begin.list();
+		for (FileHandle file : newHandles) {
+			if (file.isDirectory()) {
+				getHandles(file, handles);
+			} else {
+				handles.add(file);
+			}
+		}
 	}
 
 }

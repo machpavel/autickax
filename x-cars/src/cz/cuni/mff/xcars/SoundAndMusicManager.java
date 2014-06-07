@@ -8,14 +8,20 @@ import com.badlogic.gdx.audio.Sound;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.entities.GameObject;
 
-public class SoundAndMusicManager{
+public class SoundAndMusicManager {
 	private Map<String, Sound> soundsMap;
 
 	private Music raceMusic;
 	private Music menuMusic;
 
-	public SoundAndMusicManager(Map<String, Sound> _soundsMap, Music _raceMusic, Music _menuMusic) {
+	public SoundAndMusicManager() {
+	}
+
+	public void assignSounds(Map<String, Sound> _soundsMap) {
 		this.soundsMap = _soundsMap;
+	}
+
+	public void assignMusic(Music _raceMusic, Music _menuMusic) {
 		this.raceMusic = _raceMusic;
 		this.menuMusic = _menuMusic;
 	}
@@ -46,16 +52,18 @@ public class SoundAndMusicManager{
 	public void pauseMenuMusic() {
 		menuMusic.pause();
 	}
-	
-	public void pauseRaceMusic()
-	{
+
+	public void pauseRaceMusic() {
 		raceMusic.pause();
 	}
 
 	public void stopRaceMusic() {
 		raceMusic.stop();
 	}
-	
+
+	public void playSound(String soundName) {
+		this.playSound(soundName, Constants.sounds.SOUND_DEFAULT_VOLUME);
+	}
 
 	public void playSound(String soundName, float volume) {
 		if (Xcars.settings.isPlaySounds()) {
@@ -63,14 +71,13 @@ public class SoundAndMusicManager{
 			sound.play(volume);
 		}
 	}
-	
-	public void playStartEngineSound()
-	{
-		playSound(Constants.sounds.SOUND_ENGINE_START, Constants.sounds.SOUND_ENGINE_VOLUME);
+
+	public void playStartEngineSound() {
+		playSound(Constants.sounds.SOUND_ENGINE_START,
+				Constants.sounds.SOUND_ENGINE_VOLUME);
 	}
-	
-	public void pauseAllMusic()
-	{
+
+	public void pauseAllMusic() {
 		this.raceMusic.pause();
 		this.menuMusic.pause();
 	}
@@ -84,7 +91,9 @@ public class SoundAndMusicManager{
 		if (Xcars.settings.isPlaySounds()) {
 			String soundName = collisionOrigin.getSoundName();
 			if (!soundName.equals(Constants.sounds.SOUND_NO_SOUND)) {
-				playSound(soundName, Constants.sounds.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
+				playSound(
+						soundName,
+						Constants.sounds.SOUND_GAME_OBJECT_INTERACTION_DEFAULT_VOLUME);
 			}
 		}
 	}
