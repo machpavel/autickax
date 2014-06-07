@@ -34,6 +34,7 @@ public final class RepairingMinigame extends Minigame {
 
 	public RepairingMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
+		this.leavingDelay = Constants.minigames.REPAIRING_MINIGAME_LEAVING_DELAY;
 		setDifficulty(this.level.getDifficulty());
 		this.backgroundTexture = new NinePatchDrawable(
 				Xcars.getInstance().assets

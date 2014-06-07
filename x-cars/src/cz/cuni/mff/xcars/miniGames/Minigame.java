@@ -11,7 +11,7 @@ public abstract class Minigame extends Comunicator {
 	protected ResultType result = ResultType.UNASIGNED;
 	protected float resultValue = Constants.minigames.RESULT_VALUE_NOTHING;
 	protected String resultMessage = null;
-	private float leavingDelay = Constants.minigames.LEAVING_DELAY;
+	protected float leavingDelay = Constants.minigames.LEAVING_DELAY;
 
 	public Minigame(GameScreen gameScreen, SubLevel parent) {
 		super(gameScreen, parent);

@@ -6,8 +6,8 @@ public final class Minigames {
 	// MINIGAMES
 	//
 
-	public final float LEAVING_DELAY = 0.5f; // Delay in the end of game if
-												// there is no message
+	/** Delay in the end of game if there is no message */
+	public final float LEAVING_DELAY = 0.5f;
 	public final float RESULT_VALUE_NOTHING = 1.f;
 
 	// Avoid obstacles
@@ -142,6 +142,7 @@ public final class Minigames {
 	public final float RACE_MINIGAME_SPEED_EXTREME = 450;
 
 	// Repairing
+	public final float REPAIRING_MINIGAME_LEAVING_DELAY = 1.5f;
 	public final String REPAIRING_MINIGAME_BACKGROUND_TEXTURE = "minigames/Repairing/background";
 	public final String REPAIRING_MINIGAME_HAND_JACK_TEXTURE = "minigames/Repairing/handJack";
 	public final String REPAIRING_MINIGAME_SPANNER_TEXTURE = "minigames/Repairing/spanner";
