@@ -5,12 +5,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 
-import com.badlogic.gdx.Gdx;
 import com.google.android.gms.ads.AdView;
 
 public class AdsHandler implements IAdsHandler {
 	protected AdView banner;
 	private boolean isOnline;
+	private boolean shouldBeVisible;
 
 	private final int SHOW_ADS = 1;
 	private final int HIDE_ADS = 0;
@@ -22,12 +22,10 @@ public class AdsHandler implements IAdsHandler {
 			switch (msg.what) {
 			case SHOW_ADS:
 				banner.setVisibility(View.VISIBLE);
-				Gdx.app.log("Ads", "Banner: visible");
 				break;
 
 			case HIDE_ADS:
 				banner.setVisibility(View.GONE);
-				Gdx.app.log("Ads", "Banner: hidden");
 				break;
 			}
 		}
@@ -39,14 +37,16 @@ public class AdsHandler implements IAdsHandler {
 
 	@Override
 	public void showBanner(boolean show) {
+		shouldBeVisible = show;
 		if (this.isOnline)
 			this.handler.sendEmptyMessage(show ? SHOW_ADS : HIDE_ADS);
 	}
 
 	public void setIsOnline(boolean isOnline) {
-		if (!isOnline) {
-			this.handler.sendEmptyMessage(HIDE_ADS);
-		}
 		this.isOnline = isOnline;
+		if (isOnline && this.shouldBeVisible)
+			this.handler.sendEmptyMessage(SHOW_ADS);
+		else
+			this.handler.sendEmptyMessage(HIDE_ADS);
 	}
 }
