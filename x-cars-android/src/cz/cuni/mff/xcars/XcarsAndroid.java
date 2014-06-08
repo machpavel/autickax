@@ -1,12 +1,16 @@
 package cz.cuni.mff.xcars;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdRequest;
@@ -17,6 +21,7 @@ public class XcarsAndroid extends AndroidApplication {
 	private static final String AD_UNIT_ID = "ca-app-pub-7037996113279198/2020565061";
 	protected AdView adView;
 	protected View gameView;
+	private AdsHandler adsHandler;
 
 	private static String ShabbyhoMobil = "708BD4F8D8C72F57AE155EA12EB4E6C8";
 
@@ -50,12 +55,15 @@ public class XcarsAndroid extends AndroidApplication {
 				RelativeLayout.LayoutParams.MATCH_PARENT);
 		layout.setLayoutParams(params);
 
-		this.adView = createAdView();		
+		this.adView = createAdView();
 		this.gameView = createGameView(cfg, this.adView);
 		layout.addView(this.gameView);
 		layout.addView(this.adView);
 		setContentView(layout);
-		
+
+		boolean isOnline = isNetworkAvailable();
+		this.adsHandler.setIsOnline(isOnline);
+		Gdx.app.log("Ads", "Is online: " + isOnline);
 		startAdvertising(this.adView);
 	}
 
@@ -75,8 +83,8 @@ public class XcarsAndroid extends AndroidApplication {
 
 	private View createGameView(AndroidApplicationConfiguration cfg,
 			AdView adView) {
-		View gameView = initializeForView(new Xcars(new AdsHandler(adView)),
-				cfg);
+		this.adsHandler = new AdsHandler(adView);
+		View gameView = initializeForView(new Xcars(this.adsHandler), cfg);
 		return gameView;
 	}
 
@@ -92,6 +100,8 @@ public class XcarsAndroid extends AndroidApplication {
 		super.onResume();
 		if (adView != null)
 			adView.resume();
+		if (this.adsHandler != null)
+			this.adsHandler.setIsOnline(isNetworkAvailable());
 	}
 
 	@Override
@@ -106,6 +116,13 @@ public class XcarsAndroid extends AndroidApplication {
 		if (adView != null)
 			adView.destroy();
 		super.onDestroy();
+	}
+
+	private boolean isNetworkAvailable() {
+		ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetworkInfo = connectivityManager
+				.getActiveNetworkInfo();
+		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 
 }
