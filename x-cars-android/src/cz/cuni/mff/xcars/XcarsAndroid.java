@@ -24,6 +24,7 @@ public class XcarsAndroid extends AndroidApplication {
 	private AdsHandler adsHandler;
 
 	private static String ShabbyhoMobil = "708BD4F8D8C72F57AE155EA12EB4E6C8";
+	private static String MirovoMobil = "81BF8F8B1A2A01F725CDA3F5348BE465";
 
 	// @Override
 	// public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,8 @@ public class XcarsAndroid extends AndroidApplication {
 	private void startAdvertising(AdView adView) {
 		AdRequest adRequest = new AdRequest.Builder()
 				.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-				.addTestDevice(ShabbyhoMobil).build();
+				.addTestDevice(MirovoMobil).addTestDevice(ShabbyhoMobil)
+				.build();
 		adView.loadAd(adRequest);
 	}
 
