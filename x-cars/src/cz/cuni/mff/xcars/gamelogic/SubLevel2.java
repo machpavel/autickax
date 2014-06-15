@@ -379,7 +379,6 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 
 	private void restart() {
 		this.level.switchToPhase(this.phase1);
-		this.phase1.reset();
 		this.tyreTracks.clear();
 	}
 

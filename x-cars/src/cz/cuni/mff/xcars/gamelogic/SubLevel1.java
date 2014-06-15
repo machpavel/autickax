@@ -20,7 +20,6 @@ import cz.cuni.mff.xcars.pathway.Pathway;
 import cz.cuni.mff.xcars.scene.GameScreen;
 
 public class SubLevel1 extends SubLevel  implements IElapsed{
-
 		/** Path representation */
 	private Pathway pathway;
 
