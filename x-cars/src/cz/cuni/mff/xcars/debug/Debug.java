@@ -13,6 +13,7 @@ public final class Debug {
 	public static final boolean DEBUG = true;
 
 	public static boolean DRAW_FPS = true;
+	public static boolean drawWayPoints = true;
 
 	private static Log messageLabel;
 	private static Log valueLabel;

@@ -27,7 +27,7 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 	private SubLevel1States state;
 
 	/** Coordinates to check whether whole track was raced through */
-	private LinkedList<Vector2> wayPoints;
+	private WayPoints wayPoints;
 
 	/** Record of movement through the track; */
 	private LinkedList<CheckPoint> checkPoints;
@@ -52,8 +52,13 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 				
 				
 		initTerminatingGameObjects();
-		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
+		
+		this.wayPoints = new WayPoints(this.level.getFinish(),this.level.getStart(),pathway);
+		this.wayPoints.initWayPoints(Constants.misc.START_POSITION_IN_CURVE, 
 				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
+		this.level.getStage().addActor(this.wayPoints);
+
+		
 		this.tyreTracks = new TyreTracks(this.level.getCar().getPosition(),this.level.getCar(),this);
 		this.level.getStage().addActor(this.tyreTracks);
 
@@ -206,17 +211,17 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 				switchToMistakeState(Constants.strings.PHASE_1_OUT_OF_LINE);
 
 			} else {				
-				checkPoints.add(new CheckPoint(stats.getPhase1ElapsedTime(), carPosition));
+				this.checkPoints.add(new CheckPoint(this.stats.getPhase1ElapsedTime(), carPosition));
 				this.tyreTracks.addPoint(carPosition, this.stats.getPhase1ElapsedTime());
 
-				if (!wayPoints.isEmpty()) {
+				if (!this.wayPoints.isEmpty()) {
 					boolean canRemove = true;
-					while (canRemove && !wayPoints.isEmpty()) {
-						Vector2 way = new Vector2(wayPoints.peekFirst());
+					while (canRemove && !this.wayPoints.isEmpty()) {
+						Vector2 way = new Vector2(this.wayPoints.peekFirst());
 						Vector2 pos = new Vector2(this.level.getCar()
 								.getPosition());
 						if (way.sub(pos).len() <= Constants.misc.MAX_DISTANCE_FROM_PATHWAY*1.2)
-							wayPoints.removeFirst();
+							this.wayPoints.removeFirst();
 						else
 							canRemove = false;
 					}
@@ -256,7 +261,7 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 		
 		this.stats.reset();		
 		checkPoints.clear();
-		initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
+		this.wayPoints.initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
 				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
 		
 		for (GameObject gameObject : this.level.getGameObjects()) {
@@ -298,21 +303,7 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 		this.state.setMistake(str);
 	}
 
-	private void initWayPoints(float start, float finish, int nofWayPoints) {
-		wayPoints = new LinkedList<Vector2>();
-		float step = (finish - start) / nofWayPoints;
-		Vector2 lastAdded = null;
-		float sumRadii = this.level.getFinish().getBoundingRadius() + Constants.misc.MAX_DISTANCE_FROM_PATHWAY;
-		for (float f = start; f < finish; f += step) {
-			//do not add waypoints too close to finish
-			Vector2 pathPosition = pathway.GetPosition(f);
-			if (new Vector2(pathPosition).sub(this.level.getFinish().getPosition()).len() >   sumRadii )
-			{
-				lastAdded = pathPosition;
-				wayPoints.add(lastAdded);
-			}
-		}
-	}
+
 	
 	/** Player just starts this phase or made a mistake and was moved again */
 	public enum SubLevel1States {
@@ -334,6 +325,5 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 	public float getElapsed() {
 		return stats.getPhase1ElapsedTime();
 	}
-
 
 }
