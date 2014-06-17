@@ -53,9 +53,8 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 				
 		initTerminatingGameObjects();
 		
-		this.wayPoints = new WayPoints(this.level.getFinish(),this.level.getStart(),pathway);
-		this.wayPoints.initWayPoints(Constants.misc.START_POSITION_IN_CURVE, 
-				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
+		this.wayPoints = new WayPoints(this.level.getFinish(),this.level.getStart(),pathway, 
+				this.level.getStage().getWidth(), this.level.getStage().getHeight());
 		this.level.getStage().addActor(this.wayPoints);
 
 		
@@ -261,9 +260,11 @@ public class SubLevel1 extends SubLevel  implements IElapsed{
 		
 		this.stats.reset();		
 		checkPoints.clear();
+		//this.wayPoints.initWayPoints2(Constants.misc.WAYPOINTS_DISTANCE);
 		this.wayPoints.initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
-				Constants.misc.FINISH_POSITION_IN_CURVE, Constants.misc.WAYPOINTS_COUNT);
-		
+				Constants.misc.FINISH_POSITION_IN_CURVE, 
+				Constants.misc.WAYPOINT_STEP, Constants.misc.WAYPOINTS_DISTANCE);
+
 		for (GameObject gameObject : this.level.getGameObjects()) {
 			gameObject.reset();
 		}

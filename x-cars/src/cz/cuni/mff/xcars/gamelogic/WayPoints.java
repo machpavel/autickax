@@ -1,5 +1,6 @@
 package cz.cuni.mff.xcars.gamelogic;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
@@ -17,6 +18,8 @@ import cz.cuni.mff.xcars.entities.Finish;
 import cz.cuni.mff.xcars.entities.Start;
 import cz.cuni.mff.xcars.input.Input;
 import cz.cuni.mff.xcars.pathway.Pathway;
+import cz.cuni.mff.xcars.pathway.Splines;
+import cz.cuni.mff.xcars.pathway.Pathway.PathwayType;
 
 /**
  * This class represents positions on the track that need to be crossed in order
@@ -30,8 +33,10 @@ public class WayPoints extends Actor {
 	private Start start;
 	private Pathway pathway;
 	private ShapeRenderer renderer;
+	private final float MAX_WIDTH;
+	private final float MAX_HEIGHT;
 
-	public WayPoints(Finish finish, Start start, Pathway pathway) {
+	public WayPoints(Finish finish, Start start, Pathway pathway, float width, float height) {
 		this.renderer = new ShapeRenderer();
 		this.wayPoints = new LinkedList<Vector2>();
 		this.finish = finish;
@@ -39,30 +44,88 @@ public class WayPoints extends Actor {
 		this.sumRadii = finish.getBoundingRadius()
 				+ Constants.misc.MAX_DISTANCE_FROM_PATHWAY;
 		this.pathway = pathway;
+		this.MAX_WIDTH = width;
+		this.MAX_HEIGHT = height;
 	}
 
-	public void initWayPoints(float start, float finish, int nofWayPoints) {
+	public void initWayPoints(float start, float finish,float step, float distThreshold) {
 		this.wayPoints.clear();
-		float step = (finish - start) / nofWayPoints;
 		Vector2 lastAdded = null;
-		for (float f = start; f < finish; f += step) {
-			// do not add waypoints too close to finish
+		Vector2 current = this.start.getPosition();
+		float cumulativeDistance = 0f;
+		for(float f = start; f < finish ; f+=step)
+		{
 			Vector2 pathPosition = this.pathway.GetPosition(f);
-			float sumRadii2 = sumRadii * sumRadii;
-			if (distToFinish2(pathPosition) > sumRadii2
-					&& distToStart2(pathPosition) > sumRadii2) {
-				lastAdded = pathPosition;
-				this.wayPoints.add(lastAdded);
+			float distToCurrent = current.dst(pathPosition);
+			cumulativeDistance += distToCurrent;
+			current = pathPosition;
+			if (pathPosition.dst(this.finish.getPosition()) > sumRadii
+					&& pathPosition.dst(this.start.getPosition()) > sumRadii)
+			{
+				if (cumulativeDistance > distThreshold)
+				{
+					lastAdded = pathPosition;
+					this.wayPoints.add(lastAdded);
+					cumulativeDistance = 0;
+				}
 			}
 		}
 	}
-
-	private float distToFinish2(Vector2 pos) {
-		return new Vector2(pos).sub(this.finish.getPosition()).len2();
+	
+	public void initWayPoints2(float distThreshold) {
+		this.wayPoints.clear();
+		ArrayList<Vector2> points = getPoints(this.pathway.getType(), 
+				this.pathway.getControlPoints(), this.pathway.getTypeOfInterpolation());
+		Vector2 lastAdded = null;
+		Vector2 current = this.start.getPosition();
+		float cumulativeDistance = 0f;
+		
+		for (Vector2 point: points)
+		{
+			
+			float distToCurrent = current.dst(point);
+			cumulativeDistance += distToCurrent;
+			current = point;
+			if (point.dst(this.finish.getPosition()) > sumRadii
+					&& point.dst(this.start.getPosition()) > sumRadii)
+			{
+				if (cumulativeDistance > distThreshold)
+				{
+					lastAdded = point;
+					this.wayPoints.add(lastAdded);
+					cumulativeDistance = 0;
+				}
+			}
+		}
+		
 	}
+	
+	private ArrayList<Vector2> getPoints(PathwayType pathwayType,
+			ArrayList<Vector2> controlPoints,
+			Splines.TypeOfInterpolation typeOfInterpolation) {
+			// The calculation is related to how far control points are from
+			// each other.
+			ArrayList<Vector2> pointsOnCurve = new ArrayList<Vector2>();
+			float localUCount = 0;
+			localUCount += controlPoints.get(0).dst(controlPoints.get(1));
+			localUCount += controlPoints.get(0).dst(controlPoints.get(1));
+			localUCount += controlPoints.get(1).dst(controlPoints.get(2));
 
-	private float distToStart2(Vector2 pos) {
-		return new Vector2(pos).sub(this.start.getPosition()).len2();
+			for (int i = 0; i < controlPoints.size() - 3; i++) {
+				localUCount -= controlPoints.get(i).dst(
+						controlPoints.get(i + 1));
+				localUCount += controlPoints.get(i + 2).dst(
+						controlPoints.get(i + 3));
+				for (float j = 0; j < localUCount; j++) {
+					float localU = j / localUCount;
+					Vector2 point = Splines.GetPoint(controlPoints, i, localU,
+							typeOfInterpolation);
+					if (point.x >= 0 && point.y > 0
+							&& point.x < this.MAX_WIDTH && point.y < this.MAX_HEIGHT)
+						pointsOnCurve.add(point);
+				}
+			}
+			return pointsOnCurve;
 	}
 
 	public Vector2 peekFirst() {
@@ -80,10 +143,6 @@ public class WayPoints extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 		if (Debug.DEBUG && Debug.drawWayPoints) {
 			batch.end();
-			// TODO why is here blend function when we dont use any alpha??? And
-			// you don't disable it again. For faster performance.
-			Gdx.gl.glEnable(GL20.GL_BLEND);
-			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
 			this.renderer.begin(ShapeType.Line);
 			this.renderer.setColor(Color.BLACK);

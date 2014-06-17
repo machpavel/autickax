@@ -57,9 +57,11 @@ public final class Misc {
 
 	public final int MAX_SURFACE_DISTANCE_FROM_PATHWAY_EXTREME = 20;
 	
-	/** Number of waypoints that check if the player raced through all the track */
-	public final int WAYPOINTS_COUNT = 40;
 
+	/** Distance between waypoint  */
+	public final int WAYPOINTS_DISTANCE = 100;
+	/** Step for traversing path, tweak carefully as it is codependent on WAYPOINTS_DISTANCE! */
+	public final float WAYPOINT_STEP = 0.01f;
 	/**
 	 * Amount of parts used between two points during the counting of distances
 	 * in DistanceMap
