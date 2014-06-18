@@ -5,12 +5,12 @@ import java.util.Stack;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import cz.cuni.mff.xcars.SoundAndMusicManager;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.dialogs.Dialog;
 import cz.cuni.mff.xcars.dialogs.PauseDialog;
 import cz.cuni.mff.xcars.miniGames.Minigame;
 import cz.cuni.mff.xcars.scene.GameScreen;
+import cz.cuni.mff.xcars.sfx.SoundAndMusicManager;
 
 public abstract class SubLevel{
 	protected GameScreen level;

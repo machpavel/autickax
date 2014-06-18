@@ -15,10 +15,10 @@ public class XcarsDesktop {
 		cfg.title = "x-cars";
 		//cfg.width = 1280;
 		//cfg.height = 768;
-		//cfg.width = 1200;
-		//cfg.height = 720;
-		cfg.width = 800;
-		cfg.height = 480;
+		cfg.width = 1200;
+		cfg.height = 720;
+		//cfg.width = 800;
+		//cfg.height = 480;
 		
 		cfg.fullscreen = false;
 		cfg.resizable = false;

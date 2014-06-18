@@ -1,5 +1,6 @@
 package cz.cuni.mff.xcars;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.serialization.AvailableLevelsLoader;
+import cz.cuni.mff.xcars.sfx.SoundAndMusicManager;
 
 public class Assets {
 
@@ -33,7 +35,8 @@ public class Assets {
 	private static final String LEVEL_NUMBER_FONT = "fonts/levels.fnt";
 	private static final String AVAILABLE_LEVELS_FILE = "availableLevels.bin";
 	private static final String SOUNDS_DIR = "sfx/sounds/";
-	private static final String MUSIC_DIR = "sfx/music/";
+	private static final String MUSIC_MENU_DIR = "sfx/music/menu";
+	private static final String MUSIC_RACE_DIR = "sfx/music/race";
 
 	public AssetManager assetManager = new AssetManager();;
 	private Map<String, TextureRegion> graphicsCacheMap = new HashMap<String, TextureRegion>();
@@ -208,11 +211,30 @@ public class Assets {
 	}
 
 	private void loadMusic(SoundAndMusicManager soundAndMusicManager) {
-		Music menuMusic = Gdx.audio.newMusic(Gdx.files.internal(MUSIC_DIR
-				+ Constants.sounds.MUSIC_MENU));
-		Music raceMusic = Gdx.audio.newMusic(Gdx.files.internal(MUSIC_DIR
-				+ Constants.sounds.MUSIC_RACE));
+		ArrayList<Music> menuMusic = loadAllMusicFromDir(MUSIC_MENU_DIR);
+		ArrayList<Music> raceMusic = loadAllMusicFromDir(MUSIC_RACE_DIR);
 		soundAndMusicManager.assignMusic(raceMusic, menuMusic);
+	}
+	
+	private ArrayList<Music> loadAllMusicFromDir(String path)
+	{
+		FileHandle dirHandle;
+		String prefix;
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			prefix = "";
+		} else {
+			prefix = "./bin/";
+		}
+		ArrayList<Music> music = new ArrayList<Music>();
+
+		dirHandle = Gdx.files.internal(prefix +  path);
+		LinkedList<FileHandle> handles = new LinkedList<FileHandle>();
+		getHandles(dirHandle, handles);
+		for(FileHandle handle: handles)
+		{
+			music.add(Gdx.audio.newMusic(handle));
+		}
+		return music;
 	}
 
 	private void loadSounds(SoundAndMusicManager soundAndMusicManager) {
