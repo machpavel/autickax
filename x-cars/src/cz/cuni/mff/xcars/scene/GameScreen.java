@@ -228,7 +228,7 @@ public class GameScreen extends BaseScreen {
 		Xcars.getInstance().assets.soundAndMusicManager.playSound(
 				Constants.sounds.SOUND_MENU_CLOSE,
 				Constants.sounds.SOUND_DEFAULT_VOLUME);
-		Xcars.getInstance().assets.soundAndMusicManager.stopRaceMusic();
+		Xcars.getInstance().assets.soundAndMusicManager.pauseRaceMusic();
 		Xcars.getInstance().assets.soundAndMusicManager.playMenuMusic();
 		Xcars.levelSelectScreen.dispose();
 		Xcars.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty,
