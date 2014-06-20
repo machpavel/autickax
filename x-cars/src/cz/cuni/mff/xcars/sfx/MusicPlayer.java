@@ -25,6 +25,7 @@ public class MusicPlayer implements OnCompletionListener{
 			music.setLooping(false);
 		}
 		this.rnd = new Random();
+		this.currentTrackIndex = rnd.nextInt(tracks.size());
 		this.currentTrack = tracks.get(getNextIndex());
 	}
 	/** Chooses next index of a track */
