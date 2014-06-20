@@ -143,10 +143,6 @@ public class GameScreen extends BaseScreen {
 				.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 
-		// Start Music!
-		if (Xcars.settings.isPlayMusic()) {
-			Xcars.getInstance().assets.soundAndMusicManager.playRaceMusic();
-		}
 	}
 
 	public void stopInitialization() {

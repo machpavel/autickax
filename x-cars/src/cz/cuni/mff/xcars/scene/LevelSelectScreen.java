@@ -127,8 +127,6 @@ public class LevelSelectScreen extends BaseScreen {
 			@Override
 			public void action() {
 				if (!wasPanned) {
-					Xcars.getInstance().assets.soundAndMusicManager
-							.pauseMenuMusic();
 					Xcars.getInstance().assets.soundAndMusicManager.playSound(
 							Constants.sounds.SOUND_MENU_OPEN,
 							Constants.sounds.SOUND_DEFAULT_VOLUME);

@@ -57,9 +57,13 @@ public class LevelLoadingScreen extends BaseScreen {
 							Xcars.gameScreen.initializeTextures();
 							Xcars.getInstance().setScreen(Xcars.gameScreen);
 							Xcars.gameScreen.takeFocus();
-
 							if (Xcars.adsHandler != null) {
 								Xcars.adsHandler.showBanner(false);
+							}
+							//Music!
+							Xcars.getInstance().assets.soundAndMusicManager.pauseMenuMusic();
+							if (Xcars.settings.isPlayMusic()) {
+								Xcars.getInstance().assets.soundAndMusicManager.playRaceMusic();
 							}
 						}
 					}
