@@ -56,7 +56,7 @@ public final class GearShiftMinigame extends Minigame {
 			gearFinishRandomY = MathUtils.random(2);
 		} while (gearFinishRandomY == 1);
 		this.finish = new GearShiftMinigameFinish(columns[gearFinishRandomX],
-				rows[gearFinishRandomY]);		
+				rows[gearFinishRandomY]);
 
 		int gearShifterRandomX = 0;
 		int gearShifterRandomY = 0;
@@ -65,7 +65,8 @@ public final class GearShiftMinigame extends Minigame {
 			gearShifterRandomY = MathUtils.random(2);
 		} while (gearShifterRandomY == 1
 				|| (gearShifterRandomX == gearFinishRandomX && gearShifterRandomY == gearFinishRandomY));
-		this.gearShifter = new GearShifter(columns[gearShifterRandomX], rows[gearShifterRandomY]);
+		this.gearShifter = new GearShifter(columns[gearShifterRandomX],
+				rows[gearShifterRandomY]);
 
 	}
 
@@ -94,7 +95,8 @@ public final class GearShiftMinigame extends Minigame {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 
-			Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(touchPos.x, touchPos.y);
+			Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(
+					touchPos.x, touchPos.y);
 			if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
 				this.gearShifter.setDragged(true);
 				this.gearShifter.setShift(shift);
@@ -114,7 +116,8 @@ public final class GearShiftMinigame extends Minigame {
 			win();
 		}
 		// Out of pathway
-		else if (!isInGrid(this.gearShifter.getPosition().x, this.gearShifter.getPosition().y)) {
+		else if (!isInGrid(this.gearShifter.getPosition().x,
+				this.gearShifter.getPosition().y)) {
 			fail(null);
 		}
 	}
@@ -130,12 +133,13 @@ public final class GearShiftMinigame extends Minigame {
 	}
 
 	private void win() {
+		this.gearShifter.setPosition(this.finish.getX(), this.finish.getY());
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS;
 		this.result = ResultType.PROCEEDED;
 		leave();
 	}
-	
-	private void leave(){		
+
+	private void leave() {
 		this.playResultSound();
 		this.gearShifter.setCanBeDragged(false);
 		this.gearShifter.setDragged(false);
@@ -153,26 +157,27 @@ public final class GearShiftMinigame extends Minigame {
 
 	private boolean isInGrid(float x, float y) {
 		// Vertical limits
-		if (y > ROW_3 + MAX_DISTANCE_FROM_LINE || y < ROW_1 - MAX_DISTANCE_FROM_LINE)
+		if (y > ROW_3 + MAX_DISTANCE_FROM_LINE
+				|| y < ROW_1 - MAX_DISTANCE_FROM_LINE)
 			return false;
-
 		// In first column
-		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE && x < COLUMN_1 + MAX_DISTANCE_FROM_LINE)
+		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE
+				&& x < COLUMN_1 + MAX_DISTANCE_FROM_LINE)
 			return true;
-
 		// In second column
-		if (x > COLUMN_2 - MAX_DISTANCE_FROM_LINE && x < COLUMN_2 + MAX_DISTANCE_FROM_LINE)
+		if (x > COLUMN_2 - MAX_DISTANCE_FROM_LINE
+				&& x < COLUMN_2 + MAX_DISTANCE_FROM_LINE)
 			return true;
-
 		// In second column
-		if (x > COLUMN_3 - MAX_DISTANCE_FROM_LINE && x < COLUMN_3 + MAX_DISTANCE_FROM_LINE)
+		if (x > COLUMN_3 - MAX_DISTANCE_FROM_LINE
+				&& x < COLUMN_3 + MAX_DISTANCE_FROM_LINE)
 			return true;
-
 		// Middle row
-		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE && x < COLUMN_3 + MAX_DISTANCE_FROM_LINE
-				&& y > ROW_2 - MAX_DISTANCE_FROM_LINE && y < ROW_2 + MAX_DISTANCE_FROM_LINE)
+		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE
+				&& x < COLUMN_3 + MAX_DISTANCE_FROM_LINE
+				&& y > ROW_2 - MAX_DISTANCE_FROM_LINE
+				&& y < ROW_2 + MAX_DISTANCE_FROM_LINE)
 			return true;
-
 		return false;
 	}
 

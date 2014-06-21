@@ -160,17 +160,18 @@ public final class RaceMinigame extends Minigame {
 	}
 
 	private void updateInBeginnigState(float delta) {
-		if (Gdx.input.justTouched()) {
-			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-
-			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
-					touchPos.y);
-			if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
-				this.car.setDragged(true);
-				this.car.setShift(shift);
-				state = States.DRIVING_STATE;
-			}
-		}
+		// //This is waiting part for first input. But we want to play instantly
+		// //so it only switches the state to drive
+		// if (Gdx.input.justTouched()) {
+		// Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
+		//
+		// Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
+		// touchPos.y);
+		// this.car.setDragged(true);
+		// this.car.setShift(shift);
+		// this.state = States.DRIVING_STATE;
+		// }
+		this.state = States.DRIVING_STATE;
 	}
 
 	private void updateInDrivingState(float delta) {
@@ -187,10 +188,9 @@ public final class RaceMinigame extends Minigame {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
 			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
 					touchPos.y);
-			if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
-				this.car.setDragged(true);
-				this.car.setShift(shift);
-			}
+
+			this.car.setDragged(true);
+			this.car.setShift(shift);
 		}
 
 		moveLines(delta);
@@ -205,6 +205,8 @@ public final class RaceMinigame extends Minigame {
 				for (RaceMinigameCar car : cars[zoneIndex]) {
 					if (this.car.collides(car)) {
 						fail(null);
+						this.soundsManager
+								.playSound(Constants.sounds.SOUND_MINIGAME_RACE_CRASH);
 					}
 				}
 			}
