@@ -253,9 +253,8 @@ public class LevelSelectScreen extends BaseScreen {
 
 	@Override
 	protected void onBackKeyPressed() {
-		Xcars.getInstance().assets.soundAndMusicManager.playSound(
-				Constants.sounds.SOUND_MENU_CLOSE,
-				Constants.sounds.SOUND_DEFAULT_VOLUME);
+		Xcars.getInstance().assets.soundAndMusicManager
+				.playSound(Constants.sounds.SOUND_MENU_CLOSE);
 		Xcars.difficultySelectScreen.dispose();
 		Xcars.difficultySelectScreen = new DifficultySelectScreen();
 		Xcars.getInstance().setScreen(Xcars.difficultySelectScreen);

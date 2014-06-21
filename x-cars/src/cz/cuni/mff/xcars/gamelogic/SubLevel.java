@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import cz.cuni.mff.xcars.Xcars;
+import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.dialogs.Dialog;
 import cz.cuni.mff.xcars.dialogs.PauseDialog;
 import cz.cuni.mff.xcars.miniGames.Minigame;
@@ -80,7 +81,10 @@ public abstract class SubLevel{
 
 	public void resume() {
 		if (isPaused())
+		{
+			this.soundsManager.playSound(Constants.sounds.SOUND_DIALOG_CLOSE_SOUND);
 			this.getDialogStack().peek().endCommunication();
+		}
 	}
 
 	public boolean isDialogStackEmpty() {

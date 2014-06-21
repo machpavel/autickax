@@ -27,11 +27,14 @@ public abstract class Dialog extends Comunicator {
 				Constants.dialog.DIALOG_MESSAGE_POSITION_Y);
 		table.add(messageLabel).width(Constants.dialog.DIALOG_MESSAGE_WIDTH);
 		this.stage.addActor(table);
+
+		this.soundsManager.playSound(Constants.sounds.SOUND_DIALOG_OPEN_SOUND);
 	}
 
 	protected void playButtonSound() {
 		this.soundsManager.playSound(
-				Constants.sounds.SOUND_BUTTON_DIALOG_SOUND, Constants.sounds.SOUND_DEFAULT_VOLUME);
+				Constants.sounds.SOUND_DIALOG_CLOSE_SOUND,
+				Constants.sounds.SOUND_DEFAULT_VOLUME);
 	}
 
 	public abstract DecisionType getDecision();

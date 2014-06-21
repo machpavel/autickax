@@ -27,11 +27,11 @@ public final class Sounds {
 	public final String SOUND_MUD = "sfx/sounds/collisions/mud02.mp3";
 	public final String SOUND_HOLE = "sfx/sounds/collisions/vehicle_crash_small_hole.mp3";
 	public final String SOUND_STONE = "sfx/sounds/collisions/vehicle_crash_large_stone.mp3";
-	public final String SOUND_TREE = "sfx/sounds/collisions/vehicle_crash_large_tree.mp3";
+	public final String SOUND_TREE = "sfx/sounds/collisions/vehicle_crash_large_with_glass.mp3";
 
 	// SOUNDS MENU
-	public final String SOUND_MENU_OPEN = "sfx/sounds/menu/car_door_open.mp3";
-	public final String SOUND_MENU_CLOSE = "sfx/sounds/menu/car_door_close_6.mp3";
+	public final String SOUND_MENU_OPEN = "sfx/sounds/menu/car-door-open-1.mp3";
+	public final String SOUND_MENU_CLOSE = "sfx/sounds/menu/car-door-close-1.mp3";	
 
 	// SOUNDS SUBLEVELS
 	public final String SOUND_ENGINE_START = "sfx/sounds/sublevels/car-ignition-1.mp3";
@@ -48,7 +48,8 @@ public final class Sounds {
 	public final float SOUNDS_ENGINE_DELAY = 1.8f;
 
 	// DIALOGS
-	public final String SOUND_BUTTON_DIALOG_SOUND = SOUND_MENU_CLOSE;
+	public final String SOUND_DIALOG_OPEN_SOUND = SOUND_MENU_OPEN;
+	public final String SOUND_DIALOG_CLOSE_SOUND = SOUND_MENU_CLOSE;
 	public final String SOUND_FINISH_DIALOG_STAR_PREFIX = "sfx/sounds/finishDialog/star";
 	public final String SOUND_FINISH_DIALOG_STAR_POSTFIX = ".mp3";
 
@@ -58,7 +59,6 @@ public final class Sounds {
 
 	// RESULTS
 	public final String SOUND_MINIGAME_SUCCESS = "sfx/sounds/minigames/small_crowd_says_yes.mp3";
-
 	public final String SOUND_MINIGAME_FAIL = "sfx/sounds/minigames/wizard_says_no.mp3";
 
 	// Repairing
@@ -69,4 +69,7 @@ public final class Sounds {
 	public final String SOUND_MINIGAME_REPAIRING_TIRE_OUT = "sfx/sounds/minigames/Repairing/tireOut.mp3";
 	public final String SOUND_MINIGAME_REPAIRING_TIRE_IN = "sfx/sounds/minigames/Repairing/tireIn.mp3";
 	public final String SOUND_MINIGAME_REPAIRING_WRONG = "sfx/sounds/minigames/Repairing/wrong.mp3";
+	
+	// Race
+	public final String SOUND_MINIGAME_RACE_CRASH = "sfx/sounds/collisions/vehicle_crash_large_with_glass.mp3";
 }
