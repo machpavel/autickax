@@ -40,25 +40,27 @@ public class Arrow extends ScreenAdaptiveImage implements Externalizable {
 		writer.element(name);
 		writer.attribute("X", this.getX());
 		writer.attribute("Y", this.getY());
-		writer.attribute("rotation", this.getRotation());
+		if (this.getRotation() != 0)
+			writer.attribute("rotation", this.getRotation());
 		writer.attribute("length", this.length);
 		writer.attribute("type", this.type);
 		writer.pop();
 	}
-	
-	public void setType(int type){
+
+	public void setType(int type) {
 		this.type = type;
 		this.length = 0;
 		this.setTexture();
 	}
-	
-	public int getType(){
+
+	public int getType() {
 		return this.type;
 	}
 
 	public static Arrow parseArrow(Element arrow) {
-		return new Arrow(arrow.getFloat("X"), arrow.getFloat("Y"), arrow.getFloat("rotation"),
-				arrow.getFloat("length"), arrow.getInt("type"));
+		return new Arrow(arrow.getFloat("X"), arrow.getFloat("Y"),
+				arrow.getFloat("rotation", 0), arrow.getFloat("length"),
+				arrow.getInt("type"));
 	}
 
 	public void setLength(float length) {
@@ -72,12 +74,12 @@ public class Arrow extends ScreenAdaptiveImage implements Externalizable {
 
 	public void setTexture() {
 		// TODO figure out how rotate NinePatches
-		
+
 		// NinePatch patch = Xcars.getInstance().assets.getNinePatch(name +
 		// type);
 		// this.setDrawable(new NinePatchDrawable(patch));
-		this.setDrawable(new TextureRegionDrawable(Xcars.getInstance().assets.getGraphics(name
-				+ type)));
+		this.setDrawable(new TextureRegionDrawable(Xcars.getInstance().assets
+				.getGraphics(name + type)));
 
 		this.setHeight(this.getDrawable().getMinHeight());
 		if (this.length <= 0)
@@ -87,7 +89,8 @@ public class Arrow extends ScreenAdaptiveImage implements Externalizable {
 	}
 
 	@Override
-	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
 		this.setPosition(in.readFloat(), in.readFloat());
 		this.setRotation(in.readFloat());
 		this.setLength(in.readFloat());

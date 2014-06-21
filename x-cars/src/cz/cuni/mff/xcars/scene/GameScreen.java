@@ -13,10 +13,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Level;
 import cz.cuni.mff.xcars.PlayedLevel;
+import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.drawing.TimeStatusBar;
 import cz.cuni.mff.xcars.entities.Car;

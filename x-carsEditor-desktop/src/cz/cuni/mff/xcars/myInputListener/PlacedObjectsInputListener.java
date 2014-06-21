@@ -1,15 +1,15 @@
 package cz.cuni.mff.xcars.myInputListener;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 import cz.cuni.mff.xcars.EditorScreen;
 import cz.cuni.mff.xcars.constants.Constants;
-import cz.cuni.mff.xcars.pathway.Arrow;
 
 public class PlacedObjectsInputListener extends MyInputListener {
-	private final Object representedObject;
+	private final Actor representedObject;
 
-	public PlacedObjectsInputListener(Object representedObject,
+	public PlacedObjectsInputListener(Actor representedObject,
 			EditorScreen screen) {
 		super(screen);
 		this.representedObject = representedObject;
@@ -19,9 +19,7 @@ public class PlacedObjectsInputListener extends MyInputListener {
 	public boolean touchDown(InputEvent event, float x, float y, int pointer,
 			int button) {
 		this.screen.draggedObject = representedObject;
-		if (representedObject instanceof Arrow) {
-			this.screen.lastArrowMoved = (Arrow) representedObject;
-		}
+		this.screen.lastObjectMoved = representedObject;
 		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer,
 				button);
 	}

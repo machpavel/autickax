@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -132,8 +133,8 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	// Variables for dragging new object values
 	public boolean draggedNewObject = false;
-	public Object draggedObject = null;
-	public Arrow lastArrowMoved = null;
+	public Actor draggedObject = null;
+	public Actor lastObjectMoved = null;
 
 	public void SetAnyButtonTouched(boolean value) {
 		this.anyButtonTouched = value;
@@ -284,26 +285,29 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	private void doArrowKayboardModification(float delta) {
-		if (this.lastArrowMoved != null) {
+		if (this.lastObjectMoved != null) {
+			if (this.lastObjectMoved instanceof Arrow) {
+				Arrow arrow = (Arrow) this.lastObjectMoved;
+
+				if (Gdx.input.isKeyPressed(Keys.W)) {
+					arrow.setLength(arrow.getLength() + prolongingSpeed * delta);
+					// Debug.SetValue(this.lastArrowMoved.getLength());
+				}
+				if (Gdx.input.isKeyPressed(Keys.S)) {
+					arrow.setLength(arrow.getLength() - prolongingSpeed * delta);
+					// Debug.SetValue(this.lastArrowMoved.getLength());
+				}
+			}
+
 			if (Gdx.input.isKeyPressed(Keys.A)) {
-				this.lastArrowMoved.setRotation(this.lastArrowMoved
+				this.lastObjectMoved.setRotation(this.lastObjectMoved
 						.getRotation() + rotationSpeed * delta);
 				// Debug.SetValue(this.lastArrowMoved.getRotation());
 			}
 			if (Gdx.input.isKeyPressed(Keys.D)) {
-				this.lastArrowMoved.setRotation(this.lastArrowMoved
+				this.lastObjectMoved.setRotation(this.lastObjectMoved
 						.getRotation() - rotationSpeed * delta);
 				// Debug.SetValue(this.lastArrowMoved.getRotation());
-			}
-			if (Gdx.input.isKeyPressed(Keys.W)) {
-				this.lastArrowMoved.setLength(this.lastArrowMoved.getLength()
-						+ prolongingSpeed * delta);
-				// Debug.SetValue(this.lastArrowMoved.getLength());
-			}
-			if (Gdx.input.isKeyPressed(Keys.S)) {
-				this.lastArrowMoved.setLength(this.lastArrowMoved.getLength()
-						- prolongingSpeed * delta);
-				// Debug.SetValue(this.lastArrowMoved.getLength());
 			}
 		}
 	}
@@ -1000,14 +1004,16 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	protected void changeArrowType(boolean toRight) {
-		if (this.lastArrowMoved != null) {
-			int type = this.lastArrowMoved.getType();
+		if (this.lastObjectMoved != null
+				&& this.lastObjectMoved instanceof Arrow) {
+			Arrow arrow = (Arrow) this.lastObjectMoved;
+			int type = arrow.getType();
 			type = toRight ? type + 1 : type - 1;
 			if (type > Constants.misc.ARROW_TYPE_COUNT)
 				type = 1;
 			else if (type < 1)
 				type = Constants.misc.ARROW_TYPE_COUNT;
-			this.lastArrowMoved.setType(type);
+			arrow.setType(type);
 		}
 	}
 

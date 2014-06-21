@@ -113,14 +113,14 @@ public abstract class GameObject extends Actor implements Externalizable {
 			throw new IOException("Loading object failed: Unknown type "
 					+ " \"" + objectName + "\"");
 		}
+		float rotation = gameObject.getFloat("rotation", 0);
+		retval.setRotation(rotation);
 		return retval;
 	}
 
 	public void reset() {
 		this.isActive = true;
-		this.setRotation(0);
 		this.isDragged = false;
-		this.setScale(1);
 	}
 
 	/** Returns position of the objects center. */
@@ -172,8 +172,9 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	public String toString() {
 		return getName() + " PosX: " + this.getX() + " PosY: " + this.getY()
-				+ " Width: " + this.getWidth() + " Height: " + this.getHeight()
-				+ " Bounding: " + this.boundingCircleRadius;
+				+ " Rot: " + this.getRotation() + " Width: " + this.getWidth()
+				+ " Height: " + this.getHeight() + " Bounding: "
+				+ this.boundingCircleRadius;
 	}
 
 	public void toXml(XmlWriter writer) throws IOException {
@@ -181,6 +182,8 @@ public abstract class GameObject extends Actor implements Externalizable {
 		writer.attribute("X", this.getX());
 		writer.attribute("Y", this.getY());
 		writer.attribute("type", this.type);
+		if (this.getRotation() != 0)
+			writer.attribute("rotation", this.getRotation());
 		aditionalsToXml(writer);
 		writer.pop();
 	}
@@ -356,6 +359,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		float x = in.readFloat();
 		float y = in.readFloat();
 		this.setPosition(x, y);
+		this.setRotation(in.readFloat());
 		this.setWidth(in.readInt());
 		this.setHeight(in.readInt());
 		this.setRotation(in.readFloat());
@@ -373,6 +377,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeFloat(this.getX());
 		out.writeFloat(this.getY());
+		out.writeFloat(this.getRotation());
 		out.writeFloat(this.getWidth());
 		out.writeFloat(this.getHeight());
 		out.writeFloat(this.getRotation());

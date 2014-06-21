@@ -92,9 +92,9 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			object.setCanBeDragged(true);
 		} else {
 			Arrow object = (Arrow) this.screen.draggedObject;
-			object.setTexture();
-			this.screen.lastArrowMoved = object;
+			object.setTexture();			
 		}
+		this.screen.lastObjectMoved = this.screen.draggedObject;
 		this.screen.draggedNewObject = true;
 		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer, button);
 	}
