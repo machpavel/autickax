@@ -18,7 +18,6 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.serialization.AvailableLevelsLoader;
 import cz.cuni.mff.xcars.sfx.SoundAndMusicManager;
 
@@ -215,9 +214,8 @@ public class Assets {
 		ArrayList<Music> raceMusic = loadAllMusicFromDir(MUSIC_RACE_DIR);
 		soundAndMusicManager.assignMusic(raceMusic, menuMusic);
 	}
-	
-	private ArrayList<Music> loadAllMusicFromDir(String path)
-	{
+
+	private ArrayList<Music> loadAllMusicFromDir(String path) {
 		FileHandle dirHandle;
 		String prefix;
 		if (Gdx.app.getType() == ApplicationType.Android) {
@@ -227,11 +225,10 @@ public class Assets {
 		}
 		ArrayList<Music> music = new ArrayList<Music>();
 
-		dirHandle = Gdx.files.internal(prefix +  path);
+		dirHandle = Gdx.files.internal(prefix + path);
 		LinkedList<FileHandle> handles = new LinkedList<FileHandle>();
 		getHandles(dirHandle, handles);
-		for(FileHandle handle: handles)
-		{
+		for (FileHandle handle : handles) {
 			music.add(Gdx.audio.newMusic(handle));
 		}
 		return music;
