@@ -16,8 +16,7 @@ public class Finish extends GameObject implements Externalizable {
 	Vector2 visualShift = new Vector2(0, 0);
 
 	public Finish(float x, float y, int type) {
-		super(x, y, type);
-		super.type = type;
+		super(x, y, type);		
 		this.boundingCircleRadius = Constants.gameObjects.FINISH_BOUNDING_RADIUS;
 	}
 
