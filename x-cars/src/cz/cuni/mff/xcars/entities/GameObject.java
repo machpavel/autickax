@@ -28,6 +28,11 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	private static final byte MAGIC_GAME_OBJECT_END = 127;
 
+	/**
+	 * Bounding radius is used in methods, where rotations are possible. It
+	 * means in normal gameplay and normal objects. Or it is used when object is
+	 * more circular type.
+	 */
 	protected float boundingCircleRadius;
 
 	protected transient TextureRegion texture;
@@ -129,6 +134,15 @@ public abstract class GameObject extends Actor implements Externalizable {
 	}
 
 	/**
+	 * Returns the position of left bottom corner of the object.
+	 */
+	public Vector2 getLeftBottomCorner() {
+		float x = this.getX() - this.getWidth() / 2;
+		float y = this.getY() - this.getHeight() / 2;
+		return new Vector2(x, y);
+	}
+
+	/**
 	 * Moves object center to the specified position.
 	 * 
 	 * @param newX
@@ -164,10 +178,11 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(this.getTexture(), (this.getX() - this.getWidth() / 2),
-				(this.getY() - this.getHeight() / 2), (this.getWidth() / 2),
-				(this.getHeight() / 2), this.getWidth(), this.getHeight(),
-				this.getScaleX(), this.getScaleY(), this.getRotation());
+		Vector2 leftBottomCorner = this.getLeftBottomCorner();
+		batch.draw(this.getTexture(), leftBottomCorner.x, leftBottomCorner.y,
+				(this.getWidth() / 2), (this.getHeight() / 2), this.getWidth(),
+				this.getHeight(), this.getScaleX(), this.getScaleY(),
+				this.getRotation());
 	}
 
 	public String toString() {
@@ -195,6 +210,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		// Counts bounding radius only if it wasn't assigned before
 		if (this.boundingCircleRadius == 0)
 			this.boundingCircleRadius = width > height ? height / 2 : width / 2;
+
 	}
 
 	/**
@@ -225,7 +241,8 @@ public abstract class GameObject extends Actor implements Externalizable {
 	}
 
 	/**
-	 * Determines when two object hit each other.
+	 * Determines when two objects hit each other. It uses bounding circle, so
+	 * it can be used when objects can be rotated or are more circular.
 	 * 
 	 * @param object2
 	 * @return
@@ -236,6 +253,32 @@ public abstract class GameObject extends Actor implements Externalizable {
 		float minimalDistance = this.boundingCircleRadius
 				+ object2.boundingCircleRadius;
 		return objectsDistance < minimalDistance;
+	}
+
+	/**
+	 * Determines when two objects hit each other. It uses bounding rectangles
+	 * so it can be used only when objects CAN'T be rotated and have rectangular
+	 * shape!
+	 * 
+	 * @param object2
+	 * @return
+	 */
+	public boolean collidesRectangulary(GameObject object2) {
+		Vector2 leftBottomCorner = this.getLeftBottomCorner();
+		Vector2 object2LeftBottomCorner = object2.getLeftBottomCorner();
+		float x = leftBottomCorner.x;
+		float y = leftBottomCorner.y;
+		float width = this.getWidth();
+		float height = this.getHeight();
+		float rx = object2LeftBottomCorner.x;
+		float ry = object2LeftBottomCorner.y;
+		float rwidth = object2.getWidth();
+		float rheight = object2.getHeight();
+
+		// Copied "overlaps" function from Rectangle.class
+		return x < rx + rwidth && x + width > rx && y < ry + rheight
+				&& y + height > ry;
+
 	}
 
 	/**

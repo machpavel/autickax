@@ -203,7 +203,7 @@ public final class RaceMinigame extends Minigame {
 			// Collision detection
 			for (int zoneIndex = 0; zoneIndex < zonesCount; zoneIndex++) {
 				for (RaceMinigameCar car : cars[zoneIndex]) {
-					if (this.car.collides(car)) {
+					if (this.car.collidesRectangulary(car)) {
 						fail(null);
 						this.soundsManager
 								.playSound(Constants.sounds.SOUND_MINIGAME_RACE_CRASH);

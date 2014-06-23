@@ -115,7 +115,7 @@ public final class Minigames {
 
 	// Race
 	public final String RACE_MINIGAME_BACKGROUND_TEXTURE = "minigames/Race/background";
-	public final int RACE_MINIGAME_CAR_TYPE_COUNT = 2;
+	public final int RACE_MINIGAME_CAR_TYPE_COUNT = 8;
 	public final String RACE_MINIGAME_CAR_TEXTURE = "minigames/Race/car";
 	public float RACE_CAR_START_POSITION_X = 400;
 	public String LINE_TEXTURE = "minigames/Race/roadLine";
