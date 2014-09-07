@@ -31,7 +31,7 @@ public final class Tornado extends GameObject implements Externalizable {
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
 		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
-				+ Constants.gameObjects.TORNADO_NAME + type;
+				+ name + '/' + name + type;
 	}
 
 	@Override

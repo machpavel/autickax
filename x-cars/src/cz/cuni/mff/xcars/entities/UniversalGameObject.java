@@ -26,7 +26,7 @@ public final class UniversalGameObject extends GameObject implements Externaliza
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + name + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + name + '/' + name + type;
 	}
 
 	@Override

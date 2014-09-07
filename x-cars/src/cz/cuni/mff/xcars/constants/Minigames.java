@@ -11,7 +11,7 @@ public final class Minigames {
 	public final float RESULT_VALUE_NOTHING = 1.f;
 
 	// Avoid obstacles
-	public final int AVOID_STONE_TYPES_COUNT = 15;
+	public final int AVOID_STONE_TYPES_COUNT = 9;
 	public final String AVOID_STONE_TEXTURE_PREFIX = "minigames/AvoidObstacles/AvoidStones/";
 	public final String AVOID_STONE_NAME = "avoidstone";
 
@@ -83,7 +83,7 @@ public final class Minigames {
 
 	// Switching
 	public final String SWITCHING_MINIGAME_BACKGROUND_TEXTURE = "minigames/Switching/background";
-	public final String SWITCHING_MINIGAME_BUTTON_TEXTURE = "minigames/Switching/button";
+	public final String SWITCHING_MINIGAME_BUTTON_TEXTURE = "minigames/Switching/buttonEnabled";
 	public final String SWITCHING_MINIGAME_DISABLED_BUTTON_TEXTURE = "minigames/Switching/buttonDisabled";
 	public final String SWITCHING_MINIGAME_SLIDER_BACKGROUND_TEXTURE = "minigames/Switching/sliderBackground";
 	public final String SWITCHING_MINIGAME_SLIDER_KNOB_TEXTURE = "minigames/Switching/sliderKnob";
@@ -115,10 +115,13 @@ public final class Minigames {
 
 	// Race
 	public final String RACE_MINIGAME_BACKGROUND_TEXTURE = "minigames/Race/background";
-	public final int RACE_MINIGAME_CAR_TYPE_COUNT = 8;
+	public final int RACE_MINIGAME_CAR_TYPE_COUNT = 6;
 	public final String RACE_MINIGAME_CAR_TEXTURE = "minigames/Race/car";
 	public float RACE_CAR_START_POSITION_X = 400;
-	public String LINE_TEXTURE = "minigames/Race/roadLine";
+	public final String RACE_MINIGAME_LINE_TEXTURE = "minigames/Race/roadLine";
+	public final String ENVIRONMENT_BACKGROUND_TEXTURE = "minigames/Race/environmentBackground";
+	public final String ENVIRONMENT_FOREGROUND_TEXTURE = "minigames/Race/environmentForeground";
+	public final float ENVIRONMENT_FOREGROUND_OFFSET = 20;
 	public final float MIN_SPEED_ADDITION = 100;
 	public final float MAX_SPEED_ADDITION = 300;
 	public final float MIN_CAR_DISTANCE = 100;
@@ -137,7 +140,7 @@ public final class Minigames {
 	public final float RACE_MINIGAME_TIME_EXTREME = 35;
 	public final float RACE_MINIGAME_SPEED_KIDDIE = 250;
 	public final float RACE_MINIGAME_SPEED_BEGINNER = 300;
-	public final float RACE_MINIGAME_SPEED_NORMAL = 350;
+	public final float RACE_MINIGAME_SPEED_NORMAL = 150;
 	public final float RACE_MINIGAME_SPEED_HARD = 400;
 	public final float RACE_MINIGAME_SPEED_EXTREME = 450;
 

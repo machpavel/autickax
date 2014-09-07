@@ -18,6 +18,7 @@ import cz.cuni.mff.xcars.Level;
 import cz.cuni.mff.xcars.PlayedLevel;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.drawing.TimeStatusBar;
 import cz.cuni.mff.xcars.entities.Car;
 import cz.cuni.mff.xcars.entities.Finish;
@@ -191,9 +192,23 @@ public class GameScreen extends BaseScreen {
 		this.camera.unproject(vector);
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void render(float delta) {
+		long time, lastTime;
+		lastTime = time = System.currentTimeMillis();
+
+		if (Debug.DEBUG && Debug.drawFPSDistribution) {
+			Debug.clear();
+		}
+
 		clearScreenWithColor(); // This cryptic line clears the screen
+
+		if (Debug.DEBUG && Debug.drawFPSDistribution) {
+			time = System.currentTimeMillis();
+			Debug.Log("Clearing map: " + Long.toString(time - lastTime));
+			lastTime = time;
+		}
 
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
@@ -203,18 +218,56 @@ public class GameScreen extends BaseScreen {
 		this.level.getLevelBackground().draw(batch, stageWidth, stageHeight);
 		batch.enableBlending();
 
+		if (Debug.DEBUG && Debug.drawFPSDistribution) {
+			time = System.currentTimeMillis();
+			Debug.Log("Background: " + Long.toString(time - lastTime));
+			lastTime = time;
+		}
+
 		batch.draw(this.pathwayTexture, 0, 0, stageWidth, stageHeight);
 		batch.end();
 
+		if (Debug.DEBUG && Debug.drawFPSDistribution) {
+			time = System.currentTimeMillis();
+			Debug.Log("Pathway: " + Long.toString(time - lastTime));
+			lastTime = time;
+		}
+
 		this.currentPhase.update(delta);
 
+		if (Debug.DEBUG && Debug.drawFPSDistribution) {
+			time = System.currentTimeMillis();
+			Debug.Log("Main + minigame update: "
+					+ Long.toString(time - lastTime));
+			lastTime = time;
+		}
+
 		this.stage.act(delta);
+
+		if (Debug.DEBUG && Debug.drawFPSDistribution) {
+			time = System.currentTimeMillis();
+			Debug.Log("Main stage update: " + Long.toString(time - lastTime));
+			lastTime = time;
+		}
+
 		this.stage.draw();
+
+		if (Debug.DEBUG && Debug.drawFPSDistribution) {
+			time = System.currentTimeMillis();
+			Debug.Log("Main stage draw: " + Long.toString(time - lastTime));
+			lastTime = time;
+		}
 
 		if (!this.currentPhase.getDialogStack().isEmpty()) {
 			this.currentPhase.getDialogStack().peek().draw(batch);
 		} else if (currentPhase.getMiniGame() != null) {
 			this.currentPhase.getMiniGame().draw(batch);
+		}
+
+		if (Debug.DEBUG && Debug.drawFPSDistribution) {
+			time = System.currentTimeMillis();
+			Debug.Log("Dialogs draw: " + Long.toString(time - lastTime));
+			lastTime = time;
 		}
 
 		renderDebug(batch, delta);

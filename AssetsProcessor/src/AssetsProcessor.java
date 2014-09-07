@@ -51,7 +51,9 @@ public class AssetsProcessor {
 		copySfx();
 		System.out.println("Audio copied.");
 
-		System.out.println("Assets processed.");
+		System.out.println("-------------------------");
+		System.out.println("----Assets processed.----");
+		System.out.println("-------------------------");
 	}
 
 	private static boolean deleteDirectory(File directory) {
@@ -143,6 +145,7 @@ public class AssetsProcessor {
 		Settings settings = new Settings();
 		settings.combineSubdirectories = true;
 		settings.useIndexes = false;
+		settings.maxWidth = 2048;
 
 		TexturePacker.process(settings, ASSETS_LOADING_SCREEN_IMAGES_PATH,
 				ANDROID_LOADING_SCREEN_IMAGES_PATH.toString(), "images");

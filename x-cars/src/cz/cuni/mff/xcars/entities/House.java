@@ -4,7 +4,8 @@ import java.io.Externalizable;
 
 import cz.cuni.mff.xcars.constants.Constants;
 
-public final class House extends GameTerminatingObject implements Externalizable {
+public final class House extends GameTerminatingObject implements
+		Externalizable {
 	public static final String name = Constants.gameObjects.HOUSE_NAME;
 
 	public House(float x, float y, int type) {
@@ -42,8 +43,8 @@ public final class House extends GameTerminatingObject implements Externalizable
 
 	/** Gets the texture name according to a type */
 	public static String GetStaticTextureName(int type) {
-		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + Constants.gameObjects.HOUSE_NAME
-				+ type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + name + '/'
+				+ name + type;
 	}
 
 	@Override

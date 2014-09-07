@@ -28,7 +28,7 @@ public final class Booster extends GameObject implements Externalizable {
 	@Override
 	public void update(float delta) {
 		this.rotateBy(delta * 100);
-		//this.setRotation(this.getRotation() + delta * 100);
+		// this.setRotation(this.getRotation() + delta * 100);
 		this.scaleBy(adder * delta, adder * delta);
 		if (this.getScaleX() > 1.1f) {
 			this.setScale(1.1f);
@@ -46,8 +46,8 @@ public final class Booster extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
-				+ Constants.gameObjects.BOOSTER_NAME + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + name + '/'
+				+ name + type;
 	}
 
 	@Override

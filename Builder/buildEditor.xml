@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_run_jar" name="Create Runnable Jar for Project Autickax-desktop">
+<project default="create_run_jar" name="Create Runnable Jar for Project x-cars-desktop">
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
     <target name="create_run_jar">
-        <jar destfile="autickaEditor.jar" filesetmanifest="mergewithoutmain">
+        <jar destfile="x-carsEditor.jar" filesetmanifest="mergewithoutmain">
             <manifest>
-                <attribute name="Main-Class" value="cz.mff.cuni.autickax.AutickaxEditor"/>
+                <attribute name="Main-Class" value="cz.cuni.mff.xcars.XcarsEditor"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
-            <fileset dir="../AutickaxEditor-desktop/bin"/>
-            <fileset dir="../Auticka/bin"/>
-            <zipfileset excludes="META-INF/*.SF" src="../Auticka/libs/gdx.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="../Autickax-desktop/libs/gdx-backend-lwjgl.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="../Autickax-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
-            <zipfileset excludes="META-INF/*.SF" src="../Autickax-desktop/libs/gdx-natives.jar"/>
+            <fileset dir="../x-carsEditor-desktop/bin"/>
+            <fileset dir="../x-cars/bin"/>
+            <fileset dir="../x-cars-desktop"/>
+            <zipfileset excludes="META-INF/*.SF" src="../x-cars/libs/gdx.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-backend-lwjgl.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-natives.jar"/>
         </jar>
     </target>
 </project>

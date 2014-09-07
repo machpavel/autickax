@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.serialization.AvailableLevelsLoader;
 import cz.cuni.mff.xcars.sfx.SoundAndMusicManager;
 
@@ -83,8 +84,14 @@ public class Assets {
 		NinePatch retVal = this.graphicsAtlas.createPatch(name);
 
 		if (retVal == null) {
-			throw new RuntimeException("Graphic " + name
-					+ " not found it atlas");
+			if (name == "noTexture")
+				throw new RuntimeException("Graphic " + name
+						+ " not found it atlas");
+			else
+			{
+				Debug.Log("Graphic \"" + name + "\" not found.");
+				return getNinePatch("noTexture");
+			}
 		}
 
 		retVal.getTexture().setFilter(TextureFilter.Linear,
@@ -102,8 +109,14 @@ public class Assets {
 		TextureRegion retVal = atlas.findRegion(name);
 
 		if (retVal == null) {
-			throw new RuntimeException("Graphic " + name
-					+ " not found it atlas");
+			if (name == "noTexture")
+				throw new RuntimeException("Graphic " + name
+						+ " not found it atlas");
+			else
+			{
+				Debug.Log("Graphic \"" + name + "\" not found.");
+				return getAnyGraphic("noTexture", atlas, cacheMap);
+			}
 		}
 
 		retVal.getTexture().setFilter(TextureFilter.Linear,

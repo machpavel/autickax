@@ -63,14 +63,15 @@ public final class SwitchingMinigame extends Minigame {
 	}
 
 	private void createButtons() {
-		ButtonStyle style = new ButtonStyle();
-		style.up = new TextureRegionDrawable(
-				Xcars.getInstance().assets
-						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_BUTTON_TEXTURE));
-		style.disabled = new TextureRegionDrawable(
-				Xcars.getInstance().assets
-						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_DISABLED_BUTTON_TEXTURE));
 		for (int i = 0; i < buttons.length; i++) {
+			ButtonStyle style = new ButtonStyle();
+			style.up = new TextureRegionDrawable(
+					Xcars.getInstance().assets
+							.getGraphics(Constants.minigames.SWITCHING_MINIGAME_BUTTON_TEXTURE + i));
+			style.disabled = new TextureRegionDrawable(
+					Xcars.getInstance().assets
+							.getGraphics(Constants.minigames.SWITCHING_MINIGAME_DISABLED_BUTTON_TEXTURE + i));
+			
 			SwitchingMinigameButton newButton = new SwitchingMinigameButton(style, this);
 			newButton.setDisabled(true);
 			newButton.setCenterPosition(Constants.dialog.DIALOG_WORLD_X_OFFSET

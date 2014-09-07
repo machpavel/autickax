@@ -35,8 +35,8 @@ public final class RacingCar extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetStaticTextureName(int type) {
-		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
-				+ Constants.gameObjects.RACING_CAR_NAME + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + name + '/'
+				+ name + type;
 	}
 
 	@Override

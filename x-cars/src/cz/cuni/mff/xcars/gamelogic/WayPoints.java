@@ -134,6 +134,7 @@ public class WayPoints extends Actor {
 		return this.wayPoints.isEmpty();
 	}
 
+	@SuppressWarnings("unused")
 	public void draw(Batch batch, float parentAlpha) {
 		if (Debug.DEBUG && Debug.drawWayPoints) {
 			batch.end();

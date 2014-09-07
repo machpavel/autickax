@@ -40,10 +40,10 @@ public class Fence extends GameTerminatingObject implements Externalizable {
 		return Constants.sounds.SOUND_TREE;
 	}
 
-	/** Gets the texture name according to a type */	
+	/** Gets the texture name according to a type */
 	public static String GetStaticTextureName(int type) {
-		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX
-				+ Constants.gameObjects.FENCE_NAME + type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + name + '/'
+				+ name + type;
 	}
 
 	@Override

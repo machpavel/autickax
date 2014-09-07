@@ -29,7 +29,8 @@ public class Start extends GameObject implements Externalizable {
 	}
 
 	public static Start parseStart(Element start) {
-		return new Start(start.getFloat("X"), start.getFloat("Y"), start.getInt("type", 1));
+		return new Start(start.getFloat("X"), start.getFloat("Y"),
+				start.getInt("type", 1));
 	}
 
 	public void setShift(Vector2 shift) {
@@ -42,9 +43,12 @@ public class Start extends GameObject implements Externalizable {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		batch.draw(this.getTexture(), ((this.getPosition().x - this.getWidth() / 2) + visualShift.x),
-				((this.getPosition().y - this.getHeight() / 2) + visualShift.y), (this.getWidth() / 2),
-				(this.getHeight() / 2), this.getWidth(), this.getHeight(), this.getScaleX(), this.getScaleY(),
+		batch.draw(
+				this.getTexture(),
+				((this.getPosition().x - this.getWidth() / 2) + visualShift.x),
+				((this.getPosition().y - this.getHeight() / 2) + visualShift.y),
+				(this.getWidth() / 2), (this.getHeight() / 2), this.getWidth(),
+				this.getHeight(), this.getScaleX(), this.getScaleY(),
 				this.getRotation());
 	}
 
@@ -55,8 +59,8 @@ public class Start extends GameObject implements Externalizable {
 
 	/** Gets the texture name according to a type */
 	public static String GetTextureName(int type) {
-		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + Constants.gameObjects.START_NAME
-				+ type;
+		return Constants.gameObjects.GAME_OBJECTS_TEXTURE_PREFIX + name + '/'
+				+ name + type;
 	}
 
 	@Override
@@ -65,7 +69,8 @@ public class Start extends GameObject implements Externalizable {
 	}
 
 	@Override
-	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
 		super.readExternal(in);
 
 		this.visualShift = (Vector2) in.readObject();

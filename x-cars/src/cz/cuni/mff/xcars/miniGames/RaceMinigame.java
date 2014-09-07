@@ -2,13 +2,12 @@ package cz.cuni.mff.xcars.miniGames;
 
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 
 import cz.cuni.mff.xcars.Difficulty;
@@ -26,7 +25,10 @@ import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveImage;
 public final class RaceMinigame extends Minigame {
 	private final float CAR_START_POSITION_X = Constants.minigames.RACE_CAR_START_POSITION_X;
 
-	private String LINE_TEXTURE = Constants.minigames.LINE_TEXTURE;
+	private String LINE_TEXTURE = Constants.minigames.RACE_MINIGAME_LINE_TEXTURE;
+	private String ENVIRONMENT_BACKGROUND_TEXTURE = Constants.minigames.ENVIRONMENT_BACKGROUND_TEXTURE;
+	private String ENVIRONMENT_FOREGROUND_TEXTURE = Constants.minigames.ENVIRONMENT_FOREGROUND_TEXTURE;
+	private float ENVIRONMENT_FOREGROUND_OFFSET = Constants.minigames.ENVIRONMENT_FOREGROUND_OFFSET;
 
 	private static final float MIN_SPEED_ADDITION = Constants.minigames.MIN_SPEED_ADDITION;
 	private static final float MAX_SPEED_ADDITION = Constants.minigames.MAX_SPEED_ADDITION;
@@ -36,6 +38,8 @@ public final class RaceMinigame extends Minigame {
 
 	private float remainingTime;
 	private float speed;
+	private static final float environmentForegroundSpeedModifier = 1.3f;
+	private static final float environmentBackgroundSpeedModifier = 0.8f;
 
 	private float zoneWidth;
 	private int zonesCount;
@@ -44,12 +48,10 @@ public final class RaceMinigame extends Minigame {
 	private float[] minDistances;
 	private float[] maxDistances;
 	private ScreenAdaptiveImage[][] lineImages;
+	private ScreenAdaptiveImage[] environmentForeground;
+	private ScreenAdaptiveImage[] environmentBackground;
 
 	private Deque<RaceMinigameCar>[] cars;
-	// How much a car can move horizontally in a zone
-	private float carsMaxYShift;
-	// To come from the scene
-	private float carsXShift;
 
 	private RaceMinigameCar car;
 	States state = States.BEGINNING_STATE;
@@ -70,22 +72,19 @@ public final class RaceMinigame extends Minigame {
 		zoneWidth = (float) Constants.dialog.DIALOG_WORLD_HEIGHT / zonesCount;
 
 		initializeArrays(); // it has to be initialized first
-		generateLines();
-		createCars(gameScreen);
-		generateObstacles(cars);
 
+		generateLines();
+		generateEnvironmentBackground();
+		generateEnvironmentForeground();
+
+		initializeMainCar(gameScreen);
 	}
 
-	private void createCars(GameScreen gameScreen) {
+	private void initializeMainCar(GameScreen gameScreen) {
 		this.car = new RaceMinigameCar(CAR_START_POSITION_X,
 				zonesCenters[MathUtils.random(zonesCount - 1)], 0);
 		this.car.setCanBeDragged(true);
 		this.car.setDragged(false);
-
-		RaceMinigameCar raceCar = new RaceMinigameCar(0, 0, 1);
-		carsMaxYShift = zoneWidth / 2 - raceCar.getHeight() / 2
-				- lineImages[0][0].getHeight() / 2;
-		carsXShift = raceCar.getWidth() / 2;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -95,6 +94,8 @@ public final class RaceMinigame extends Minigame {
 		minDistances = new float[zonesCount];
 		maxDistances = new float[zonesCount];
 		lineImages = new ScreenAdaptiveImage[zonesCount - 1][2];
+		environmentBackground = new ScreenAdaptiveImage[2];
+		environmentForeground = new ScreenAdaptiveImage[2];
 
 		cars = new LinkedList[zonesCount];
 
@@ -125,18 +126,52 @@ public final class RaceMinigame extends Minigame {
 		for (int offsetX = 0; offsetX < lineImages.length; offsetX++) {
 			for (int i = 0; i < lineImages[offsetX].length; i++) {
 				lineImages[offsetX][i] = new ScreenAdaptiveImage(line);
-				lineImages[offsetX][i].setWidth(Constants.WORLD_WIDTH);
+				lineImages[offsetX][i].setWidth(400
+						+ 400
+						% line.getRegion().getRegionWidth());
 				this.stage.addActor(lineImages[offsetX][i]);
 			}
+			//lineImages[offsetX][0].setVisible(false);
 			lineImages[offsetX][0].setPosition(0, positionY);
-			lineImages[offsetX][1].setPosition(-Constants.WORLD_WIDTH,
-					positionY);
+			lineImages[offsetX][1].setPosition(
+					lineImages[offsetX][0].getRight(), positionY);
 			positionY += zoneWidth;
 		}
 	}
 
-	private void generateObstacles(Queue<RaceMinigameCar>[] gameObjects) {
-		// Here can be some starting configuration
+	private void generateEnvironmentForeground() {
+		TextureRegionDrawable foreground = new TextureRegionDrawable(
+				Xcars.getInstance().assets
+						.getGraphics(ENVIRONMENT_FOREGROUND_TEXTURE));
+		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET
+				- foreground.getRegion().getRegionHeight()
+				+ ENVIRONMENT_FOREGROUND_OFFSET;
+
+		for (int i = 0; i < environmentForeground.length; i++) {
+			environmentForeground[i] = new ScreenAdaptiveImage(foreground);
+			// this.stage.addActor(environmentForeground[i]); It is done
+			// manually in draw function
+		}
+		environmentForeground[0].setPosition(0, positionY);
+		environmentForeground[1].setPosition(
+				environmentForeground[0].getWidth(), positionY);
+	}
+
+	private void generateEnvironmentBackground() {
+
+		TextureRegionDrawable background = new TextureRegionDrawable(
+				Xcars.getInstance().assets
+						.getGraphics(ENVIRONMENT_BACKGROUND_TEXTURE));
+		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET
+				+ Constants.dialog.DIALOG_WORLD_HEIGHT;
+
+		for (int i = 0; i < environmentBackground.length; i++) {
+			environmentBackground[i] = new ScreenAdaptiveImage(background);
+			this.stage.addActor(environmentBackground[i]);
+		}
+		environmentBackground[0].setPosition(0, positionY);
+		environmentBackground[1].setPosition(
+				environmentBackground[0].getWidth(), positionY);
 	}
 
 	@Override
@@ -171,6 +206,7 @@ public final class RaceMinigame extends Minigame {
 		// this.car.setShift(shift);
 		// this.state = States.DRIVING_STATE;
 		// }
+		//updateEnvironment(delta);
 		this.state = States.DRIVING_STATE;
 	}
 
@@ -193,8 +229,8 @@ public final class RaceMinigame extends Minigame {
 			this.car.setShift(shift);
 		}
 
-		moveLines(delta);
-		carsUpdate(delta);
+		updateEnvironment(delta);
+		updateCars(delta);
 
 		// Car is out of borders
 		if (!isInWorld(this.car.getPosition())) {
@@ -213,8 +249,7 @@ public final class RaceMinigame extends Minigame {
 		}
 	}
 
-	private void carsUpdate(float delta) {
-		float rightBorder = Constants.WORLD_WIDTH + carsXShift;
+	private void updateCars(float delta) {
 		for (int zoneIndex = 0; zoneIndex < zonesCount; zoneIndex++) {
 			// Moves cars
 			for (RaceMinigameCar car : cars[zoneIndex]) {
@@ -225,22 +260,30 @@ public final class RaceMinigame extends Minigame {
 
 			// Removes cars which are gone
 			RaceMinigameCar firstCar = cars[zoneIndex].peekFirst();
-			if (firstCar != null && firstCar.getX() < -carsXShift) {
+			if (firstCar != null
+					&& firstCar.getLeftBottomCorner().x < -firstCar.getWidth()) {
 				cars[zoneIndex].poll();
 
 			}
 
 			// Adds new car
 			RaceMinigameCar lastCar = cars[zoneIndex].peekLast();
-			if (lastCar == null || lastCar.getX() < rightBorder) {
-				float x = rightBorder
-						+ (maxDistances[zoneIndex] - minDistances[zoneIndex])
-						* MathUtils.random(1.f) + minDistances[zoneIndex];
-				float y = zonesCenters[zoneIndex] + MathUtils.random(-1, 1)
-						* carsMaxYShift;
+			if (lastCar == null
+					|| lastCar.getLeftBottomCorner().x < Constants.WORLD_WIDTH) {
 				int type = MathUtils.random(1,
 						Constants.minigames.RACE_MINIGAME_CAR_TYPE_COUNT);
-				cars[zoneIndex].add(new RaceMinigameCar(x, y, type));
+				RaceMinigameCar car = new RaceMinigameCar(0, 0, type);
+
+				car.setX(Constants.WORLD_WIDTH + car.getWidth() / 2
+						+ +(maxDistances[zoneIndex] - minDistances[zoneIndex])
+						* MathUtils.random(1.f) + minDistances[zoneIndex]);
+
+				car.setY(zonesCenters[zoneIndex]
+						+ MathUtils.random(-1, 1)
+						* (zoneWidth / 2 - car.getHeight() / 2 - lineImages[0][0]
+								.getHeight() / 2));
+
+				cars[zoneIndex].add(car);
 			}
 		}
 
@@ -286,6 +329,9 @@ public final class RaceMinigame extends Minigame {
 			}
 		}
 		this.car.draw(batch);
+		for (int i = 0; i < environmentForeground.length; i++) {
+			environmentForeground[i].draw(batch, 1);
+		}
 		batch.end();
 	}
 
@@ -326,15 +372,54 @@ public final class RaceMinigame extends Minigame {
 		return;
 	}
 
-	public void moveLines(float delta) {
+	private void updateEnvironment(float delta) {
+		updateLines(delta);
+		updateEnvironmentForeground(delta);
+		updateEnvironmentBackground(delta);
+	}
+
+	private void updateLines(float delta) {
 		for (int offsetX = 0; offsetX < lineImages.length; offsetX++) {
 			for (int i = 0; i < lineImages[offsetX].length; i++) {
 				lineImages[offsetX][i].setX(lineImages[offsetX][i].getX()
 						- speed * delta);
-				if (lineImages[offsetX][i].getX() < -Constants.WORLD_WIDTH) {
-					lineImages[offsetX][i].setX(Constants.WORLD_WIDTH);
+			}
+		}
+		for (int offsetX = 0; offsetX < lineImages.length; offsetX++) {
+			for (int i = 0; i < lineImages[offsetX].length; i++) {
+				if (lineImages[offsetX][i].getX() < -lineImages[offsetX][i]
+						.getWidth()) {
+					lineImages[offsetX][i].setX(lineImages[offsetX][(i + 1)
+							% lineImages[offsetX].length].getRight());
 				}
+			}
+		}
+	}
 
+	private void updateEnvironmentForeground(float delta) {
+		for (int i = 0; i < environmentForeground.length; i++) {
+			environmentForeground[i].setX(environmentForeground[i].getX()
+					- speed * environmentForegroundSpeedModifier * delta);
+		}
+		for (int i = 0; i < environmentForeground.length; i++) {
+			if (environmentForeground[i].getX() < -environmentForeground[i]
+					.getWidth()) {
+				environmentForeground[i].setX(environmentForeground[(i + 1)
+						% environmentForeground.length].getRight());
+			}
+		}
+	}
+
+	private void updateEnvironmentBackground(float delta) {
+		for (int i = 0; i < environmentBackground.length; i++) {
+			environmentBackground[i].setX(environmentBackground[i].getX()
+					- speed * environmentBackgroundSpeedModifier * delta);
+		}
+		for (int i = 0; i < environmentBackground.length; i++) {
+			if (environmentBackground[i].getX() < -environmentBackground[i]
+					.getWidth()) {
+				environmentBackground[i].setX(environmentBackground[(i + 1)
+						% environmentBackground.length].getRight());
 			}
 		}
 	}
