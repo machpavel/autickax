@@ -1,5 +1,7 @@
 package cz.cuni.mff.xcars.constants;
 
+import com.badlogic.gdx.graphics.Color;
+
 public final class Dialog {
 	/** Determines ideal dialog world width. */
 	public final int DIALOG_WORLD_WIDTH = 600;
@@ -15,6 +17,7 @@ public final class Dialog {
 	//
 
 	public final String DIALOG_BACKGROUND_TEXTURE = "dialog/dialogBackground";
+	public final Color DIALOG_BACKGROUND_COLOR = new Color(0.7f, 0.7f, 0.7f, 0.5f);
 
 	public final float DIALOG_MESSAGE_POSITION_X = 400;
 	public final float DIALOG_MESSAGE_POSITION_Y = 270;

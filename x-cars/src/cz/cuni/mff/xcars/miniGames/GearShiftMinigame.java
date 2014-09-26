@@ -2,20 +2,23 @@ package cz.cuni.mff.xcars.miniGames;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
-import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
+import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.dialogs.MessageDialog;
 import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
 import cz.cuni.mff.xcars.gamelogic.SubLevel;
 import cz.cuni.mff.xcars.input.Input;
-import cz.cuni.mff.xcars.miniGames.support.GearShiftMinigameFinish;
 import cz.cuni.mff.xcars.miniGames.support.GearShifter;
+import cz.cuni.mff.xcars.pathway.Vector2i;
 import cz.cuni.mff.xcars.scene.GameScreen;
+import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveImage;
 
 public final class GearShiftMinigame extends Minigame {
 	private static final float FAIL_VALUE = Constants.minigames.GEAR_SHIFT_FAIL_VALUE;
@@ -29,7 +32,7 @@ public final class GearShiftMinigame extends Minigame {
 
 	private States state = States.BEGINNING_STATE;
 	private GearShifter gearShifter;
-	private GearShiftMinigameFinish finish;
+	private Vector2 finishPosition;
 
 	public GearShiftMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
@@ -42,38 +45,55 @@ public final class GearShiftMinigame extends Minigame {
 			this.parent.setDialog(new MessageDialog(screen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WHAT_TO_DO));
 
-		randomizeStartAndFinish(screen);
-	}
-
-	public void randomizeStartAndFinish(GameScreen screen) {
 		float[] rows = new float[] { ROW_1, ROW_2, ROW_3 };
 		float[] columns = new float[] { COLUMN_1, COLUMN_2, COLUMN_3 };
 
-		int gearFinishRandomX = 0;
-		int gearFinishRandomY = 0;
-		do {
-			gearFinishRandomX = MathUtils.random(2);
-			gearFinishRandomY = MathUtils.random(2);
-		} while (gearFinishRandomY == 1);
-		this.finish = new GearShiftMinigameFinish(columns[gearFinishRandomX],
-				rows[gearFinishRandomY]);
+		// Generates position of finish
+		int finishPositionIndex = MathUtils.random(5);
+		this.finishPosition = new Vector2(columns[finishPositionIndex % 3],
+				rows[(((finishPositionIndex / 3) + 1) % 2) * 2]);
 
-		int gearShifterRandomX = 0;
-		int gearShifterRandomY = 0;
+		// Generates position of gear shifter
+		int gearShifterIndex = 0;
 		do {
-			gearShifterRandomX = MathUtils.random(2);
-			gearShifterRandomY = MathUtils.random(2);
-		} while (gearShifterRandomY == 1
-				|| (gearShifterRandomX == gearFinishRandomX && gearShifterRandomY == gearFinishRandomY));
-		this.gearShifter = new GearShifter(columns[gearShifterRandomX],
-				rows[gearShifterRandomY]);
+			gearShifterIndex = MathUtils.random(5);
+		} while (finishPositionIndex == gearShifterIndex);
+		this.gearShifter = new GearShifter(columns[gearShifterIndex % 3],
+				rows[(((gearShifterIndex / 3) + 1) % 2) * 2]);
 
+		// Generates gears numbers
+		float numbersPositionOffset = Constants.minigames.GEAR_SHIFT_MINIGAME_GEAR_NUMBER_VERTICAL_OFFSET;
+		String numbersTexturePrefix = Constants.minigames.GEAR_SHIFT_MINIGAME_GEAR_NUMBER_TEXTURE_PREFIX;
+		for (int i = 0; i < 6; i++) {
+			TextureRegion numberTexture;
+			if (i == finishPositionIndex) {
+				numberTexture = Xcars.getInstance().assets
+						.getGraphics(numbersTexturePrefix + (i + 1) + "e");
+			} else {
+				numberTexture = Xcars.getInstance().assets
+						.getGraphics(numbersTexturePrefix + (i + 1) + "d");
+			}
+			ScreenAdaptiveImage gearNumberImage = new ScreenAdaptiveImage(
+					numberTexture);
+			float yOffset = i < 3 ? numbersPositionOffset
+					: -numbersPositionOffset;
+			gearNumberImage.setCenterPosition(columns[i % 3],
+					rows[(((i / 3) + 1) % 2) * 2] + yOffset);
+			stage.addActor(gearNumberImage);
+		}
+
+		// Generates axis image
+		ScreenAdaptiveImage gearsAxisImage = new ScreenAdaptiveImage(
+				Xcars.getInstance().assets
+						.getGraphics(Constants.minigames.GEAR_SHIFT_MINIGAME_GEARS_AXIS_TEXTURE));
+		gearsAxisImage.setCenterPosition(Constants.WORLD_WIDTH / 2,
+				Constants.WORLD_HEIGHT / 2);
+		stage.addActor(gearsAxisImage);
 	}
 
 	@Override
 	public void update(float delta) {
 		this.gearShifter.update(delta);
-		this.finish.update(delta);
 
 		switch (state) {
 		case BEGINNING_STATE:
@@ -112,9 +132,9 @@ public final class GearShiftMinigame extends Minigame {
 			fail(Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WAS_RELEASED);
 		}
 		// Finish reached
-		else if (this.gearShifter.positionCollides(finish)) {
-			win();
-		}
+		// else if (this.gearShifter.positionCollides(finish)) {
+		// win();
+		// }
 		// Out of pathway
 		else if (!isInGrid(this.gearShifter.getPosition().x,
 				this.gearShifter.getPosition().y)) {
@@ -133,7 +153,7 @@ public final class GearShiftMinigame extends Minigame {
 	}
 
 	private void win() {
-		this.gearShifter.setPosition(this.finish.getX(), this.finish.getY());
+		// this.gearShifter.setPosition(this.finish.getX(), this.finish.getY());
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS;
 		this.result = ResultType.PROCEEDED;
 		leave();
@@ -150,7 +170,6 @@ public final class GearShiftMinigame extends Minigame {
 	public void draw(SpriteBatch batch) {
 		super.draw(batch);
 		batch.begin();
-		this.finish.draw(batch);
 		this.gearShifter.draw(batch);
 		batch.end();
 	}
@@ -206,5 +225,47 @@ public final class GearShiftMinigame extends Minigame {
 
 	private enum States {
 		BEGINNING_STATE, DRIVING_STATE, LEAVING_STATE;
+	}
+
+	@Override
+	public void DrawDiagnostics() {
+		shapeRenderer.begin(ShapeType.Filled);
+
+		float width = 1.f;
+		shapeRenderer.setColor(0.5f, 0, 0, 1);
+		shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_2
+				+ MAX_DISTANCE_FROM_LINE, COLUMN_3 + MAX_DISTANCE_FROM_LINE,
+				ROW_2 + MAX_DISTANCE_FROM_LINE, width);
+		shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_2
+				- MAX_DISTANCE_FROM_LINE, COLUMN_3 + MAX_DISTANCE_FROM_LINE,
+				ROW_2 - MAX_DISTANCE_FROM_LINE, width);
+		shapeRenderer.rectLine(COLUMN_1 + MAX_DISTANCE_FROM_LINE, ROW_1
+				- MAX_DISTANCE_FROM_LINE, COLUMN_1 + MAX_DISTANCE_FROM_LINE,
+				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+		shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_1
+				- MAX_DISTANCE_FROM_LINE, COLUMN_1 - MAX_DISTANCE_FROM_LINE,
+				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+		shapeRenderer.rectLine(COLUMN_2 + MAX_DISTANCE_FROM_LINE, ROW_1
+				- MAX_DISTANCE_FROM_LINE, COLUMN_2 + MAX_DISTANCE_FROM_LINE,
+				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+		shapeRenderer.rectLine(COLUMN_2 - MAX_DISTANCE_FROM_LINE, ROW_1
+				- MAX_DISTANCE_FROM_LINE, COLUMN_2 - MAX_DISTANCE_FROM_LINE,
+				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+		shapeRenderer.rectLine(COLUMN_3 + MAX_DISTANCE_FROM_LINE, ROW_1
+				- MAX_DISTANCE_FROM_LINE, COLUMN_3 + MAX_DISTANCE_FROM_LINE,
+				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+		shapeRenderer.rectLine(COLUMN_3 - MAX_DISTANCE_FROM_LINE, ROW_1
+				- MAX_DISTANCE_FROM_LINE, COLUMN_3 - MAX_DISTANCE_FROM_LINE,
+				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+
+		width = 3.0f;
+		shapeRenderer.setColor(1, 0, 0, 1);
+		Gdx.gl20.glLineWidth(10);
+
+		shapeRenderer.rectLine(COLUMN_1, ROW_2, COLUMN_3, ROW_2, width);
+		shapeRenderer.rectLine(COLUMN_1, ROW_1, COLUMN_1, ROW_3, width);
+		shapeRenderer.rectLine(COLUMN_2, ROW_1, COLUMN_2, ROW_3, width);
+		shapeRenderer.rectLine(COLUMN_3, ROW_1, COLUMN_3, ROW_3, width);
+		shapeRenderer.end();
 	}
 }

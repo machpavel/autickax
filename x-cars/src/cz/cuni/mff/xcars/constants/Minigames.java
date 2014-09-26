@@ -37,8 +37,10 @@ public final class Minigames {
 
 	// Gear shift
 	public final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "minigames/GearShift/background";
+	public final String GEAR_SHIFT_MINIGAME_GEARS_AXIS_TEXTURE = "minigames/GearShift/gearsAxis";
+	public final String GEAR_SHIFT_MINIGAME_GEAR_NUMBER_TEXTURE_PREFIX = "minigames/GearShift/gearNumber";
+	public final float GEAR_SHIFT_MINIGAME_GEAR_NUMBER_VERTICAL_OFFSET = 20;
 	public final String GEAR_SHIFTER_TEXTURE = "minigames/GearShift/gearShifter";
-	public final String GEAR_SHIFT_MINIGAME_FINISH_TEXTURE = "minigames/GearShift/finish";
 	public final float GEAR_SHIFT_MINIGAME_FINISH_RADIUS = 50;
 	public final float GEAR_SHIFT_MINIGAME_ROW_1 = 180;
 	public final float GEAR_SHIFT_MINIGAME_ROW_2 = 245;
