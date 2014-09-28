@@ -39,21 +39,22 @@ public final class Minigames {
 	public final String GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE = "minigames/GearShift/background";
 	public final String GEAR_SHIFT_MINIGAME_GEARS_AXIS_TEXTURE = "minigames/GearShift/gearsAxis";
 	public final String GEAR_SHIFT_MINIGAME_GEAR_NUMBER_TEXTURE_PREFIX = "minigames/GearShift/gearNumber";
-	public final float GEAR_SHIFT_MINIGAME_GEAR_NUMBER_VERTICAL_OFFSET = 20;
+	public final float GEAR_SHIFT_MINIGAME_GEAR_NUMBER_VERTICAL_OFFSET = 30;
 	public final String GEAR_SHIFTER_TEXTURE = "minigames/GearShift/gearShifter";
 	public final float GEAR_SHIFT_MINIGAME_FINISH_RADIUS = 50;
-	public final float GEAR_SHIFT_MINIGAME_ROW_1 = 180;
-	public final float GEAR_SHIFT_MINIGAME_ROW_2 = 245;
-	public final float GEAR_SHIFT_MINIGAME_ROW_3 = 310;
-	public final float GEAR_SHIFT_MINIGAME_COLUMN_1 = 320;
+	public final float GEAR_SHIFT_MINIGAME_ROW_1 = 175;
+	public final float GEAR_SHIFT_MINIGAME_ROW_2 = 240;
+	public final float GEAR_SHIFT_MINIGAME_ROW_3 = 305;
+	public final float GEAR_SHIFT_MINIGAME_COLUMN_1 = 323;
 	public final float GEAR_SHIFT_MINIGAME_COLUMN_2 = 400;
-	public final float GEAR_SHIFT_MINIGAME_COLUMN_3 = 480;
+	public final float GEAR_SHIFT_MINIGAME_COLUMN_3 = 477;
 	public final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_KIDDIE = 50;
 	public final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_BEGINNER = 40;
 	public final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_NORMAL = 30;
 	public final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_HARD = 20;
 	public final float GEAR_SHIFT_MINIGAME_MAX_DISTANCE_FROM_LINE_EXTREME = 15;
 	public final float GEAR_SHIFT_FAIL_VALUE = 0.7f;
+	public final float GEAR_SHIFT_FINISH_RADIUS = 15f;
 
 	// Boost
 	public final String BOOST_MINIGAME_BACKGROUND_TEXTURE = "minigames/Boost/background";

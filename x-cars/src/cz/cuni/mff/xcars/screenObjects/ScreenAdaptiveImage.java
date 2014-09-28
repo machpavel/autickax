@@ -2,20 +2,20 @@ package cz.cuni.mff.xcars.screenObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class ScreenAdaptiveImage extends Image {
 
+	public ScreenAdaptiveImage(TextureRegion texture) {
+		super(texture);
+	}
+
+	public ScreenAdaptiveImage(TextureRegionDrawable texture) {
+		super(texture);
+	}
+
 	public ScreenAdaptiveImage() {
 		super();
-	}
-
-	public ScreenAdaptiveImage(TextureRegion graphics) {
-		super(graphics);
-	}
-
-	public ScreenAdaptiveImage(Drawable drawableGraphics) {
-		super(drawableGraphics);
 	}
 
 	public void setCenterPosition(float x, float y) {

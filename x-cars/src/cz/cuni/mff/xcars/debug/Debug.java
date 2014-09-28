@@ -5,16 +5,33 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 
+import cz.cuni.mff.xcars.drawing.ShapeRendererStretched;
 import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveLabel;
 
 public final class Debug {
-	public static final boolean DEBUG = true;
 
+	// *******GENERAL ENABLING***************
+	public static final boolean DEBUG = true;
+	// **************************************
+
+	// *******PARTS ENABLING*****************
 	public static boolean DRAW_FPS = true;
 	public static final boolean drawWayPoints = false;
 	public static final boolean drawFPSDistribution = false;
+	// All diagnostics in communicators - dialog and minigames
+	public static final boolean drawCommunicatorDiagnostics = true; 
+	public static final boolean drawBoundingBoxes = true;
+	// Maximal distance from object where it is possible to activate them
+	public static final boolean drawMaxTouchableArea = true;
+	// **************************************
+
+	public static ShapeRendererStretched shapeRenderer = new ShapeRendererStretched();
 
 	private static Log messageLabel;
 	private static Log valueLabel;
@@ -144,5 +161,15 @@ public final class Debug {
 		logger.clear();
 		messageLabel = null;
 		valueLabel = null;
+	}
+
+	public static void drawCircle(Vector2 position, float radius, Color color,
+			float width) {
+		// Finish bounding circle
+		Gdx.gl20.glLineWidth(width);
+		shapeRenderer.setColor(color);
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.circle(position.x, position.y, radius);
+		shapeRenderer.end();
 	}
 }

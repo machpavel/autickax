@@ -213,4 +213,11 @@ public final class RepairingMinigame extends Minigame {
 	private enum States {
 		JACK_TO_SPANNER, SPANNER_TO_TIRE, TIRE_TO_TIRE, TIRE_TO_SPANNER, SPANNER_TO_JACK, JACK_TO_LEAVING, LEAVING;
 	}
+	
+	@Override
+	public void DrawMaxTouchableArea() {
+		for (RepairingMinigameObject gameObject : gameObjects) {
+			gameObject.DrawMaxTouchableArea();
+		}		
+	}
 }

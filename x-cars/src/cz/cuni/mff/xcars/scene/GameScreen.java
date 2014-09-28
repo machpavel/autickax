@@ -257,6 +257,13 @@ public class GameScreen extends BaseScreen {
 			Debug.Log("Main stage draw: " + Long.toString(time - lastTime));
 			lastTime = time;
 		}
+		
+		if(Debug.DEBUG && Debug.drawMaxTouchableArea){
+			if(this.currentPhase != null && this.currentPhase instanceof SubLevel1){
+				SubLevel1 sl1 = (SubLevel1)this.currentPhase;
+				sl1.DrawMaxTouchableArea();
+			}
+		}
 
 		if (!this.currentPhase.getDialogStack().isEmpty()) {
 			this.currentPhase.getDialogStack().peek().draw(batch);

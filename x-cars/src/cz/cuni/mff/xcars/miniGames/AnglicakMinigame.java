@@ -1,6 +1,7 @@
 package cz.cuni.mff.xcars.miniGames;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.dialogs.MessageDialog;
 import cz.cuni.mff.xcars.entities.Car;
 import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
@@ -63,7 +65,8 @@ public final class AnglicakMinigame extends Minigame {
 			this.parent.setDialog(new MessageDialog(gameScreen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_ANGLICAK_WHAT_TO_DO));
 
-		this.target = new AnglicakMinigameTarget(targetLocationX, targetLocationY, targetRadius);
+		this.target = new AnglicakMinigameTarget(targetLocationX,
+				targetLocationY, targetRadius);
 		this.stage.addActor(this.target);
 
 		this.car = new Car(0, 0, 1);
@@ -89,7 +92,7 @@ public final class AnglicakMinigame extends Minigame {
 	}
 
 	@Override
-	public void update(float delta) {		
+	public void update(float delta) {
 		this.car.update(delta);
 		switch (state) {
 		case BEGINNING_STATE:
@@ -109,8 +112,12 @@ public final class AnglicakMinigame extends Minigame {
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
-			if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
+					touchPos.y);
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
+					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+
+			if (shift.len() <= maxDistance) {
 				this.carWasDragged = true;
 				this.car.setDragged(true);
 				this.car.setShift(shift);
@@ -126,7 +133,8 @@ public final class AnglicakMinigame extends Minigame {
 					return;
 				}
 
-				carSpeeds[carSpeedsIndex] = new Vector2(newPosition).sub(lastCarPosition);
+				carSpeeds[carSpeedsIndex] = new Vector2(newPosition)
+						.sub(lastCarPosition);
 				carSpeedsDeltas[carSpeedsIndex] = delta;
 
 				// Counts average speed
@@ -158,7 +166,8 @@ public final class AnglicakMinigame extends Minigame {
 	}
 
 	private void updateInDrivingState(float delta) {
-		Vector2 a = new Vector2(carSpeed).nor().scl(-uniformDeceleration).add(wind);
+		Vector2 a = new Vector2(carSpeed).nor().scl(-uniformDeceleration)
+				.add(wind);
 		Vector2 at = new Vector2(a).scl(delta);
 		Vector2 v = new Vector2(carSpeed).add(at);
 		Vector2 s = new Vector2(carSpeed).add(v).scl(delta / 2);
@@ -180,7 +189,8 @@ public final class AnglicakMinigame extends Minigame {
 	}
 
 	public void checkEnd() {
-		float distanceFromTargetInPercents = this.target.distanceInPerc(this.car.getPosition());
+		float distanceFromTargetInPercents = this.target
+				.distanceInPerc(this.car.getPosition());
 		if (distanceFromTargetInPercents > 0) {
 			this.setResultValue(distanceFromTargetInPercents);
 			win();
@@ -262,6 +272,18 @@ public final class AnglicakMinigame extends Minigame {
 			throw new IllegalDifficultyException(difficulty.toString());
 		}
 		return;
+	}
+	
+	@Override
+	public void DrawMaxTouchableArea() {
+		if (!this.car.isDragged()) {
+			if (Debug.drawMaxTouchableArea) {
+				float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
+						* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+				Debug.drawCircle(this.car.getPosition(), maxDistance,
+						new Color(1, 1, 0, 1), 1);
+			}
+		}
 	}
 
 }

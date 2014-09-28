@@ -6,6 +6,7 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.gamelogic.SubLevel;
 import cz.cuni.mff.xcars.input.Input;
 import cz.cuni.mff.xcars.miniGames.Minigame;
@@ -183,6 +185,15 @@ public abstract class GameObject extends Actor implements Externalizable {
 				(this.getWidth() / 2), (this.getHeight() / 2), this.getWidth(),
 				this.getHeight(), this.getScaleX(), this.getScaleY(),
 				this.getRotation());
+
+		if (Debug.DEBUG) {
+			if (Debug.drawBoundingBoxes) {
+				batch.end();
+				Debug.drawCircle(this.getPosition(), boundingCircleRadius,
+						new Color(0, 0, 1, 1), 2);
+				batch.begin();
+			}
+		}
 	}
 
 	public String toString() {
@@ -252,6 +263,19 @@ public abstract class GameObject extends Actor implements Externalizable {
 				.len();
 		float minimalDistance = this.boundingCircleRadius
 				+ object2.boundingCircleRadius;
+		return objectsDistance < minimalDistance;
+	}
+
+	/**
+	 * Determines when two objects hit each other. It uses bounding circle, so
+	 * it can be used when objects can be rotated or are more circular.
+	 * 
+	 * @param object2
+	 * @return
+	 */
+	public boolean collides(Vector2 position, float radius) {
+		float objectsDistance = this.getPosition().sub(position).len();
+		float minimalDistance = this.boundingCircleRadius + radius;
 		return objectsDistance < minimalDistance;
 	}
 

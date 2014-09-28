@@ -1,6 +1,7 @@
 package cz.cuni.mff.xcars.miniGames;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -11,12 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.dialogs.MessageDialog;
 import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
 import cz.cuni.mff.xcars.gamelogic.SubLevel;
 import cz.cuni.mff.xcars.input.Input;
 import cz.cuni.mff.xcars.miniGames.support.GearShifter;
-import cz.cuni.mff.xcars.pathway.Vector2i;
 import cz.cuni.mff.xcars.scene.GameScreen;
 import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveImage;
 
@@ -29,6 +30,8 @@ public final class GearShiftMinigame extends Minigame {
 	private static final float COLUMN_2 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_2;
 	private static final float COLUMN_3 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_3;
 	private static float MAX_DISTANCE_FROM_LINE;
+	private static float FINISH_RADIUS = Constants.minigames.GEAR_SHIFT_FINISH_RADIUS
+			* (Input.xStretchFactorInv + Input.yStretchFactorInv) / 2;
 
 	private States state = States.BEGINNING_STATE;
 	private GearShifter gearShifter;
@@ -114,10 +117,12 @@ public final class GearShiftMinigame extends Minigame {
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-
 			Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(
 					touchPos.x, touchPos.y);
-			if (shift.len() <= Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE) {
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
+					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+
+			if (shift.len() <= maxDistance) {
 				this.gearShifter.setDragged(true);
 				this.gearShifter.setShift(shift);
 				state = States.DRIVING_STATE;
@@ -132,9 +137,9 @@ public final class GearShiftMinigame extends Minigame {
 			fail(Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_WAS_RELEASED);
 		}
 		// Finish reached
-		// else if (this.gearShifter.positionCollides(finish)) {
-		// win();
-		// }
+		else if (this.gearShifter.getPosition().sub(finishPosition).len() < FINISH_RADIUS) {
+			win();
+		}
 		// Out of pathway
 		else if (!isInGrid(this.gearShifter.getPosition().x,
 				this.gearShifter.getPosition().y)) {
@@ -153,7 +158,7 @@ public final class GearShiftMinigame extends Minigame {
 	}
 
 	private void win() {
-		// this.gearShifter.setPosition(this.finish.getX(), this.finish.getY());
+		this.gearShifter.setPosition(finishPosition.x, finishPosition.y);
 		this.resultMessage = Constants.strings.TOOLTIP_MINIGAME_GEAR_SHIFT_SUCCESS;
 		this.result = ResultType.PROCEEDED;
 		leave();
@@ -229,8 +234,8 @@ public final class GearShiftMinigame extends Minigame {
 
 	@Override
 	public void DrawDiagnostics() {
+		// Max distance from skeleton lines
 		shapeRenderer.begin(ShapeType.Filled);
-
 		float width = 1.f;
 		shapeRenderer.setColor(0.5f, 0, 0, 1);
 		shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_2
@@ -258,14 +263,27 @@ public final class GearShiftMinigame extends Minigame {
 				- MAX_DISTANCE_FROM_LINE, COLUMN_3 - MAX_DISTANCE_FROM_LINE,
 				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
 
+		// Skeleton lines
 		width = 3.0f;
 		shapeRenderer.setColor(1, 0, 0, 1);
-		Gdx.gl20.glLineWidth(10);
-
 		shapeRenderer.rectLine(COLUMN_1, ROW_2, COLUMN_3, ROW_2, width);
 		shapeRenderer.rectLine(COLUMN_1, ROW_1, COLUMN_1, ROW_3, width);
 		shapeRenderer.rectLine(COLUMN_2, ROW_1, COLUMN_2, ROW_3, width);
 		shapeRenderer.rectLine(COLUMN_3, ROW_1, COLUMN_3, ROW_3, width);
 		shapeRenderer.end();
+
+		// Finish bounding circle
+		Debug.drawCircle(finishPosition, FINISH_RADIUS, new Color(1, 0, 0, 1),
+				1);
+	}
+
+	@Override
+	public void DrawMaxTouchableArea() {
+		if (!this.gearShifter.isDragged()) {
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
+					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+			Debug.drawCircle(this.gearShifter.getPosition(), maxDistance,
+					new Color(1, 1, 0, 1), 1);
+		}
 	}
 }

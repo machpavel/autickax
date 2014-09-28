@@ -5,7 +5,6 @@ import java.util.LinkedList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,7 +13,6 @@ import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.entities.Finish;
 import cz.cuni.mff.xcars.entities.Start;
-import cz.cuni.mff.xcars.input.Input;
 import cz.cuni.mff.xcars.pathway.Pathway;
 import cz.cuni.mff.xcars.pathway.Pathway.PathwayType;
 import cz.cuni.mff.xcars.pathway.Splines;
@@ -30,13 +28,11 @@ public class WayPoints extends Actor {
 	private Finish finish;
 	private Start start;
 	private Pathway pathway;
-	private ShapeRenderer renderer;
 	private final float MAX_WIDTH;
 	private final float MAX_HEIGHT;
 
 	public WayPoints(Finish finish, Start start, Pathway pathway, float width,
 			float height) {
-		this.renderer = new ShapeRenderer();
 		this.wayPoints = new LinkedList<Vector2>();
 		this.finish = finish;
 		this.start = start;
@@ -135,19 +131,18 @@ public class WayPoints extends Actor {
 	}
 
 	@SuppressWarnings("unused")
+	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		if (Debug.DEBUG && Debug.drawWayPoints) {
 			batch.end();
 
-			this.renderer.begin(ShapeType.Line);
-			this.renderer.setColor(Color.BLACK);
+			Debug.shapeRenderer.begin(ShapeType.Line);
+			Debug.shapeRenderer.setColor(Color.BLACK);
 			for (Vector2 way : this.wayPoints) {
-				this.renderer.circle(way.x * Input.xStretchFactorInv, way.y
-						* Input.yStretchFactorInv,
-						Constants.misc.MAX_DISTANCE_FROM_PATHWAY
-								* Input.xStretchFactorInv);
+				Debug.shapeRenderer.circle(way.x, way.y,
+						Constants.misc.MAX_DISTANCE_FROM_PATHWAY);
 			}
-			renderer.end();
+			Debug.shapeRenderer.end();
 			batch.begin();
 		}
 	}

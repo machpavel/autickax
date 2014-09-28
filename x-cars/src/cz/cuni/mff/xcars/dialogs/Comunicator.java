@@ -19,7 +19,7 @@ import cz.cuni.mff.xcars.scene.ScreenInputListener;
 
 public abstract class Comunicator extends SubLevel {
 	protected ShapeRendererStretched shapeRenderer = new ShapeRendererStretched();
-	protected final Color backgroundColor = Constants.dialog.DIALOG_BACKGROUND_COLOR; 
+	protected final Color backgroundColor = Constants.dialog.DIALOG_BACKGROUND_COLOR;
 	protected NinePatchDrawable backgroundTexture;
 	protected DialogAbstractStatus status;
 	protected SubLevel parent;
@@ -29,8 +29,9 @@ public abstract class Comunicator extends SubLevel {
 
 		this.parent = sublevel;
 		this.status = DialogAbstractStatus.IN_PROGRESS;
-		this.stage = new Stage(new ScalingViewport(Scaling.stretch, Constants.WORLD_WIDTH,
-				Constants.WORLD_HEIGHT), this.level.getBatch());
+		this.stage = new Stage(new ScalingViewport(Scaling.stretch,
+				Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT),
+				this.level.getBatch());
 		this.stage.addListener(new ScreenInputListener(this.level));
 		takeFocus();
 	}
@@ -48,14 +49,23 @@ public abstract class Comunicator extends SubLevel {
 		shapeRenderer.rect(0, 0, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 		shapeRenderer.end();
 		Gdx.gl.glDisable(GL20.GL_BLEND);
-		
+
 		batch.begin();
-		this.backgroundTexture.draw(batch, Constants.dialog.DIALOG_WORLD_X_OFFSET, Constants.dialog.DIALOG_WORLD_Y_OFFSET, Constants.dialog.DIALOG_WORLD_WIDTH, Constants.dialog.DIALOG_WORLD_HEIGHT);
+		this.backgroundTexture.draw(batch,
+				Constants.dialog.DIALOG_WORLD_X_OFFSET,
+				Constants.dialog.DIALOG_WORLD_Y_OFFSET,
+				Constants.dialog.DIALOG_WORLD_WIDTH,
+				Constants.dialog.DIALOG_WORLD_HEIGHT);
 		batch.end();
 		stage.draw();
-		
-		if (Debug.DEBUG){
-			DrawDiagnostics();
+
+		if (Debug.DEBUG) {
+			if (Debug.drawCommunicatorDiagnostics) {
+				DrawDiagnostics();
+			}
+			if (Debug.drawMaxTouchableArea){
+				DrawMaxTouchableArea();
+			}
 		}
 	};
 
@@ -75,8 +85,11 @@ public abstract class Comunicator extends SubLevel {
 	public enum DialogAbstractStatus {
 		IN_PROGRESS, FINISHED
 	}
-	
-	
-	public void DrawDiagnostics(){
+
+	// start DEBUG methods
+	public void DrawDiagnostics() {
 	}
+	public void DrawMaxTouchableArea() {
+	}
+	// end of DEBUG methods
 }

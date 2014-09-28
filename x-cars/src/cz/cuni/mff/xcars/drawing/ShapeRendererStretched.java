@@ -22,4 +22,18 @@ public class ShapeRendererStretched extends ShapeRenderer {
 				* (Input.xStretchFactorInv + Input.yStretchFactorInv) / 2);
 	}
 
+	@Override
+	public void rect(float x, float y, float width, float height) {
+		super.rect(x * Input.xStretchFactorInv, y * Input.yStretchFactorInv,
+				width * Input.xStretchFactorInv, height
+						* Input.yStretchFactorInv);
+	}
+
+	@Override
+	public void circle(float x, float y, float radius) {
+		super.circle(x * Input.xStretchFactorInv, y * Input.yStretchFactorInv,
+				radius * (Input.xStretchFactorInv + Input.yStretchFactorInv)
+						/ 2);
+	}
+
 }
