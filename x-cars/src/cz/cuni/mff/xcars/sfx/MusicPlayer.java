@@ -14,6 +14,7 @@ public class MusicPlayer implements OnCompletionListener{
 	private Music currentTrack;
 	private int currentTrackIndex;
 	private Random rnd;
+	private boolean anySongs;
 	
 	public MusicPlayer(ArrayList<Music> tracks)
 	{
@@ -24,6 +25,10 @@ public class MusicPlayer implements OnCompletionListener{
 			music.setVolume(Constants.sounds.MUSIC_DEFAULT_VOLUME);
 			music.setLooping(false);
 		}
+		anySongs = tracks.size() > 0;
+		if (!anySongs)
+			return;
+		
 		this.rnd = new Random();
 		this.currentTrackIndex = rnd.nextInt(tracks.size());
 		this.currentTrack = tracks.get(getNextIndex());
@@ -49,19 +54,22 @@ public class MusicPlayer implements OnCompletionListener{
 	/**	Starts playing currently assigned music */
 	public void play()
 	{
-		this.currentTrack.play();
+		if (currentTrack != null)
+			this.currentTrack.play();
 	}
 	
 	/** Pauses currently played music */
 	public void pause()
 	{
-		this.currentTrack.pause();
+		if (currentTrack != null)
+			this.currentTrack.pause();
 	}
 	
 	/** Stops currently played music */
 	public void stop()
 	{
-		this.currentTrack.stop();
+		if (currentTrack != null)
+			this.currentTrack.stop();
 	}
 
 	/**
