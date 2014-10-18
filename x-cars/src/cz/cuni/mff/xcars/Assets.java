@@ -1,9 +1,15 @@
 package cz.cuni.mff.xcars;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
@@ -17,6 +23,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 
 import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.serialization.AvailableLevelsLoader;
@@ -87,8 +94,7 @@ public class Assets {
 			if (name == "noTexture")
 				throw new RuntimeException("Graphic " + name
 						+ " not found it atlas");
-			else
-			{
+			else {
 				Debug.Log("Graphic \"" + name + "\" not found.");
 				return getNinePatch("noTexture");
 			}
@@ -112,8 +118,7 @@ public class Assets {
 			if (name == "noTexture")
 				throw new RuntimeException("Graphic " + name
 						+ " not found it atlas");
-			else
-			{
+			else {
 				Debug.Log("Graphic \"" + name + "\" not found.");
 				return getAnyGraphic("noTexture", atlas, cacheMap);
 			}
@@ -237,13 +242,17 @@ public class Assets {
 			prefix = "./bin/";
 		}
 		ArrayList<Music> music = new ArrayList<Music>();
-
-		dirHandle = Gdx.files.internal(prefix + path);
-		LinkedList<FileHandle> handles = new LinkedList<FileHandle>();
-		getHandles(dirHandle, handles);
+		JarAssetsLoader jarLoader = new JarAssetsLoader();
+		LinkedList<FileHandle> handles = jarLoader.LoadFromJar(path);
+		if (handles.isEmpty()) //run from IDE
+		{
+			dirHandle = Gdx.files.internal(prefix + path);
+			getHandles(dirHandle, handles);
+		}
 		for (FileHandle handle : handles) {
 			music.add(Gdx.audio.newMusic(handle));
 		}
+
 		return music;
 	}
 
@@ -255,14 +264,21 @@ public class Assets {
 		} else {
 			prefix = "./bin/";
 		}
-		dirHandle = Gdx.files.internal(prefix + SOUNDS_DIR);
-		LinkedList<FileHandle> handles = new LinkedList<FileHandle>();
-		getHandles(dirHandle, handles);
+		String path = SOUNDS_DIR;
+		JarAssetsLoader jarLoader = new JarAssetsLoader();
+		LinkedList<FileHandle> handles = jarLoader.LoadFromJar(path);
+		if (handles.isEmpty())
+		{
+			dirHandle = Gdx.files.internal(prefix + path);
+			getHandles(dirHandle, handles);
+		}
+		else
+			prefix = "";
 		Map<String, Sound> soundsMap = new HashMap<String, Sound>();
 		for (FileHandle fileHandle : handles) {
 			String name = fileHandle.path();
 			name = name.substring(prefix.length());
-			soundsMap.put(name, Gdx.audio.newSound(Gdx.files.internal(name)));
+			soundsMap.put(name, Gdx.audio.newSound(fileHandle));
 		}
 
 		soundAndMusicManager.assignSounds(soundsMap);
