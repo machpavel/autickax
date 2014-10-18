@@ -11,9 +11,11 @@ public class GameStatistics {
 	private float phase1ElapsedTime = 0;
 	private float phase2ElapsedTime = 0;
 	private Difficulty difficulty = null;
+	private int levelIndex = 0;
 	
-	GameStatistics(Difficulty difficulty, float phase1TimeLimit){
+	GameStatistics(Difficulty difficulty, float phase1TimeLimit, int levelIndex){
 		this.difficulty = difficulty;
+		this.levelIndex = levelIndex;
 		this.phase1TimeLimit = phase1TimeLimit;
 	}
 	
@@ -96,6 +98,10 @@ public class GameStatistics {
 
 	public float getPhase1TimeLimit() {
 		return phase1TimeLimit;
+	}
+	
+	public int getLevelIndex(){
+		return this.levelIndex;
 	}
 
 	public float getPhase1ElapsedTime() {

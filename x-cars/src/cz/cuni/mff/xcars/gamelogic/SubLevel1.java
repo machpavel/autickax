@@ -45,7 +45,7 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 		super(gameScreen);
 		pathway = gameScreen.getPathWay();
 
-		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit);
+		this.stats = new GameStatistics(gameScreen.getDifficulty(), tLimit, gameScreen.getLevelIndex());
 		checkPoints = new LinkedList<CheckPoint>();
 		state = SubLevel1States.BEGINNING_STATE;
 

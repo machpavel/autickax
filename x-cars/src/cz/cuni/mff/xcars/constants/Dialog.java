@@ -43,14 +43,19 @@ public final class Dialog {
 	public final float DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_X = 200;
 	public final float DECISION_DIALOG_BUTTON_GO_TO_MAIN_MENU_POSITION_Y = 110;
 
-	public final float COMPLETE_DIALOG_MESSAGE_POSITION_X = 360;
+	public final float COMPLETE_DIALOG_MESSAGE_POSITION_X = 280;
 	public final float COMPLETE_DIALOG_MESSAGE_POSITION_Y = 230;
-	public final float COMPLETE_DIALOG_MESSAGE_WIDTH = 450;
-	public final float COMPLETE_DIALOG_MESSAGE_HEIGHT = 250;
-	public final String COMPLETE_DIALOG_STAR_FILLED_TEXTURE = "dialog/endOfLevelFullStar";
-	public final String COMPLETE_DIALOG_STAR_EMPTY_TEXTURE = "dialog/endOfLevelEmptyStar";
-	public final int COMPLETE_DIALOG_STAR_POSITION_X = 600;
-	public final int COMPLETE_DIALOG_STAR_POSITION_Y = 155;
+	public final float COMPLETE_DIALOG_MESSAGE_WIDTH = 300;
+	public final float COMPLETE_DIALOG_MESSAGE_HEIGHT = 200;
+	public final String COMPLETE_DIALOG_STAR_FILLED_TEXTURE = "dialog/CompleteLevelDialog/endOfLevelFullStar";
+	public final String COMPLETE_DIALOG_STAR_EMPTY_TEXTURE = "dialog/CompleteLevelDialog/endOfLevelEmptyStar";
+	public final String COMPLETE_DIALOG_CAR_RESULT_TEXTURE_PREFIX = "dialog/CompleteLevelDialog/carResult";
+	public final int COMPLETE_DIALOG_CAR_RESULT_TRESHOLDS[] = {1,2,3};
+	public final int COMPLETE_DIALOG_CAR_RESULT_COUNT = 4;
+	public final int COMPLETE_DIALOG_STAR_POSITION_X = 450;
+	public final int COMPLETE_DIALOG_STAR_POSITION_Y = 170;
+	public final int COMPLETE_DIALOG_CAR_POSITION_X = 550;
+	public final int COMPLETE_DIALOG_CAR_POSITION_Y = 300;
 
 	public final int PAUSE_DIALOG_TOOLTIPS_POSITION_X = 100;
 	public final int PAUSE_DIALOG_TOOLTIPS_POSITION_Y = 290;
