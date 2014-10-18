@@ -258,6 +258,8 @@ public class GameScreen extends BaseScreen {
 			lastTime = time;
 		}
 		
+		
+		// Touchable area for car
 		if(Debug.DEBUG && Debug.drawMaxTouchableArea){
 			if(this.currentPhase != null && this.currentPhase instanceof SubLevel1){
 				SubLevel1 sl1 = (SubLevel1)this.currentPhase;
