@@ -10,7 +10,7 @@
             </manifest>
             <fileset dir="../x-carsEditor-desktop/bin"/>
             <fileset dir="../x-cars/bin"/>
-            <fileset dir="../x-cars-desktop"/>
+            <fileset dir="../x-cars-desktop/bin/images"/>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars/libs/gdx.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-backend-lwjgl.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
