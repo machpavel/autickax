@@ -9,14 +9,14 @@ public final class GameObjects {
 	public final float CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION = 30;
 	public final int CAR_TYPES_COUNT = 1;
 	public final String CAR_NAME = "car";
-	public final String CAR_TYPE_1_POSITION_0_TEXTURE_NAME = "cars/car0";
-	public final String CAR_TYPE_1_POSITION_1_TEXTURE_NAME = "cars/car1";
-	public final String CAR_TYPE_1_POSITION_2_TEXTURE_NAME = "cars/car2";
-	public final String CAR_TYPE_1_POSITION_3_TEXTURE_NAME = "cars/car3";
-	public final String CAR_TYPE_1_POSITION_4_TEXTURE_NAME = "cars/car4";
-	public final String CAR_TYPE_1_POSITION_5_TEXTURE_NAME = "cars/car5";
-	public final String CAR_TYPE_1_POSITION_6_TEXTURE_NAME = "cars/car6";
-	public final String CAR_TYPE_1_POSITION_7_TEXTURE_NAME = "cars/car7";
+	public final String CAR_TYPE_1_POSITION_0_TEXTURE_NAME = "cars/car";
+	public final String CAR_TYPE_1_POSITION_1_TEXTURE_NAME = "cars/car";
+	public final String CAR_TYPE_1_POSITION_2_TEXTURE_NAME = "cars/car";
+	public final String CAR_TYPE_1_POSITION_3_TEXTURE_NAME = "cars/car";
+	public final String CAR_TYPE_1_POSITION_4_TEXTURE_NAME = "cars/car";
+	public final String CAR_TYPE_1_POSITION_5_TEXTURE_NAME = "cars/car";
+	public final String CAR_TYPE_1_POSITION_6_TEXTURE_NAME = "cars/car";
+	public final String CAR_TYPE_1_POSITION_7_TEXTURE_NAME = "cars/car";
 
 	public final String GAME_OBJECTS_TEXTURE_PREFIX = "gameObjects/";
 	public final int FINISH_TYPES_COUNT = 2;
@@ -38,7 +38,7 @@ public final class GameObjects {
 	public final int FENCE_TYPES_COUNT = 2;
 	public final String FENCE_NAME = "fence";
 
-	public final int HOUSE_TYPES_COUNT = 1;
+	public final int HOUSE_TYPES_COUNT = 8;
 	public final String HOUSE_NAME = "house";
 
 	public final int PARKING_CAR_TYPES_COUNT = 4;
