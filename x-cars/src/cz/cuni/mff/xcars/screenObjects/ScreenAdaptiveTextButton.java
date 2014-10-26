@@ -15,7 +15,7 @@ public abstract class ScreenAdaptiveTextButton extends TextButton {
 	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover,
 			TextureRegion disabled, BitmapFont font, boolean hasListener) {
 		super(text, new ScreenAdaptiveButtonStyle(image, imageHover, disabled, font));
-
+		
 		this.text = text;
 
 		if (hasListener) {

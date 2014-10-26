@@ -23,9 +23,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.utils.Array;
 
 import cz.cuni.mff.xcars.debug.Debug;
+import cz.cuni.mff.xcars.input.Input;
 import cz.cuni.mff.xcars.serialization.AvailableLevelsLoader;
 import cz.cuni.mff.xcars.sfx.SoundAndMusicManager;
 
@@ -34,12 +37,15 @@ public class Assets {
 	private static final String GRAPHICS_DIR = "images/";
 	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "images.atlas";
 	private static final String LOADING_SCREEN_GRAPHICS_FILE = "loadingScreen/images.atlas";
-	private static final String MENU_FONT_FILE = "fonts/menu.fnt";
-	private static final String DIALOG_FONT_FILE = "fonts/dialog.fnt";
-	private static final String FINISH_DIALOG_FONT_FILE = "fonts/finishDialog.fnt";
-	private static final String TIME_STRINGS_FONT = "fonts/timeString.fnt";
-	private static final String TIME_INT_FONT = "fonts/timeInt.fnt";
-	private static final String LEVEL_NUMBER_FONT = "fonts/levels.fnt";
+	private static final String FONTS_DIRECTORY = "fonts/";
+	private static final String MENU_FONT_FILE = FONTS_DIRECTORY + "menu.fnt";
+	private static final String DIALOG_FONT_FILE = FONTS_DIRECTORY + "dialog.fnt";
+	private static final String FINISH_DIALOG_FONT_FILE = FONTS_DIRECTORY + "finishDialog.fnt";
+	private static final String TIME_STRINGS_FONT = FONTS_DIRECTORY + "timeString.fnt";
+	private static final String TIME_INT_FONT = FONTS_DIRECTORY + "timeInt.fnt";
+	private static final String LEVEL_NUMBER_FONT = FONTS_DIRECTORY + "levels.fnt";
+	private static final String LIGHT_FONT = FONTS_DIRECTORY + "xcars-Light.ttf";
+	private static final String BOLD_FONT = FONTS_DIRECTORY + "xcars-Bold.ttf";
 	private static final String AVAILABLE_LEVELS_FILE = "availableLevels.bin";
 	private static final String SOUNDS_DIR = "sfx/sounds/";
 	private static final String MUSIC_MENU_DIR = "sfx/music/menu";
@@ -178,13 +184,41 @@ public class Assets {
 		assetManager.load(GRAPHICS_FILE, TextureAtlas.class);
 	}
 
-	private void loadFonts() {
-		assetManager.load(MENU_FONT_FILE, BitmapFont.class);
-		assetManager.load(DIALOG_FONT_FILE, BitmapFont.class);
-		assetManager.load(FINISH_DIALOG_FONT_FILE, BitmapFont.class);
-		assetManager.load(TIME_INT_FONT, BitmapFont.class);
-		assetManager.load(TIME_STRINGS_FONT, BitmapFont.class);
-		assetManager.load(LEVEL_NUMBER_FONT, BitmapFont.class);
+	private void loadFonts() {		
+		FileHandle lightFontHandle = Gdx.files.internal(Assets.LIGHT_FONT);
+		FreeTypeFontGenerator lightFontGenerator = new FreeTypeFontGenerator(lightFontHandle);
+		
+		FileHandle boldFontHandle = Gdx.files.internal(Assets.BOLD_FONT);
+		FreeTypeFontGenerator boldFontGenerator = new FreeTypeFontGenerator(boldFontHandle);
+		
+		FreeTypeFontParameter lightFontParameter = new FreeTypeFontParameter();
+		lightFontParameter.size = (int) (30 * Input.xStretchFactorInv);
+		
+		this.timeIntFont = lightFontGenerator.generateFont(lightFontParameter);
+		this.timeIntFont.setScale(Input.xStretchFactor);
+		
+
+		FreeTypeFontParameter boldFontParameter = new FreeTypeFontParameter();
+		boldFontParameter.size = (int) (30 * Input.xStretchFactorInv);
+		
+		this.dialogFont = lightFontGenerator.generateFont(boldFontParameter);
+		this.dialogFont.setScale(Input.xStretchFactor);
+		
+		this.menuFont = lightFontGenerator.generateFont(boldFontParameter);
+		this.menuFont.setScale(Input.xStretchFactor);
+		
+		this.levelNumberFont = boldFontGenerator.generateFont(boldFontParameter);
+		this.levelNumberFont.setScale(Input.xStretchFactor);
+		
+		this.timeStringFont = lightFontGenerator.generateFont(boldFontParameter);
+		this.timeStringFont.setScale(Input.xStretchFactor);
+		
+		this.finishDialogFont = lightFontGenerator.generateFont(boldFontParameter);
+		this.finishDialogFont.setScale(Input.xStretchFactor);
+		
+		
+		lightFontGenerator.dispose();
+		boldFontGenerator.dispose();
 	}
 
 	private void loadAvailableLevels() {
@@ -193,32 +227,38 @@ public class Assets {
 		assetManager.load(AVAILABLE_LEVELS_FILE, AvailableLevels.class);
 	}
 
+	private BitmapFont menuFont;
 	public BitmapFont getMenuFont() {
-		return assetManager.get(MENU_FONT_FILE, BitmapFont.class);
+		return this.menuFont;
 	}
 
+	private BitmapFont dialogFont;
 	public BitmapFont getDialogFont() {
-		return assetManager.get(DIALOG_FONT_FILE, BitmapFont.class);
+		return this.dialogFont;
 	}
 
+	private BitmapFont finishDialogFont;
 	public BitmapFont getFinishDialogFont() {
-		return assetManager.get(FINISH_DIALOG_FONT_FILE, BitmapFont.class);
+		return this.finishDialogFont;
+	}
+
+	private BitmapFont timeStringFont;
+	public BitmapFont getTimeStringFont() {
+		return this.timeStringFont;
+	}
+
+	private BitmapFont timeIntFont;
+	public BitmapFont getTimeIntFont() {
+		return this.timeIntFont;
+	}
+
+	private BitmapFont levelNumberFont;
+	public BitmapFont getLevelNumberFont() {
+		return this.levelNumberFont;
 	}
 
 	public AvailableLevels getAvailableLevels() {
 		return assetManager.get(AVAILABLE_LEVELS_FILE, AvailableLevels.class);
-	}
-
-	public BitmapFont getTimeStringFont() {
-		return assetManager.get(TIME_STRINGS_FONT, BitmapFont.class);
-	}
-
-	public BitmapFont getTimeIntFont() {
-		return assetManager.get(TIME_INT_FONT, BitmapFont.class);
-	}
-
-	public BitmapFont getLevelNumberFont() {
-		return assetManager.get(LEVEL_NUMBER_FONT, BitmapFont.class);
 	}
 
 	private void loadSfx() {
