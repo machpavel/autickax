@@ -21,7 +21,7 @@ public final class Dialog {
 
 	public final float DIALOG_MESSAGE_POSITION_X = 400;
 	public final float DIALOG_MESSAGE_POSITION_Y = 270;
-	public final float DIALOG_MESSAGE_WIDTH = 600;	
+	public final float DIALOG_MESSAGE_WIDTH = 500;	
 
 	public final String MESSAGE_DIALOG_BUTTON_OK_TEXTURE = "dialog/popOk";
 	public final String MESSAGE_DIALOG_BUTTON_OK_OVER_TEXTURE = "dialog/popOkOver";
@@ -63,5 +63,7 @@ public final class Dialog {
 	public final int PAUSE_DIALOG_SOUNDS_POSITION_Y = 315;
 	public final int PAUSE_DIALOG_MUSIC_POSITION_X = 550;
 	public final int PAUSE_DIALOG_MUSIC_POSITION_Y = 315;
+	
+	public final Color DIALOG_FONT_COLOR = new Color(0f, 0f, 0f, 0.8f);
 
 }

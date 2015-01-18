@@ -77,7 +77,10 @@ public class CompleteLevelDialog extends DecisionDialog {
 	float offset = 80;
 
 	private void createLabels() {
-		ScreenAdaptiveLabel[][] labels = new ScreenAdaptiveLabel[5][2];
+		final int LABELS_ROW_COUNT = 5;
+		final int LABELS_COLUMN_COUNT = 2;
+		
+		ScreenAdaptiveLabel[][] labels = new ScreenAdaptiveLabel[LABELS_ROW_COUNT][LABELS_COLUMN_COUNT];
 
 		labels[0][0] = ScreenAdaptiveLabel.getCompleteLevelDialogLabel(stats
 				.getDifficulty().toString());
@@ -107,7 +110,15 @@ public class CompleteLevelDialog extends DecisionDialog {
 		scoreLabel = labels[4][1] = ScreenAdaptiveLabel
 				.getCompleteLevelDialogLabel(Integer.toString(this.score));
 
-		for (int row = 0; row < labels.length; row++) {
+		for (int row = 0; row < LABELS_ROW_COUNT; ++row) {
+			for (int column = 0; column < LABELS_COLUMN_COUNT; ++column) {
+				if (labels[row][column] != null) {
+					labels[row][column].setColor(Constants.dialog.DIALOG_FONT_COLOR);
+				}
+			}
+		}
+		
+		for (int row = 0; row < LABELS_ROW_COUNT; ++row) {
 			labels[row][0].setPosition(
 					Constants.dialog.COMPLETE_DIALOG_MESSAGE_POSITION_X
 							- Constants.dialog.COMPLETE_DIALOG_MESSAGE_WIDTH

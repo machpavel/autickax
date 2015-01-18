@@ -21,6 +21,7 @@ public abstract class Dialog extends Comunicator {
 
 		this.messageLabel.setWrap(true);
 		this.messageLabel.setAlignment(0, 0);
+		this.messageLabel.setColor(Constants.dialog.DIALOG_FONT_COLOR);
 
 		Table table = new Table();
 		table.setPosition(Constants.dialog.DIALOG_MESSAGE_POSITION_X,

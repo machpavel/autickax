@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -18,6 +17,7 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -198,11 +198,14 @@ public class Assets {
 		this.timeIntFont.setScale(Input.xStretchFactor);
 		
 
+		FreeTypeFontParameter dialogFontParameter = new FreeTypeFontParameter();
+		dialogFontParameter.size = (int) (30 * Input.xStretchFactorInv);
+		
+		this.dialogFont = lightFontGenerator.generateFont(dialogFontParameter);
+		this.dialogFont.setScale(Input.xStretchFactor);
+		
 		FreeTypeFontParameter boldFontParameter = new FreeTypeFontParameter();
 		boldFontParameter.size = (int) (30 * Input.xStretchFactorInv);
-		
-		this.dialogFont = lightFontGenerator.generateFont(boldFontParameter);
-		this.dialogFont.setScale(Input.xStretchFactor);
 		
 		this.menuFont = lightFontGenerator.generateFont(boldFontParameter);
 		this.menuFont.setScale(Input.xStretchFactor);
