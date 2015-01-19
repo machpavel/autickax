@@ -14,6 +14,8 @@
 		<include name="**/icons/*.*"/>
 	    </fileset>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars/libs/gdx.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="../x-cars/libs/gdx-freetype.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-freetype-natives.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-backend-lwjgl.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-backend-lwjgl-natives.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-natives.jar"/>
