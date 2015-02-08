@@ -45,8 +45,9 @@ public final class Strings {
 	public final String PHASE_1_OUT_OF_LINE = " You went out of the pathway.";
 	public final String PHASE_1_FINISH_NOT_REACHED = "You have not reached the finish";
 	public final String PHASE_1_TIME_EXPIRED = "Time limit exceeded.";
-	public final String DIFFICULTY_FINISHED = " difficulty is finished.";
-	public final String NEW_LEVEL_UNLOCK = "New level has been unlocked.";
+	public final String SCENARIO_FINISHED = " scenario has been finished.";
+	public final String NEW_LEVEL_UNLOCKED = "New level has been unlocked.";
+	public final String NEW_SCENARIO_UNLOCKED = "New scenario has been unlocked.";
 
 	public final String PHASE_2_MINIGAME_FAILED = "You failed.";
 

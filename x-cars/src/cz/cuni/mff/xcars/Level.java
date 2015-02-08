@@ -30,6 +30,7 @@ public class Level implements java.io.Externalizable {
 	private Finish finish;
 	private float timeLimit;
 	private LevelBackground background;
+	private Difficulty difficulty;
 
 	public Pathway getPathway() {
 		return this.pathway;
@@ -123,6 +124,9 @@ public class Level implements java.io.Externalizable {
 
 		// Time limit
 		this.timeLimit = root.getFloat("timeLimit");
+		
+		Element difficulty = root.getChildByName("difficulty");
+		this.setDifficulty(Difficulty.valueOf(difficulty.getText()));
 
 		System.out.println("Loading level \"" + file.name() + "\" done.");
 	}
@@ -169,6 +173,7 @@ public class Level implements java.io.Externalizable {
 		this.start = (Start) in.readObject();
 		this.finish = (Finish) in.readObject();
 		this.timeLimit = in.readFloat();
+		this.difficulty = (Difficulty)in.readObject();
 
 		byte check = in.readByte();
 		if (check != Level.MAGIC_LEVEL_END)
@@ -189,7 +194,16 @@ public class Level implements java.io.Externalizable {
 		out.writeObject(this.start);
 		out.writeObject(this.finish);
 		out.writeFloat(this.timeLimit);
+		out.writeObject(this.difficulty);
 
 		out.writeByte(Level.MAGIC_LEVEL_END);
+	}
+
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(Difficulty difficulty) {
+		this.difficulty = difficulty;
 	}
 }

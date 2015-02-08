@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.math.Vector2;
 
+import cz.cuni.mff.xcars.Scenario;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Level;
@@ -52,6 +53,8 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 	// to main screen;
 	private boolean playNextLevel = false;
 	private GameStatistics stats;
+	
+	private Scenario scenarioToReturn;
 
 	// class supporting calculating and rendering tyre tracks on the road
 
@@ -89,6 +92,8 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 		this.level.getStage().addActor(this.tyreTracks);
 		this.tyreTracks.addPoint(this.to.position,
 				this.stats.getPhase2ElapsedTime());
+		
+		this.scenarioToReturn = this.level.getScenario();
 	}
 
 	@Override
@@ -213,7 +218,6 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 		if (checkpoints.isEmpty()) {
 			state = SubLevel2States.FINISH_STATE;
 			this.updateScore();
-			this.unlockNewLevel();
 			this.soundsManager.playSound(Constants.sounds.SOUND_SUB2_CHEER,
 					Constants.sounds.SOUND_SUB2_CHEER_VOLUME);
 			dialogStack.push(new CompleteLevelDialog(this.level, this,
@@ -250,7 +254,7 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 		if (this.playNextLevel)
 			this.playNextLevel();
 		else
-			this.level.goToMainScreen();
+			this.level.goToMainScreen(this.scenarioToReturn);
 	}
 
 	private void updateInMistakeState(float delta) {
@@ -347,15 +351,17 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 			if (this.isNextLevelAvaible())
 				this.playNextLevel = true;
 			else
-				this.dialogStack.push(new MessageDialog(this.level, this,
-						this.level.getDifficulty().toString()
-								+ Constants.strings.DIFFICULTY_FINISHED));
+				this.dialogStack.push(new MessageDialog (
+						this.level,
+						this,
+						this.level.getScenario().name + Constants.strings.SCENARIO_FINISHED)
+					);
 			break;
 		case RESTART:
 			this.level.switchToPhase(this.phase1);
 			break;
 		case GO_TO_MAIN_MENU:
-			this.level.goToMainScreen();
+			this.level.goToMainScreen(this.scenarioToReturn);
 			break;
 		default:
 			throw new IllegalCommandException(dialogLocal.getDecision()
@@ -364,16 +370,45 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 	}
 
 	private void unlockNewLevel() {
-		if (this.isNextLevelAvaible()
-				&& this.level.getLevelIndex() == this.level.getDifficulty()
-						.getPlayedLevels().size() - 1) {
-			this.level.getDifficulty().getPlayedLevels()
-					.add(new PlayedLevel(0, (byte) 0));
+		Vector<PlayedLevel> playedLevel = Xcars.playedLevels.levels.get(this.level.getScenario().name);
+		boolean levelIsLastInScenario = this.level.getLevelIndex() == playedLevel.size() - 1;
+		
+		if (this.isNextLevelAvaible() && levelIsLastInScenario) {
+			playedLevel.add(new PlayedLevel(0, (byte) 0));
+			
 			if (Xcars.settings.isShowTooltips()) {
-				this.dialogStack.push(new MessageDialog(this.level, this,
-						Constants.strings.NEW_LEVEL_UNLOCK));
+				this.dialogStack.push(new MessageDialog(this.level, this, Constants.strings.NEW_LEVEL_UNLOCKED));
 			}
+			
 			Xcars.playedLevels.storeLevels();
+		}
+		else if (levelIsLastInScenario)
+		{
+			this.unlockNewScenario();
+		}
+	}
+	
+	private void unlockNewScenario() {
+		if (Xcars.availableLevels.scenarios.size() > Xcars.playedLevels.levels.size())
+		{
+			int lastScenarioIndex = 0;
+			while (Xcars.availableLevels.scenarios.get(lastScenarioIndex).name == this.level.getScenario().name){
+				++lastScenarioIndex;
+			}		
+			
+			Scenario newScenario = Xcars.availableLevels.scenarios.get(lastScenarioIndex + 1);
+			
+			if (!Xcars.playedLevels.levels.containsKey(newScenario.name)) {
+				Vector<PlayedLevel> levelsInNewScenario = new Vector<PlayedLevel>();
+				levelsInNewScenario.add(new PlayedLevel(0, (byte)0));
+				Xcars.playedLevels.levels.put(newScenario.name, levelsInNewScenario);
+				
+				this.dialogStack.push(new MessageDialog(this.level, this, Constants.strings.NEW_SCENARIO_UNLOCKED));
+				
+				this.scenarioToReturn = newScenario;
+				
+				Xcars.playedLevels.storeLevels();
+			}
 		}
 	}
 
@@ -398,17 +433,14 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 			Xcars.levelLoadingScreen = null;
 		}
 
-		Xcars.levelLoadingScreen = new LevelLoadingScreen(
-				this.level.getLevelIndex() + 1, difficulty);
+		Xcars.levelLoadingScreen = new LevelLoadingScreen(this.level.getLevelIndex() + 1, this.level.getScenario());
 
 		Xcars.getInstance().setScreen(Xcars.levelLoadingScreen);
 	}
 
 	private boolean isNextLevelAvaible() {
-		Vector<Level> availableLevels = this.level.getDifficulty()
-				.getAvailableLevels();
-		Vector<PlayedLevel> playedLevels = this.level.getDifficulty()
-				.getPlayedLevels();
+		Vector<Level> availableLevels = this.level.getScenario().levels;
+		Vector<PlayedLevel> playedLevels = Xcars.playedLevels.levels.get(this.level.getScenario().name);
 
 		return this.level.getLevelIndex() < playedLevels.size()
 				&& this.level.getLevelIndex() < availableLevels.size() - 1;

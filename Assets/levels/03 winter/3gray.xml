@@ -1,0 +1,82 @@
+<AutickaX>
+	<pathway pathwayType="OPENED" typeOfInterpolation="CUBIC_B_SPLINE" textureType="0">
+		<controlPoints>
+			<point X="82.0" Y="435.0"/>
+			<point X="73.0" Y="397.0"/>
+			<point X="59.0" Y="340.0"/>
+			<point X="56.0" Y="273.0"/>
+			<point X="59.0" Y="216.0"/>
+			<point X="84.0" Y="147.0"/>
+			<point X="108.0" Y="96.0"/>
+			<point X="158.0" Y="59.0"/>
+			<point X="224.0" Y="45.0"/>
+			<point X="291.0" Y="61.0"/>
+			<point X="297.0" Y="95.0"/>
+			<point X="251.0" Y="125.0"/>
+			<point X="210.0" Y="152.0"/>
+			<point X="184.0" Y="183.0"/>
+			<point X="178.0" Y="232.0"/>
+			<point X="231.0" Y="260.0"/>
+			<point X="278.0" Y="226.0"/>
+			<point X="313.0" Y="182.0"/>
+			<point X="378.0" Y="167.0"/>
+			<point X="424.0" Y="202.0"/>
+			<point X="421.0" Y="260.0"/>
+			<point X="389.0" Y="295.0"/>
+			<point X="298.0" Y="321.0"/>
+			<point X="235.0" Y="321.0"/>
+			<point X="179.0" Y="314.0"/>
+			<point X="168.0" Y="356.0"/>
+			<point X="209.0" Y="396.0"/>
+			<point X="315.0" Y="396.0"/>
+			<point X="408.0" Y="371.0"/>
+			<point X="493.0" Y="344.0"/>
+			<point X="602.0" Y="324.0"/>
+			<point X="699.0" Y="319.0"/>
+			<point X="741.0" Y="366.0"/>
+			<point X="712.0" Y="439.0"/>
+			<point X="653.0" Y="449.0"/>
+			<point X="602.0" Y="389.0"/>
+			<point X="596.0" Y="357.0"/>
+			<point X="600.0" Y="308.0"/>
+			<point X="617.0" Y="242.0"/>
+			<point X="616.0" Y="198.0"/>
+			<point X="581.0" Y="158.0"/>
+			<point X="506.0" Y="164.0"/>
+			<point X="492.0" Y="182.0"/>
+			<point X="490.0" Y="224.0"/>
+			<point X="567.0" Y="255.0"/>
+			<point X="642.0" Y="255.0"/>
+			<point X="705.0" Y="217.0"/>
+			<point X="715.0" Y="169.0"/>
+			<point X="715.0" Y="135.0"/>
+			<point X="699.0" Y="97.0"/>
+			<point X="610.0" Y="71.0"/>
+			<point X="511.0" Y="61.0"/>
+			<point X="450.0" Y="76.0"/>
+			<point X="439.0" Y="83.0"/>
+			<point X="394.0" Y="118.0"/>
+		</controlPoints>
+	</pathway>
+	<entities>
+		<parkingCar X="566.0" Y="293.0" type="1"/>
+		<parkingCar X="643.0" Y="376.0" type="4"/>
+		<parkingCar X="660.0" Y="203.0" type="2"/>
+		<parkingCar X="103.0" Y="202.0" type="3"/>
+		<stone X="368.0" Y="172.0" type="2"/>
+		<stone X="418.0" Y="223.0" type="4"/>
+		<stone X="308.0" Y="304.0" type="4"/>
+		<stone X="207.0" Y="331.0" type="6"/>
+		<tree X="282.0" Y="417.0" type="15"/>
+		<fence X="532.0" Y="90.0" type="1"/>
+		<tree X="604.0" Y="45.0" type="14"/>
+		<tree X="163.0" Y="96.0" type="15"/>
+		<mud X="225.0" Y="68.0" type="3"/>
+	</entities>
+	<car X="0.0" Y="0.0" type="1"/>
+	<start X="72.16667" Y="393.83334" type="4"/>
+	<finish X="433.33344" Y="87.66661" type="2"/>
+	<background><textureBackground textureName="background4" /></background>
+	<timeLimit>10.0</timeLimit>
+	<difficulty>Normal</difficulty>
+</AutickaX>

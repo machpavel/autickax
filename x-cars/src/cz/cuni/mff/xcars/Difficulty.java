@@ -1,7 +1,5 @@
 package cz.cuni.mff.xcars;
 
-import java.util.Vector;
-
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
 
@@ -38,43 +36,5 @@ public enum Difficulty {
 			throw new IllegalDifficultyException(this.toString());
 		}
 		return distSurface;
-	}
-	
-
-	public Vector<Level> getAvailableLevels() {
-		switch(this)
-		{
-		case Kiddie: 
-			return Xcars.getInstance().assets.getAvailableLevels().kiddieLevels;
-		case Beginner:
-			return Xcars.getInstance().assets.getAvailableLevels().beginnerLevels;
-		case Normal:
-			return Xcars.getInstance().assets.getAvailableLevels().normalLevels;
-		case Hard:
-			return Xcars.getInstance().assets.getAvailableLevels().hardLevels;
-		case Extreme:
-			return Xcars.getInstance().assets.getAvailableLevels().extremeLevels;
-		default:
-			throw new IllegalDifficultyException(this.toString());
-		}
-	}
-	
-
-	public Vector<PlayedLevel> getPlayedLevels() {
-		switch(this)
-		{
-		case Kiddie: 
-			return Xcars.playedLevels.kiddieLevels;
-		case Beginner:
-			return Xcars.playedLevels.beginnerLevels;
-		case Normal:
-			return Xcars.playedLevels.normalLevels;
-		case Hard:
-			return Xcars.playedLevels.hardLevels;
-		case Extreme:
-			return Xcars.playedLevels.extremeLevels;
-		default:
-			throw new IllegalDifficultyException(this.toString());
-		}
 	}
 }

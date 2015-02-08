@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import cz.cuni.mff.xcars.Scenario;
 import cz.cuni.mff.xcars.Xcars;
-import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.PlayedLevel;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.input.Input;
@@ -25,7 +25,7 @@ import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveTextButton;
 
 public class LevelSelectScreen extends BaseScreen {
 
-	private final Difficulty difficulty;
+	private final Scenario scenario;
 
 	private static final int buttonsStartXPosition = 20;
 	private static final int buttonsStartYPosition = 330;
@@ -52,25 +52,31 @@ public class LevelSelectScreen extends BaseScreen {
 	Slider slider;
 	private boolean isSliderOperating = false;
 
-	public LevelSelectScreen(final Difficulty difficulty) {
-		this(difficulty, 0);
+	public LevelSelectScreen(final Scenario levelsSet) {
+		this(0, levelsSet);
+		
 		if (Xcars.adsHandler != null) {
 			Xcars.adsHandler.showBanner(false);
 		}
 	}
 
-	public LevelSelectScreen(final Difficulty difficulty, final int levelIndex) {
-		this.difficulty = difficulty;
-		this.actualPage = levelIndex
-				/ Constants.menu.DISPLAYED_LEVELS_MAX_COUNT;
-		int numberOfButtons = this.difficulty.getAvailableLevels().size();
+	public LevelSelectScreen(final int levelIndex, Scenario levelsSet) {
+		this.scenario = levelsSet;
+		this.actualPage = levelIndex / Constants.menu.DISPLAYED_LEVELS_MAX_COUNT;
+		int numberOfButtons = levelsSet.levels.size();
 		this.buttons = new ScreenAdaptiveTextButton[numberOfButtons];
+
+		
+		Vector<PlayedLevel> playedLevels = Xcars.playedLevels.levels.containsKey(levelsSet.name) ?
+				Xcars.playedLevels.levels.get(levelsSet.name) : new Vector<PlayedLevel>();
+				
 		for (int i = 0; i < numberOfButtons; ++i) {
-			ScreenAdaptiveTextButton levelButton = createButton(i,
-					this.difficulty.getPlayedLevels());
+			ScreenAdaptiveTextButton levelButton = createButton(i, playedLevels, this.scenario);
+			 
 			stage.addActor(levelButton);
 			buttons[i] = levelButton;
 		}
+		
 		this.pagesCount = numberOfButtons / buttonsPageMaximalCount + 1;
 		setButtonsPosition(this.actualPage, 0);
 
@@ -81,15 +87,9 @@ public class LevelSelectScreen extends BaseScreen {
 
 	/**
 	 * Creates a text button with according start level handler.
-	 * 
-	 * @param levelIndex
-	 *            Number of level
-	 * @param playedLevels
-	 *            List of played levels
-	 * @return
 	 */
 	private ScreenAdaptiveTextButton createButton(final int levelIndex,
-			Vector<PlayedLevel> playedLevels) {
+			Vector<PlayedLevel> playedLevels, final Scenario levelsSet) {
 
 		String buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
 		String buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
@@ -134,8 +134,7 @@ public class LevelSelectScreen extends BaseScreen {
 						Xcars.levelLoadingScreen.dispose();
 						Xcars.levelLoadingScreen = null;
 					}
-					Xcars.levelLoadingScreen = new LevelLoadingScreen(
-							levelIndex, difficulty);
+					Xcars.levelLoadingScreen = new LevelLoadingScreen(levelIndex, levelsSet);
 					Xcars.getInstance().setScreen(Xcars.levelLoadingScreen);
 				}
 			}
@@ -256,7 +255,7 @@ public class LevelSelectScreen extends BaseScreen {
 		Xcars.getInstance().assets.soundAndMusicManager
 				.playSound(Constants.sounds.SOUND_MENU_CLOSE);
 		Xcars.difficultySelectScreen.dispose();
-		Xcars.difficultySelectScreen = new DifficultySelectScreen();
+		Xcars.difficultySelectScreen = new ScenarioSelectScreen();
 		Xcars.getInstance().setScreen(Xcars.difficultySelectScreen);
 	}
 

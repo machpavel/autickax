@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Level;
+import cz.cuni.mff.xcars.Scenario;
 import cz.cuni.mff.xcars.PlayedLevel;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
@@ -45,6 +46,7 @@ public class GameScreen extends BaseScreen {
 	private PlayedLevel playedLevel;
 	private final int levelIndex;
 	private final Difficulty levelDifficulty;
+	private final Scenario scenario;
 
 	// Entities
 	private ArrayList<GameObject> gameObjects;
@@ -61,17 +63,22 @@ public class GameScreen extends BaseScreen {
 		return pathway;
 	}
 
-	public GameScreen(int levelIndex, Difficulty difficulty) {
-		this(levelIndex, difficulty, true);
+	public GameScreen(int levelIndex, Scenario levelsSet) {
+		this(levelIndex, levelsSet, true);
 	}
 
-	public GameScreen(int levelIndex, Difficulty difficulty, boolean takeFocus) {
+	public GameScreen(int levelIndex, Scenario levelsSet, boolean takeFocus) {
 		super(takeFocus);
 
-		this.levelDifficulty = difficulty;
+		this.scenario = levelsSet;
+		this.level = scenario.levels.get(levelIndex);
+		this.levelDifficulty = this.level.getDifficulty();
 		this.levelIndex = levelIndex;
-		this.loadLevels(levelIndex, this.levelDifficulty.getAvailableLevels(),
-				this.levelDifficulty.getPlayedLevels());
+				
+		Vector<PlayedLevel> playedLevels = Xcars.playedLevels.levels.containsKey(levelsSet.name) ?
+				Xcars.playedLevels.levels.get(levelsSet.name) : new Vector<PlayedLevel>();
+		
+		this.playedLevel = playedLevels.get(levelIndex);
 
 		this.timeStatusBar = new TimeStatusBar(this.level.getTimeLimit());
 
@@ -105,8 +112,7 @@ public class GameScreen extends BaseScreen {
 	 */
 	public void initializeTextures() {
 		level.setTextures();
-		this.pathwayTexture = level.getPathway().getDistanceMap()
-				.generateTexture(this.levelDifficulty);
+		this.pathwayTexture = level.getPathway().getDistanceMap().generateTexture(this.levelDifficulty);
 		// If tooltips are turned on, texture in dialog is generated
 		this.currentPhase = new SubLevel1(this, level.getTimeLimit());
 	}
@@ -151,18 +157,6 @@ public class GameScreen extends BaseScreen {
 			this.pathway.stopInitialization();
 	}
 
-	/**
-	 * Load level information and playedLevel information. If the playedLevel
-	 * information is not preset, adds a blank one.
-	 * 
-	 * @param levelIndex
-	 */
-	private void loadLevels(int levelIndex, Vector<Level> levels,
-			Vector<PlayedLevel> playedLevels) {
-		this.level = levels.get(levelIndex);
-		this.playedLevel = playedLevels.get(levelIndex);
-	}
-
 	public Start getStart() {
 		return this.start;
 	}
@@ -173,6 +167,11 @@ public class GameScreen extends BaseScreen {
 
 	public Car getCar() {
 		return this.car;
+	}
+	
+	public Scenario getScenario()
+	{
+		return this.scenario;
 	}
 
 	public void switchToPhase(SubLevel1 phase1) {
@@ -285,16 +284,23 @@ public class GameScreen extends BaseScreen {
 	public ArrayList<GameObject> getGameObjects() {
 		return gameObjects;
 	}
-
+	
 	public void goToMainScreen() {
+		this.goToMainScreen(this.scenario);
+	}
+	
+	public void goToMainScreen(Scenario displayedScenario) {
+		this.goToMainScreen(displayedScenario, 0);
+	}
+
+	public void goToMainScreen(Scenario displayedScenario, int levelIndex) {
 		Xcars.getInstance().assets.soundAndMusicManager.playSound(
 				Constants.sounds.SOUND_MENU_CLOSE,
 				Constants.sounds.SOUND_DEFAULT_VOLUME);
 		Xcars.getInstance().assets.soundAndMusicManager.pauseRaceMusic();
 		Xcars.getInstance().assets.soundAndMusicManager.playMenuMusic();
 		Xcars.levelSelectScreen.dispose();
-		Xcars.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty,
-				levelIndex);
+		Xcars.levelSelectScreen = new LevelSelectScreen(levelIndex, displayedScenario);
 		Xcars.getInstance().setScreen(Xcars.levelSelectScreen);
 		Xcars.levelSelectScreen.takeFocus();
 

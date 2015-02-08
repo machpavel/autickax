@@ -2,9 +2,8 @@ import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 
 import cz.cuni.mff.xcars.AvailableLevels;
-import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Level;
-import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
+import cz.cuni.mff.xcars.Scenario;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Vector;
 
 public class AssetsProcessor {
 
@@ -86,35 +86,21 @@ public class AssetsProcessor {
 		for (File directory : directories) {
 			File[] files = directory.listFiles();
 
-			Difficulty levelDifficulty = Difficulty
-					.valueOf(directory.getName());
+			String scenarioName = directory.getName().split(" ")[1]; // the name is after space
+			
+			Scenario scenario = new Scenario();
+			scenario.name = scenarioName;
+			scenario.levels = new Vector<Level>();
 
 			for (File file : files) {
 				LevelPath levelPath = new LevelPath(file);
 				levelPath.parseLevel();
 				Level level = levelPath.getLevel();
 
-				switch (levelDifficulty) {
-				case Beginner:
-					availableLevels.beginnerLevels.add(level);
-					break;
-				case Extreme:
-					availableLevels.extremeLevels.add(level);
-					break;
-				case Hard:
-					availableLevels.hardLevels.add(level);
-					break;
-				case Kiddie:
-					availableLevels.kiddieLevels.add(level);
-					break;
-				case Normal:
-					availableLevels.normalLevels.add(level);
-					break;
-				default:
-					throw new IllegalDifficultyException(
-							levelDifficulty.toString());
-				}
+				scenario.levels.add(level);
 			}
+			
+			availableLevels.scenarios.addElement(scenario);
 		}
 
 		try {

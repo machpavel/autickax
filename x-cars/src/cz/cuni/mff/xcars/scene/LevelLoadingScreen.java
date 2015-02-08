@@ -4,12 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import cz.cuni.mff.xcars.Scenario;
 import cz.cuni.mff.xcars.Xcars;
-import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.debug.Debug;
 
 public class LevelLoadingScreen extends BaseScreen {
+	private final Scenario scenario;
 
 	private final TextureRegion background;
 	private final TextureRegion grayLight;
@@ -25,14 +26,11 @@ public class LevelLoadingScreen extends BaseScreen {
 
 	// Helping variables to stop a loading
 	private final int levelIndex;
-	private final Difficulty levelDifficulty;
 	private boolean isInitializationStopped = false;
 
-	public LevelLoadingScreen(final int levelIndex,
-			final Difficulty levelDifficulty) {
-		super();
+	public LevelLoadingScreen(final int levelIndex, final Scenario scenario) {
 		this.levelIndex = levelIndex;
-		this.levelDifficulty = levelDifficulty;
+		this.scenario = scenario;
 
 		if (Xcars.adsHandler != null) {
 			Xcars.adsHandler.showBanner(true);
@@ -44,7 +42,7 @@ public class LevelLoadingScreen extends BaseScreen {
 			Xcars.gameScreen = null;
 		}
 
-		Xcars.gameScreen = new GameScreen(levelIndex, levelDifficulty, false);
+		Xcars.gameScreen = new GameScreen(this.levelIndex, this.scenario);
 
 		Thread distanceMapLoader = new Thread(new Runnable() {
 			@Override
@@ -140,8 +138,7 @@ public class LevelLoadingScreen extends BaseScreen {
 		Xcars.getInstance().assets.soundAndMusicManager.stopRaceMusic();
 		Xcars.getInstance().assets.soundAndMusicManager.playMenuMusic();
 		Xcars.levelSelectScreen.dispose();
-		Xcars.levelSelectScreen = new LevelSelectScreen(this.levelDifficulty,
-				levelIndex);
+		Xcars.levelSelectScreen = new LevelSelectScreen(this.levelIndex, this.scenario);
 		Xcars.getInstance().setScreen(Xcars.levelSelectScreen);
 		Xcars.levelSelectScreen.takeFocus();
 	}

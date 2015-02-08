@@ -1,5 +1,8 @@
 package cz.cuni.mff.xcars;
 
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
@@ -8,11 +11,7 @@ import com.badlogic.gdx.Preferences;
 import cz.cuni.mff.xcars.constants.Constants;
 
 public class PlayedLevels {
-	public Vector<PlayedLevel> kiddieLevels = new Vector<PlayedLevel>();
-	public Vector<PlayedLevel> beginnerLevels = new Vector<PlayedLevel>();
-	public Vector<PlayedLevel> normalLevels = new Vector<PlayedLevel>();
-	public Vector<PlayedLevel> hardLevels = new Vector<PlayedLevel>();
-	public Vector<PlayedLevel> extremeLevels = new Vector<PlayedLevel>();
+	public TreeMap<String, Vector<PlayedLevel>> levels = new TreeMap<String, Vector<PlayedLevel>>();
 	
 	/**
 	 * Stores information about played levels in a file, so that can be read again.
@@ -29,14 +28,40 @@ public class PlayedLevels {
 	public void storeLevels() {
 		Preferences prefs = Gdx.app.getPreferences(Constants.serialization.PLAYED_LEVELS_FILENAME);
 		
-		putLevels(prefs, this.kiddieLevels, Constants.serialization.PLAYED_LEVELS_KIDDIE_NAME);
-		putLevels(prefs, this.beginnerLevels, Constants.serialization.PLAYED_LEVELS_BEGINNER_NAME);
-		putLevels(prefs, this.normalLevels, Constants.serialization.PLAYED_LEVELS_NORMAL_NAME);
-		putLevels(prefs, this.hardLevels, Constants.serialization.PLAYED_LEVELS_HARD_NAME);
-		putLevels(prefs, this.extremeLevels, Constants.serialization.PLAYED_LEVELS_EXTREME_NAME);
+		for(Entry<String, Vector<PlayedLevel>> levelsSets : this.levels.entrySet()) {
+		    String name = levelsSets.getKey();
+		    Vector<PlayedLevel> levels = levelsSets.getValue();
+
+		    putLevels(prefs, levels, name);
+		}
 		
 		prefs.flush();
 	}
+	
+	public void loadLevels() {
+		Preferences prefs = Gdx.app.getPreferences(Constants.serialization.PLAYED_LEVELS_FILENAME);
+		
+	 	@SuppressWarnings("unchecked")
+		Map<String, String> loadedLevelsSets = (Map<String, String>) prefs.get();
+	 	
+	 	if (loadedLevelsSets.size() > 0) {
+		 	for(Entry<String, String> levelsSets : loadedLevelsSets.entrySet()) {
+		 		Vector<PlayedLevel> newLevels = new Vector<PlayedLevel>();
+		 		this.levels.put(levelsSets.getKey(), newLevels);
+	
+			    loadLevels(newLevels, levelsSets.getValue());
+		 	}
+	 	}
+	 	else
+	 	{
+	 		String firstScenarioName = Xcars.availableLevels.scenarios.get(0).name;
+	 		Vector<PlayedLevel> firstScenarioPlayedLevels = new Vector<PlayedLevel>();
+	 		firstScenarioPlayedLevels.add(new PlayedLevel(0, (byte)0));
+	 		this.levels.put(firstScenarioName, firstScenarioPlayedLevels);
+	 	}
+	}
+	
+	
 
 	private void putLevels(Preferences prefs, Vector<PlayedLevel> levels, String levelsName) {
 		if (levels != null && levels.size() > 0) {
@@ -47,32 +72,17 @@ public class PlayedLevels {
 			prefs.putString(levelsName, levelsString);
 		}
 	}
-	
-	public void loadLevels() {
-		Preferences prefs = Gdx.app.getPreferences(Constants.serialization.PLAYED_LEVELS_FILENAME);
-		
-		loadLevels(prefs, this.kiddieLevels, Constants.serialization.PLAYED_LEVELS_KIDDIE_NAME);
-		loadLevels(prefs, this.beginnerLevels, Constants.serialization.PLAYED_LEVELS_BEGINNER_NAME);
-		loadLevels(prefs, this.normalLevels, Constants.serialization.PLAYED_LEVELS_NORMAL_NAME);
-		loadLevels(prefs, this.hardLevels, Constants.serialization.PLAYED_LEVELS_HARD_NAME);
-		loadLevels(prefs, this.extremeLevels, Constants.serialization.PLAYED_LEVELS_EXTREME_NAME);
-	}
 
-	private void loadLevels(Preferences prefs, Vector<PlayedLevel> levels, String levelsName) {
-		if (prefs.contains(levelsName)) {
-			String encodedLevelsString = prefs.getString(levelsName);
-			String[] encodedLevels = encodedLevelsString.split("\\|");
+	private void loadLevels(Vector<PlayedLevel> levels, String encodedLevelsString) {
+		String[] encodedLevels = encodedLevelsString.split("\\|");
+		
+		for (int i = 0; i < encodedLevels.length; ++i) {
+			String[] values = encodedLevels[i].split(";");
 			
-			for (int i = 0; i < encodedLevels.length; ++i) {
-				String[] values = encodedLevels[i].split(";");
-				
-				byte stars = Byte.parseByte(values[0].substring(6)); // "stars:5"
-				float score = Float.parseFloat(values[1].substring(6)); // "score:123.5"
-				
-				levels.add(new PlayedLevel(score, stars));
-			}
-		} else { // initial level must be playable
-			levels.add(new PlayedLevel(0, (byte)0));
+			byte stars = Byte.parseByte(values[0].substring(6)); // "stars:5"
+			float score = Float.parseFloat(values[1].substring(6)); // "score:123.5"
+			
+			levels.add(new PlayedLevel(score, stars));
 		}
 	}
 }

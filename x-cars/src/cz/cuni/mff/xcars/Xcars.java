@@ -6,7 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.input.Input;
-import cz.cuni.mff.xcars.scene.DifficultySelectScreen;
+import cz.cuni.mff.xcars.scene.ScenarioSelectScreen;
 import cz.cuni.mff.xcars.scene.GameScreen;
 import cz.cuni.mff.xcars.scene.LevelLoadingScreen;
 import cz.cuni.mff.xcars.scene.LevelSelectScreen;
@@ -19,12 +19,13 @@ public class Xcars extends Game {
 
 	public static LoadingScreen loadingScreen;
 	public static MainMenuScreen mainMenuScreen;
-	public static DifficultySelectScreen difficultySelectScreen;
+	public static ScenarioSelectScreen difficultySelectScreen;
 	public static LevelSelectScreen levelSelectScreen;
 	public static LevelLoadingScreen levelLoadingScreen;
 	public static GameScreen gameScreen;
 	public static Settings settings;
 	public static PlayedLevels playedLevels;
+	public static AvailableLevels availableLevels;
 	public static IAdsHandler adsHandler;
 
 	public final Assets assets;
@@ -43,9 +44,6 @@ public class Xcars extends Game {
 
 		settings = new Settings();
 		settings.loadSettings();
-
-		playedLevels = new PlayedLevels();
-		playedLevels.loadLevels();
 
 		setScreen(Xcars.loadingScreen);
 	}

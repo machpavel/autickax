@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
  import com.badlogic.gdx.scenes.scene2d.actions.Actions;*/
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+
+import cz.cuni.mff.xcars.PlayedLevels;
 //import cz.cuni.mff.xcars.menu.MenuAnimator;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
@@ -26,6 +28,11 @@ public class MainMenuScreen extends BaseScreen {
 		if(Xcars.adsHandler != null){
 			Xcars.adsHandler.showBanner(true);
 		}
+		
+		Xcars.availableLevels = Xcars.getInstance().assets.getAvailableLevels();
+
+		Xcars.playedLevels = new PlayedLevels();
+		Xcars.playedLevels.loadLevels();
 
 		this.playMenuMusic();
 
@@ -48,7 +55,7 @@ public class MainMenuScreen extends BaseScreen {
 					Xcars.difficultySelectScreen.dispose();
 					Xcars.difficultySelectScreen = null;
 				}
-				Xcars.difficultySelectScreen = new DifficultySelectScreen();
+				Xcars.difficultySelectScreen = new ScenarioSelectScreen();
 				Xcars.getInstance().setScreen(Xcars.difficultySelectScreen);
 			}
 		};

@@ -38,6 +38,8 @@ public final class Menu {
 	public final String SLIDER_MENU_LEVEL_BACKGROUND = "menu/menuSelectScreenProgressBar";
 	public final String SLIDER_MENU_LEVEL_KNOB = "menu/menuSelectScreenKnob";
 	public final String SLIDER_MENU_LEVEL_ANCHOR = "menu/menuSelectScreenPageAnchor";
+	
+	public final String SCENARIOS_FOLDER_NAME = "scenarioThemes";
 
 	public final String BUTTON_MENU_DIFFICULTY = "menu/menuDifficulty";
 	public final String BUTTON_MENU_DIFFICULTY_HOVER = "menu/menuDifficultyHover";
