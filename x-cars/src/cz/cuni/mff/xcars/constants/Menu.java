@@ -1,13 +1,36 @@
 package cz.cuni.mff.xcars.constants;
 
+import java.util.HashMap;
+
 public final class Menu {
 	//
 	// Menu textures
 	//
 
+	//Backgrounds
 	public final String MAIN_MENU_BACKGROUND = "menu/mainMenuBackground";
 	public final String DIFFICULTY_MENU_BACKGROUND = "menu/difficultyMenuBackground";
 	public final String LOADING_LEVEL_MENU_BACKGROUND = "menu/menuLoadingLevelBackground";
+	
+	private static final String CITY_LEVEL_SELECT_BACKGROUND = "menu/backgroundCity3";
+	private static final String DESERT_LEVEL_SELECT_BACKGROUND = "menu/backgroundDesert6";
+	private static final String FOREST_LEVEL_SELECT_BACKGROUND = "menu/backgroundforest1";
+	private static final String ROOM_LEVEL_SELECT_BACKGROUND = "menu/backgroundRoom3";
+	private static final String SPACE_LEVEL_SELECT_BACKGROUND = "menu/backgroundSpace4";
+	private static final String WINTER_LEVEL_SELECT_BACKGROUND = "menu/backgroundWinter4";
+	
+	public static final HashMap<String, String> SCENARIO_TO_BG_MAPPING;
+	static
+	{
+		SCENARIO_TO_BG_MAPPING = new HashMap<String, String>();
+		SCENARIO_TO_BG_MAPPING.put("city", CITY_LEVEL_SELECT_BACKGROUND);
+		SCENARIO_TO_BG_MAPPING.put("desert", DESERT_LEVEL_SELECT_BACKGROUND);
+		SCENARIO_TO_BG_MAPPING.put("forest", FOREST_LEVEL_SELECT_BACKGROUND);
+		SCENARIO_TO_BG_MAPPING.put("room", ROOM_LEVEL_SELECT_BACKGROUND);
+		SCENARIO_TO_BG_MAPPING.put("space", SPACE_LEVEL_SELECT_BACKGROUND);
+		SCENARIO_TO_BG_MAPPING.put("winter", WINTER_LEVEL_SELECT_BACKGROUND);
+	}
+	
 	public final String LOADING_LEVEL_MENU_GRAY = "menu/menuLoadingLevelGrey";
 	public final String LOADING_LEVEL_MENU_GREEN = "menu/menuLoadingLevelGreen";
 	public final String LOADING_LEVEL_MENU_RED = "menu/menuLoadingLevelRed";

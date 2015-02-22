@@ -10,6 +10,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -19,6 +20,7 @@ import cz.cuni.mff.xcars.Scenario;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.PlayedLevel;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.constants.Menu;
 import cz.cuni.mff.xcars.input.Input;
 import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveImage;
 import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveTextButton;
@@ -61,6 +63,7 @@ public class LevelSelectScreen extends BaseScreen {
 	}
 
 	public LevelSelectScreen(final int levelIndex, Scenario levelsSet) {
+		setBackground(Menu.SCENARIO_TO_BG_MAPPING.get(levelsSet.name.toLowerCase()));
 		this.scenario = levelsSet;
 		this.actualPage = levelIndex / Constants.menu.DISPLAYED_LEVELS_MAX_COUNT;
 		int numberOfButtons = levelsSet.levels.size();
@@ -83,6 +86,15 @@ public class LevelSelectScreen extends BaseScreen {
 		createAnchors(this.pagesCount);
 		this.slider = createSlider(this.pagesCount, this.actualPage);
 		this.stage.addActor(this.slider);
+	}
+	
+	private void setBackground(String backgroundPath)
+	{
+		Image background = new Image(
+				Xcars.getInstance().assets
+						.getGraphics(backgroundPath));
+		background.setSize(this.stageWidth, this.stageHeight);
+		stage.addActor(background); 
 	}
 
 	/**
