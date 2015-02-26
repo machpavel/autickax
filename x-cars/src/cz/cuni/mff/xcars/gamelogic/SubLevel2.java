@@ -350,12 +350,6 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 		case CONTINUE:
 			if (this.isNextLevelAvaible())
 				this.playNextLevel = true;
-			else
-				this.dialogStack.push(new MessageDialog (
-						this.level,
-						this,
-						this.level.getScenario().name + Constants.strings.SCENARIO_FINISHED)
-					);
 			break;
 		case RESTART:
 			this.level.switchToPhase(this.phase1);
@@ -403,7 +397,7 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 				levelsInNewScenario.add(new PlayedLevel(0, (byte)0));
 				Xcars.playedLevels.levels.put(newScenario.name, levelsInNewScenario);
 				
-				this.dialogStack.push(new MessageDialog(this.level, this, Constants.strings.NEW_SCENARIO_UNLOCKED));
+				this.dialogStack.push(new MessageDialog(this.level, this,capitalize(newScenario.name) + Constants.strings.SCENARIO_UNLOCKED));
 				
 				this.scenarioToReturn = newScenario;
 				
@@ -411,6 +405,13 @@ public class SubLevel2 extends SubLevel implements IElapsed {
 			}
 		}
 	}
+	
+	private String capitalize(String line)
+	{
+	  return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+	}
+	
+	
 
 	private void restart() {
 		this.level.switchToPhase(this.phase1);
