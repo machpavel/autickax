@@ -241,6 +241,8 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		this.background = level.getLevelBackground();
 
+		this.difficulty = level.getDifficulty();
+
 		for (GameObject universalObject : this.universalObjects) {
 			universalObject.setTexture();
 			universalObject.setPosition(universalObject.getX(),
@@ -533,8 +535,9 @@ public final class EditorScreen extends BaseScreenEditor {
 			background.toXml(xml);
 			xml.pop();
 
-			xml.element("timeLimit", getTimeLimit());
-
+			xml.element("timeLimit", getTimeLimit());			
+			xml.element("difficulty", difficulty.toString());
+			
 			xml.pop();
 			xml.close();
 

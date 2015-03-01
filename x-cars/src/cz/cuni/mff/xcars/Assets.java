@@ -31,12 +31,6 @@ public class Assets {
 	private static final String GRAPHICS_FILE = GRAPHICS_DIR + "images.atlas";
 	private static final String LOADING_SCREEN_GRAPHICS_FILE = "loadingScreen/images.atlas";
 	private static final String FONTS_DIRECTORY = "fonts/";
-	private static final String MENU_FONT_FILE = FONTS_DIRECTORY + "menu.fnt";
-	private static final String DIALOG_FONT_FILE = FONTS_DIRECTORY + "dialog.fnt";
-	private static final String FINISH_DIALOG_FONT_FILE = FONTS_DIRECTORY + "finishDialog.fnt";
-	private static final String TIME_STRINGS_FONT = FONTS_DIRECTORY + "timeString.fnt";
-	private static final String TIME_INT_FONT = FONTS_DIRECTORY + "timeInt.fnt";
-	private static final String LEVEL_NUMBER_FONT = FONTS_DIRECTORY + "levels.fnt";
 	private static final String LIGHT_FONT = FONTS_DIRECTORY + "xcars-Light.ttf";
 	private static final String BOLD_FONT = FONTS_DIRECTORY + "xcars-Bold.ttf";
 	private static final String AVAILABLE_LEVELS_FILE = "availableLevels.bin";

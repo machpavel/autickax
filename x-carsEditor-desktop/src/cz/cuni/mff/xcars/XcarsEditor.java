@@ -21,8 +21,8 @@ public class XcarsEditor extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new LoadingScreenEditor());
 		Input.InitDimensionsInEditor();
+		setScreen(new LoadingScreenEditor());
 	}
 
 	public static XcarsEditor getInstance() {
@@ -36,7 +36,7 @@ public class XcarsEditor extends Game {
 		// "../SampleGDXgame-android/assets/img/packed", "graphics");
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "AutickaX";
+		cfg.title = "XCars-Editor";
 		cfg.width = (int) (Constants.WORLD_WIDTH + EditorConstants.CONTROL_PANEL_WIDTH);
 		cfg.height = (int) Constants.WORLD_HEIGHT;
 		cfg.resizable = false;
