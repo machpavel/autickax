@@ -12,10 +12,9 @@ public abstract class ScreenAdaptiveTextButton extends TextButton {
 
 	private final String text;
 
-	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover,
-			TextureRegion disabled, BitmapFont font, boolean hasListener) {
+	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover, TextureRegion disabled,
+			BitmapFont font, boolean hasListener) {
 		super(text, new ScreenAdaptiveButtonStyle(image, imageHover, disabled, font));
-		
 		this.text = text;
 
 		if (hasListener) {
@@ -25,24 +24,24 @@ public abstract class ScreenAdaptiveTextButton extends TextButton {
 				}
 
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-					action();
+					if (x >= 0 && x < getWidth() && y >= 0 && y < getHeight()) {
+						action();
+					}
 				}
 			});
 		}
 	}
 
-	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover,
-			BitmapFont font, TextureRegion disabled) {
+	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover, BitmapFont font,
+			TextureRegion disabled) {
 		this(text, image, imageHover, disabled, font, true);
 	}
 
-	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover,
-			TextureRegion disabled) {
+	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover, TextureRegion disabled) {
 		this(text, image, imageHover, disabled, Xcars.getInstance().assets.getMenuFont(), true);
 	}
 
-	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover,
-			BitmapFont font) {
+	public ScreenAdaptiveTextButton(String text, TextureRegion image, TextureRegion imageHover, BitmapFont font) {
 		this(text, image, imageHover, null, font, true);
 	}
 
@@ -54,11 +53,10 @@ public abstract class ScreenAdaptiveTextButton extends TextButton {
 		super.setPosition(x - this.getWidth() / 2, y - this.getHeight() / 2);
 	}
 
-	@Override
-	public void setDisabled(boolean isDisabled) {
+	public void setDisabled(boolean isDisabled, boolean disableText) {
 		super.setDisabled(isDisabled);
 
-		if (isDisabled) {
+		if (disableText) {
 			this.setText("");
 		} else {
 			this.setText(this.text);

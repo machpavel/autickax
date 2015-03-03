@@ -86,6 +86,20 @@ public final class Menu {
 	public final String BUTTON_MENU_LEFT_SHIFTER_HOVER = "menu/leftShifterHover";
 	public final String BUTTON_MENU_RIGHT_SHIFTER = "menu/rightShifter";
 	public final String BUTTON_MENU_RIGHT_SHIFTER_HOVER = "menu/rightShifterHover";
+	
 	public final int DISPLAYED_LEVELS_MAX_COUNT = 15;
+	public final int DISPLAYED_SCENARIOS_MAX_COUNT = 4;
+	
+	public final float LEVEL_SELECT_SCREEN_buttonsMinXPosition = 20;
+	public final float LEVEL_SELECT_SCREEN_buttonsMinYPosition = 50;
+	public final float LEVEL_SELECT_SCREEN_buttonsMaxYPosition = 450;
+	public final int LEVEL_SELECT_SCREEN_buttonsXOffset = 60;
+	public final int LEVEL_SELECT_SCREEN_buttonsYOffset = 60;
+	
+	public final float SCENARIO_SELECT_SCREEN_buttonsMinXPosition = 20;
+	public final float SCENARIO_SELECT_SCREEN_buttonsMinYPosition = 50;
+	public final float SCENARIO_SELECT_SCREEN_buttonsMaxYPosition = 450;
+	public final int SCENARIO_SELECT_SCREEN_buttonsXOffset = 120;
+	public final int SCENARIO_SELECT_SCREEN_buttonsYOffset = 120;
 
 }

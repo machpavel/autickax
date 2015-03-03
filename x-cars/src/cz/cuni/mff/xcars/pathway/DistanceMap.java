@@ -43,8 +43,7 @@ public class DistanceMap {
 	public boolean isInitializationStopped = false;
 
 	private static final int distanceModifier = one;
-	private static final int maxDistanceFromPathway = Constants.misc.MAX_DISTANCE_FROM_PATHWAY
-			* distanceModifier;
+	private static final int maxDistanceFromPathway = Constants.misc.MAX_DISTANCE_FROM_PATHWAY * distanceModifier;
 	private static final int circleRadius = Constants.misc.PATHWAY_START_AND_FINISH_CIRCLE_RADIUS;
 
 	/**
@@ -60,8 +59,7 @@ public class DistanceMap {
 	}
 
 	public float At(Vector2 position) {
-		return (float) map[(int) position.x][(int) position.y]
-				/ distanceModifier;
+		return (float) map[(int) position.x][(int) position.y] / distanceModifier;
 	}
 
 	public DistanceMap(int height, int width) {
@@ -103,40 +101,53 @@ public class DistanceMap {
 	 * @param pathwayType
 	 * @param typeOfInterpolation
 	 */
-	public void CreateDistances(ArrayList<Vector2> controlPoints,
-			Pathway.PathwayType pathwayType,
+	public void CreateDistances(ArrayList<Vector2> controlPoints, Pathway.PathwayType pathwayType,
 			Splines.TypeOfInterpolation typeOfInterpolation) {
 		if (controlPoints.size() < 4)
 			return;
 
 		long time, lastTime;
-		lastTime = time = System.currentTimeMillis();
+		if (Debug.DEBUG)
+			if (Debug.logDistanceMap) {
+				lastTime = time = System.currentTimeMillis();
+			}
 		progress = 0;
 
 		if (!this.isInitializationStopped) {
 			clearMap();
 			progress = 5;
-			time = System.currentTimeMillis();
-			Debug.Log("Clearing map: " + Long.toString(time - lastTime));
-			lastTime = time;
+
+			if (Debug.DEBUG)
+				if (Debug.logDistanceMap) {
+					time = System.currentTimeMillis();
+					Debug.Log("Clearing map: " + Long.toString(time - lastTime));
+					lastTime = time;
+				}
+
 		}
 
 		if (!this.isInitializationStopped) {
-			initializeZeroDistances(pathwayType, controlPoints,
-					typeOfInterpolation);
+			initializeZeroDistances(pathwayType, controlPoints, typeOfInterpolation);
 			progress = 15;
-			time = System.currentTimeMillis();
-			Debug.Log("Line to zero: " + Long.toString(time - lastTime));
-			lastTime = time;
+
+			if (Debug.DEBUG)
+				if (Debug.logDistanceMap) {
+					time = System.currentTimeMillis();
+					Debug.Log("Line to zero: " + Long.toString(time - lastTime));
+					lastTime = time;
+				}
 		}
 
 		if (!this.isInitializationStopped) {
-			initializeStartAndFinish(pathwayType, controlPoints,
-					typeOfInterpolation);
-			time = System.currentTimeMillis();
-			Debug.Log("Start and finish: " + Long.toString(time - lastTime));
-			lastTime = time;
+			initializeStartAndFinish(pathwayType, controlPoints, typeOfInterpolation);
 			progress = 20;
+
+			if (Debug.DEBUG)
+				if (Debug.logDistanceMap) {
+					time = System.currentTimeMillis();
+					Debug.Log("Start and finish: " + Long.toString(time - lastTime));
+					lastTime = time;
+				}
 		}
 
 		Queue<Vector2i> nodesToSearch = new LinkedList<Vector2i>();
@@ -144,14 +155,21 @@ public class DistanceMap {
 		if (!this.isInitializationStopped) {
 			prepareNodesForBFS(nodesToSearch);
 			progress = 30;
-			time = System.currentTimeMillis();
-			Debug.Log("Preparing for BFS: " + Long.toString(time - lastTime));
-			lastTime = time;
+
+			if (Debug.DEBUG)
+				if (Debug.logDistanceMap) {
+					time = System.currentTimeMillis();
+					Debug.Log("Preparing for BFS: " + Long.toString(time - lastTime));
+					lastTime = time;
+				}
 		}
 
 		BFSCountDistances(nodesToSearch);
-		time = System.currentTimeMillis();
-		Debug.Log("BFS: " + Long.toString(time - lastTime));
+		if (Debug.DEBUG)
+			if (Debug.logDistanceMap) {
+				time = System.currentTimeMillis();
+				Debug.Log("BFS: " + Long.toString(time - lastTime));
+			}
 	}
 
 	/**
@@ -170,9 +188,7 @@ public class DistanceMap {
 		while (currentPoint != null && !this.isInitializationStopped) {
 			for (int x = -1; x <= 1; x++) {
 				for (int y = -1; y <= 1; y++) {
-					if ((x == 0 && y == 0)
-							|| !isInWorld(currentPoint.x + x, currentPoint.y
-									+ y)
+					if ((x == 0 && y == 0) || !isInWorld(currentPoint.x + x, currentPoint.y + y)
 							|| map[currentPoint.x][currentPoint.y] > maxDistanceFromPathway) {
 						continue;
 					}
@@ -183,17 +199,13 @@ public class DistanceMap {
 							// diagonal distance
 							map[currentPoint.x + x][currentPoint.y + y] = map[currentPoint.x][currentPoint.y]
 									+ sqrtOfTwo;
-							nodesToSearch.add(new Vector2i(currentPoint.x + x,
-									currentPoint.y + y));
+							nodesToSearch.add(new Vector2i(currentPoint.x + x, currentPoint.y + y));
 						}
 					} else {
 						// horizontal or vertical distance
-						if (map[currentPoint.x + x][currentPoint.y + y] > map[currentPoint.x][currentPoint.y]
-								+ one) {
-							map[currentPoint.x + x][currentPoint.y + y] = map[currentPoint.x][currentPoint.y]
-									+ one;
-							nodesToSearch.add(new Vector2i(currentPoint.x + x,
-									currentPoint.y + y));
+						if (map[currentPoint.x + x][currentPoint.y + y] > map[currentPoint.x][currentPoint.y] + one) {
+							map[currentPoint.x + x][currentPoint.y + y] = map[currentPoint.x][currentPoint.y] + one;
+							nodesToSearch.add(new Vector2i(currentPoint.x + x, currentPoint.y + y));
 						}
 					}
 				}
@@ -234,15 +246,12 @@ public class DistanceMap {
 	 * @param controlPoints
 	 * @param typeOfInterpolation
 	 */
-	private void initializeStartAndFinish(PathwayType pathwayType,
-			ArrayList<Vector2> controlPoints,
+	private void initializeStartAndFinish(PathwayType pathwayType, ArrayList<Vector2> controlPoints,
 			Splines.TypeOfInterpolation typeOfInterpolation) {
 		int CIRCLE_RADIUS_SQR = circleRadius * circleRadius;
 		int minusCircleRadius = -circleRadius;
-		Vector2 startF = Splines.GetPoint(controlPoints, 0,
-				typeOfInterpolation, pathwayType);
-		Vector2 finishF = Splines.GetPoint(controlPoints, 1,
-				typeOfInterpolation, pathwayType);
+		Vector2 startF = Splines.GetPoint(controlPoints, 0, typeOfInterpolation, pathwayType);
+		Vector2 finishF = Splines.GetPoint(controlPoints, 1, typeOfInterpolation, pathwayType);
 		Vector2i start = new Vector2i((int) startF.x, (int) startF.y);
 		Vector2i finish = new Vector2i((int) finishF.x, (int) finishF.y);
 		int xSqr, ySqr;
@@ -273,8 +282,7 @@ public class DistanceMap {
 	 * @param controlPoints
 	 * @param typeOfInterpolation
 	 */
-	private void initializeZeroDistances(PathwayType pathwayType,
-			ArrayList<Vector2> controlPoints,
+	private void initializeZeroDistances(PathwayType pathwayType, ArrayList<Vector2> controlPoints,
 			Splines.TypeOfInterpolation typeOfInterpolation) {
 		if (pathwayType == PathwayType.OPENED) {
 			// The calculation is related to how far control points are from
@@ -286,16 +294,12 @@ public class DistanceMap {
 			localUCount += controlPoints.get(1).dst(controlPoints.get(2));
 
 			for (int i = 0; i < controlPoints.size() - 3; i++) {
-				localUCount -= controlPoints.get(i).dst(
-						controlPoints.get(i + 1));
-				localUCount += controlPoints.get(i + 2).dst(
-						controlPoints.get(i + 3));
+				localUCount -= controlPoints.get(i).dst(controlPoints.get(i + 1));
+				localUCount += controlPoints.get(i + 2).dst(controlPoints.get(i + 3));
 				for (float j = 0; j < localUCount; j++) {
 					float localU = j / localUCount;
-					Vector2 point = Splines.GetPoint(controlPoints, i, localU,
-							typeOfInterpolation);
-					if (point.x >= 0 && point.y > 0 && point.x <= width
-							&& point.y <= height)
+					Vector2 point = Splines.GetPoint(controlPoints, i, localU, typeOfInterpolation);
+					if (point.x >= 0 && point.y > 0 && point.x <= width && point.y <= height)
 						this.map[(int) point.x][(int) point.y] = 0;
 				}
 				progress = 5 + (float) i / controlPoints.size() * 10;
@@ -305,16 +309,13 @@ public class DistanceMap {
 			// control
 			// points. Doesn't matter how far are from each other.
 
-			int totalLines = controlPoints.size()
-					* Constants.misc.LINE_SEGMENTATION;
+			int totalLines = controlPoints.size() * Constants.misc.LINE_SEGMENTATION;
 			Vector2 point;
 			for (float i = 0; i <= totalLines; i++) {
 				float part = i / totalLines;
-				point = Splines.GetPoint(controlPoints, part,
-						typeOfInterpolation, pathwayType);
+				point = Splines.GetPoint(controlPoints, part, typeOfInterpolation, pathwayType);
 				progress = 5 + part * 10;
-				if (point.x >= 0 && point.y > 0 && point.x <= width
-						&& point.y <= height)
+				if (point.x >= 0 && point.y > 0 && point.x <= width && point.y <= height)
 					this.map[(int) point.x][(int) point.y] = 0;
 			}
 		}
@@ -332,10 +333,8 @@ public class DistanceMap {
 
 		Pixmap pixmap = new Pixmap(1024, 512, Pixmap.Format.RGBA8888);
 		Pixmap.setBlending(Pixmap.Blending.None);
-		int maxDistanceFromSurface = difficulty.getMaxDistanceFromSurface()
-				* distanceModifier;
-		int borderBlendDistance = Constants.misc.PATHWAY_BORDER_BLEND_DISTANCE
-				* distanceModifier;
+		int maxDistanceFromSurface = difficulty.getMaxDistanceFromSurface() * distanceModifier;
+		int borderBlendDistance = Constants.misc.PATHWAY_BORDER_BLEND_DISTANCE * distanceModifier;
 
 		for (int row = 0; row < Constants.WORLD_HEIGHT; ++row) {
 			for (int column = 0; column < Constants.WORLD_WIDTH; ++column) { //
@@ -344,13 +343,9 @@ public class DistanceMap {
 				if (distance < maxDistanceFromSurface) {
 					pixmap.setColor(Constants.misc.PATHWAY_COLOR);
 					pixmap.drawPixel(column, row);
-				} else if (distance < maxDistanceFromSurface
-						+ borderBlendDistance) {
-					float alpha = 1.f
-							- ((float) distance - maxDistanceFromSurface)
-							/ borderBlendDistance;
-					Color color = new Color(Constants.misc.PATHWAY_COLOR.r,
-							Constants.misc.PATHWAY_COLOR.g,
+				} else if (distance < maxDistanceFromSurface + borderBlendDistance) {
+					float alpha = 1.f - ((float) distance - maxDistanceFromSurface) / borderBlendDistance;
+					Color color = new Color(Constants.misc.PATHWAY_COLOR.r, Constants.misc.PATHWAY_COLOR.g,
 							Constants.misc.PATHWAY_COLOR.b, alpha);
 
 					pixmap.setColor(color);
@@ -362,26 +357,28 @@ public class DistanceMap {
 		// Save pixmap to temporary file
 		FileHandle textureFile = null;
 		if (Gdx.files.isLocalStorageAvailable()) {
-			textureFile = Gdx.files
-					.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
-							+ ".cim");
-			Debug.Log("Texture of pathway was saved into local memory.");
+			textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
+			if (Debug.DEBUG)
+				if (Debug.logDistanceMap) {
+					Debug.Log("Texture of pathway was saved into local memory.");
+				}
 		} else {
-			textureFile = Gdx.files
-					.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
-							+ ".cim");
-			Debug.Log("Texture of pathway was saved into internal memory.");
+			textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
+			if (Debug.DEBUG)
+				if (Debug.logDistanceMap) {
+					Debug.Log("Texture of pathway was saved into internal memory.");
+				}
 		}
 		PixmapIO.writeCIM(textureFile, pixmap);
 
 		// Texture from pixmap
 		Texture texture = new Texture(pixmap);
 		pixmap.dispose();
-
-		Debug.Log("Texture created: "
-				+ Long.toString(System.currentTimeMillis() - timeAnchor));
-		return new TextureRegion(texture, Constants.WORLD_WIDTH,
-				Constants.WORLD_HEIGHT);
+		if (Debug.DEBUG)
+			if (Debug.logDistanceMap) {
+				Debug.Log("Texture created: " + Long.toString(System.currentTimeMillis() - timeAnchor));
+			}
+		return new TextureRegion(texture, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 	}
 
 	/*

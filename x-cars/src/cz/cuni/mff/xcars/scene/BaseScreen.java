@@ -76,7 +76,9 @@ public abstract class BaseScreen implements Screen {
 		stage.act(delta);
 		stage.draw();
 
-		renderDebug(batch, delta);
+		if (Debug.DEBUG) {
+			renderDebug(batch, delta);
+		}
 	}
 
 	protected void renderDebug(SpriteBatch batch, float delta) {

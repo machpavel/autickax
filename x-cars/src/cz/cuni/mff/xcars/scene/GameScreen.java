@@ -290,7 +290,7 @@ public class GameScreen extends BaseScreen {
 	}
 	
 	public void goToMainScreen(Scenario displayedScenario) {
-		this.goToMainScreen(displayedScenario, 0);
+		this.goToMainScreen(displayedScenario, this.levelIndex);
 	}
 
 	public void goToMainScreen(Scenario displayedScenario, int levelIndex) {

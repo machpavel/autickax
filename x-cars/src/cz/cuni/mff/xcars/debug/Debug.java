@@ -25,10 +25,15 @@ public final class Debug {
 	public static final boolean drawWayPoints = false;
 	public static final boolean drawFPSDistribution = false;
 	// All diagnostics in communicators - dialog and minigames
-	public static final boolean drawCommunicatorDiagnostics = true; 
+	public static final boolean drawCommunicatorDiagnostics = true;
 	public static final boolean drawBoundingBoxes = true;
 	// Maximal distance from object where it is possible to activate them
 	public static final boolean drawMaxTouchableArea = true;
+	// Area in which buttons can be generated in SelestScreenBase typed screen
+	// (level selection, scenario selection)
+	public static final boolean drawSelectScreenButtonsArea = true;
+	// Debug logs while DistanceMap.CreateDistances (loading of map)
+	public static final boolean logDistanceMap = false;
 	// **************************************
 
 	public static ShapeRendererStretched shapeRenderer = new ShapeRendererStretched();
@@ -47,8 +52,7 @@ public final class Debug {
 
 	public static void SetMessage(String message) {
 		if (DEBUG) {
-			ScreenAdaptiveLabel label = ScreenAdaptiveLabel
-					.getMenuLabel(message);
+			ScreenAdaptiveLabel label = ScreenAdaptiveLabel.getMenuLabel(message);
 			label.setPosition(X1, 0);
 			messageLabel = new Log(label, System.currentTimeMillis());
 		}
@@ -58,15 +62,12 @@ public final class Debug {
 		if (DEBUG) {
 			synchronized (loggerLock) {
 				for (Log log : logger) {
-					log.label.setPosition(log.label.getX(), log.label.getY()
-							+ ROW_HEIGHT);
+					log.label.setPosition(log.label.getX(), log.label.getY() + ROW_HEIGHT);
 				}
 
-				ScreenAdaptiveLabel label = ScreenAdaptiveLabel
-						.getMenuLabel(message);
+				ScreenAdaptiveLabel label = ScreenAdaptiveLabel.getMenuLabel(message);
 				label.setPosition(X0, 0);
-				logger.addLast(new Log(ScreenAdaptiveLabel
-						.getMenuLabel(message), System.currentTimeMillis()));
+				logger.addLast(new Log(ScreenAdaptiveLabel.getMenuLabel(message), System.currentTimeMillis()));
 			}
 		}
 	}
@@ -163,13 +164,24 @@ public final class Debug {
 		valueLabel = null;
 	}
 
-	public static void drawCircle(Vector2 position, float radius, Color color,
-			float width) {
-		// Finish bounding circle
+	public static void drawCircle(Vector2 position, float radius, Color color, float width) {
 		Gdx.gl20.glLineWidth(width);
 		shapeRenderer.setColor(color);
 		shapeRenderer.begin(ShapeType.Line);
 		shapeRenderer.circle(position.x, position.y, radius);
+		shapeRenderer.end();
+	}
+
+	public static void drawPolygon(Vector2[] points, Color color, float width) {
+		if (points.length < 2)
+			return;
+		Gdx.gl20.glLineWidth(width);
+		shapeRenderer.setColor(color);
+		shapeRenderer.begin(ShapeType.Line);
+		for (int i = 0; i < points.length - 1; i++) {
+			shapeRenderer.line(points[i], points[i + 1]);
+		}
+		shapeRenderer.line(points[points.length - 1], points[0]);
 		shapeRenderer.end();
 	}
 }
