@@ -535,9 +535,9 @@ public final class EditorScreen extends BaseScreenEditor {
 			background.toXml(xml);
 			xml.pop();
 
-			xml.element("timeLimit", getTimeLimit());			
+			xml.element("timeLimit", getTimeLimit());
 			xml.element("difficulty", difficulty.toString());
-			
+
 			xml.pop();
 			xml.close();
 
@@ -803,113 +803,204 @@ public final class EditorScreen extends BaseScreenEditor {
 		Vector2i maxValue = new Vector2i(0, 0);
 
 		// Holes
-		for (int i = 1; i <= Constants.gameObjects.HOLE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Hole
-					.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.HOLE, i,
-					offsetOnScreen, maxValue);
+		int holeIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(Hole.GetTextureName(holeIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Hole
+						.GetTextureName(holeIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.HOLE,
+						holeIndex, offsetOnScreen, maxValue);
+				++holeIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Muds
-		for (int i = 1; i <= Constants.gameObjects.MUD_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Mud
-					.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.MUD, i,
-					offsetOnScreen, maxValue);
+		int mudIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(Mud.GetTextureName(mudIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Mud
+						.GetTextureName(mudIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.MUD, mudIndex,
+						offsetOnScreen, maxValue);
+				++mudIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Stones
-		for (int i = 1; i <= Constants.gameObjects.STONE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Stone
-					.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.STONE, i,
-					offsetOnScreen, maxValue);
+		int stoneIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(Stone.GetTextureName(stoneIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Stone
+						.GetTextureName(stoneIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.STONE,
+						stoneIndex, offsetOnScreen, maxValue);
+				++stoneIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Trees
-		for (int i = 1; i <= Constants.gameObjects.TREE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Tree
-					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.TREE, i,
-					offsetOnScreen, maxValue);
+		int treeIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(Tree.GetStaticTextureName(treeIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Tree
+						.GetStaticTextureName(treeIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.TREE,
+						treeIndex, offsetOnScreen, maxValue);
+				++treeIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Boosts
-		for (int i = 1; i <= Constants.gameObjects.BOOSTER_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Booster
-					.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.BOOSTER, i,
-					offsetOnScreen, maxValue);
+		int boostIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(Booster.GetTextureName(boostIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Booster
+						.GetTextureName(boostIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.BOOSTER,
+						boostIndex, offsetOnScreen, maxValue);
+				++boostIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Fences
-		for (int i = 1; i <= Constants.gameObjects.FENCE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Fence
-					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.FENCE, i,
-					offsetOnScreen, maxValue);
+		int fenceIndex = 1;
+		while (true) {
+			if (game.assets
+					.graphicExist(Fence.GetStaticTextureName(fenceIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Fence
+						.GetStaticTextureName(fenceIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.FENCE,
+						fenceIndex, offsetOnScreen, maxValue);
+				++fenceIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Houses
-		for (int i = 1; i <= Constants.gameObjects.HOUSE_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(House
-					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.HOUSE, i,
-					offsetOnScreen, maxValue);
+		int houseIndex = 1;
+		while (true) {
+			if (game.assets
+					.graphicExist(House.GetStaticTextureName(houseIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(House
+						.GetStaticTextureName(houseIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.HOUSE,
+						houseIndex, offsetOnScreen, maxValue);
+				++houseIndex;
+			} else {
+				break;
+			}
 		}
 		// Parking cars
-		for (int i = 1; i <= Constants.gameObjects.PARKING_CAR_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(ParkingCar
-					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.PARKING_CAR, i,
-					offsetOnScreen, maxValue);
+		int parkingCarIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(ParkingCar
+					.GetStaticTextureName(parkingCarIndex))) {
+				trd = new TextureRegionDrawable(
+						game.assets.getGraphics(ParkingCar
+								.GetStaticTextureName(parkingCarIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.PARKING_CAR,
+						parkingCarIndex, offsetOnScreen, maxValue);
+				++parkingCarIndex;
+			} else {
+				break;
+			}
 		}
 		// Walls
-		for (int i = 1; i <= Constants.gameObjects.WALL_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Wall
-					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.WALL, i,
-					offsetOnScreen, maxValue);
+		int wallIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(Wall.GetStaticTextureName(wallIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Wall
+						.GetStaticTextureName(wallIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.WALL,
+						wallIndex, offsetOnScreen, maxValue);
+				++wallIndex;
+			} else {
+				break;
+			}
 		}
 		// Hills
-		for (int i = 1; i <= Constants.gameObjects.HILL_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Hill
-					.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.HILL, i,
-					offsetOnScreen, maxValue);
+		int hillIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(Hill.GetTextureName(hillIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Hill
+						.GetTextureName(hillIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.HILL,
+						hillIndex, offsetOnScreen, maxValue);
+				++hillIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Tornados
-		for (int i = 1; i <= Constants.gameObjects.TORNADO_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Tornado
-					.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.TORNADO, i,
-					offsetOnScreen, maxValue);
+		int tornadoIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(Tornado.GetTextureName(tornadoIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Tornado
+						.GetTextureName(tornadoIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.TORNADO,
+						tornadoIndex, offsetOnScreen, maxValue);
+				++tornadoIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Racing cars
-		for (int i = 1; i <= Constants.gameObjects.RACING_CAR_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(RacingCar
-					.GetStaticTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.RACING_CAR, i,
-					offsetOnScreen, maxValue);
+		int racingCarIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(RacingCar
+					.GetStaticTextureName(racingCarIndex))) {
+				trd = new TextureRegionDrawable(
+						game.assets.getGraphics(RacingCar
+								.GetStaticTextureName(racingCarIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.RACING_CAR,
+						racingCarIndex, offsetOnScreen, maxValue);
+				++racingCarIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Pneu
-		for (int i = 1; i <= Constants.gameObjects.PNEU_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(game.assets.getGraphics(Pneu
-					.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.PNEU, i,
-					offsetOnScreen, maxValue);
+		int pneuIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(Pneu.GetTextureName(pneuIndex))) {
+				trd = new TextureRegionDrawable(game.assets.getGraphics(Pneu
+						.GetTextureName(pneuIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.PNEU,
+						pneuIndex, offsetOnScreen, maxValue);
+				++pneuIndex;
+			} else {
+				break;
+			}
 		}
 
 		// Universal
-		for (int i = 1; i <= Constants.gameObjects.UNIVERSAL_TYPES_COUNT; i++) {
-			trd = new TextureRegionDrawable(
-					game.assets.getGraphics(UniversalGameObject
-							.GetTextureName(i)));
-			createGameObjectButtons(trd, TypeOfObjectToDrag.UNIVERSAL, i,
-					offsetOnScreen, maxValue);
+		int universalIndex = 1;
+		while (true) {
+			if (game.assets.graphicExist(UniversalGameObject
+					.GetTextureName(universalIndex))) {
+				trd = new TextureRegionDrawable(
+						game.assets.getGraphics(UniversalGameObject
+								.GetTextureName(universalIndex)));
+				createGameObjectButtons(trd, TypeOfObjectToDrag.UNIVERSAL,
+						universalIndex, offsetOnScreen, maxValue);
+				++universalIndex;
+			} else {
+				break;
+			}
 		}
 	}
 

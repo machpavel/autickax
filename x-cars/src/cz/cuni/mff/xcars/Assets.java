@@ -78,29 +78,25 @@ public class Assets {
 			return this.ninePatchCacheMap.get(name);
 		}
 		if (this.graphicsAtlas == null) {
-			this.graphicsAtlas = this.assetManager.get(GRAPHICS_FILE,
-					TextureAtlas.class);
+			this.graphicsAtlas = this.assetManager.get(GRAPHICS_FILE, TextureAtlas.class);
 		}
 		NinePatch retVal = this.graphicsAtlas.createPatch(name);
 
 		if (retVal == null) {
 			if (name == "noTexture")
-				throw new RuntimeException("Graphic " + name
-						+ " not found it atlas");
+				throw new RuntimeException("Graphic " + name + " not found it atlas");
 			else {
 				Debug.Log("Graphic \"" + name + "\" not found.");
 				return getNinePatch("noTexture");
 			}
 		}
 
-		retVal.getTexture().setFilter(TextureFilter.Linear,
-				TextureFilter.Linear);
+		retVal.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		this.ninePatchCacheMap.put(name, retVal);
 		return retVal;
 	}
 
-	public TextureRegion getAnyGraphic(String name, TextureAtlas atlas,
-			Map<String, TextureRegion> cacheMap) {
+	public TextureRegion getAnyGraphic(String name, TextureAtlas atlas, Map<String, TextureRegion> cacheMap) {
 		if (cacheMap.containsKey(name)) {
 			return cacheMap.get(name);
 		}
@@ -109,35 +105,51 @@ public class Assets {
 
 		if (retVal == null) {
 			if (name == "noTexture")
-				throw new RuntimeException("Graphic " + name
-						+ " not found it atlas");
+				throw new RuntimeException("Graphic " + name + " not found it atlas");
 			else {
 				Debug.Log("Graphic \"" + name + "\" not found.");
 				return getAnyGraphic("noTexture", atlas, cacheMap);
 			}
 		}
 
-		retVal.getTexture().setFilter(TextureFilter.Linear,
-				TextureFilter.Linear);
+		retVal.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		cacheMap.put(name, retVal); // cache the result
 		return retVal;
 	}
 
 	public TextureRegion getGraphics(String name) {
 		if (this.graphicsAtlas == null) {
-			this.graphicsAtlas = this.assetManager.get(GRAPHICS_FILE,
-					TextureAtlas.class);
+			this.graphicsAtlas = this.assetManager.get(GRAPHICS_FILE, TextureAtlas.class);
 		}
 		return getAnyGraphic(name, this.graphicsAtlas, this.graphicsCacheMap);
 	}
 
+	public boolean graphicExist(String name) {
+		if (this.graphicsAtlas == null) {
+			this.graphicsAtlas = this.assetManager.get(GRAPHICS_FILE, TextureAtlas.class);
+		}
+		return anyGraphicExists(name, this.graphicsAtlas, this.graphicsCacheMap);
+	}
+
+	public boolean anyGraphicExists(String name, TextureAtlas atlas, Map<String, TextureRegion> cacheMap) {
+		if (cacheMap.containsKey(name)) {
+			return true;
+		}
+
+		TextureRegion retVal = atlas.findRegion(name);
+		if (retVal != null) {
+			cacheMap.put(name, retVal);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public TextureRegion getLoadingScreenGraphics(String name) {
 		if (this.loadingGraphicsAtlas == null) {
-			this.loadingGraphicsAtlas = this.assetManager.get(
-					LOADING_SCREEN_GRAPHICS_FILE, TextureAtlas.class);
+			this.loadingGraphicsAtlas = this.assetManager.get(LOADING_SCREEN_GRAPHICS_FILE, TextureAtlas.class);
 		}
-		return getAnyGraphic(name, this.loadingGraphicsAtlas,
-				this.loadingGraphicsCacheMap);
+		return getAnyGraphic(name, this.loadingGraphicsAtlas, this.loadingGraphicsCacheMap);
 	}
 
 	public void disposeGameScreenGraphic() {
@@ -171,78 +183,81 @@ public class Assets {
 		assetManager.load(GRAPHICS_FILE, TextureAtlas.class);
 	}
 
-	private void loadFonts() {		
+	private void loadFonts() {
 		FileHandle lightFontHandle = Gdx.files.internal(Assets.LIGHT_FONT);
 		FreeTypeFontGenerator lightFontGenerator = new FreeTypeFontGenerator(lightFontHandle);
-		
+
 		FileHandle boldFontHandle = Gdx.files.internal(Assets.BOLD_FONT);
 		FreeTypeFontGenerator boldFontGenerator = new FreeTypeFontGenerator(boldFontHandle);
-		
+
 		FreeTypeFontParameter lightFontParameter = new FreeTypeFontParameter();
 		lightFontParameter.size = (int) (30 * Input.xStretchFactorInv);
-		
+
 		this.timeIntFont = lightFontGenerator.generateFont(lightFontParameter);
 		this.timeIntFont.setScale(Input.xStretchFactor);
-		
 
 		FreeTypeFontParameter dialogFontParameter = new FreeTypeFontParameter();
 		dialogFontParameter.size = (int) (30 * Input.xStretchFactorInv);
-		
+
 		this.dialogFont = lightFontGenerator.generateFont(dialogFontParameter);
 		this.dialogFont.setScale(Input.xStretchFactor);
-		
+
 		FreeTypeFontParameter boldFontParameter = new FreeTypeFontParameter();
 		boldFontParameter.size = (int) (30 * Input.xStretchFactorInv);
-		
+
 		this.menuFont = lightFontGenerator.generateFont(boldFontParameter);
 		this.menuFont.setScale(Input.xStretchFactor);
-		
+
 		this.levelNumberFont = boldFontGenerator.generateFont(boldFontParameter);
 		this.levelNumberFont.setScale(Input.xStretchFactor);
-		
+
 		this.timeStringFont = lightFontGenerator.generateFont(boldFontParameter);
 		this.timeStringFont.setScale(Input.xStretchFactor);
-		
+
 		this.finishDialogFont = lightFontGenerator.generateFont(boldFontParameter);
 		this.finishDialogFont.setScale(Input.xStretchFactor);
-		
-		
+
 		lightFontGenerator.dispose();
 		boldFontGenerator.dispose();
 	}
 
 	private void loadAvailableLevels() {
-		assetManager.setLoader(AvailableLevels.class,
-				new AvailableLevelsLoader(new InternalFileHandleResolver()));
+		assetManager.setLoader(AvailableLevels.class, new AvailableLevelsLoader(new InternalFileHandleResolver()));
 		assetManager.load(AVAILABLE_LEVELS_FILE, AvailableLevels.class);
 	}
 
 	private BitmapFont menuFont;
+
 	public BitmapFont getMenuFont() {
 		return this.menuFont;
 	}
 
 	private BitmapFont dialogFont;
+
 	public BitmapFont getDialogFont() {
 		return this.dialogFont;
 	}
 
 	private BitmapFont finishDialogFont;
+
 	public BitmapFont getFinishDialogFont() {
 		return this.finishDialogFont;
 	}
 
 	private BitmapFont timeStringFont;
+
 	public BitmapFont getTimeStringFont() {
 		return this.timeStringFont;
 	}
 
 	private BitmapFont timeIntFont;
+
 	public BitmapFont getTimeIntFont() {
 		return this.timeIntFont;
 	}
 
 	private BitmapFont levelNumberFont;
+
 	public BitmapFont getLevelNumberFont() {
 		return this.levelNumberFont;
 	}
@@ -274,7 +289,7 @@ public class Assets {
 		ArrayList<Music> music = new ArrayList<Music>();
 		JarAssetsLoader jarLoader = new JarAssetsLoader();
 		LinkedList<FileHandle> handles = jarLoader.LoadFromJar(path);
-		if (handles.isEmpty()) //run from IDE
+		if (handles.isEmpty()) // run from IDE
 		{
 			dirHandle = Gdx.files.internal(prefix + path);
 			getHandles(dirHandle, handles);
@@ -297,12 +312,10 @@ public class Assets {
 		String path = SOUNDS_DIR;
 		JarAssetsLoader jarLoader = new JarAssetsLoader();
 		LinkedList<FileHandle> handles = jarLoader.LoadFromJar(path);
-		if (handles.isEmpty())
-		{
+		if (handles.isEmpty()) {
 			dirHandle = Gdx.files.internal(prefix + path);
 			getHandles(dirHandle, handles);
-		}
-		else
+		} else
 			prefix = "";
 		Map<String, Sound> soundsMap = new HashMap<String, Sound>();
 		for (FileHandle fileHandle : handles) {
