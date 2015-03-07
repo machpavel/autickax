@@ -119,6 +119,8 @@ public final class Minigames {
 	// Race
 	public final String RACE_MINIGAME_BACKGROUND_TEXTURE = "minigames/Race/background";
 	public final String RACE_MINIGAME_CAR_TEXTURE = "minigames/Race/car";
+	public final String RACE_MINIGAME_SLIDER_BACKGROUND_TEXTURE = "minigames/Race/sliderBackground";
+	public final String RACE_MINIGAME_SLIDER_KNOB_TEXTURE = "minigames/Race/sliderKnob";
 	public float RACE_CAR_START_POSITION_X = 400;
 	public final String RACE_MINIGAME_LINE_TEXTURE = "minigames/Race/roadLine";
 	public final String ENVIRONMENT_BACKGROUND_TEXTURE = "minigames/Race/environmentBackground";

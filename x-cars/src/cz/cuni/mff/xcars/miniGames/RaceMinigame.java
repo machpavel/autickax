@@ -9,7 +9,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Xcars;
@@ -56,7 +59,13 @@ public final class RaceMinigame extends Minigame {
 	States state = States.BEGINNING_STATE;
 
 	private float remainingTime;
+	private float timeLimit;
 	private float speed;
+
+	// TODO how to show progress?
+	private static final float progressBarXPosition = 400;
+	private static final float progressBarYPosition = 440;
+	private ProgressBar progressBar;
 
 	public RaceMinigame(GameScreen gameScreen, SubLevel parent) {
 		super(gameScreen, parent);
@@ -80,6 +89,20 @@ public final class RaceMinigame extends Minigame {
 		generateEnvironmentForeground();
 
 		initializeMainCar(gameScreen);
+		createProgressBar();
+	}
+
+	private void createProgressBar() {
+		SliderStyle style = new SliderStyle();
+		// TODO Figure out how to show the progress
+		style.background = new TextureRegionDrawable(
+				Xcars.getInstance().assets.getGraphics(Constants.minigames.RACE_MINIGAME_SLIDER_BACKGROUND_TEXTURE));
+		style.knob = new TextureRegionDrawable(
+				Xcars.getInstance().assets.getGraphics(Constants.minigames.RACE_MINIGAME_SLIDER_KNOB_TEXTURE));
+		progressBar = new ProgressBar(0, 1, 0.001f, false, style);
+		progressBar.setPosition(progressBarXPosition - progressBar.getWidth() / 2, progressBarYPosition);
+		progressBar.setValue(50);
+		this.stage.addActor(progressBar);
 	}
 
 	private int getCarTypesCount() {
@@ -212,6 +235,8 @@ public final class RaceMinigame extends Minigame {
 			return;
 		}
 
+		updateProgress();
+
 		// Taking focus of the car again
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
@@ -240,6 +265,11 @@ public final class RaceMinigame extends Minigame {
 				}
 			}
 		}
+	}
+
+	private void updateProgress() {
+		float nextProgressBarValue = 1 - this.remainingTime / this.timeLimit;
+		this.progressBar.setValue(nextProgressBarValue);
 	}
 
 	private void updateCars(float delta) {
@@ -356,6 +386,7 @@ public final class RaceMinigame extends Minigame {
 		default:
 			throw new IllegalDifficultyException(difficulty.toString());
 		}
+		this.timeLimit = remainingTime;
 		return;
 	}
 
