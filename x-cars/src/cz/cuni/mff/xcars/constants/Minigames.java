@@ -118,7 +118,6 @@ public final class Minigames {
 
 	// Race
 	public final String RACE_MINIGAME_BACKGROUND_TEXTURE = "minigames/Race/background";
-	public final int RACE_MINIGAME_CAR_TYPE_COUNT = 6;
 	public final String RACE_MINIGAME_CAR_TEXTURE = "minigames/Race/car";
 	public float RACE_CAR_START_POSITION_X = 400;
 	public final String RACE_MINIGAME_LINE_TEXTURE = "minigames/Race/roadLine";
@@ -130,7 +129,6 @@ public final class Minigames {
 	public final float MIN_CAR_DISTANCE = 100;
 	public final float MAX_CAR_DISTANCE = 500;
 	public final float DISTANCE_RAISER = 1.2f; // Change in distance
-	public final float RACE_MINIMAL_DISTANCE_BETWEEN_CAR = 2;
 	public final int RACE_MINIGAME_ZONES_COUNT_KIDDIE = 1;
 	public final int RACE_MINIGAME_ZONES_COUNT_BEGINNER = 2;
 	public final int RACE_MINIGAME_ZONES_COUNT_NORMAL = 3;
@@ -143,7 +141,7 @@ public final class Minigames {
 	public final float RACE_MINIGAME_TIME_EXTREME = 35;
 	public final float RACE_MINIGAME_SPEED_KIDDIE = 250;
 	public final float RACE_MINIGAME_SPEED_BEGINNER = 300;
-	public final float RACE_MINIGAME_SPEED_NORMAL = 150;
+	public final float RACE_MINIGAME_SPEED_NORMAL = 350;
 	public final float RACE_MINIGAME_SPEED_HARD = 400;
 	public final float RACE_MINIGAME_SPEED_EXTREME = 450;
 

@@ -2,17 +2,19 @@ package cz.cuni.mff.xcars.miniGames;
 
 import java.util.Deque;
 import java.util.LinkedList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.dialogs.MessageDialog;
 import cz.cuni.mff.xcars.entities.GameObject;
 import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
@@ -35,11 +37,9 @@ public final class RaceMinigame extends Minigame {
 	private static final float MIN_CAR_DISTANCE = Constants.minigames.MIN_CAR_DISTANCE;
 	private static final float MAX_CAR_DISTANCE = Constants.minigames.MAX_CAR_DISTANCE;
 	private static final float DISTANCE_RAISER = Constants.minigames.DISTANCE_RAISER;
-
-	private float remainingTime;
-	private float speed;
 	private static final float environmentForegroundSpeedModifier = 1.3f;
 	private static final float environmentBackgroundSpeedModifier = 0.8f;
+	private static int carsTypeCount;
 
 	private float zoneWidth;
 	private int zonesCount;
@@ -47,14 +47,16 @@ public final class RaceMinigame extends Minigame {
 	private float[] zonesSpeeds;
 	private float[] minDistances;
 	private float[] maxDistances;
-	private ScreenAdaptiveImage[][] lineImages;
-	private ScreenAdaptiveImage[] environmentForeground;
-	private ScreenAdaptiveImage[] environmentBackground;
-
+	private Deque<ScreenAdaptiveImage>[] lineImages;
+	private Deque<ScreenAdaptiveImage> environmentForeground;
+	private Deque<ScreenAdaptiveImage> environmentBackground;
 	private Deque<RaceMinigameCar>[] cars;
 
 	private RaceMinigameCar car;
 	States state = States.BEGINNING_STATE;
+
+	private float remainingTime;
+	private float speed;
 
 	public RaceMinigame(GameScreen gameScreen, SubLevel parent) {
 		super(gameScreen, parent);
@@ -62,14 +64,14 @@ public final class RaceMinigame extends Minigame {
 		setDifficulty(this.level.getDifficulty());
 
 		this.backgroundTexture = new NinePatchDrawable(
-				Xcars.getInstance().assets
-						.getNinePatch(Constants.minigames.RACE_MINIGAME_BACKGROUND_TEXTURE));
+				Xcars.getInstance().assets.getNinePatch(Constants.minigames.RACE_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Xcars.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(gameScreen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_RACE_WHAT_TO_DO));
 
 		zoneWidth = (float) Constants.dialog.DIALOG_WORLD_HEIGHT / zonesCount;
+		carsTypeCount = getCarTypesCount();
 
 		initializeArrays(); // it has to be initialized first
 
@@ -80,98 +82,89 @@ public final class RaceMinigame extends Minigame {
 		initializeMainCar(gameScreen);
 	}
 
+	private int getCarTypesCount() {
+		// Index 0 is reserved for player car
+		int count = 1;
+		while (Xcars.getInstance().assets.graphicExist(RaceMinigameCar.GetTextureName(count))) {
+			++count;
+		}
+		return count - 1;
+	}
+
 	private void initializeMainCar(GameScreen gameScreen) {
-		this.car = new RaceMinigameCar(CAR_START_POSITION_X,
-				zonesCenters[MathUtils.random(zonesCount - 1)], 0);
+		this.car = new RaceMinigameCar(CAR_START_POSITION_X, zonesCenters[MathUtils.random(zonesCount - 1)], 0);
 		this.car.setCanBeDragged(true);
 		this.car.setDragged(false);
 	}
 
 	@SuppressWarnings("unchecked")
 	private void initializeArrays() {
+		// Zones stuffs (except for distances)
 		zonesCenters = new float[zonesCount];
 		zonesSpeeds = new float[zonesCount];
-		minDistances = new float[zonesCount];
-		maxDistances = new float[zonesCount];
-		lineImages = new ScreenAdaptiveImage[zonesCount - 1][2];
-		environmentBackground = new ScreenAdaptiveImage[2];
-		environmentForeground = new ScreenAdaptiveImage[2];
-
 		cars = new LinkedList[zonesCount];
-
 		for (int zoneIndex = 0; zoneIndex < zonesCount; zoneIndex++) {
-			zonesCenters[zoneIndex] = (float) Constants.dialog.DIALOG_WORLD_Y_OFFSET
-					+ zoneWidth / 2 + zoneWidth * zoneIndex;
-			zonesSpeeds[zoneIndex] = speed
-					- (MAX_SPEED_ADDITION - MIN_SPEED_ADDITION) * zoneIndex
-					/ zonesCount - MIN_SPEED_ADDITION;
+			zonesCenters[zoneIndex] = (float) Constants.dialog.DIALOG_WORLD_Y_OFFSET + zoneWidth / 2 + zoneWidth
+					* zoneIndex;
+			zonesSpeeds[zoneIndex] = speed - (MAX_SPEED_ADDITION - MIN_SPEED_ADDITION) * zoneIndex / zonesCount
+					- MIN_SPEED_ADDITION;
 			cars[zoneIndex] = new LinkedList<RaceMinigameCar>();
 		}
 
+		// Zones distances
+		minDistances = new float[zonesCount];
+		maxDistances = new float[zonesCount];
 		minDistances[zonesCount - 1] = MIN_CAR_DISTANCE;
 		maxDistances[zonesCount - 1] = MAX_CAR_DISTANCE;
 		for (int zoneIndex = zonesCount - 2; zoneIndex >= 0; zoneIndex--) {
-			minDistances[zoneIndex] = minDistances[zoneIndex + 1]
-					* DISTANCE_RAISER;
-			maxDistances[zoneIndex] = maxDistances[zoneIndex + 1]
-					* DISTANCE_RAISER;
+			minDistances[zoneIndex] = minDistances[zoneIndex + 1] * DISTANCE_RAISER;
+			maxDistances[zoneIndex] = maxDistances[zoneIndex + 1] * DISTANCE_RAISER;
+		}
+
+		// Lines
+		lineImages = new LinkedList[zonesCount - 1];
+		for (int zoneIndex = 0; zoneIndex < zonesCount - 1; zoneIndex++) {
+			lineImages[zoneIndex] = new LinkedList<ScreenAdaptiveImage>();
 		}
 	}
 
+	private void generateDeque(Deque<ScreenAdaptiveImage> deque, TextureRegion texture, float positionY,
+			boolean addActors) {
+		float offsetX = 0;
+		int count = 0;
+		do {
+			ScreenAdaptiveImage image = new ScreenAdaptiveImage(texture);
+			image.setPosition(offsetX, positionY);
+			deque.addLast(image);
+			if (addActors)
+				this.stage.addActor(image);
+			offsetX = image.getRight();
+			count++;
+		} while (offsetX <= Constants.WORLD_WIDTH || count < 2);
+	}
+
 	private void generateLines() {
-		TiledDrawable line = new TiledDrawable(
-				Xcars.getInstance().assets.getGraphics(LINE_TEXTURE));
-		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET + zoneWidth
-				- line.getRegion().getRegionHeight() / 2;
-		for (int offsetX = 0; offsetX < lineImages.length; offsetX++) {
-			for (int i = 0; i < lineImages[offsetX].length; i++) {
-				lineImages[offsetX][i] = new ScreenAdaptiveImage(line);
-				lineImages[offsetX][i].setWidth(400
-						+ 400
-						% line.getRegion().getRegionWidth());
-				this.stage.addActor(lineImages[offsetX][i]);
-			}
-			//lineImages[offsetX][0].setVisible(false);
-			lineImages[offsetX][0].setPosition(0, positionY);
-			lineImages[offsetX][1].setPosition(
-					lineImages[offsetX][0].getRight(), positionY);
+		TextureRegion lineTexture = Xcars.getInstance().assets.getGraphics(LINE_TEXTURE);
+		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET + zoneWidth - lineTexture.getRegionHeight() / 2;
+		for (int i = 0; i < lineImages.length; i++) {
+			generateDeque(this.lineImages[i], lineTexture, positionY, true);
 			positionY += zoneWidth;
 		}
 	}
 
 	private void generateEnvironmentForeground() {
-		TextureRegionDrawable foreground = new TextureRegionDrawable(
-				Xcars.getInstance().assets
-						.getGraphics(ENVIRONMENT_FOREGROUND_TEXTURE));
-		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET
-				- foreground.getRegion().getRegionHeight()
+		this.environmentForeground = new LinkedList<ScreenAdaptiveImage>();
+		TextureRegion foregroundTexture = Xcars.getInstance().assets.getGraphics(ENVIRONMENT_FOREGROUND_TEXTURE);
+		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET - foregroundTexture.getRegionHeight()
 				+ ENVIRONMENT_FOREGROUND_OFFSET;
-
-		for (int i = 0; i < environmentForeground.length; i++) {
-			environmentForeground[i] = new ScreenAdaptiveImage(foreground);
-			// this.stage.addActor(environmentForeground[i]); It is done
-			// manually in draw function
-		}
-		environmentForeground[0].setPosition(0, positionY);
-		environmentForeground[1].setPosition(
-				environmentForeground[0].getWidth(), positionY);
+		generateDeque(this.environmentForeground, foregroundTexture, positionY, false);
 	}
 
 	private void generateEnvironmentBackground() {
-
-		TextureRegionDrawable background = new TextureRegionDrawable(
-				Xcars.getInstance().assets
-						.getGraphics(ENVIRONMENT_BACKGROUND_TEXTURE));
-		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET
-				+ Constants.dialog.DIALOG_WORLD_HEIGHT;
-
-		for (int i = 0; i < environmentBackground.length; i++) {
-			environmentBackground[i] = new ScreenAdaptiveImage(background);
-			this.stage.addActor(environmentBackground[i]);
-		}
-		environmentBackground[0].setPosition(0, positionY);
-		environmentBackground[1].setPosition(
-				environmentBackground[0].getWidth(), positionY);
+		this.environmentBackground = new LinkedList<ScreenAdaptiveImage>();
+		TextureRegion backgroundTexture = Xcars.getInstance().assets.getGraphics(ENVIRONMENT_BACKGROUND_TEXTURE);
+		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET + Constants.dialog.DIALOG_WORLD_HEIGHT;
+		generateDeque(this.environmentBackground, backgroundTexture, positionY, true);
 	}
 
 	@Override
@@ -206,7 +199,7 @@ public final class RaceMinigame extends Minigame {
 		// this.car.setShift(shift);
 		// this.state = States.DRIVING_STATE;
 		// }
-		//updateEnvironment(delta);
+		// updateEnvironment(delta);
 		this.state = States.DRIVING_STATE;
 	}
 
@@ -222,14 +215,15 @@ public final class RaceMinigame extends Minigame {
 		// Taking focus of the car again
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
-					touchPos.y);
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
 
 			this.car.setDragged(true);
 			this.car.setShift(shift);
 		}
 
-		updateEnvironment(delta);
+		updateLines(delta);
+		updateEnvironmentForeground(delta);
+		updateEnvironmentBackground(delta);
 		updateCars(delta);
 
 		// Car is out of borders
@@ -241,8 +235,7 @@ public final class RaceMinigame extends Minigame {
 				for (RaceMinigameCar car : cars[zoneIndex]) {
 					if (this.car.collidesRectangulary(car)) {
 						fail(null);
-						this.soundsManager
-								.playSound(Constants.sounds.SOUND_MINIGAME_RACE_CRASH);
+						this.soundsManager.playSound(Constants.sounds.SOUND_MINIGAME_RACE_CRASH);
 					}
 				}
 			}
@@ -260,41 +253,34 @@ public final class RaceMinigame extends Minigame {
 
 			// Removes cars which are gone
 			RaceMinigameCar firstCar = cars[zoneIndex].peekFirst();
-			if (firstCar != null
-					&& firstCar.getLeftBottomCorner().x < -firstCar.getWidth()) {
+			while (firstCar != null && firstCar.getLeftBottomCorner().x < -firstCar.getWidth()) {
 				cars[zoneIndex].poll();
-
+				firstCar = cars[zoneIndex].peekFirst();
 			}
 
 			// Adds new car
 			RaceMinigameCar lastCar = cars[zoneIndex].peekLast();
-			if (lastCar == null
-					|| lastCar.getLeftBottomCorner().x < Constants.WORLD_WIDTH) {
-				int type = MathUtils.random(1,
-						Constants.minigames.RACE_MINIGAME_CAR_TYPE_COUNT);
+			if (lastCar == null || lastCar.getLeftBottomCorner().x < Constants.WORLD_WIDTH) {
+				// Index 0 is reserved for player car
+				int type = MathUtils.random(1, carsTypeCount);
 				RaceMinigameCar car = new RaceMinigameCar(0, 0, type);
 
 				car.setX(Constants.WORLD_WIDTH + car.getWidth() / 2
-						+ +(maxDistances[zoneIndex] - minDistances[zoneIndex])
-						* MathUtils.random(1.f) + minDistances[zoneIndex]);
+						+ (maxDistances[zoneIndex] - minDistances[zoneIndex]) * MathUtils.random(1.f)
+						+ minDistances[zoneIndex]);
 
-				car.setY(zonesCenters[zoneIndex]
-						+ MathUtils.random(-1, 1)
-						* (zoneWidth / 2 - car.getHeight() / 2 - lineImages[0][0]
-								.getHeight() / 2));
+				car.setY(zonesCenters[zoneIndex] + MathUtils.random(-1, 1)
+						* (zoneWidth / 2 - car.getHeight() / 2 - lineImages[0].peek().getHeight() / 2));
 
 				cars[zoneIndex].add(car);
 			}
 		}
-
 	}
 
 	private boolean isInWorld(Vector2 position) {
-		return position.x > 0
-				&& position.x < Constants.WORLD_WIDTH
+		return position.x > 0 && position.x < Constants.WORLD_WIDTH
 				&& position.y > Constants.dialog.DIALOG_WORLD_Y_OFFSET
-				&& position.y < Constants.dialog.DIALOG_WORLD_Y_OFFSET
-						+ Constants.dialog.DIALOG_WORLD_HEIGHT;
+				&& position.y < Constants.dialog.DIALOG_WORLD_Y_OFFSET + Constants.dialog.DIALOG_WORLD_HEIGHT;
 	}
 
 	private void fail(String primaryMessage) {
@@ -329,8 +315,9 @@ public final class RaceMinigame extends Minigame {
 			}
 		}
 		this.car.draw(batch);
-		for (int i = 0; i < environmentForeground.length; i++) {
-			environmentForeground[i].draw(batch, 1);
+		// Draws foreground manually to be up
+		for (ScreenAdaptiveImage foreground : environmentForeground) {
+			foreground.draw(batch, 1);
 		}
 		batch.end();
 	}
@@ -372,55 +359,61 @@ public final class RaceMinigame extends Minigame {
 		return;
 	}
 
-	private void updateEnvironment(float delta) {
-		updateLines(delta);
-		updateEnvironmentForeground(delta);
-		updateEnvironmentBackground(delta);
+	// Moves items which are off the screen to the second side
+	private void updateDeque(Deque<ScreenAdaptiveImage> deque, float speed, float delta) {
+		// Moves all items
+		for (ScreenAdaptiveImage item : deque) {
+			item.setX(item.getX() - delta * speed);
+		}
+
+		// Items out off screen are moved to the second size
+		while (deque.peekFirst().getRight() < 0) {
+			deque.peekFirst().setX(deque.peekLast().getRight());
+			deque.addLast(deque.pollFirst());
+		}
+
 	}
 
 	private void updateLines(float delta) {
-		for (int offsetX = 0; offsetX < lineImages.length; offsetX++) {
-			for (int i = 0; i < lineImages[offsetX].length; i++) {
-				lineImages[offsetX][i].setX(lineImages[offsetX][i].getX()
-						- speed * delta);
-			}
-		}
-		for (int offsetX = 0; offsetX < lineImages.length; offsetX++) {
-			for (int i = 0; i < lineImages[offsetX].length; i++) {
-				if (lineImages[offsetX][i].getX() < -lineImages[offsetX][i]
-						.getWidth()) {
-					lineImages[offsetX][i].setX(lineImages[offsetX][(i + 1)
-							% lineImages[offsetX].length].getRight());
-				}
-			}
+		for (int i = 0; i < this.lineImages.length; i++) {
+			updateDeque(this.lineImages[i], this.speed, delta);
 		}
 	}
 
 	private void updateEnvironmentForeground(float delta) {
-		for (int i = 0; i < environmentForeground.length; i++) {
-			environmentForeground[i].setX(environmentForeground[i].getX()
-					- speed * environmentForegroundSpeedModifier * delta);
-		}
-		for (int i = 0; i < environmentForeground.length; i++) {
-			if (environmentForeground[i].getX() < -environmentForeground[i]
-					.getWidth()) {
-				environmentForeground[i].setX(environmentForeground[(i + 1)
-						% environmentForeground.length].getRight());
-			}
-		}
+		updateDeque(this.environmentForeground, this.speed * environmentForegroundSpeedModifier, delta);
 	}
 
 	private void updateEnvironmentBackground(float delta) {
-		for (int i = 0; i < environmentBackground.length; i++) {
-			environmentBackground[i].setX(environmentBackground[i].getX()
-					- speed * environmentBackgroundSpeedModifier * delta);
-		}
-		for (int i = 0; i < environmentBackground.length; i++) {
-			if (environmentBackground[i].getX() < -environmentBackground[i]
-					.getWidth()) {
-				environmentBackground[i].setX(environmentBackground[(i + 1)
-						% environmentBackground.length].getRight());
-			}
+		updateDeque(this.environmentBackground, this.speed * environmentBackgroundSpeedModifier, delta);
+	}
+
+	@Override
+	protected void drawBackGroundTexture(SpriteBatch batch) {
+		batch.begin();
+		this.backgroundTexture.draw(batch, 0, 0, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+		batch.end();
+	}
+
+	@Override
+	public void DrawDiagnostics() {
+		if (Debug.raceMinigameMinigame) {
+			Debug.SetValue(remainingTime);
+
+			super.DrawDiagnostics();
+
+			shapeRenderer.begin(ShapeType.Line);
+			float width = 2.f;
+			shapeRenderer.setColor(0.5f, 0, 0, 1);
+
+			// Out of world
+			shapeRenderer.rectLine(0, Constants.dialog.DIALOG_WORLD_Y_OFFSET + Constants.dialog.DIALOG_WORLD_HEIGHT,
+					Constants.WORLD_WIDTH, Constants.dialog.DIALOG_WORLD_Y_OFFSET
+							+ Constants.dialog.DIALOG_WORLD_HEIGHT, width);
+			shapeRenderer.rectLine(0, Constants.dialog.DIALOG_WORLD_Y_OFFSET, Constants.WORLD_WIDTH,
+					Constants.dialog.DIALOG_WORLD_Y_OFFSET, width);
+
+			shapeRenderer.end();
 		}
 	}
 }

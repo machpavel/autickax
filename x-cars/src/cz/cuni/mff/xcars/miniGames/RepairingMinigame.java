@@ -4,11 +4,13 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 
-import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
+import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.dialogs.MessageDialog;
 import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
 import cz.cuni.mff.xcars.gamelogic.SubLevel;
@@ -37,15 +39,13 @@ public final class RepairingMinigame extends Minigame {
 		this.leavingDelay = Constants.minigames.REPAIRING_MINIGAME_LEAVING_DELAY;
 		setDifficulty(this.level.getDifficulty());
 		this.backgroundTexture = new NinePatchDrawable(
-				Xcars.getInstance().assets
-						.getNinePatch(Constants.minigames.REPAIRING_MINIGAME_BACKGROUND_TEXTURE));
+				Xcars.getInstance().assets.getNinePatch(Constants.minigames.REPAIRING_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Xcars.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(screen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_REPAIRING_WHAT_TO_DO));
 
-		this.timeLabel = ScreenAdaptiveLabel.getDialogLabel(this.timeFormat
-				.format(this.timeLimit));
+		this.timeLabel = ScreenAdaptiveLabel.getDialogLabel(this.timeFormat.format(this.timeLimit));
 		// TODO remove and refactor
 		this.timeLabel.setColor(1, 0, 0, 1);
 		this.timeLabel.setPosition(timeLabelXPosition, timeLabelYPosition);
@@ -56,24 +56,20 @@ public final class RepairingMinigame extends Minigame {
 
 	private void initializeGameObjects() {
 		handJack = new RepairingMinigameObject(600, 400, 90, 80,
-				Constants.minigames.REPAIRING_MINIGAME_HAND_JACK_TEXTURE, this,
-				false);
+				Constants.minigames.REPAIRING_MINIGAME_HAND_JACK_TEXTURE, this, false);
 		handJack.setIsActive(true);
 		gameObjects.add(handJack);
 
-		spanner = new RepairingMinigameObject(600, 300, 90, 80,
-				Constants.minigames.REPAIRING_MINIGAME_SPANNER_TEXTURE, this,
-				false);
+		spanner = new RepairingMinigameObject(600, 300, 90, 80, Constants.minigames.REPAIRING_MINIGAME_SPANNER_TEXTURE,
+				this, false);
 		gameObjects.add(spanner);
 
 		damagedTire = new RepairingMinigameObject(90, 80, 600, 200,
-				Constants.minigames.REPAIRING_MINIGAME_DAMAGED_TIRE_TEXTURE,
-				this, true);
+				Constants.minigames.REPAIRING_MINIGAME_DAMAGED_TIRE_TEXTURE, this, true);
 		gameObjects.add(damagedTire);
 
 		newTire = new RepairingMinigameObject(600, 100, 90, 80,
-				Constants.minigames.REPAIRING_MINIGAME_NEW_TIRE_TEXTURE, this,
-				true);
+				Constants.minigames.REPAIRING_MINIGAME_NEW_TIRE_TEXTURE, this, true);
 		gameObjects.add(newTire);
 
 		// gameObjects.add(new RepairingMinigameObject(400, 400, 1));
@@ -82,7 +78,9 @@ public final class RepairingMinigame extends Minigame {
 	}
 
 	public void switchToNextState() {
-		System.out.println(this.state.toString());
+		if (Debug.DEBUG && Debug.repairingMinigame) {
+			System.out.println(this.state.toString());
+		}
 		switch (this.state) {
 		case JACK_TO_SPANNER:
 			this.state = States.SPANNER_TO_TIRE;
@@ -148,11 +146,32 @@ public final class RepairingMinigame extends Minigame {
 		for (RepairingMinigameObject gameObject : gameObjects) {
 			gameObject.update(delta);
 		}
-		this.timeLimit -= delta;
+		// this.timeLimit -= delta;
 		if (this.timeLimit > 0)
 			this.timeLabel.setText(this.timeFormat.format(this.timeLimit));
 		else
 			fail(null);
+	}
+
+	RepairingMinigameObject objectToDrag;
+
+	public void setDraggedObject(RepairingMinigameObject object, Vector2 shift) {
+		if (objectToDrag == null || shift.len2() < objectToDrag.getShift().len2()) {
+			if (objectToDrag != null) {
+				objectToDrag.setDragged(false);
+			}
+			object.setDragged(true);
+			object.setShift(shift);
+			objectToDrag = object;
+		}
+	}
+
+	public void resetDraggedObject() {
+		objectToDrag = null;
+	}
+
+	public boolean draggedObjectExist() {
+		return this.objectToDrag != null;
 	}
 
 	private void fail(String primaryMessage) {
@@ -173,7 +192,7 @@ public final class RepairingMinigame extends Minigame {
 		leave();
 	}
 
-	private void leave() {		
+	private void leave() {
 		this.state = States.LEAVING;
 	}
 
@@ -213,11 +232,30 @@ public final class RepairingMinigame extends Minigame {
 	private enum States {
 		JACK_TO_SPANNER, SPANNER_TO_TIRE, TIRE_TO_TIRE, TIRE_TO_SPANNER, SPANNER_TO_JACK, JACK_TO_LEAVING, LEAVING;
 	}
-	
+
+	@Override
+	protected void drawBackGroundTexture(SpriteBatch batch) {
+		batch.begin();
+		this.backgroundTexture.draw(batch, 0, 0, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+		batch.end();
+	}
+
 	@Override
 	public void DrawMaxTouchableArea() {
+		super.DrawMaxTouchableArea();
 		for (RepairingMinigameObject gameObject : gameObjects) {
 			gameObject.DrawMaxTouchableArea();
-		}		
+		}
+	}
+
+	@Override
+	public void DrawDiagnostics() {
+		if (Debug.repairingMinigame) {
+			super.DrawDiagnostics();
+			for (RepairingMinigameObject gameObject : gameObjects) {
+				gameObject.DrawTarget();
+				gameObject.DrawActiveObject();
+			}
+		}
 	}
 }

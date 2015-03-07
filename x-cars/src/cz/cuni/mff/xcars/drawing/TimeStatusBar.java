@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.constants.TimeStatusBarConsts;
-import cz.cuni.mff.xcars.input.Input;
 
 public class TimeStatusBar extends Actor {
 	private final BitmapFont bigfont = Xcars.getInstance().assets.getTimeIntFont();
@@ -23,7 +21,7 @@ public class TimeStatusBar extends Actor {
 	private float timeLimit;
 
 	private TimeStatusBarConsts consts = Constants.tsb;
-	private ShapeRenderer renderer = new ShapeRenderer();
+	private ShapeRendererStretched renderer = new ShapeRendererStretched();
 	private boolean countdown = true;
 
 	public TimeStatusBar(float timeLimit) {
@@ -35,8 +33,7 @@ public class TimeStatusBar extends Actor {
 
 		timeStrLabel = new Label("time:", new LabelStyle(smallfont, consts.black90));
 
-		timeIntLabel = new Label(String.format("%1$,.1f", timeLimit), new LabelStyle(bigfont,
-				consts.black90));
+		timeIntLabel = new Label(String.format("%1$,.1f", timeLimit), new LabelStyle(bigfont, consts.black90));
 
 		timeStrLabel.setPosition(consts.xTimeStringLabel, consts.yTimeStringLabel);
 		timeIntLabel.setPosition(consts.xTimeIntLabel, consts.yTimeIntLabel);
@@ -72,7 +69,6 @@ public class TimeStatusBar extends Actor {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-
 		this.timeIntLabel.draw(batch, parentAlpha);
 		this.timeStrLabel.draw(batch, parentAlpha);
 
@@ -80,14 +76,12 @@ public class TimeStatusBar extends Actor {
 
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
 		renderer.begin(ShapeType.Filled);
-
 		renderer.setColor(consts.black90alpha);
-		renderer.rect(consts.xRectangle * Input.xStretchFactorInv, consts.yRectangle
-				* Input.yStretchFactorInv, consts.RectWidth * Input.xStretchFactorInv,
-				consts.RectHeight * Input.yStretchFactorInv);
-
+		renderer.rect(consts.xRectangle, consts.yRectangle, consts.RectWidth, consts.RectHeight);
 		renderer.end();
+
 		Gdx.gl.glDisable(GL20.GL_BLEND);
 
 		batch.begin();

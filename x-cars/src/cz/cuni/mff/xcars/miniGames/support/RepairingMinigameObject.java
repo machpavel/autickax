@@ -23,9 +23,8 @@ public class RepairingMinigameObject extends ShiftableGameObject {
 	private Vector2 target;
 	private boolean stickWithTarget;
 
-	public RepairingMinigameObject(float originX, float originY, float targetX,
-			float targetY, String textureName, RepairingMinigame game,
-			boolean stickWithTarget) {
+	public RepairingMinigameObject(float originX, float originY, float targetX, float targetY, String textureName,
+			RepairingMinigame game, boolean stickWithTarget) {
 		super();
 		this.setPosition(originX, originY);
 		this.origin = new Vector2(originX, originY);
@@ -56,6 +55,7 @@ public class RepairingMinigameObject extends ShiftableGameObject {
 				}
 				// Just released
 				else {
+					game.resetDraggedObject();
 					if (isActive && isInTarget()) {
 						doInTargetAction();
 					} else {
@@ -68,14 +68,11 @@ public class RepairingMinigameObject extends ShiftableGameObject {
 			// Just touched
 			else if (Gdx.input.justTouched()) {
 				Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-				Vector2 shift = new Vector2(this.getPosition()).sub(touchPos.x,
-						touchPos.y);
-				float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-						* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+				Vector2 shift = new Vector2(this.getPosition()).sub(touchPos.x, touchPos.y);
+				float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
 
 				if (shift.len() <= maxDistance) {
-					this.setDragged(true);
-					this.setShift(shift);
+					game.setDraggedObject(this, shift);
 				}
 			}
 
@@ -88,7 +85,7 @@ public class RepairingMinigameObject extends ShiftableGameObject {
 
 	protected void doInTargetAction() {
 		game.switchToNextState();
-		if (stickWithTarget)
+		if (this.stickWithTarget)
 			this.origin = this.target;
 		this.reset();
 
@@ -128,15 +125,27 @@ public class RepairingMinigameObject extends ShiftableGameObject {
 
 	public void DrawMaxTouchableArea() {
 		if (this.canBeDragged && !this.isDragged) {
-			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
-			if (isActive) {
-				Debug.drawCircle(this.getPosition(), maxDistance, new Color(1,
-						1, 0, 1), 3);
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
+			if (this.isActive) {
+				Debug.drawCircle(this.getPosition(), maxDistance, new Color(1, 1, 0, 1), 1);
 			} else {
-				Debug.drawCircle(this.getPosition(), maxDistance, new Color(1,
-						1, 0, 1), 1);
+				Debug.drawCircle(this.getPosition(), maxDistance, new Color(1, 1, 0, 1), 1);
 			}
+		}
+	}
+
+	public void DrawTarget() {
+		if (this.canBeDragged && this.isDragged && this.isActive) {
+			float maxDistance = targetRadius;
+			Debug.drawCircle(this.target, maxDistance, new Color(0, 1, 0, 1), 5);
+		}
+	}
+
+	public void DrawActiveObject() {
+		if (this.canBeDragged && !this.isDragged && this.isActive) {
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
+			Debug.drawCircle(this.getPosition(), maxDistance, new Color(0, 1, 0, 1), 5);
+
 		}
 	}
 }

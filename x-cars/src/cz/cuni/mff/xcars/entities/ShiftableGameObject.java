@@ -35,4 +35,8 @@ public abstract class ShiftableGameObject extends GameObject {
 		this.shift = value;
 	}
 
+	public Vector2 getShift() {
+		return new Vector2(this.shift);
+	}
+
 }

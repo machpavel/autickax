@@ -51,13 +51,11 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 
 		initTerminatingGameObjects();
 
-		this.wayPoints = new WayPoints(this.level.getFinish(),
-				this.level.getStart(), pathway, this.level.getStage()
-						.getWidth(), this.level.getStage().getHeight());
+		this.wayPoints = new WayPoints(this.level.getFinish(), this.level.getStart(), pathway, this.level.getStage()
+				.getWidth(), this.level.getStage().getHeight());
 		this.level.getStage().addActor(this.wayPoints);
 
-		this.tyreTracks = new TyreTracks(this.level.getCar().getPosition(),
-				this.level.getCar(), this);
+		this.tyreTracks = new TyreTracks(this.level.getCar().getPosition(), this.level.getCar(), this);
 		this.level.getStage().addActor(this.tyreTracks);
 
 		reset();
@@ -85,8 +83,7 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 			this.level.goToMainScreen();
 			break;
 		default:
-			throw new IllegalCommandException(dialogLocal.getDecision()
-					.toString());
+			throw new IllegalCommandException(dialogLocal.getDecision().toString());
 		}
 
 	}
@@ -138,8 +135,7 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 
 	private void updateInFinishState(float delta) {
 		this.tyreTracks.clear();
-		this.level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this,
-				this.stats);
+		this.level.switchToPhase2(checkPoints, pathway.getDistanceMap(), this, this.stats);
 	}
 
 	private void updateInDrivingState(float delta) {
@@ -168,11 +164,9 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 			// Vector2(carPosition).sub(formerPosition).len();
 			if (!checkPoints.isEmpty()) {
 				Vector2 formerPosition = checkPoints.getLast().getPosition();
-				if (this.level.getCar().collidesWithinLineSegment(gameObject,
-						formerPosition)) {
+				if (this.level.getCar().collidesWithinLineSegment(gameObject, formerPosition)) {
 					this.soundsManager.playCollisionSound(gameObject);
-					switchToMistakeState("You crashed into a "
-							+ gameObject.getName() + "!");
+					switchToMistakeState("You crashed into a " + gameObject.getName() + "!");
 					return;
 				}
 			}
@@ -180,21 +174,18 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 
 		// coordinates ok
 		DistanceMap map = pathway.getDistanceMap();
-		if (carPosition.x >= 0 && carPosition.x < Constants.WORLD_WIDTH
-				&& carPosition.y >= 0 && carPosition.y < Constants.WORLD_HEIGHT) {
+		if (carPosition.x >= 0 && carPosition.x < Constants.WORLD_WIDTH && carPosition.y >= 0
+				&& carPosition.y < Constants.WORLD_HEIGHT) {
 
 			// if(this.level.getCar().positionCollides(this.level.getFinish())){
 			if (this.level.getCar().collides(this.level.getFinish())) {
 
 				if (wayPoints.isEmpty()) {
 					state = SubLevel1States.FINISH_STATE;
-					this.soundsManager.playSound(
-							Constants.sounds.SOUND_SUB1_CHEER,
+					this.soundsManager.playSound(Constants.sounds.SOUND_SUB1_CHEER,
 							Constants.sounds.SOUND_DEFAULT_VOLUME);
 					getDialogStack().push(
-							new DecisionDialog(this.level, this,
-									Constants.strings.PHASE_1_FINISH_REACHED,
-									true));
+							new DecisionDialog(this.level, this, Constants.strings.PHASE_1_FINISH_REACHED, true));
 					timeMeasured = false;
 					this.level.getCar().setDragged(false);
 				} else {
@@ -208,17 +199,14 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 				switchToMistakeState(Constants.strings.PHASE_1_OUT_OF_LINE);
 
 			} else {
-				this.checkPoints.add(new CheckPoint(this.stats
-						.getPhase1ElapsedTime(), carPosition));
-				this.tyreTracks.addPoint(carPosition,
-						this.stats.getPhase1ElapsedTime());
+				this.checkPoints.add(new CheckPoint(this.stats.getPhase1ElapsedTime(), carPosition));
+				this.tyreTracks.addPoint(carPosition, this.stats.getPhase1ElapsedTime());
 
 				if (!this.wayPoints.isEmpty()) {
 					boolean canRemove = true;
 					while (canRemove && !this.wayPoints.isEmpty()) {
 						Vector2 way = new Vector2(this.wayPoints.peekFirst());
-						Vector2 pos = new Vector2(this.level.getCar()
-								.getPosition());
+						Vector2 pos = new Vector2(this.level.getCar().getPosition());
 						if (way.sub(pos).len() <= Constants.misc.MAX_DISTANCE_FROM_PATHWAY * 1.2)
 							this.wayPoints.removeFirst();
 						else
@@ -233,10 +221,8 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-			Vector2 shift = new Vector2(this.level.getCar().getPosition()).sub(
-					touchPos.x, touchPos.y);
-			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+			Vector2 shift = new Vector2(this.level.getCar().getPosition()).sub(touchPos.x, touchPos.y);
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
 
 			if (shift.len() <= maxDistance) {
 				this.level.getCar().setDragged(true);
@@ -264,11 +250,8 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 		this.stats.reset();
 		checkPoints.clear();
 		// this.wayPoints.initWayPoints2(Constants.misc.WAYPOINTS_DISTANCE);
-		this.wayPoints
-				.initWayPoints(Constants.misc.START_POSITION_IN_CURVE,
-						Constants.misc.FINISH_POSITION_IN_CURVE,
-						Constants.misc.WAYPOINT_STEP,
-						Constants.misc.WAYPOINTS_DISTANCE);
+		this.wayPoints.initWayPoints(Constants.misc.START_POSITION_IN_CURVE, Constants.misc.FINISH_POSITION_IN_CURVE,
+				Constants.misc.WAYPOINT_STEP, Constants.misc.WAYPOINTS_DISTANCE);
 
 		for (GameObject gameObject : this.level.getGameObjects()) {
 			gameObject.reset();
@@ -280,8 +263,7 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 
 		if (Xcars.settings.isShowTooltips())
 			this.getDialogStack().push(
-					new MessageDialog(this.level, this,
-							Constants.strings.TOOLTIP_PHASE_1_WHAT_TO_DO));
+					new MessageDialog(this.level, this, Constants.strings.TOOLTIP_PHASE_1_WHAT_TO_DO));
 
 		this.level.getTimeStatusBar().reset();
 		this.tyreTracks.clear();
@@ -292,14 +274,10 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 		// Car positioning
 		float EPSILON_F = 0.01f;
 		Vector2 startPosition = this.level.getStart().getPosition();
-		Vector2 startDirection = new Vector2(
-				this.pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE
-						+ EPSILON_F))
-				.sub(startPosition)
-				.nor()
+		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE
+				+ EPSILON_F)).sub(startPosition).nor()
 				.scl(2 * Constants.gameObjects.CAR_MINIMAL_DISTANCE_TO_SHOW_ROTATION);
-		Vector2 preparePosition = new Vector2(startPosition)
-				.sub(startDirection);
+		Vector2 preparePosition = new Vector2(startPosition).sub(startDirection);
 		this.level.getCar().move(new Vector2(preparePosition));
 		this.level.getCar().move(new Vector2(startPosition));
 	}
@@ -308,10 +286,8 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 	 * Player failed to finish the track
 	 */
 	private void switchToMistakeState(String str) {
-		this.soundsManager.playSound(Constants.sounds.SOUND_SUB1_FAIL,
-				Constants.sounds.SOUND_DEFAULT_VOLUME);
-		this.getDialogStack().push(
-				new DecisionDialog(this.level, this, str, false));
+		this.soundsManager.playSound(Constants.sounds.SOUND_SUB1_FAIL, Constants.sounds.SOUND_DEFAULT_VOLUME);
+		this.getDialogStack().push(new DecisionDialog(this.level, this, str, false));
 		this.state = SubLevel1States.MISTAKE_STATE;
 		this.level.getCar().setDragged(false);
 		timeMeasured = false;
@@ -340,10 +316,8 @@ public class SubLevel1 extends SubLevel implements IElapsed {
 	}
 
 	public void DrawMaxTouchableArea() {
-		float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-				* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+		float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
 
-		Debug.drawCircle(this.level.getCar().getPosition(), maxDistance,
-				new Color(1, 1, 0, 1), 1);
+		Debug.drawCircle(this.level.getCar().getPosition(), maxDistance, new Color(1, 1, 0, 1), 1);
 	}
 }

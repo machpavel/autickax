@@ -58,15 +58,13 @@ public final class AnglicakMinigame extends Minigame {
 		setDifficulty(this.level.getDifficulty());
 
 		this.backgroundTexture = new NinePatchDrawable(
-				Xcars.getInstance().assets
-						.getNinePatch(Constants.minigames.ANGLICAK_MINIGAME_BACKGROUND_TEXTURE));
+				Xcars.getInstance().assets.getNinePatch(Constants.minigames.ANGLICAK_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Xcars.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(gameScreen, parent,
 					Constants.strings.TOOLTIP_MINIGAME_ANGLICAK_WHAT_TO_DO));
 
-		this.target = new AnglicakMinigameTarget(targetLocationX,
-				targetLocationY, targetRadius);
+		this.target = new AnglicakMinigameTarget(targetLocationX, targetLocationY, targetRadius);
 		this.stage.addActor(this.target);
 
 		this.car = new Car(0, 0, 1);
@@ -112,10 +110,8 @@ public final class AnglicakMinigame extends Minigame {
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
-					touchPos.y);
-			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
 
 			if (shift.len() <= maxDistance) {
 				this.carWasDragged = true;
@@ -133,8 +129,7 @@ public final class AnglicakMinigame extends Minigame {
 					return;
 				}
 
-				carSpeeds[carSpeedsIndex] = new Vector2(newPosition)
-						.sub(lastCarPosition);
+				carSpeeds[carSpeedsIndex] = new Vector2(newPosition).sub(lastCarPosition);
 				carSpeedsDeltas[carSpeedsIndex] = delta;
 
 				// Counts average speed
@@ -166,8 +161,7 @@ public final class AnglicakMinigame extends Minigame {
 	}
 
 	private void updateInDrivingState(float delta) {
-		Vector2 a = new Vector2(carSpeed).nor().scl(-uniformDeceleration)
-				.add(wind);
+		Vector2 a = new Vector2(carSpeed).nor().scl(-uniformDeceleration).add(wind);
 		Vector2 at = new Vector2(a).scl(delta);
 		Vector2 v = new Vector2(carSpeed).add(at);
 		Vector2 s = new Vector2(carSpeed).add(v).scl(delta / 2);
@@ -189,8 +183,7 @@ public final class AnglicakMinigame extends Minigame {
 	}
 
 	public void checkEnd() {
-		float distanceFromTargetInPercents = this.target
-				.distanceInPerc(this.car.getPosition());
+		float distanceFromTargetInPercents = this.target.distanceInPerc(this.car.getPosition());
 		if (distanceFromTargetInPercents > 0) {
 			this.setResultValue(distanceFromTargetInPercents);
 			win();
@@ -207,11 +200,9 @@ public final class AnglicakMinigame extends Minigame {
 
 	private boolean isInWorld(Vector2 position) {
 		return position.x > Constants.dialog.DIALOG_WORLD_X_OFFSET
-				&& position.x < Constants.dialog.DIALOG_WORLD_X_OFFSET
-						+ Constants.dialog.DIALOG_WORLD_WIDTH
+				&& position.x < Constants.dialog.DIALOG_WORLD_X_OFFSET + Constants.dialog.DIALOG_WORLD_WIDTH
 				&& position.y > Constants.dialog.DIALOG_WORLD_Y_OFFSET
-				&& position.y < Constants.dialog.DIALOG_WORLD_Y_OFFSET
-						+ Constants.dialog.DIALOG_WORLD_HEIGHT;
+				&& position.y < Constants.dialog.DIALOG_WORLD_Y_OFFSET + Constants.dialog.DIALOG_WORLD_HEIGHT;
 	}
 
 	private void setResultValue(float succesInPerc) {
@@ -273,15 +264,13 @@ public final class AnglicakMinigame extends Minigame {
 		}
 		return;
 	}
-	
+
 	@Override
 	public void DrawMaxTouchableArea() {
 		if (!this.car.isDragged()) {
 			if (Debug.drawMaxTouchableArea) {
-				float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-						* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
-				Debug.drawCircle(this.car.getPosition(), maxDistance,
-						new Color(1, 1, 0, 1), 1);
+				float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
+				Debug.drawCircle(this.car.getPosition(), maxDistance, new Color(1, 1, 0, 1), 1);
 			}
 		}
 	}

@@ -58,7 +58,7 @@ public class LevelLoadingScreen extends BaseScreen {
 							if (Xcars.adsHandler != null) {
 								Xcars.adsHandler.showBanner(false);
 							}
-							//Music!
+							// Music!
 							Xcars.getInstance().assets.soundAndMusicManager.pauseMenuMusic();
 							if (Xcars.settings.isPlayMusic()) {
 								Xcars.getInstance().assets.soundAndMusicManager.playRaceMusic();
@@ -71,14 +71,10 @@ public class LevelLoadingScreen extends BaseScreen {
 
 		distanceMapLoader.start();
 
-		this.background = Xcars.getInstance().assets
-				.getGraphics(Constants.menu.LOADING_LEVEL_MENU_BACKGROUND);
-		this.greenLight = Xcars.getInstance().assets
-				.getGraphics(Constants.menu.LOADING_LEVEL_MENU_GREEN);
-		this.redLight = Xcars.getInstance().assets
-				.getGraphics(Constants.menu.LOADING_LEVEL_MENU_RED);
-		this.grayLight = Xcars.getInstance().assets
-				.getGraphics(Constants.menu.LOADING_LEVEL_MENU_GRAY);
+		this.background = Xcars.getInstance().assets.getGraphics(Constants.menu.LOADING_LEVEL_MENU_BACKGROUND);
+		this.greenLight = Xcars.getInstance().assets.getGraphics(Constants.menu.LOADING_LEVEL_MENU_GREEN);
+		this.redLight = Xcars.getInstance().assets.getGraphics(Constants.menu.LOADING_LEVEL_MENU_RED);
+		this.grayLight = Xcars.getInstance().assets.getGraphics(Constants.menu.LOADING_LEVEL_MENU_GRAY);
 
 		this.lightsXposition = (int) ((this.getStage().getWidth() / 2) - ((LevelLoadingScreen.lightsCount / 2) * LevelLoadingScreen.lightsXmargin));
 	}
@@ -92,8 +88,7 @@ public class LevelLoadingScreen extends BaseScreen {
 
 		this.batch.begin();
 
-		this.batch.draw(this.background, 0, 0, this.stageWidth,
-				this.stageHeight);
+		this.batch.draw(this.background, 0, 0, this.stageWidth, this.stageHeight);
 
 		for (int i = 0; i < LevelLoadingScreen.lightsCount; ++i) {
 			TextureRegion drawnLight;
@@ -104,25 +99,24 @@ public class LevelLoadingScreen extends BaseScreen {
 			} else {
 				drawnLight = this.redLight;
 			}
-			this.batch.draw(drawnLight, this.lightsXposition + i
-					* LevelLoadingScreen.lightsXmargin,
-					LevelLoadingScreen.lightsYposition
-							+ LevelLoadingScreen.lightsYmargin,
-					drawnLight.getRegionWidth(), drawnLight.getRegionHeight());
+			this.batch.draw(drawnLight, this.lightsXposition + i * LevelLoadingScreen.lightsXmargin,
+					LevelLoadingScreen.lightsYposition + LevelLoadingScreen.lightsYmargin, drawnLight.getRegionWidth(),
+					drawnLight.getRegionHeight());
 
-			this.batch.draw(drawnLight, this.lightsXposition + i
-					* LevelLoadingScreen.lightsXmargin,
-					LevelLoadingScreen.lightsYposition
-							- LevelLoadingScreen.lightsYmargin,
-					drawnLight.getRegionWidth(), drawnLight.getRegionHeight());
+			this.batch.draw(drawnLight, this.lightsXposition + i * LevelLoadingScreen.lightsXmargin,
+					LevelLoadingScreen.lightsYposition - LevelLoadingScreen.lightsYmargin, drawnLight.getRegionWidth(),
+					drawnLight.getRegionHeight());
 		}
 
 		this.batch.end();
 
-		this.shiningLightsCount = (int) (Xcars.gameScreen
-				.getDistanceMapProgress() * LevelLoadingScreen.lightsCount);
-		Debug.SetValue(Xcars.gameScreen.getDistanceMapProgress());
-		renderDebug(batch, delta);
+		this.shiningLightsCount = (int) (Xcars.gameScreen.getDistanceMapProgress() * LevelLoadingScreen.lightsCount);
+		if (Debug.DEBUG) {
+			if (Debug.logDistanceMap) {
+				Debug.SetValue(Xcars.gameScreen.getDistanceMapProgress());
+				renderDebug(batch, delta);
+			}
+		}
 	}
 
 	@Override
@@ -132,8 +126,7 @@ public class LevelLoadingScreen extends BaseScreen {
 
 		Debug.Log("Exit loading screen");
 
-		Xcars.getInstance().assets.soundAndMusicManager.playSound(
-				Constants.sounds.SOUND_MENU_CLOSE,
+		Xcars.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_CLOSE,
 				Constants.sounds.SOUND_DEFAULT_VOLUME);
 		Xcars.getInstance().assets.soundAndMusicManager.stopRaceMusic();
 		Xcars.getInstance().assets.soundAndMusicManager.playMenuMusic();

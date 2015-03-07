@@ -25,15 +25,20 @@ public final class Debug {
 	public static final boolean drawWayPoints = false;
 	public static final boolean drawFPSDistribution = false;
 	// All diagnostics in communicators - dialog and minigames
-	public static final boolean drawCommunicatorDiagnostics = true;
-	public static final boolean drawBoundingBoxes = true;
+	// public static final boolean drawCommunicatorDiagnostics = true;
+	// Draw bounding circles of all game Objects
+	public static final boolean drawBoundingBoxes = false;
 	// Maximal distance from object where it is possible to activate them
 	public static final boolean drawMaxTouchableArea = true;
-	// Area in which buttons can be generated in SelestScreenBase typed screen
+	// Area where buttons can be generated in SelectScreenBase typed screen
 	// (level selection, scenario selection)
 	public static final boolean drawSelectScreenButtonsArea = true;
 	// Debug logs while DistanceMap.CreateDistances (loading of map)
 	public static final boolean logDistanceMap = false;
+	// ********minigames********************
+	public static final boolean repairingMinigame = true;
+	public static final boolean raceMinigameMinigame = true;
+	public static final boolean gearShiftMinigame = true;
 	// **************************************
 
 	public static ShapeRendererStretched shapeRenderer = new ShapeRendererStretched();

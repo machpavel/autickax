@@ -41,8 +41,7 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	private Finish finish;
 	States state = States.BEGINNING_STATE;
 
-	public AvoidObstaclesMinigame(GameScreen gameScreen, SubLevel parent,
-			ObstaclesType obstacleType) {
+	public AvoidObstaclesMinigame(GameScreen gameScreen, SubLevel parent, ObstaclesType obstacleType) {
 		super(gameScreen, parent);
 		this.obstaclesType = obstacleType;
 
@@ -53,16 +52,12 @@ public final class AvoidObstaclesMinigame extends Minigame {
 						.getNinePatch(Constants.minigames.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Xcars.settings.isShowTooltips())
-			this.parent
-					.setDialog(new MessageDialog(
-							gameScreen,
-							parent,
-							Constants.strings.TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO));
+			this.parent.setDialog(new MessageDialog(gameScreen, parent,
+					Constants.strings.TOOLTIP_MINIGAME_AVOID_OBSTACLES_WHAT_TO_DO));
 
 		this.gameObjects = new ArrayList<GameObject>();
 
-		this.finish = new Finish(FINISH_START_POSITION_X,
-				Constants.WORLD_HEIGHT / 2, FINISH_TYPE);
+		this.finish = new Finish(FINISH_START_POSITION_X, Constants.WORLD_HEIGHT / 2, FINISH_TYPE);
 
 		this.car = new Car(CAR_START_POSITION_X, Constants.WORLD_HEIGHT / 2, 1);
 		this.car.setDragged(false);
@@ -83,11 +78,9 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			do {
 				positionIsCorrect = true;
 
-				xPosition = MathUtils
-						.random(Constants.dialog.DIALOG_WORLD_WIDTH - 20)
+				xPosition = MathUtils.random(Constants.dialog.DIALOG_WORLD_WIDTH - 20)
 						+ Constants.dialog.DIALOG_WORLD_X_OFFSET + 10;
-				yPosition = MathUtils
-						.random(Constants.dialog.DIALOG_WORLD_HEIGHT - 20)
+				yPosition = MathUtils.random(Constants.dialog.DIALOG_WORLD_HEIGHT - 20)
 						+ Constants.dialog.DIALOG_WORLD_Y_OFFSET + 10;
 				Vector2 position = new Vector2(xPosition, yPosition);
 
@@ -111,17 +104,13 @@ public final class AvoidObstaclesMinigame extends Minigame {
 			if (!limitReached) {
 				switch (obstaclesType) {
 				case HOLES:
-					int avoidHoleType = MathUtils.random(1,
-							Constants.minigames.AVOID_HOLES_TYPES_COUNT);
-					AvoidHole avoidHoleObstacle = new AvoidHole(xPosition,
-							yPosition, avoidHoleType);
+					int avoidHoleType = MathUtils.random(1, Constants.minigames.AVOID_HOLES_TYPES_COUNT);
+					AvoidHole avoidHoleObstacle = new AvoidHole(xPosition, yPosition, avoidHoleType);
 					gameObjects.add(avoidHoleObstacle);
 					break;
 				case STONES:
-					int avoidStoneType = MathUtils.random(1,
-							Constants.minigames.AVOID_STONE_TYPES_COUNT);
-					AvoidStone avoidStoneObstacle = new AvoidStone(xPosition,
-							yPosition, avoidStoneType);
+					int avoidStoneType = MathUtils.random(1, Constants.minigames.AVOID_STONE_TYPES_COUNT);
+					AvoidStone avoidStoneObstacle = new AvoidStone(xPosition, yPosition, avoidStoneType);
 					gameObjects.add(avoidStoneObstacle);
 					break;
 				default:
@@ -157,10 +146,8 @@ public final class AvoidObstaclesMinigame extends Minigame {
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
-					touchPos.y);
-			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
 			if (shift.len() <= maxDistance) {
 				this.car.setDragged(true);
 				this.car.setShift(shift);
@@ -174,10 +161,8 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		// Taking focus of the car again
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x,
-					touchPos.y);
-			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+			Vector2 shift = new Vector2(this.car.getPosition()).sub(touchPos.x, touchPos.y);
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
 			if (shift.len() <= maxDistance) {
 				this.car.setDragged(true);
 				this.car.setShift(shift);
@@ -204,11 +189,9 @@ public final class AvoidObstaclesMinigame extends Minigame {
 
 	private boolean isInWorld(Vector2 position) {
 		return position.x > Constants.dialog.DIALOG_WORLD_X_OFFSET
-				&& position.x < Constants.dialog.DIALOG_WORLD_X_OFFSET
-						+ Constants.dialog.DIALOG_WORLD_WIDTH
+				&& position.x < Constants.dialog.DIALOG_WORLD_X_OFFSET + Constants.dialog.DIALOG_WORLD_WIDTH
 				&& position.y > Constants.dialog.DIALOG_WORLD_Y_OFFSET
-				&& position.y < Constants.dialog.DIALOG_WORLD_Y_OFFSET
-						+ Constants.dialog.DIALOG_WORLD_HEIGHT;
+				&& position.y < Constants.dialog.DIALOG_WORLD_Y_OFFSET + Constants.dialog.DIALOG_WORLD_HEIGHT;
 	}
 
 	private void fail(String primaryMessage) {
@@ -291,10 +274,8 @@ public final class AvoidObstaclesMinigame extends Minigame {
 		if (Debug.DEBUG) {
 			if (Debug.drawMaxTouchableArea) {
 				if (!this.car.isDragged()) {
-					float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-							* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
-					Debug.drawCircle(this.car.getPosition(), maxDistance,
-							new Color(1, 1, 0, 1), 1);
+					float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
+					Debug.drawCircle(this.car.getPosition(), maxDistance, new Color(1, 1, 0, 1), 1);
 				}
 			}
 		}

@@ -30,8 +30,7 @@ public final class GearShiftMinigame extends Minigame {
 	private static final float COLUMN_2 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_2;
 	private static final float COLUMN_3 = Constants.minigames.GEAR_SHIFT_MINIGAME_COLUMN_3;
 	private static float MAX_DISTANCE_FROM_LINE;
-	private static float FINISH_RADIUS = Constants.minigames.GEAR_SHIFT_FINISH_RADIUS
-			* (Input.xStretchFactorInv + Input.yStretchFactorInv) / 2;
+	private static float FINISH_RADIUS = Constants.minigames.GEAR_SHIFT_FINISH_RADIUS;
 
 	private States state = States.BEGINNING_STATE;
 	private GearShifter gearShifter;
@@ -41,8 +40,7 @@ public final class GearShiftMinigame extends Minigame {
 		super(screen, parent);
 		setDifficulty(this.level.getDifficulty());
 		this.backgroundTexture = new NinePatchDrawable(
-				Xcars.getInstance().assets
-						.getNinePatch(Constants.minigames.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
+				Xcars.getInstance().assets.getNinePatch(Constants.minigames.GEAR_SHIFT_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Xcars.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(screen, parent,
@@ -61,8 +59,7 @@ public final class GearShiftMinigame extends Minigame {
 		do {
 			gearShifterIndex = MathUtils.random(5);
 		} while (finishPositionIndex == gearShifterIndex);
-		this.gearShifter = new GearShifter(columns[gearShifterIndex % 3],
-				rows[(((gearShifterIndex / 3) + 1) % 2) * 2]);
+		this.gearShifter = new GearShifter(columns[gearShifterIndex % 3], rows[(((gearShifterIndex / 3) + 1) % 2) * 2]);
 
 		// Generates gears numbers
 		float numbersPositionOffset = Constants.minigames.GEAR_SHIFT_MINIGAME_GEAR_NUMBER_VERTICAL_OFFSET;
@@ -70,27 +67,20 @@ public final class GearShiftMinigame extends Minigame {
 		for (int i = 0; i < 6; i++) {
 			TextureRegion numberTexture;
 			if (i == finishPositionIndex) {
-				numberTexture = Xcars.getInstance().assets
-						.getGraphics(numbersTexturePrefix + (i + 1) + "e");
+				numberTexture = Xcars.getInstance().assets.getGraphics(numbersTexturePrefix + (i + 1) + "e");
 			} else {
-				numberTexture = Xcars.getInstance().assets
-						.getGraphics(numbersTexturePrefix + (i + 1) + "d");
+				numberTexture = Xcars.getInstance().assets.getGraphics(numbersTexturePrefix + (i + 1) + "d");
 			}
-			ScreenAdaptiveImage gearNumberImage = new ScreenAdaptiveImage(
-					numberTexture);
-			float yOffset = i < 3 ? numbersPositionOffset
-					: -numbersPositionOffset;
-			gearNumberImage.setCenterPosition(columns[i % 3],
-					rows[(((i / 3) + 1) % 2) * 2] + yOffset);
+			ScreenAdaptiveImage gearNumberImage = new ScreenAdaptiveImage(numberTexture);
+			float yOffset = i < 3 ? numbersPositionOffset : -numbersPositionOffset;
+			gearNumberImage.setCenterPosition(columns[i % 3], rows[(((i / 3) + 1) % 2) * 2] + yOffset);
 			stage.addActor(gearNumberImage);
 		}
 
 		// Generates axis image
 		ScreenAdaptiveImage gearsAxisImage = new ScreenAdaptiveImage(
-				Xcars.getInstance().assets
-						.getGraphics(Constants.minigames.GEAR_SHIFT_MINIGAME_GEARS_AXIS_TEXTURE));
-		gearsAxisImage.setCenterPosition(Constants.WORLD_WIDTH / 2,
-				Constants.WORLD_HEIGHT / 2);
+				Xcars.getInstance().assets.getGraphics(Constants.minigames.GEAR_SHIFT_MINIGAME_GEARS_AXIS_TEXTURE));
+		gearsAxisImage.setCenterPosition(Constants.WORLD_WIDTH / 2, Constants.WORLD_HEIGHT / 2);
 		stage.addActor(gearsAxisImage);
 	}
 
@@ -117,10 +107,8 @@ public final class GearShiftMinigame extends Minigame {
 	private void updateInBeginnigState(float delta) {
 		if (Gdx.input.justTouched()) {
 			Vector2 touchPos = new Vector2(Input.getX(), Input.getY());
-			Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(
-					touchPos.x, touchPos.y);
-			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
+			Vector2 shift = new Vector2(this.gearShifter.getPosition()).sub(touchPos.x, touchPos.y);
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
 
 			if (shift.len() <= maxDistance) {
 				this.gearShifter.setDragged(true);
@@ -141,8 +129,7 @@ public final class GearShiftMinigame extends Minigame {
 			win();
 		}
 		// Out of pathway
-		else if (!isInGrid(this.gearShifter.getPosition().x,
-				this.gearShifter.getPosition().y)) {
+		else if (!isInGrid(this.gearShifter.getPosition().x, this.gearShifter.getPosition().y)) {
 			fail(null);
 		}
 	}
@@ -181,26 +168,20 @@ public final class GearShiftMinigame extends Minigame {
 
 	private boolean isInGrid(float x, float y) {
 		// Vertical limits
-		if (y > ROW_3 + MAX_DISTANCE_FROM_LINE
-				|| y < ROW_1 - MAX_DISTANCE_FROM_LINE)
+		if (y > ROW_3 + MAX_DISTANCE_FROM_LINE || y < ROW_1 - MAX_DISTANCE_FROM_LINE)
 			return false;
 		// In first column
-		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE
-				&& x < COLUMN_1 + MAX_DISTANCE_FROM_LINE)
+		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE && x < COLUMN_1 + MAX_DISTANCE_FROM_LINE)
 			return true;
 		// In second column
-		if (x > COLUMN_2 - MAX_DISTANCE_FROM_LINE
-				&& x < COLUMN_2 + MAX_DISTANCE_FROM_LINE)
+		if (x > COLUMN_2 - MAX_DISTANCE_FROM_LINE && x < COLUMN_2 + MAX_DISTANCE_FROM_LINE)
 			return true;
 		// In second column
-		if (x > COLUMN_3 - MAX_DISTANCE_FROM_LINE
-				&& x < COLUMN_3 + MAX_DISTANCE_FROM_LINE)
+		if (x > COLUMN_3 - MAX_DISTANCE_FROM_LINE && x < COLUMN_3 + MAX_DISTANCE_FROM_LINE)
 			return true;
 		// Middle row
-		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE
-				&& x < COLUMN_3 + MAX_DISTANCE_FROM_LINE
-				&& y > ROW_2 - MAX_DISTANCE_FROM_LINE
-				&& y < ROW_2 + MAX_DISTANCE_FROM_LINE)
+		if (x > COLUMN_1 - MAX_DISTANCE_FROM_LINE && x < COLUMN_3 + MAX_DISTANCE_FROM_LINE
+				&& y > ROW_2 - MAX_DISTANCE_FROM_LINE && y < ROW_2 + MAX_DISTANCE_FROM_LINE)
 			return true;
 		return false;
 	}
@@ -234,56 +215,47 @@ public final class GearShiftMinigame extends Minigame {
 
 	@Override
 	public void DrawDiagnostics() {
-		// Max distance from skeleton lines
-		shapeRenderer.begin(ShapeType.Filled);
-		float width = 1.f;
-		shapeRenderer.setColor(0.5f, 0, 0, 1);
-		shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_2
-				+ MAX_DISTANCE_FROM_LINE, COLUMN_3 + MAX_DISTANCE_FROM_LINE,
-				ROW_2 + MAX_DISTANCE_FROM_LINE, width);
-		shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_2
-				- MAX_DISTANCE_FROM_LINE, COLUMN_3 + MAX_DISTANCE_FROM_LINE,
-				ROW_2 - MAX_DISTANCE_FROM_LINE, width);
-		shapeRenderer.rectLine(COLUMN_1 + MAX_DISTANCE_FROM_LINE, ROW_1
-				- MAX_DISTANCE_FROM_LINE, COLUMN_1 + MAX_DISTANCE_FROM_LINE,
-				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
-		shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_1
-				- MAX_DISTANCE_FROM_LINE, COLUMN_1 - MAX_DISTANCE_FROM_LINE,
-				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
-		shapeRenderer.rectLine(COLUMN_2 + MAX_DISTANCE_FROM_LINE, ROW_1
-				- MAX_DISTANCE_FROM_LINE, COLUMN_2 + MAX_DISTANCE_FROM_LINE,
-				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
-		shapeRenderer.rectLine(COLUMN_2 - MAX_DISTANCE_FROM_LINE, ROW_1
-				- MAX_DISTANCE_FROM_LINE, COLUMN_2 - MAX_DISTANCE_FROM_LINE,
-				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
-		shapeRenderer.rectLine(COLUMN_3 + MAX_DISTANCE_FROM_LINE, ROW_1
-				- MAX_DISTANCE_FROM_LINE, COLUMN_3 + MAX_DISTANCE_FROM_LINE,
-				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
-		shapeRenderer.rectLine(COLUMN_3 - MAX_DISTANCE_FROM_LINE, ROW_1
-				- MAX_DISTANCE_FROM_LINE, COLUMN_3 - MAX_DISTANCE_FROM_LINE,
-				ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+		if (Debug.gearShiftMinigame) {
+			// Max distance from skeleton lines
+			shapeRenderer.begin(ShapeType.Filled);
+			float width = 1.f;
+			shapeRenderer.setColor(0.5f, 0, 0, 1);
+			shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_2 + MAX_DISTANCE_FROM_LINE, COLUMN_3
+					+ MAX_DISTANCE_FROM_LINE, ROW_2 + MAX_DISTANCE_FROM_LINE, width);
+			shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_2 - MAX_DISTANCE_FROM_LINE, COLUMN_3
+					+ MAX_DISTANCE_FROM_LINE, ROW_2 - MAX_DISTANCE_FROM_LINE, width);
+			shapeRenderer.rectLine(COLUMN_1 + MAX_DISTANCE_FROM_LINE, ROW_1 - MAX_DISTANCE_FROM_LINE, COLUMN_1
+					+ MAX_DISTANCE_FROM_LINE, ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+			shapeRenderer.rectLine(COLUMN_1 - MAX_DISTANCE_FROM_LINE, ROW_1 - MAX_DISTANCE_FROM_LINE, COLUMN_1
+					- MAX_DISTANCE_FROM_LINE, ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+			shapeRenderer.rectLine(COLUMN_2 + MAX_DISTANCE_FROM_LINE, ROW_1 - MAX_DISTANCE_FROM_LINE, COLUMN_2
+					+ MAX_DISTANCE_FROM_LINE, ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+			shapeRenderer.rectLine(COLUMN_2 - MAX_DISTANCE_FROM_LINE, ROW_1 - MAX_DISTANCE_FROM_LINE, COLUMN_2
+					- MAX_DISTANCE_FROM_LINE, ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+			shapeRenderer.rectLine(COLUMN_3 + MAX_DISTANCE_FROM_LINE, ROW_1 - MAX_DISTANCE_FROM_LINE, COLUMN_3
+					+ MAX_DISTANCE_FROM_LINE, ROW_3 + MAX_DISTANCE_FROM_LINE, width);
+			shapeRenderer.rectLine(COLUMN_3 - MAX_DISTANCE_FROM_LINE, ROW_1 - MAX_DISTANCE_FROM_LINE, COLUMN_3
+					- MAX_DISTANCE_FROM_LINE, ROW_3 + MAX_DISTANCE_FROM_LINE, width);
 
-		// Skeleton lines
-		width = 3.0f;
-		shapeRenderer.setColor(1, 0, 0, 1);
-		shapeRenderer.rectLine(COLUMN_1, ROW_2, COLUMN_3, ROW_2, width);
-		shapeRenderer.rectLine(COLUMN_1, ROW_1, COLUMN_1, ROW_3, width);
-		shapeRenderer.rectLine(COLUMN_2, ROW_1, COLUMN_2, ROW_3, width);
-		shapeRenderer.rectLine(COLUMN_3, ROW_1, COLUMN_3, ROW_3, width);
-		shapeRenderer.end();
+			// Skeleton lines
+			width = 3.0f;
+			shapeRenderer.setColor(1, 0, 0, 1);
+			shapeRenderer.rectLine(COLUMN_1, ROW_2, COLUMN_3, ROW_2, width);
+			shapeRenderer.rectLine(COLUMN_1, ROW_1, COLUMN_1, ROW_3, width);
+			shapeRenderer.rectLine(COLUMN_2, ROW_1, COLUMN_2, ROW_3, width);
+			shapeRenderer.rectLine(COLUMN_3, ROW_1, COLUMN_3, ROW_3, width);
+			shapeRenderer.end();
 
-		// Finish bounding circle
-		Debug.drawCircle(finishPosition, FINISH_RADIUS, new Color(1, 0, 0, 1),
-				1);
+			// Finish bounding circle
+			Debug.drawCircle(finishPosition, FINISH_RADIUS, new Color(1, 0, 0, 1), 1);
+		}
 	}
 
 	@Override
 	public void DrawMaxTouchableArea() {
 		if (!this.gearShifter.isDragged()) {
-			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE
-					* (Input.xStretchFactorInv + Input.yStretchFactorInv / 2);
-			Debug.drawCircle(this.gearShifter.getPosition(), maxDistance,
-					new Color(1, 1, 0, 1), 1);
+			float maxDistance = Constants.misc.SHIFTABLE_OBJECT_MAX_CAPABLE_DISTANCE;
+			Debug.drawCircle(this.gearShifter.getPosition(), maxDistance, new Color(1, 1, 0, 1), 1);
 		}
 	}
 }
