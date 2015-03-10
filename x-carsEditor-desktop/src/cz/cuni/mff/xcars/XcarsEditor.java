@@ -36,7 +36,7 @@ public class XcarsEditor extends Game {
 		// "../SampleGDXgame-android/assets/img/packed", "graphics");
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "XCars-Editor";
+		cfg.title = "x-cars-editor";
 		cfg.width = (int) (Constants.WORLD_WIDTH + EditorConstants.CONTROL_PANEL_WIDTH);
 		cfg.height = (int) Constants.WORLD_HEIGHT;
 		cfg.resizable = false;

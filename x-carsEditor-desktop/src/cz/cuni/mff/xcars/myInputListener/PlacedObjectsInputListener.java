@@ -1,32 +1,28 @@
 package cz.cuni.mff.xcars.myInputListener;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 import cz.cuni.mff.xcars.EditorScreen;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.entities.GameObject;
 
 public class PlacedObjectsInputListener extends MyInputListener {
-	private final Actor representedObject;
+	private final GameObject representedObject;
 
-	public PlacedObjectsInputListener(Actor representedObject,
-			EditorScreen screen) {
+	public PlacedObjectsInputListener(GameObject representedObject, EditorScreen screen) {
 		super(screen);
 		this.representedObject = representedObject;
 	}
 
 	@Override
-	public boolean touchDown(InputEvent event, float x, float y, int pointer,
-			int button) {
+	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 		this.screen.draggedObject = representedObject;
 		this.screen.lastObjectMoved = representedObject;
-		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer,
-				button);
+		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer, button);
 	}
 
 	@Override
-	public void touchUp(InputEvent event, float x, float y, int pointer,
-			int button) {
+	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 		if (!this.screen.isInWorld(this.representedObject)) {
 			this.screen.removeObject(this.representedObject);
 		}

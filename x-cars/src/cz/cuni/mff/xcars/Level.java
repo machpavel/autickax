@@ -14,7 +14,6 @@ import cz.cuni.mff.xcars.entities.Car;
 import cz.cuni.mff.xcars.entities.Finish;
 import cz.cuni.mff.xcars.entities.GameObject;
 import cz.cuni.mff.xcars.entities.Start;
-import cz.cuni.mff.xcars.pathway.Arrow;
 import cz.cuni.mff.xcars.pathway.Pathway;
 
 public class Level implements java.io.Externalizable {
@@ -24,7 +23,6 @@ public class Level implements java.io.Externalizable {
 	private Pathway pathway;
 	private ArrayList<GameObject> gameObjects;
 	private ArrayList<GameObject> universalObjects;
-	private ArrayList<Arrow> arrows;
 	private Car car;
 	private Start start;
 	private Finish finish;
@@ -68,23 +66,11 @@ public class Level implements java.io.Externalizable {
 		return this.pathway.getTextureType();
 	}
 
-	public ArrayList<Arrow> getArrows() {
-		return this.arrows;
-	}
-
 	public void parseLevel(FileHandle file) throws Exception {
 
 		Element root = new XmlReader().parse(file);
 
 		this.pathway = Pathway.parsePathway(root);
-
-		this.arrows = new ArrayList<Arrow>();
-		Element arrows = root.getChildByName("arrows");
-		if (arrows != null)
-			for (int i = 0; i < arrows.getChildCount(); i++) {
-				Element arrow = arrows.getChild(i);
-				this.arrows.add(Arrow.parseArrow(arrow));
-			}
 
 		// Loading game objects
 		Element entities = root.getChildByName("entities");
@@ -124,7 +110,7 @@ public class Level implements java.io.Externalizable {
 
 		// Time limit
 		this.timeLimit = root.getFloat("timeLimit");
-		
+
 		Element difficulty = root.getChildByName("difficulty");
 		this.setDifficulty(Difficulty.valueOf(difficulty.getText()));
 
@@ -144,9 +130,7 @@ public class Level implements java.io.Externalizable {
 			if (gameObject.getTexture() == null)
 				gameObject.setTexture();
 		}
-		for (Arrow arrow : this.arrows) {
-			arrow.setTexture();
-		}
+
 		for (GameObject universalObject : this.universalObjects) {
 			universalObject.setTexture();
 		}
@@ -166,14 +150,13 @@ public class Level implements java.io.Externalizable {
 
 		this.gameObjects = (ArrayList<GameObject>) in.readObject();
 		this.universalObjects = (ArrayList<GameObject>) in.readObject();
-		this.arrows = (ArrayList<Arrow>) in.readObject();
 
 		this.car = (Car) in.readObject();
 		this.background = (LevelBackground) in.readObject();
 		this.start = (Start) in.readObject();
 		this.finish = (Finish) in.readObject();
 		this.timeLimit = in.readFloat();
-		this.difficulty = (Difficulty)in.readObject();
+		this.difficulty = (Difficulty) in.readObject();
 
 		byte check = in.readByte();
 		if (check != Level.MAGIC_LEVEL_END)
@@ -187,7 +170,6 @@ public class Level implements java.io.Externalizable {
 
 		out.writeObject(this.gameObjects);
 		out.writeObject(this.universalObjects);
-		out.writeObject(this.arrows);
 
 		out.writeObject(this.car);
 		out.writeObject(this.background);

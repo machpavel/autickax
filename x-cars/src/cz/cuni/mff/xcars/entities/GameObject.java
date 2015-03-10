@@ -79,8 +79,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		this.type = object.type;
 	}
 
-	public static GameObject parseGameObject(Element gameObject)
-			throws IOException {
+	public static GameObject parseGameObject(Element gameObject) throws IOException {
 		GameObject retval;
 
 		float x = gameObject.getFloat("X");
@@ -116,12 +115,18 @@ public abstract class GameObject extends Actor implements Externalizable {
 			retval = new Pneu(x, y, type);
 		} else if (objectName.equals(RacingCar.name)) {
 			retval = new RacingCar(x, y, type);
+		} else if (objectName.equals(Arrow.name)) {
+			retval = new Arrow(x, y, type);
 		} else {
-			throw new IOException("Loading object failed: Unknown type "
-					+ " \"" + objectName + "\"");
+			throw new IOException("Loading object failed: Unknown type " + " \"" + objectName + "\"");
 		}
 		float rotation = gameObject.getFloat("rotation", 0);
 		retval.setRotation(rotation);
+
+		float scaleX = gameObject.getFloat("scaleX", 1);
+		float scaleY = gameObject.getFloat("scaleY", 1);
+		retval.setScale(scaleX, scaleY);
+
 		return retval;
 	}
 
@@ -181,25 +186,22 @@ public abstract class GameObject extends Actor implements Externalizable {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		Vector2 leftBottomCorner = this.getLeftBottomCorner();
-		batch.draw(this.getTexture(), leftBottomCorner.x, leftBottomCorner.y,
-				(this.getWidth() / 2), (this.getHeight() / 2), this.getWidth(),
-				this.getHeight(), this.getScaleX(), this.getScaleY(),
+		batch.draw(this.getTexture(), leftBottomCorner.x, leftBottomCorner.y, (this.getWidth() / 2),
+				(this.getHeight() / 2), this.getWidth(), this.getHeight(), this.getScaleX(), this.getScaleY(),
 				this.getRotation());
 
 		if (Debug.DEBUG) {
 			if (Debug.drawBoundingBoxes) {
 				batch.end();
-				Debug.drawCircle(this.getPosition(), boundingCircleRadius,
-						new Color(0, 0, 1, 1), 2);
+				Debug.drawCircle(this.getPosition(), boundingCircleRadius, new Color(0, 0, 1, 1), 2);
 				batch.begin();
 			}
 		}
 	}
 
 	public String toString() {
-		return getName() + " PosX: " + this.getX() + " PosY: " + this.getY()
-				+ " Rot: " + this.getRotation() + " Width: " + this.getWidth()
-				+ " Height: " + this.getHeight() + " Bounding: "
+		return getName() + " PosX: " + this.getX() + " PosY: " + this.getY() + " Rot: " + this.getRotation()
+				+ " Width: " + this.getWidth() + " Height: " + this.getHeight() + " Bounding: "
 				+ this.boundingCircleRadius;
 	}
 
@@ -210,6 +212,10 @@ public abstract class GameObject extends Actor implements Externalizable {
 		writer.attribute("type", this.type);
 		if (this.getRotation() != 0)
 			writer.attribute("rotation", this.getRotation());
+		if (this.getScaleX() != 1)
+			writer.attribute("scaleX", this.getScaleX());
+		if (this.getScaleY() != 1)
+			writer.attribute("scaleX", this.getScaleY());
 		aditionalsToXml(writer);
 		writer.pop();
 	}
@@ -221,7 +227,6 @@ public abstract class GameObject extends Actor implements Externalizable {
 		// Counts bounding radius only if it wasn't assigned before
 		if (this.boundingCircleRadius == 0)
 			this.boundingCircleRadius = width > height ? height / 2 : width / 2;
-
 	}
 
 	/**
@@ -233,8 +238,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 	public boolean setTexture(String name) {
 		if (Xcars.getInstance() != null) {
 			this.texture = Xcars.getInstance().assets.getGraphics(name);
-			setMeasurements(this.texture.getRegionWidth(),
-					this.texture.getRegionHeight());
+			setMeasurements(this.texture.getRegionWidth(), this.texture.getRegionHeight());
 			return true;
 		} else
 			return false;
@@ -259,10 +263,8 @@ public abstract class GameObject extends Actor implements Externalizable {
 	 * @return
 	 */
 	public boolean collides(GameObject object2) {
-		float objectsDistance = this.getPosition().sub(object2.getPosition())
-				.len();
-		float minimalDistance = this.boundingCircleRadius
-				+ object2.boundingCircleRadius;
+		float objectsDistance = this.getPosition().sub(object2.getPosition()).len();
+		float minimalDistance = this.boundingCircleRadius + object2.boundingCircleRadius;
 		return objectsDistance < minimalDistance;
 	}
 
@@ -300,8 +302,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		float rheight = object2.getHeight();
 
 		// Copied "overlaps" function from Rectangle.class
-		return x < rx + rwidth && x + width > rx && y < ry + rheight
-				&& y + height > ry;
+		return x < rx + rwidth && x + width > rx && y < ry + rheight && y + height > ry;
 
 	}
 
@@ -319,27 +320,23 @@ public abstract class GameObject extends Actor implements Externalizable {
 	 *            Last known position of this object before the current one
 	 * @return true if there is a collision
 	 */
-	public boolean collidesWithinLineSegment(GameObject obstacle,
-			Vector2 formerPosition) {
+	public boolean collidesWithinLineSegment(GameObject obstacle, Vector2 formerPosition) {
 		GameObject movingObject = copy();
 		movingObject.setPosition(formerPosition.x, formerPosition.y);
 		Vector2 dirVec = this.getPosition().sub(formerPosition);
 		float dist = dirVec.len();
 		Vector2 norm = new Vector2(dirVec).nor();
-		Vector2 lineCenter = new Vector2(formerPosition).add(new Vector2(norm)
-				.scl(dist / 2));
+		Vector2 lineCenter = new Vector2(formerPosition).add(new Vector2(norm).scl(dist / 2));
 
 		return movingObject.collides(obstacle)
 				|| collides(obstacle)
-				|| intersects(obstacle.getPosition(),
-						obstacle.boundingCircleRadius, lineCenter,
+				|| intersects(obstacle.getPosition(), obstacle.boundingCircleRadius, lineCenter,
 						2 * this.boundingCircleRadius, dist);
 	}
 
-	private boolean intersects(Vector2 circleCenter, float circleRadius,
-			Vector2 rectCenter, float width, float height) {
-		Vector2 circleDistance = new Vector2(Math.abs(circleCenter.x
-				- rectCenter.x), Math.abs(circleCenter.y - rectCenter.y));
+	private boolean intersects(Vector2 circleCenter, float circleRadius, Vector2 rectCenter, float width, float height) {
+		Vector2 circleDistance = new Vector2(Math.abs(circleCenter.x - rectCenter.x), Math.abs(circleCenter.y
+				- rectCenter.y));
 
 		if (circleDistance.x > (width / 2 + circleRadius)) {
 			return false;
@@ -379,8 +376,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 	 * @return
 	 */
 	public boolean includePosition(Vector2 position) {
-		float middlesDistance = new Vector2(this.getPosition()).sub(position)
-				.len();
+		float middlesDistance = new Vector2(this.getPosition()).sub(position).len();
 		return middlesDistance < this.boundingCircleRadius;
 	}
 
@@ -392,10 +388,8 @@ public abstract class GameObject extends Actor implements Externalizable {
 	public Actor hit(float x, float y, boolean touchable) {
 		if (touchable && this.getTouchable() != Touchable.enabled)
 			return null;
-		Vector2 point = new Vector2(x * Input.xStretchFactor, y
-				* Input.yStretchFactor);
-		return point.dst(Vector2.Zero) < this.boundingCircleRadius ? this
-				: null;
+		Vector2 point = new Vector2(x * Input.xStretchFactor, y * Input.yStretchFactor);
+		return point.dst(Vector2.Zero) < this.boundingCircleRadius ? this : null;
 	}
 
 	public abstract GameObject copy();
@@ -421,8 +415,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 	}
 
 	@Override
-	public void readExternal(ObjectInput in) throws IOException,
-			ClassNotFoundException {
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 		float x = in.readFloat();
 		float y = in.readFloat();
 		this.setPosition(x, y);

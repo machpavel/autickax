@@ -38,7 +38,7 @@ public class Assets {
 	private static final String MUSIC_MENU_DIR = "sfx/music/menu";
 	private static final String MUSIC_RACE_DIR = "sfx/music/race";
 
-	public AssetManager assetManager = new AssetManager();;
+	public AssetManager assetManager = new AssetManager();
 	private Map<String, TextureRegion> graphicsCacheMap = new HashMap<String, TextureRegion>();
 	private Map<String, NinePatch> ninePatchCacheMap = new HashMap<String, NinePatch>();
 	private Map<String, TextureRegion> loadingGraphicsCacheMap = new HashMap<String, TextureRegion>();

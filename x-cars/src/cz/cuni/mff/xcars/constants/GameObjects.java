@@ -51,4 +51,6 @@ public final class GameObjects {
 	public final String TORNADO_NAME = "tornado";
 
 	public final String UNIVERSAL_NAME = "universal";
+	
+	public final String ARROW_NAME = "arrow";
 }

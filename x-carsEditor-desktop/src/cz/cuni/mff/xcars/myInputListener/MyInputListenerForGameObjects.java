@@ -3,8 +3,8 @@ package cz.cuni.mff.xcars.myInputListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 
 import cz.cuni.mff.xcars.EditorScreen;
-import cz.cuni.mff.xcars.EditorScreen.TypeOfObjectToDrag;
 import cz.cuni.mff.xcars.constants.Constants;
+import cz.cuni.mff.xcars.entities.Arrow;
 import cz.cuni.mff.xcars.entities.Booster;
 import cz.cuni.mff.xcars.entities.Fence;
 import cz.cuni.mff.xcars.entities.GameObject;
@@ -21,14 +21,12 @@ import cz.cuni.mff.xcars.entities.Tree;
 import cz.cuni.mff.xcars.entities.UniversalGameObject;
 import cz.cuni.mff.xcars.entities.Wall;
 import cz.cuni.mff.xcars.exceptions.IllegalGameObjectException;
-import cz.cuni.mff.xcars.pathway.Arrow;
 
 public class MyInputListenerForGameObjects extends MyInputListener {
 	EditorScreen.TypeOfObjectToDrag typeOfClass;
 	int type;
 
-	public MyInputListenerForGameObjects(EditorScreen.TypeOfObjectToDrag typeOfClass, int type,
-			EditorScreen screen) {
+	public MyInputListenerForGameObjects(EditorScreen.TypeOfObjectToDrag typeOfClass, int type, EditorScreen screen) {
 		super(screen);
 		this.type = type;
 		this.typeOfClass = typeOfClass;
@@ -77,7 +75,7 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			this.screen.draggedObject = new Pneu(x, y, type);
 			break;
 		case ARROW:
-			this.screen.draggedObject = new Arrow(type);
+			this.screen.draggedObject = new Arrow(x, y, type);
 			break;
 		case UNIVERSAL:
 			this.screen.draggedObject = new UniversalGameObject(x, y, type);
@@ -86,16 +84,12 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 			throw new IllegalGameObjectException(typeOfClass.toString());
 		}
 
-		if (typeOfClass != TypeOfObjectToDrag.ARROW) {
-			GameObject object = (GameObject) this.screen.draggedObject;
-			object.setTexture();
-			object.setCanBeDragged(true);
-		} else {
-			Arrow object = (Arrow) this.screen.draggedObject;
-			object.setTexture();			
-		}
+		GameObject object = this.screen.draggedObject;
+		object.setTexture();
+		object.setCanBeDragged(true);
+
 		this.screen.lastObjectMoved = this.screen.draggedObject;
-		this.screen.draggedNewObject = true;
+		this.screen.draggingNewObject = true;
 		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer, button);
 	}
 }

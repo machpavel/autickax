@@ -4,19 +4,20 @@ import java.io.Externalizable;
 
 import cz.cuni.mff.xcars.constants.Constants;
 
-public class UniversalGameObject extends GameObject implements Externalizable {
-	public static final String name = Constants.gameObjects.UNIVERSAL_NAME;
+public class Arrow extends UniversalGameObject implements Externalizable {
+	public static final String name = Constants.gameObjects.ARROW_NAME;
+	float length = -1;
 
-	public UniversalGameObject(float x, float y, int type) {
+	public Arrow(float x, float y, int type) {
 		super(x, y, type);
 	}
 
-	public UniversalGameObject(GameObject object) {
+	public Arrow(GameObject object) {
 		super(object);
 	}
 
 	/** Parameterless constructor for the externalization */
-	public UniversalGameObject() {
+	public Arrow() {
 	}
 
 	@Override
@@ -31,11 +32,11 @@ public class UniversalGameObject extends GameObject implements Externalizable {
 
 	@Override
 	public GameObject copy() {
-		return new UniversalGameObject(this);
+		return new Arrow(this);
 	}
 
 	@Override
 	public void setTexture(int type) {
-		super.setTexture(UniversalGameObject.GetTextureName(type));
+		this.setTexture(Arrow.GetTextureName(type));
 	}
 }

@@ -8,11 +8,11 @@
                 <attribute name="Main-Class" value="cz.cuni.mff.xcars.XcarsDesktop"/>
                 <attribute name="Class-Path" value="."/>
             </manifest>
-	    <fileset dir="../x-cars-desktop/bin"/>
-            <fileset dir="../x-cars/bin"/>
-            <fileset dir="../x-cars-desktop/">
-		<include name="**/icons/*.*"/>
-	    </fileset>
+            <fileset dir="../x-cars-desktop/bin"/>
+                <fileset dir="../x-cars/bin"/>
+                <fileset dir="../x-cars-desktop/">
+            <include name="**/icons/*.*"/>
+            </fileset>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars/libs/gdx.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars/libs/gdx-freetype.jar"/>
             <zipfileset excludes="META-INF/*.SF" src="../x-cars-desktop/libs/gdx-freetype-natives.jar"/>

@@ -15,8 +15,8 @@ import com.badlogic.gdx.math.Vector3;
 
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Level;
-import cz.cuni.mff.xcars.Scenario;
 import cz.cuni.mff.xcars.PlayedLevel;
+import cz.cuni.mff.xcars.Scenario;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.debug.Debug;
@@ -30,7 +30,6 @@ import cz.cuni.mff.xcars.gamelogic.GameStatistics;
 import cz.cuni.mff.xcars.gamelogic.SubLevel;
 import cz.cuni.mff.xcars.gamelogic.SubLevel1;
 import cz.cuni.mff.xcars.gamelogic.SubLevel2;
-import cz.cuni.mff.xcars.pathway.Arrow;
 import cz.cuni.mff.xcars.pathway.DistanceMap;
 import cz.cuni.mff.xcars.pathway.Pathway;
 
@@ -74,10 +73,10 @@ public class GameScreen extends BaseScreen {
 		this.level = scenario.levels.get(levelIndex);
 		this.levelDifficulty = this.level.getDifficulty();
 		this.levelIndex = levelIndex;
-				
-		Vector<PlayedLevel> playedLevels = Xcars.playedLevels.levels.containsKey(levelsSet.name) ?
-				Xcars.playedLevels.levels.get(levelsSet.name) : new Vector<PlayedLevel>();
-		
+
+		Vector<PlayedLevel> playedLevels = Xcars.playedLevels.levels.containsKey(levelsSet.name) ? Xcars.playedLevels.levels
+				.get(levelsSet.name) : new Vector<PlayedLevel>();
+
 		this.playedLevel = playedLevels.get(levelIndex);
 
 		this.timeStatusBar = new TimeStatusBar(this.level.getTimeLimit());
@@ -85,9 +84,6 @@ public class GameScreen extends BaseScreen {
 		// Add actors - note that start and finish should be added first
 		this.stage.addActor(this.level.getFinish());
 		this.stage.addActor(this.level.getStart());
-		for (Arrow arrow : this.level.getArrows()) {
-			this.stage.addActor(arrow);
-		}
 		for (GameObject universalObject : this.level.getUniversalObjects()) {
 			this.stage.addActor(universalObject);
 		}
@@ -133,21 +129,15 @@ public class GameScreen extends BaseScreen {
 		this.car = level.getCar();
 
 		this.start = level.getStart();
-		Vector2 startDirection = new Vector2(
-				this.pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE
-						+ EPSILON_F)).sub(this.start.getPosition()).nor();
-		this.start.setShift(startDirection
-				.scl(Constants.misc.CAR_DISTANCE_FROM_START));
+		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE
+				+ EPSILON_F)).sub(this.start.getPosition()).nor();
+		this.start.setShift(startDirection.scl(Constants.misc.CAR_DISTANCE_FROM_START));
 		this.start.setRotation((startDirection.angle() + 270) % 360);
 
 		this.finish = level.getFinish();
-		Vector2 finishDirection = new Vector2(
-				this.pathway
-						.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE
-								- EPSILON_F)).sub(this.finish.getPosition())
-				.nor();
-		this.finish.setShift(finishDirection
-				.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
+		Vector2 finishDirection = new Vector2(this.pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE
+				- EPSILON_F)).sub(this.finish.getPosition()).nor();
+		this.finish.setShift(finishDirection.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
 		this.finish.setRotation((finishDirection.angle() + 90) % 360);
 
 	}
@@ -168,9 +158,8 @@ public class GameScreen extends BaseScreen {
 	public Car getCar() {
 		return this.car;
 	}
-	
-	public Scenario getScenario()
-	{
+
+	public Scenario getScenario() {
 		return this.scenario;
 	}
 
@@ -180,10 +169,9 @@ public class GameScreen extends BaseScreen {
 		this.currentPhase = phase1;
 	}
 
-	public void switchToPhase2(LinkedList<CheckPoint> checkpoints,
-			DistanceMap map, SubLevel1 lastPhase, GameStatistics stats) {
-		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase,
-				stats);
+	public void switchToPhase2(LinkedList<CheckPoint> checkpoints, DistanceMap map, SubLevel1 lastPhase,
+			GameStatistics stats) {
+		this.currentPhase = new SubLevel2(this, checkpoints, map, lastPhase, stats);
 		this.timeStatusBar.setPhase2();
 	}
 
@@ -236,8 +224,7 @@ public class GameScreen extends BaseScreen {
 
 		if (Debug.DEBUG && Debug.drawFPSDistribution) {
 			time = System.currentTimeMillis();
-			Debug.Log("Main + minigame update: "
-					+ Long.toString(time - lastTime));
+			Debug.Log("Main + minigame update: " + Long.toString(time - lastTime));
 			lastTime = time;
 		}
 
@@ -256,12 +243,11 @@ public class GameScreen extends BaseScreen {
 			Debug.Log("Main stage draw: " + Long.toString(time - lastTime));
 			lastTime = time;
 		}
-		
-		
+
 		// Touchable area for car
-		if(Debug.DEBUG && Debug.drawMaxTouchableArea){
-			if(this.currentPhase != null && this.currentPhase instanceof SubLevel1){
-				SubLevel1 sl1 = (SubLevel1)this.currentPhase;
+		if (Debug.DEBUG && Debug.drawMaxTouchableArea) {
+			if (this.currentPhase != null && this.currentPhase instanceof SubLevel1) {
+				SubLevel1 sl1 = (SubLevel1) this.currentPhase;
 				sl1.DrawMaxTouchableArea();
 			}
 		}
@@ -284,18 +270,17 @@ public class GameScreen extends BaseScreen {
 	public ArrayList<GameObject> getGameObjects() {
 		return gameObjects;
 	}
-	
+
 	public void goToMainScreen() {
 		this.goToMainScreen(this.scenario);
 	}
-	
+
 	public void goToMainScreen(Scenario displayedScenario) {
 		this.goToMainScreen(displayedScenario, this.levelIndex);
 	}
 
 	public void goToMainScreen(Scenario displayedScenario, int levelIndex) {
-		Xcars.getInstance().assets.soundAndMusicManager.playSound(
-				Constants.sounds.SOUND_MENU_CLOSE,
+		Xcars.getInstance().assets.soundAndMusicManager.playSound(Constants.sounds.SOUND_MENU_CLOSE,
 				Constants.sounds.SOUND_DEFAULT_VOLUME);
 		Xcars.getInstance().assets.soundAndMusicManager.pauseRaceMusic();
 		Xcars.getInstance().assets.soundAndMusicManager.playMenuMusic();
@@ -346,16 +331,12 @@ public class GameScreen extends BaseScreen {
 	public void resume() {
 		FileHandle textureFile = null;
 		if (Gdx.files.isLocalStorageAvailable()) {
-			textureFile = Gdx.files
-					.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
-							+ ".cim");
+			textureFile = Gdx.files.local(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
 			// Gdx.app.log("TEXTURE",
 			// "Texture of pathway is loaded from local memory.");
 			// Debug.Log("Texture of pathway is loaded from local memory.");
 		} else {
-			textureFile = Gdx.files
-					.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME
-							+ ".cim");
+			textureFile = Gdx.files.internal(Constants.misc.TEMPORARY_PATHWAY_TEXTURE_STORAGE_NAME + ".cim");
 			// Gdx.app.log("TEXTURE",
 			// "Texture of pathway is loaded from internal memory.");
 			// Debug.Log("Texture of pathway is loaded from internal memory.");
@@ -363,8 +344,7 @@ public class GameScreen extends BaseScreen {
 
 		if (textureFile.exists()) {
 			Pixmap pixmap = PixmapIO.readCIM(textureFile);
-			this.pathwayTexture = new TextureRegion(new Texture(pixmap),
-					Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
+			this.pathwayTexture = new TextureRegion(new Texture(pixmap), Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 			pixmap.dispose();
 			// Gdx.app.log("TEXTURE",
 			// "The pathway texture was loaded succesfully.");
