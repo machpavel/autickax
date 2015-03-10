@@ -8,5 +8,6 @@
 	<classpathentry exported="true" kind="lib" path="libs/gdx-natives.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/x-cars"/>
 	<classpathentry exported="true" kind="lib" path="libs/gdx-freetype-natives.jar"/>
+	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

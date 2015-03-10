@@ -10,5 +10,6 @@
 	<classpathentry exported="true" kind="lib" path="/x-cars-desktop/libs/gdx-natives.jar"/>
 	<classpathentry kind="lib" path="/x-cars/libs/gdx-freetype.jar" sourcepath="/x-cars/libs/gdx-freetype-sources.jar"/>
 	<classpathentry kind="lib" path="/x-cars-desktop/libs/gdx-freetype-natives.jar"/>
+	<classpathentry kind="lib" path="/x-cars-desktop/libs/gdx-backend-lwjgl-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
