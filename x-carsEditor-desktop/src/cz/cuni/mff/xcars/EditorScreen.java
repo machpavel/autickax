@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -92,7 +93,7 @@ public final class EditorScreen extends BaseScreenEditor {
 	private static final float TIME_LIMIT_DEFAULT = 10;
 
 	private static final float rotationSpeed = 60;
-	private static final float prolongingSpeed = 30;
+	private static final float prolongingSpeed = 3;
 	// ***********************************************
 
 	// Rendering
@@ -123,9 +124,20 @@ public final class EditorScreen extends BaseScreenEditor {
 	public Difficulty difficulty = Difficulty.Normal;
 
 	// Variables for dragging new object values
-	public boolean draggingNewObject = false;
-	public GameObject draggedObject = null;
-	public GameObject lastObjectMoved = null;
+	private boolean draggingNewObject;
+	private GameObject draggedObject;
+	private GameObject lastObjectMoved;
+
+	Table objectModifPanel;
+	Table universalObjectModifPanel;
+	private AtomicBoolean selObjRotLeftModif = new AtomicBoolean();
+	private AtomicBoolean selObjRotRightModif = new AtomicBoolean();
+	private AtomicBoolean selObjScaleXDecModif = new AtomicBoolean();
+	private AtomicBoolean selObjScaleXIncModif = new AtomicBoolean();
+	private AtomicBoolean selObjScaleYDecModif = new AtomicBoolean();
+	private AtomicBoolean selObjScaleYIncModif = new AtomicBoolean();
+	private AtomicBoolean selObjScaleDecModif = new AtomicBoolean();
+	private AtomicBoolean selObjScaleIncModif = new AtomicBoolean();
 
 	// Disables creating new pathway point when UI is pressed
 	private boolean anyButtonTouched = false;
@@ -162,6 +174,15 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	public void restart() {
+		this.selObjRotLeftModif.set(false);
+		this.selObjRotRightModif.set(false);
+		this.selObjScaleXDecModif.set(false);
+		this.selObjScaleXIncModif.set(false);
+		this.selObjScaleYDecModif.set(false);
+		this.selObjScaleYIncModif.set(false);
+		this.selObjScaleDecModif.set(false);
+		this.selObjScaleIncModif.set(false);
+
 		this.stage.clear();
 		this.background = new LevelConstantBackground(169, 207, 56);
 		this.gameObjects = new ArrayList<GameObject>();
@@ -175,6 +196,8 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Must be called last
 		createUI();
+
+		this.setLastObjectMoved(null);
 	}
 
 	public void createUI() {
@@ -190,11 +213,15 @@ public final class EditorScreen extends BaseScreenEditor {
 		table.add(controlPanel).expand().fill();
 
 		// Background buttons
-		controlPanel.add(createBackgroundButtons()).left();
+		controlPanel.add(createBackgroundButtons()).left().height(45);
 		controlPanel.row();
 
 		// Game objects tree
 		controlPanel.add(createGameObjectsButtons()).expand().fill();
+		controlPanel.row();
+
+		// Creates panel to modify selected object
+		controlPanel.add(createObjectModifPanel()).left();
 		controlPanel.row();
 
 		// Additional controllers
@@ -221,10 +248,11 @@ public final class EditorScreen extends BaseScreenEditor {
 		} else {
 			update(delta);
 		}
-		doArrowKayboardModification(delta);
+		doFlagModifications(delta);
 		dragObject();
 
 		// Rendering
+		Gdx.gl.glClearColor(.5f, .5f, .5f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		renderScene();
@@ -245,23 +273,49 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 	}
 
-	private void doArrowKayboardModification(float delta) {
+	private void doFlagModifications(float delta) {
 		if (this.lastObjectMoved != null) {
 			if (this.lastObjectMoved instanceof UniversalGameObject) {
 				UniversalGameObject scalableObject = (UniversalGameObject) this.lastObjectMoved;
 
-				if (Gdx.input.isKeyPressed(Keys.W)) {
-					scalableObject.setScaleX(scalableObject.getScaleX() + prolongingSpeed * delta);
+				float scaleRatio = scalableObject.getScaleX() / scalableObject.getScaleY();
+				float deltaXY = prolongingSpeed * delta;
+				float deltaX = prolongingSpeed * delta * scaleRatio;
+				float deltaY = prolongingSpeed * delta / scaleRatio;
+
+				// Inc scaleX
+				if (this.selObjScaleXIncModif.get()) {
+					scalableObject.scaleBy(deltaXY, 0);
 				}
-				if (Gdx.input.isKeyPressed(Keys.S)) {
-					scalableObject.setScaleX(scalableObject.getScaleX() - prolongingSpeed * delta);
+				// Dec scaleX
+				if (this.selObjScaleXDecModif.get()) {
+					scalableObject.scaleBy(-deltaXY, 0);
+				}
+				// Inc scaleY
+				if (this.selObjScaleYIncModif.get()) {
+					scalableObject.scaleBy(0, deltaXY);
+				}
+				// Dec scaleY
+				if (this.selObjScaleYDecModif.get()) {
+					scalableObject.scaleBy(0, -deltaXY);
+				}
+				// Inc general scale
+				if (this.selObjScaleIncModif.get()) {
+					scalableObject.scaleBy(deltaX, deltaY);
+				}
+				// Dec general scaleX
+				if (this.selObjScaleDecModif.get()) {
+					scalableObject.scaleBy(-deltaX, -deltaY);
 				}
 			}
 
-			if (Gdx.input.isKeyPressed(Keys.A)) {
+			// Rotation left
+			if (Gdx.input.isKeyPressed(Keys.A) || this.selObjRotLeftModif.get()) {
 				this.lastObjectMoved.setRotation(this.lastObjectMoved.getRotation() + rotationSpeed * delta);
 			}
-			if (Gdx.input.isKeyPressed(Keys.D)) {
+
+			// Rotation right
+			if (Gdx.input.isKeyPressed(Keys.D) || this.selObjRotRightModif.get()) {
 				this.lastObjectMoved.setRotation(this.lastObjectMoved.getRotation() - rotationSpeed * delta);
 			}
 		}
@@ -271,7 +325,6 @@ public final class EditorScreen extends BaseScreenEditor {
 		Debug.clear();
 		Debug.Log("Keys:");
 		Debug.Log("A, D: Rotate an object");
-		Debug.Log("W, S: Resize an scalable object");
 		Debug.Log("Numbers: Modify time limit");
 		Debug.Log("Arrows, +, -: Modify time limit");
 		Debug.Log("");
@@ -284,15 +337,8 @@ public final class EditorScreen extends BaseScreenEditor {
 		boolean objectIsDragging = this.draggedObject != null;
 		if (objectIsDragging) {
 			if (Gdx.input.isTouched()) {
-				if (this.draggingNewObject) {
-					// dragging new object
-					GameObject draggedGameObject = this.draggedObject;
-					draggedGameObject.setPosition(Gdx.input.getX(), Constants.WORLD_HEIGHT - Gdx.input.getY());
-				} else {
-					// dragging placed object
-					GameObject draggedGameObject = this.draggedObject;
-					draggedGameObject.setPosition(Gdx.input.getX(), Constants.WORLD_HEIGHT - Gdx.input.getY());
-				}
+				this.draggedObject.setPosition(Gdx.input.getX(), Constants.WORLD_HEIGHT - Gdx.input.getY());
+
 			} else {
 				// Just released
 				if (this.draggingNewObject) {
@@ -307,6 +353,8 @@ public final class EditorScreen extends BaseScreenEditor {
 						}
 						this.stage.addActor(draggedGameObject);
 
+					} else {
+						this.setLastObjectMoved(null);
 					}
 				}
 				this.draggedObject = null;
@@ -338,12 +386,6 @@ public final class EditorScreen extends BaseScreenEditor {
 			batch.draw(this.pathwayTexture, 0, 0, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
 		batch.end();
 
-		// Control panel
-		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(0.5f, 0.5f, 0.5f, 1);
-		shapeRenderer.rect(Constants.WORLD_WIDTH, 0, EditorConstants.CONTROL_PANEL_WIDTH, Constants.WORLD_HEIGHT);
-		shapeRenderer.end();
-
 		// Renders control points
 		shapeRenderer.begin(ShapeType.Filled);
 		for (Vector2 point : pathway.getControlPoints()) {
@@ -352,20 +394,28 @@ public final class EditorScreen extends BaseScreenEditor {
 		}
 		shapeRenderer.end();
 
+		// Draws stage
 		stage.draw();
 
 		batch.begin();
+		// Draws start
 		if (start != null)
 			start.draw(batch);
-
+		// Draws finish
 		if (finish != null)
 			finish.draw(batch);
-
-		if (this.draggingNewObject) {
-			this.draggedObject.setPosition(Gdx.input.getX(), Constants.WORLD_HEIGHT - Gdx.input.getY());
+		// Draws dragged new object
+		if (this.draggingNewObject && this.draggedObject != null) {
 			this.draggedObject.draw(batch, 1);
 		}
 		batch.end();
+
+		// Draws selected object bounds
+		if (this.lastObjectMoved != null) {
+			shapeRenderer.begin(ShapeType.Line);
+			this.lastObjectMoved.drawBounds(shapeRenderer, Color.MAGENTA, 2);
+			shapeRenderer.end();
+		}
 	}
 
 	public void loadLevel(FileHandle file) throws Exception {
@@ -621,6 +671,97 @@ public final class EditorScreen extends BaseScreenEditor {
 			}
 		});
 		return buttonUnpoint;
+	}
+
+	private Table createObjectModifPanel() {
+		float minWidth = 20;
+		float padLeft = 20;
+		Table objectModifPanel = new Table(this.skin);
+		this.objectModifPanel = objectModifPanel;
+		objectModifPanel.defaults().minWidth(minWidth);
+
+		// Rotation
+		objectModifPanel.add(new Label("Rotation:", this.skin));
+		objectModifPanel.add(new ObjectModifButton("-", this.skin, this.selObjRotLeftModif)).fillY();
+		objectModifPanel.add(new ObjectModifButton("+", this.skin, this.selObjRotRightModif)).fillY();
+
+		Table universalObjectModifPanel = new Table();
+		universalObjectModifPanel.defaults().minWidth(minWidth);
+		this.universalObjectModifPanel = universalObjectModifPanel;
+		objectModifPanel.add(universalObjectModifPanel);
+
+		// Scale
+		Table scaleRoot = new Table(this.skin);
+		scaleRoot.defaults().minWidth(minWidth);
+		universalObjectModifPanel.add(scaleRoot).padLeft(padLeft);
+
+		Table scaleDoubleRows = new Table(this.skin);
+		scaleDoubleRows.defaults().minWidth(minWidth);
+		scaleRoot.add(scaleDoubleRows);
+		scaleDoubleRows.add(new Label("ScaleX:", this.skin));
+		scaleDoubleRows.add(new ObjectModifButton("-", this.skin, this.selObjScaleXDecModif));
+		scaleDoubleRows.add(new ObjectModifButton("+", this.skin, this.selObjScaleXIncModif));
+		scaleDoubleRows.row();
+		scaleDoubleRows.add(new Label("ScaleY:", this.skin));
+		scaleDoubleRows.add(new ObjectModifButton("-", this.skin, this.selObjScaleYDecModif));
+		scaleDoubleRows.add(new ObjectModifButton("+", this.skin, this.selObjScaleYIncModif));
+
+		scaleRoot.add(new ObjectModifButton("-", this.skin, this.selObjScaleDecModif)).fillY();
+		scaleRoot.add(new ObjectModifButton("+", this.skin, this.selObjScaleIncModif)).fillY();
+
+		// Flip
+		Table flipDoubleRows = new Table(this.skin);
+		flipDoubleRows.defaults().minWidth(minWidth);
+		universalObjectModifPanel.add(flipDoubleRows).padLeft(padLeft);
+		TextButton flipXButton = new TextButton("FlipX", this.skin);
+		flipXButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if (EditorScreen.this.lastObjectMoved != null) {
+					EditorScreen.this.lastObjectMoved.setScaleX(-EditorScreen.this.lastObjectMoved.getScaleX());
+				}
+				return super.touchDown(event, x, y, pointer, button);
+			}
+		});
+		TextButton flipYButton = new TextButton("FlipY", this.skin);
+		flipYButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				if (EditorScreen.this.lastObjectMoved != null) {
+					EditorScreen.this.lastObjectMoved.setScaleY(-EditorScreen.this.lastObjectMoved.getScaleY());
+				}
+				return super.touchDown(event, x, y, pointer, button);
+			}
+		});
+		flipDoubleRows.add(flipXButton);
+		flipDoubleRows.row();
+		flipDoubleRows.add(flipYButton);
+
+		// Reset
+		class ResetEventListener extends InputListener {
+			TextButton flipXButton;
+			TextButton flipYButton;
+
+			ResetEventListener(TextButton flipXButton, TextButton flipYButton) {
+				this.flipXButton = flipXButton;
+				this.flipYButton = flipYButton;
+			}
+
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				this.flipXButton.setChecked(false);
+				this.flipYButton.setChecked(false);
+				if (EditorScreen.this.getLastObjectMoved() != null) {
+					EditorScreen.this.getLastObjectMoved().setScale(1);
+					EditorScreen.this.getLastObjectMoved().setRotation(0);
+				}
+				return super.touchDown(event, x, y, pointer, button);
+			}
+		}
+		TextButton resetSelObjModif = new TextButton("Reset", this.skin);
+		resetSelObjModif.addListener(new ResetEventListener(flipXButton, flipYButton));
+		objectModifPanel.add(resetSelObjModif).fillY().padLeft(padLeft);
+		return objectModifPanel;
 	}
 
 	private ScrollPane createBackgroundButtons() {
@@ -958,5 +1099,39 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	public void SetBackground(LevelBackground value) {
 		this.background = value;
+	}
+
+	public GameObject getDraggedObject() {
+		return draggedObject;
+	}
+
+	public void setDraggedObject(GameObject draggedObject) {
+		this.draggedObject = draggedObject;
+	}
+
+	public boolean isDraggingNewObject() {
+		return draggingNewObject;
+	}
+
+	public void setDraggingNewObject(boolean draggingNewObject) {
+		this.draggingNewObject = draggingNewObject;
+	}
+
+	public GameObject getLastObjectMoved() {
+		return lastObjectMoved;
+	}
+
+	public void setLastObjectMoved(GameObject lastObjectMoved) {
+		if (lastObjectMoved == null) {
+			this.universalObjectModifPanel.setVisible(false);
+			this.objectModifPanel.setVisible(false);
+		} else if (lastObjectMoved instanceof UniversalGameObject) {
+			this.universalObjectModifPanel.setVisible(true);
+			this.objectModifPanel.setVisible(true);
+		} else {
+			this.universalObjectModifPanel.setVisible(false);
+			this.objectModifPanel.setVisible(true);
+		}
+		this.lastObjectMoved = lastObjectMoved;
 	}
 }

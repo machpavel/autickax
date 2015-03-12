@@ -36,60 +36,60 @@ public class MyInputListenerForGameObjects extends MyInputListener {
 	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 		switch (typeOfClass) {
 		case HOLE:
-			this.screen.draggedObject = new Hole(x, y, type);
+			this.screen.setDraggedObject(new Hole(x, y, type));
 			break;
 		case MUD:
-			this.screen.draggedObject = new Mud(x, y, type);
+			this.screen.setDraggedObject(new Mud(x, y, type));
 			break;
 		case STONE:
-			this.screen.draggedObject = new Stone(x, y, type);
+			this.screen.setDraggedObject(new Stone(x, y, type));
 			break;
 		case TREE:
-			this.screen.draggedObject = new Tree(x, y, type);
+			this.screen.setDraggedObject(new Tree(x, y, type));
 			break;
 		case BOOSTER:
-			this.screen.draggedObject = new Booster(x, y, type);
+			this.screen.setDraggedObject(new Booster(x, y, type));
 			break;
 		case FENCE:
-			this.screen.draggedObject = new Fence(x, y, type);
+			this.screen.setDraggedObject(new Fence(x, y, type));
 			break;
 		case HOUSE:
-			this.screen.draggedObject = new House(x, y, type);
+			this.screen.setDraggedObject(new House(x, y, type));
 			break;
 		case PARKING_CAR:
-			this.screen.draggedObject = new ParkingCar(x, y, type);
+			this.screen.setDraggedObject(new ParkingCar(x, y, type));
 			break;
 		case WALL:
-			this.screen.draggedObject = new Wall(x, y, type);
+			this.screen.setDraggedObject(new Wall(x, y, type));
 			break;
 		case HILL:
-			this.screen.draggedObject = new Hill(x, y, type);
+			this.screen.setDraggedObject(new Hill(x, y, type));
 			break;
 		case TORNADO:
-			this.screen.draggedObject = new Tornado(x, y, type);
+			this.screen.setDraggedObject(new Tornado(x, y, type));
 			break;
 		case RACING_CAR:
-			this.screen.draggedObject = new RacingCar(x, y, type);
+			this.screen.setDraggedObject(new RacingCar(x, y, type));
 			break;
 		case PNEU:
-			this.screen.draggedObject = new Pneu(x, y, type);
+			this.screen.setDraggedObject(new Pneu(x, y, type));
 			break;
 		case ARROW:
-			this.screen.draggedObject = new Arrow(x, y, type);
+			this.screen.setDraggedObject(new Arrow(x, y, type));
 			break;
 		case UNIVERSAL:
-			this.screen.draggedObject = new UniversalGameObject(x, y, type);
+			this.screen.setDraggedObject(new UniversalGameObject(x, y, type));
 			break;
 		default:
 			throw new IllegalGameObjectException(typeOfClass.toString());
 		}
 
-		GameObject object = this.screen.draggedObject;
+		GameObject object = this.screen.getDraggedObject();
 		object.setTexture();
 		object.setCanBeDragged(true);
 
-		this.screen.lastObjectMoved = this.screen.draggedObject;
-		this.screen.draggingNewObject = true;
+		this.screen.setLastObjectMoved(this.screen.getDraggedObject());
+		this.screen.setDraggingNewObject(true);
 		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer, button);
 	}
 }

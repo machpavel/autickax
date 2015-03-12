@@ -9,6 +9,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -181,6 +183,27 @@ public abstract class GameObject extends Actor implements Externalizable {
 
 	public void draw(Batch batch) {
 		this.draw(batch, 0);
+	}
+
+	@Override
+	protected void drawDebugBounds(ShapeRenderer shapes) {
+		if (!this.getDebug())
+			return;
+		shapes.set(ShapeType.Line);
+		shapes.setColor(this.getStage().getDebugColor());
+		shapes.rect(this.getLeftBottomCorner().x, this.getLeftBottomCorner().y, (this.getWidth() / 2),
+				(this.getHeight() / 2), this.getWidth() - 1, this.getHeight() - 1, this.getScaleX(), this.getScaleY(),
+				this.getRotation());
+	}
+	
+	
+	public void drawBounds(ShapeRenderer shapes, Color color, float width) {
+		Gdx.gl20.glLineWidth(width);
+		shapes.set(ShapeType.Line);
+		shapes.setColor(color);
+		shapes.rect(this.getLeftBottomCorner().x, this.getLeftBottomCorner().y, (this.getWidth() / 2),
+				(this.getHeight() / 2), this.getWidth() - 1, this.getHeight() - 1, this.getScaleX(), this.getScaleY(),
+				this.getRotation());
 	}
 
 	@Override

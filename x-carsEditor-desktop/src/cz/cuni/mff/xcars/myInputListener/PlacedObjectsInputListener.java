@@ -16,8 +16,8 @@ public class PlacedObjectsInputListener extends MyInputListener {
 
 	@Override
 	public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-		this.screen.draggedObject = representedObject;
-		this.screen.lastObjectMoved = representedObject;
+		this.screen.setDraggedObject(representedObject);
+		this.screen.setLastObjectMoved(representedObject);
 		return super.touchDown(event, x, Constants.WORLD_HEIGHT - y, pointer, button);
 	}
 
@@ -25,6 +25,7 @@ public class PlacedObjectsInputListener extends MyInputListener {
 	public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 		if (!this.screen.isInWorld(this.representedObject)) {
 			this.screen.removeObject(this.representedObject);
+			this.screen.setLastObjectMoved(null);
 		}
 		super.touchUp(event, x, y, pointer, button);
 	}

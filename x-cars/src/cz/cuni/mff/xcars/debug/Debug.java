@@ -27,7 +27,7 @@ public final class Debug {
 	// All diagnostics in communicators - dialog and minigames
 	// public static final boolean drawCommunicatorDiagnostics = true;
 	// Draw bounding circles of all game Objects
-	public static final boolean drawBoundingBoxes = true;
+	public static final boolean drawBoundingBoxes = false;
 	// Maximal distance from object where it is possible to activate them
 	public static final boolean drawMaxTouchableArea = true;
 	// Area where buttons can be generated in SelectScreenBase typed screen

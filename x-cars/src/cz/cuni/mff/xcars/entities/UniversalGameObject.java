@@ -38,4 +38,28 @@ public class UniversalGameObject extends GameObject implements Externalizable {
 	public void setTexture(int type) {
 		super.setTexture(UniversalGameObject.GetTextureName(type));
 	}
+
+	@Override
+	public void scaleBy(float scaleX, float scaleY) {
+		float epsilon = 0.0000001f;
+		if (this.getScaleX() >= 0) {
+			if (this.getScaleX() + scaleX < 0)
+				scaleX = -(this.getScaleX() - epsilon);
+		} else if (this.getScaleX() < 0) {
+			scaleX *= -1;
+			if (this.getScaleX() + scaleX > 0)
+				scaleX = -(this.getScaleX() + epsilon);
+		}
+
+		if (this.getScaleY() > 0) {
+			if (this.getScaleY() + scaleY < 0)
+				scaleY = -(this.getScaleY() - epsilon);
+		} else if (this.getScaleY() < 0) {
+			scaleY *= -1;
+			if (this.getScaleY() + scaleY > 0)
+				scaleY = -(this.getScaleY() + epsilon);
+		}
+		super.scaleBy(scaleX, scaleY);
+	}
+	
 }
