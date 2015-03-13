@@ -62,7 +62,8 @@ public abstract class SelectScreenBase extends BaseScreen {
 		this.buttonsPerPage = setButtonsCountsPerPage(buttons);
 		this.pagesCount = buttons.length % this.buttonsPerPage == 0 ? buttons.length / this.buttonsPerPage
 				: (buttons.length / this.buttonsPerPage) + 1;
-		this.actualPage = buttonIndex / this.buttonsPerPage;
+		this.actualPage = Math.min(buttonIndex / this.buttonsPerPage, this.pagesCount - 1);
+		
 
 		this.buttons = buttons;
 		for (int i = 0; i < buttons.length; i++) {

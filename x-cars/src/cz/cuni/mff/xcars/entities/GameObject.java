@@ -81,6 +81,29 @@ public abstract class GameObject extends Actor implements Externalizable {
 		this.type = object.type;
 	}
 
+	public void toXml(XmlWriter writer) throws IOException {
+		writer.element(this.getName());
+		writer.attribute("X", this.getX());
+		writer.attribute("Y", this.getY());
+		writer.attribute("type", this.type);
+		if (this.getRotation() != 0)
+			writer.attribute("rotation", this.getRotation());
+		if (this.getScaleX() != 1)
+			writer.attribute("scaleX", this.getScaleX());
+		if (this.getScaleY() != 1)
+			writer.attribute("scaleX", this.getScaleY());
+		aditionalsToXml(writer);
+		writer.pop();
+	}
+
+	void aditionalsToXml(XmlWriter writer) throws IOException {
+		// Every object can write its own values in writer
+	}
+
+	void parseAditionals(Element gameObject) throws IOException {
+		// Every object can read its own values from reader
+	}
+
 	public static GameObject parseGameObject(Element gameObject) throws IOException {
 		GameObject retval;
 
@@ -119,6 +142,10 @@ public abstract class GameObject extends Actor implements Externalizable {
 			retval = new RacingCar(x, y, type);
 		} else if (objectName.equals(Arrow.name)) {
 			retval = new Arrow(x, y, type);
+		} else if (objectName.equals(Start.name)) {
+			retval = new Start(x, y, type);
+		} else if (objectName.equals(Finish.name)) {
+			retval = new Finish(x, y, type);
 		} else {
 			throw new IOException("Loading object failed: Unknown type " + " \"" + objectName + "\"");
 		}
@@ -129,6 +156,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 		float scaleY = gameObject.getFloat("scaleY", 1);
 		retval.setScale(scaleX, scaleY);
 
+		retval.parseAditionals(gameObject);
 		return retval;
 	}
 
@@ -195,8 +223,7 @@ public abstract class GameObject extends Actor implements Externalizable {
 				(this.getHeight() / 2), this.getWidth() - 1, this.getHeight() - 1, this.getScaleX(), this.getScaleY(),
 				this.getRotation());
 	}
-	
-	
+
 	public void drawBounds(ShapeRenderer shapes, Color color, float width) {
 		Gdx.gl20.glLineWidth(width);
 		shapes.set(ShapeType.Line);
@@ -226,21 +253,6 @@ public abstract class GameObject extends Actor implements Externalizable {
 		return getName() + " PosX: " + this.getX() + " PosY: " + this.getY() + " Rot: " + this.getRotation()
 				+ " Width: " + this.getWidth() + " Height: " + this.getHeight() + " Bounding: "
 				+ this.boundingCircleRadius;
-	}
-
-	public void toXml(XmlWriter writer) throws IOException {
-		writer.element(this.getName());
-		writer.attribute("X", this.getX());
-		writer.attribute("Y", this.getY());
-		writer.attribute("type", this.type);
-		if (this.getRotation() != 0)
-			writer.attribute("rotation", this.getRotation());
-		if (this.getScaleX() != 1)
-			writer.attribute("scaleX", this.getScaleX());
-		if (this.getScaleY() != 1)
-			writer.attribute("scaleX", this.getScaleY());
-		aditionalsToXml(writer);
-		writer.pop();
 	}
 
 	protected void setMeasurements(int width, int height) {
@@ -401,10 +413,6 @@ public abstract class GameObject extends Actor implements Externalizable {
 	public boolean includePosition(Vector2 position) {
 		float middlesDistance = new Vector2(this.getPosition()).sub(position).len();
 		return middlesDistance < this.boundingCircleRadius;
-	}
-
-	void aditionalsToXml(XmlWriter writer) throws IOException {
-		// Every object can write its own values in writer
 	}
 
 	@Override

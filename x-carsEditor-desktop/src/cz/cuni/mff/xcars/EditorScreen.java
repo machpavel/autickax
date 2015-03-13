@@ -121,7 +121,8 @@ public final class EditorScreen extends BaseScreenEditor {
 	private TextField timeTextField;
 
 	// Difficulty
-	public Difficulty difficulty = Difficulty.Normal;
+	private Difficulty difficulty;
+	public SelectBox<String> difficultySelectBox;
 
 	// Variables for dragging new object values
 	private boolean draggingNewObject;
@@ -193,6 +194,7 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.draggingNewObject = false;
 		this.draggedObject = null;
 		this.timeLimit = TIME_LIMIT_DEFAULT;
+		this.difficulty = Difficulty.Normal;
 
 		// Must be called last
 		createUI();
@@ -427,16 +429,16 @@ public final class EditorScreen extends BaseScreenEditor {
 		this.gameObjects = level.getGameObjects();
 		this.universalObjects = level.getUniversalObjects();
 		this.pathway = level.getPathway();
-		this.pathwayTexture = this.pathway.getDistanceMap().generateTexture(this.difficulty);
+		this.setPathwayTexture(level.getPathway().getDistanceMap().generateTexture(level.getDifficulty()));
 		this.car = level.getCar();
 		this.start = level.getStart();
 		this.start.setTexture();
 		this.finish = level.getFinish();
 		this.finish.setTexture();
 		this.timeLimit = level.getTimeLimit();
-		this.timeTextField.setText(new DecimalFormat().format(timeLimit));
+		this.timeTextField.setText(new DecimalFormat().format(level.getTimeLimit()));
 		this.background = level.getLevelBackground();
-		this.difficulty = level.getDifficulty();
+		this.difficultySelectBox.setSelected(level.getDifficulty().toString());
 
 		for (GameObject universalObject : this.universalObjects) {
 			universalObject.setTexture();
@@ -521,22 +523,25 @@ public final class EditorScreen extends BaseScreenEditor {
 	}
 
 	public void generateStartAndFinish() {
-		float delta = 0.01f;
-		start = new Start(pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).x,
+		final float EPSILON_F = 0.01f;
+		this.start = new Start(pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).x,
 				pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE).y, START_TYPE);
-		start.setTexture();
-		Vector2 startTo = pathway.GetPosition(delta);
-		Vector2 startFrom = pathway.GetPosition(0);
-		float startAngle = startTo.sub(startFrom).angle();
-		start.setRotation((startAngle + 270) % 360);
+		this.start.setTexture();
+		Vector2 startTo = pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE + EPSILON_F);
+		Vector2 startFrom = pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE);
+		Vector2 startShift = new Vector2(startTo).sub(startFrom).nor().scl(Constants.misc.CAR_DISTANCE_FROM_START);
+		this.start.setRotation((startShift.angle() + 270) % 360);
+		this.start.setVisualShift(startShift);
 
 		finish = new Finish(pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).x,
 				pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE).y, FINISH_TYPE);
-		finish.setTexture();
-		Vector2 finishTo = pathway.GetPosition(1 - delta);
-		Vector2 finishFrom = pathway.GetPosition(1);
-		float finishAngle = finishTo.sub(finishFrom).angle();
-		finish.setRotation((finishAngle + 90) % 360);
+		this.finish.setTexture();
+		Vector2 finishTo = pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE - EPSILON_F);
+		Vector2 finishFrom = pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE);
+		Vector2 finishShift = new Vector2(finishTo).sub(finishFrom).nor()
+				.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS);
+		this.finish.setRotation((finishShift.angle() + 90) % 360);
+		this.finish.setVisualShift(finishShift);
 	}
 
 	private TextButton createGenerateButton() {
@@ -1018,9 +1023,10 @@ public final class EditorScreen extends BaseScreenEditor {
 			listChoises.add(Difficulty.values()[i].toString());
 		}
 		SelectBox<String> selectBox = new SelectBox<String>(this.skin);
+		this.difficultySelectBox = selectBox;
+
 		group.add(selectBox);
 		selectBox.setItems(listChoises);
-		;
 		selectBox.addListener(new ChangeListener() {
 			@SuppressWarnings("unchecked")
 			@Override

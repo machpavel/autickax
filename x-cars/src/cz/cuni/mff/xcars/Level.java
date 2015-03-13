@@ -98,11 +98,11 @@ public class Level implements java.io.Externalizable {
 
 		// Loading start
 		Element start = root.getChildByName(Start.name);
-		this.start = Start.parseStart(start);
+		this.start = (Start) GameObject.parseGameObject(start);
 
 		// Loading finish
 		Element finish = root.getChildByName(Finish.name);
-		this.finish = Finish.parseFinish(finish);
+		this.finish = (Finish) GameObject.parseGameObject(finish);
 
 		// Background
 		Element background = root.getChildByName("background");

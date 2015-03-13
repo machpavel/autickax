@@ -8,11 +8,10 @@ import java.io.ObjectOutput;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
-import com.badlogic.gdx.utils.XmlWriter;
 import com.badlogic.gdx.utils.XmlReader.Element;
+import com.badlogic.gdx.utils.XmlWriter;
 
 import cz.cuni.mff.xcars.Xcars;
-import cz.cuni.mff.xcars.constants.Constants;
 
 public class LevelTextureBackground extends LevelBackground implements Externalizable {
 	public static final String xmlName = "textureBackground";
@@ -25,10 +24,10 @@ public class LevelTextureBackground extends LevelBackground implements Externali
 	}
 
 	public LevelTextureBackground(String textureName) {
-		this.textureName = Constants.levelBackgroundsDirectory + textureName;
+		this.textureName = textureName;
 	}
-	
-	public LevelTextureBackground(String textureName, TextureRegion textureRegion){
+
+	public LevelTextureBackground(String textureName, TextureRegion textureRegion) {
 		this(textureName);
 		this.texture = textureRegion;
 		this.tile = new TiledDrawable(this.texture);
@@ -43,9 +42,7 @@ public class LevelTextureBackground extends LevelBackground implements Externali
 
 		tile.draw(batch, 0, 0, stageWidth, stageHeight);
 	}
-	
-	 
-	
+
 	@Override
 	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
 		this.textureName = in.readUTF();
@@ -62,7 +59,7 @@ public class LevelTextureBackground extends LevelBackground implements Externali
 		writer.attribute("textureName", textureName.toString());
 		writer.pop();
 	}
-	
+
 	public static LevelBackground parseLevelBackground(Element levelBackground) {
 		String textureName = levelBackground.getAttribute("textureName");
 		return new LevelTextureBackground(textureName);

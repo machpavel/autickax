@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import cz.cuni.mff.xcars.Difficulty;
@@ -34,8 +33,6 @@ import cz.cuni.mff.xcars.pathway.DistanceMap;
 import cz.cuni.mff.xcars.pathway.Pathway;
 
 public class GameScreen extends BaseScreen {
-	public static final float EPSILON_F = 0.01f;
-
 	// Textures
 	private TextureRegion pathwayTexture;
 
@@ -127,19 +124,8 @@ public class GameScreen extends BaseScreen {
 		// Game objects
 		this.gameObjects = level.getGameObjects();
 		this.car = level.getCar();
-
 		this.start = level.getStart();
-		Vector2 startDirection = new Vector2(this.pathway.GetPosition(Constants.misc.START_POSITION_IN_CURVE
-				+ EPSILON_F)).sub(this.start.getPosition()).nor();
-		this.start.setShift(startDirection.scl(Constants.misc.CAR_DISTANCE_FROM_START));
-		this.start.setRotation((startDirection.angle() + 270) % 360);
-
 		this.finish = level.getFinish();
-		Vector2 finishDirection = new Vector2(this.pathway.GetPosition(Constants.misc.FINISH_POSITION_IN_CURVE
-				- EPSILON_F)).sub(this.finish.getPosition()).nor();
-		this.finish.setShift(finishDirection.scl(Constants.gameObjects.FINISH_BOUNDING_RADIUS));
-		this.finish.setRotation((finishDirection.angle() + 90) % 360);
-
 	}
 
 	public void stopInitialization() {
