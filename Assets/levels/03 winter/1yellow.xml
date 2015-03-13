@@ -1,4 +1,4 @@
-<AutickaX>
+<x-cars>
 	<pathway pathwayType="OPENED" typeOfInterpolation="CUBIC_B_SPLINE" textureType="0">
 		<controlPoints>
 			<point X="715.0" Y="72.0"/>
@@ -35,7 +35,7 @@
 			<point X="69.0" Y="256.0"/>
 			<point X="89.0" Y="194.0"/>
 			<point X="166.0" Y="183.0"/>
-			<point X="243.0" Y="230.0"/>	
+			<point X="243.0" Y="230.0"/>
 			<point X="322.0" Y="241.0"/>
 			<point X="396.0" Y="217.0"/>
 			<point X="368.0" Y="159.0"/>
@@ -49,6 +49,7 @@
 			<point X="446.0" Y="70.0"/>
 			<point X="507.0" Y="49.0"/>
 		</controlPoints>
+		<distanceMap nodesCount="660687.0"/>
 	</pathway>
 	<entities>
 		<mud X="754.0" Y="349.0" type="1"/>
@@ -67,10 +68,13 @@
 		<tree X="344.0" Y="201.0" type="15"/>
 		<mud X="183.0" Y="172.0" type="1"/>
 	</entities>
+	<drawings/>
 	<car X="0.0" Y="0.0" type="1"/>
-	<start X="673.3334" Y="67.333336" type="4"/>
-	<finish X="450.33334" Y="70.666664" type="2"/>
-	<background><textureBackground textureName="background10" /></background>
+	<start X="673.3334" Y="67.333336" type="4" rotation="86.492645" visualShiftX="-29.943808" visualShiftY="1.8352913"/>
+	<finish X="450.33334" Y="70.666664" type="2" rotation="242.94104" visualShiftX="-35.62156" visualShiftY="18.196283"/>
+	<background>
+		<textureBackground textureName="backgrounds/background10"/>
+	</background>
 	<timeLimit>10.0</timeLimit>
 	<difficulty>Normal</difficulty>
-</AutickaX>
+</x-cars>

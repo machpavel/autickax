@@ -47,7 +47,7 @@
 	<car X="0.0" Y="0.0" type="1"/>
 	<start X="58.5" Y="359.66666" type="4"/>
 	<finish X="640.5" Y="100.16667" type="2"/>
-	<background><textureBackground textureName="background2" /></background>
+	<background><textureBackground textureName="backgrounds/background2" /></background>
 	<timeLimit>10.0</timeLimit>
 	<difficulty>Normal</difficulty>
 </AutickaX>
