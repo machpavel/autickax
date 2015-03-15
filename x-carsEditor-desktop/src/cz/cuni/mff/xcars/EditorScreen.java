@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JFileChooser;
@@ -799,12 +801,12 @@ public final class EditorScreen extends BaseScreenEditor {
 
 	private ScrollPane createGameObjectsButtons() {
 		com.badlogic.gdx.scenes.scene2d.ui.Tree objectsTree = new com.badlogic.gdx.scenes.scene2d.ui.Tree(this.skin);
-
+		ArrayList<Node> categories = new ArrayList<Node>(); 
 		final int maxColumnSize = 8;
 
 		// Holes
 		final Node holesNode = new Node(new Label("Holes", this.skin));
-		objectsTree.add(holesNode);
+		categories.add(holesNode);
 		Table holesTable = new Table();
 		holesNode.add(new Node(holesTable));
 		int holeIndex = 1;
@@ -817,7 +819,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Muds
 		Node mudsNode = new Node(new Label("Muds", this.skin));
-		objectsTree.add(mudsNode);
+		categories.add(mudsNode);
 		Table mudsTable = new Table();
 		mudsNode.add(new Node(mudsTable));
 		int mudIndex = 1;
@@ -829,7 +831,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Stones
 		Node stonesNode = new Node(new Label("Stones", this.skin));
-		objectsTree.add(stonesNode);
+		categories.add(stonesNode);
 		Table stonesTable = new Table();
 		stonesNode.add(new Node(stonesTable));
 		int stoneIndex = 1;
@@ -842,7 +844,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Trees
 		Node treesNode = new Node(new Label("Trees", this.skin));
-		objectsTree.add(treesNode);
+		categories.add(treesNode);
 		Table treesTable = new Table();
 		treesNode.add(new Node(treesTable));
 		int treeIndex = 1;
@@ -855,7 +857,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Boosts
 		Node boostsNode = new Node(new Label("Boosts", this.skin));
-		objectsTree.add(boostsNode);
+		categories.add(boostsNode);
 		Table boostsTable = new Table();
 		boostsNode.add(new Node(boostsTable));
 		int boostIndex = 1;
@@ -868,7 +870,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Fences
 		Node fencesNode = new Node(new Label("Fences", this.skin));
-		objectsTree.add(fencesNode);
+		categories.add(fencesNode);
 		Table fencesTable = new Table();
 		fencesNode.add(new Node(fencesTable));
 		int fenceIndex = 1;
@@ -881,7 +883,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Houses
 		Node housesNode = new Node(new Label("Houses", this.skin));
-		objectsTree.add(housesNode);
+		categories.add(housesNode);
 		Table housesTable = new Table();
 		housesNode.add(new Node(housesTable));
 		int houseIndex = 1;
@@ -894,7 +896,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Parking cars
 		Node parkingCarsNode = new Node(new Label("Parking Cars", this.skin));
-		objectsTree.add(parkingCarsNode);
+		categories.add(parkingCarsNode);
 		Table parkingCarsTable = new Table();
 		parkingCarsNode.add(new Node(parkingCarsTable));
 		int parkingCarIndex = 1;
@@ -908,7 +910,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Walls
 		Node wallsNode = new Node(new Label("Walls", this.skin));
-		objectsTree.add(wallsNode);
+		categories.add(wallsNode);
 		Table wallsTable = new Table();
 		wallsNode.add(new Node(wallsTable));
 		int wallIndex = 1;
@@ -921,7 +923,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Hills
 		Node hillsNode = new Node(new Label("Hills", this.skin));
-		objectsTree.add(hillsNode);
+		categories.add(hillsNode);
 		Table hillsTable = new Table();
 		hillsNode.add(new Node(hillsTable));
 		int hillIndex = 1;
@@ -934,7 +936,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Tornados
 		Node tornadosNode = new Node(new Label("Tornados", this.skin));
-		objectsTree.add(tornadosNode);
+		categories.add(tornadosNode);
 		Table tornadosTable = new Table();
 		tornadosNode.add(new Node(tornadosTable));
 		int tornadoIndex = 1;
@@ -947,7 +949,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Racing cars
 		Node racingCarsNode = new Node(new Label("Racing Cars", this.skin));
-		objectsTree.add(racingCarsNode);
+		categories.add(racingCarsNode);
 		Table racingCarsTable = new Table();
 		racingCarsNode.add(new Node(racingCarsTable));
 		int racingCarIndex = 1;
@@ -960,7 +962,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Pneu
 		Node pneuNode = new Node(new Label("Pneu", this.skin));
-		objectsTree.add(pneuNode);
+		categories.add(pneuNode);
 		Table pneuTable = new Table();
 		pneuNode.add(new Node(pneuTable));
 		int pneuIndex = 1;
@@ -973,7 +975,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Universal
 		Node universalNode = new Node(new Label("Universal", this.skin));
-		objectsTree.add(universalNode);
+		categories.add(universalNode);
 		Table universalTable = new Table();
 		universalNode.add(new Node(universalTable));
 		int universalIndex = 1;
@@ -986,7 +988,7 @@ public final class EditorScreen extends BaseScreenEditor {
 
 		// Arrows
 		Node arrowsNode = new Node(new Label("Arrows", this.skin));
-		objectsTree.add(arrowsNode);
+		categories.add(arrowsNode);
 		Table arrowsTable = new Table();
 		arrowsNode.add(new Node(arrowsTable));
 		int arrowsIndex = 1;
@@ -996,10 +998,25 @@ public final class EditorScreen extends BaseScreenEditor {
 			createGameObjectButtons(arrowsTable, trd, TypeOfObjectToDrag.ARROW, arrowsIndex, maxColumnSize);
 			++arrowsIndex;
 		}
-
+		
+	    Node [] sortedNodes = sortByCategories(categories.toArray(new Node[categories.size()]));
+	    for(Node node: sortedNodes)
+	       	objectsTree.add(node);
+	    	    
 		ScrollPane objectsScrollPane = new ScrollPane(objectsTree, this.skin);
 		objectsScrollPane.setFlickScroll(false);
 		return objectsScrollPane;
+	}
+	
+	private Node[] sortByCategories(Node [] categories)
+	{
+		Arrays.sort(categories, new Comparator<Node>() {
+			@Override
+			public int compare(Node o1, Node o2) {
+				return o1.getActor().toString().compareToIgnoreCase(o2.getActor().toString());
+			}
+		});
+		return categories;
 	}
 
 	private void createGameObjectButtons(Table table, TextureRegionDrawable trd, TypeOfObjectToDrag typeOfClass,
