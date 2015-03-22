@@ -63,7 +63,6 @@ public abstract class SelectScreenBase extends BaseScreen {
 		this.pagesCount = buttons.length % this.buttonsPerPage == 0 ? buttons.length / this.buttonsPerPage
 				: (buttons.length / this.buttonsPerPage) + 1;
 		this.actualPage = Math.min(buttonIndex / this.buttonsPerPage, this.pagesCount - 1);
-		
 
 		this.buttons = buttons;
 		for (int i = 0; i < buttons.length; i++) {
@@ -251,13 +250,14 @@ public abstract class SelectScreenBase extends BaseScreen {
 	public void render(float delta) {
 		updateAnimation(delta);
 		super.render(delta);
-		if (Debug.DEBUG && Debug.drawSelectScreenButtonsArea) {
-			Vector2[] points = { new Vector2(buttonsMinXPosition, buttonsMaxYPosition),
-					new Vector2(buttonsMaxXPosition, buttonsMaxYPosition),
-					new Vector2(buttonsMaxXPosition, buttonsMinYPosition),
-					new Vector2(buttonsMinXPosition, buttonsMinYPosition) };
-			Debug.drawPolygon(points, Color.RED, 2);
-		}
+		if (Debug.DEBUG)
+			if (Debug.drawSelectScreenButtonsArea) {
+				Vector2[] points = { new Vector2(buttonsMinXPosition, buttonsMaxYPosition),
+						new Vector2(buttonsMaxXPosition, buttonsMaxYPosition),
+						new Vector2(buttonsMaxXPosition, buttonsMinYPosition),
+						new Vector2(buttonsMinXPosition, buttonsMinYPosition) };
+				Debug.drawPolygon(points, Color.RED, 2);
+			}
 	}
 
 	private void startAnimation() {

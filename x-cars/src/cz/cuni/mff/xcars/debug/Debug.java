@@ -30,7 +30,7 @@ public final class Debug {
 	public static final boolean drawMaxTouchableArea = true;
 	// Area where buttons can be generated in SelectScreenBase typed screen
 	// (level selection, scenario selection)
-	public static final boolean drawSelectScreenButtonsArea = true;
+	public static final boolean drawSelectScreenButtonsArea = false;
 	// Debug logs while DistanceMap.CreateDistances (loading of map)
 	public static final boolean logDistanceMap = false;
 	// Debug of UI in editor
