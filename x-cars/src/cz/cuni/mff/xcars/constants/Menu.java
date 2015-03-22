@@ -99,7 +99,7 @@ public final class Menu {
 	public final float SCENARIO_SELECT_SCREEN_buttonsMinXPosition = 20;
 	public final float SCENARIO_SELECT_SCREEN_buttonsMinYPosition = 50;
 	public final float SCENARIO_SELECT_SCREEN_buttonsMaxYPosition = 450;
-	public final int SCENARIO_SELECT_SCREEN_buttonsXOffset = 120;
-	public final int SCENARIO_SELECT_SCREEN_buttonsYOffset = 120;
+	public final int SCENARIO_SELECT_SCREEN_buttonsXOffset = 15;
+	public final int SCENARIO_SELECT_SCREEN_buttonsYOffset = 50;
 
 }

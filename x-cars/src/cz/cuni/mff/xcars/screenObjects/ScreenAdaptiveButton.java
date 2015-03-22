@@ -7,22 +7,27 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 public abstract class ScreenAdaptiveButton extends Button {
 
-	public ScreenAdaptiveButton(TextureRegion image, TextureRegion imagePressed) {
-		super(new ScreenAdaptiveButtonStyle(image, imagePressed));
+	public ScreenAdaptiveButton(TextureRegion image, TextureRegion imagePressed, TextureRegion disabled,
+			boolean hasListener) {
+		super(new ScreenAdaptiveButtonStyle(image, imagePressed, disabled));
 
-		this.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event, float x, float y,
-					int pointer, int button) {
-				return true;
-			}
-
-			public void touchUp(InputEvent event, float x, float y,
-					int pointer, int button) {
-				if (x >= 0 && x < getWidth() && y >= 0 && y < getHeight()) {
-					action();
+		if (hasListener) {
+			this.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+					return true;
 				}
-			}
-		});
+
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+					if (x >= 0 && x < getWidth() && y >= 0 && y < getHeight()) {
+						action();
+					}
+				}
+			});
+		}
+	}
+
+	public ScreenAdaptiveButton(TextureRegion image, TextureRegion imagePressed) {
+		this(image, imagePressed, null, true);
 	}
 
 	public void setStyle(TextureRegion image, TextureRegion imageHover) {

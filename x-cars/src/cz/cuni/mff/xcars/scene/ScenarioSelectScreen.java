@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import cz.cuni.mff.xcars.Scenario;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
-import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveTextButton;
+import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveButton;
 
 public class ScenarioSelectScreen extends SelectScreenBase {
 	public ScenarioSelectScreen(final int levelIndex) {
@@ -33,15 +33,15 @@ public class ScenarioSelectScreen extends SelectScreenBase {
 
 		// Buttons
 		Vector<Scenario> scenarios = Xcars.availableLevels.scenarios;
-		ScreenAdaptiveTextButton[] buttons = new ScreenAdaptiveTextButton[scenarios.size()];
+		ScreenAdaptiveButton[] buttons = new ScreenAdaptiveButton[scenarios.size()];
 		for (int i = 0; i < scenarios.size(); ++i) {
 			final Scenario scenario = scenarios.get(i);
 			boolean isEnabled = Xcars.playedLevels.levels.containsKey(scenario.name);
-			ScreenAdaptiveTextButton scenarioButton = new ScreenAdaptiveTextButton(scenario.name,
+			ScreenAdaptiveButton scenarioButton = new ScreenAdaptiveButton(
 					Xcars.getInstance().assets.getGraphics(Constants.menu.SCENARIOS_FOLDER_NAME + "/" + scenario.name),
-					Xcars.getInstance().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY_HOVER),
-					Xcars.getInstance().assets.getGraphics(Constants.menu.BUTTON_MENU_DIFFICULTY),
-					Xcars.getInstance().assets.getLevelNumberFont(), isEnabled) {
+					Xcars.getInstance().assets.getGraphics(Constants.menu.SCENARIOS_FOLDER_NAME + "/" + scenario.name
+							+ "Hover"), Xcars.getInstance().assets.getGraphics(Constants.menu.SCENARIOS_FOLDER_NAME
+							+ "/" + scenario.name + "Locked"), isEnabled) {
 				@Override
 				public void action() {
 					if (!wasPanned) {

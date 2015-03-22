@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -18,7 +19,6 @@ import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.input.Input;
 import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveImage;
-import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveTextButton;
 
 public abstract class SelectScreenBase extends BaseScreen {
 	// Buttons bounds
@@ -53,12 +53,12 @@ public abstract class SelectScreenBase extends BaseScreen {
 	private boolean isAnimationInProgress = false;
 	private float flingVelocity;
 
-	private ScreenAdaptiveTextButton[] buttons;
+	private Button[] buttons;
 
 	Slider slider;
 	private boolean isSliderOperating = false;
 
-	protected void RegisterButtons(final int buttonIndex, ScreenAdaptiveTextButton[] buttons) {
+	protected void RegisterButtons(final int buttonIndex, Button[] buttons) {
 		this.buttonsPerPage = setButtonsCountsPerPage(buttons);
 		this.pagesCount = buttons.length % this.buttonsPerPage == 0 ? buttons.length / this.buttonsPerPage
 				: (buttons.length / this.buttonsPerPage) + 1;
@@ -83,7 +83,7 @@ public abstract class SelectScreenBase extends BaseScreen {
 	 * @param buttons
 	 * @return Total number of buttons
 	 */
-	private int setButtonsCountsPerPage(ScreenAdaptiveTextButton[] buttons) {
+	private int setButtonsCountsPerPage(Button[] buttons) {
 		float y = buttonsMaxYPosition - buttons[0].getHeight();
 		int attemp = 0;
 
