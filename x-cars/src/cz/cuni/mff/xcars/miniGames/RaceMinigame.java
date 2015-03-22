@@ -33,6 +33,7 @@ public final class RaceMinigame extends Minigame {
 	private String ENVIRONMENT_BACKGROUND_TEXTURE = Constants.minigames.ENVIRONMENT_BACKGROUND_TEXTURE;
 	private String ENVIRONMENT_FOREGROUND_TEXTURE = Constants.minigames.ENVIRONMENT_FOREGROUND_TEXTURE;
 	private float ENVIRONMENT_FOREGROUND_OFFSET = Constants.minigames.ENVIRONMENT_FOREGROUND_OFFSET;
+	private float ENVIRONMENT_BACKGROUND_OFFSET = Constants.minigames.ENVIRONMENT_BACKGROUND_OFFSET;
 
 	private static final float MIN_SPEED_ADDITION = Constants.minigames.MIN_SPEED_ADDITION;
 	private static final float MAX_SPEED_ADDITION = Constants.minigames.MAX_SPEED_ADDITION;
@@ -177,15 +178,14 @@ public final class RaceMinigame extends Minigame {
 	private void generateEnvironmentForeground() {
 		this.environmentForeground = new LinkedList<ScreenAdaptiveImage>();
 		TextureRegion foregroundTexture = Xcars.getInstance().assets.getGraphics(ENVIRONMENT_FOREGROUND_TEXTURE);
-		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET - foregroundTexture.getRegionHeight()
-				+ ENVIRONMENT_FOREGROUND_OFFSET;
+		float positionY = ENVIRONMENT_FOREGROUND_OFFSET;
 		generateDeque(this.environmentForeground, foregroundTexture, positionY, false);
 	}
 
 	private void generateEnvironmentBackground() {
 		this.environmentBackground = new LinkedList<ScreenAdaptiveImage>();
 		TextureRegion backgroundTexture = Xcars.getInstance().assets.getGraphics(ENVIRONMENT_BACKGROUND_TEXTURE);
-		float positionY = Constants.dialog.DIALOG_WORLD_Y_OFFSET + Constants.dialog.DIALOG_WORLD_HEIGHT;
+		float positionY = Constants.WORLD_HEIGHT - backgroundTexture.getRegionHeight() + ENVIRONMENT_BACKGROUND_OFFSET;
 		generateDeque(this.environmentBackground, backgroundTexture, positionY, true);
 	}
 
@@ -334,23 +334,6 @@ public final class RaceMinigame extends Minigame {
 		this.state = States.LEAVING_STATE;
 	}
 
-	@Override
-	public void draw(SpriteBatch batch) {
-		super.draw(batch);
-		batch.begin();
-		for (int i = 0; i < cars.length; i++) {
-			for (GameObject car : cars[i]) {
-				car.draw(batch);
-			}
-		}
-		this.car.draw(batch);
-		// Draws foreground manually to be up
-		for (ScreenAdaptiveImage foreground : environmentForeground) {
-			foreground.draw(batch, 1);
-		}
-		batch.end();
-	}
-
 	public enum States {
 		BEGINNING_STATE, DRIVING_STATE, LEAVING_STATE;
 	}
@@ -419,6 +402,28 @@ public final class RaceMinigame extends Minigame {
 	}
 
 	@Override
+	public void draw(SpriteBatch batch) {
+		super.draw(batch);
+		batch.begin();
+		for (int i = 0; i < cars.length; i++) {
+			for (GameObject car : cars[i]) {
+				car.draw(batch);
+			}
+		}
+		this.car.draw(batch);
+		// Draws foreground manually to be up
+		for (ScreenAdaptiveImage foreground : environmentForeground) {
+			foreground.draw(batch, 1);
+		}
+		batch.end();
+
+		// Redraw diagnostics because of foreground
+		if (Debug.DEBUG) {
+			DrawDiagnostics();
+		}
+	}
+
+	@Override
 	protected void drawBackGroundTexture(SpriteBatch batch) {
 		batch.begin();
 		this.backgroundTexture.draw(batch, 0, 0, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
@@ -433,16 +438,14 @@ public final class RaceMinigame extends Minigame {
 			super.DrawDiagnostics();
 
 			shapeRenderer.begin(ShapeType.Line);
-			float width = 2.f;
+			float width = 1.f;
 			shapeRenderer.setColor(0.5f, 0, 0, 1);
-
 			// Out of world
 			shapeRenderer.rectLine(0, Constants.dialog.DIALOG_WORLD_Y_OFFSET + Constants.dialog.DIALOG_WORLD_HEIGHT,
 					Constants.WORLD_WIDTH, Constants.dialog.DIALOG_WORLD_Y_OFFSET
 							+ Constants.dialog.DIALOG_WORLD_HEIGHT, width);
 			shapeRenderer.rectLine(0, Constants.dialog.DIALOG_WORLD_Y_OFFSET, Constants.WORLD_WIDTH,
 					Constants.dialog.DIALOG_WORLD_Y_OFFSET, width);
-
 			shapeRenderer.end();
 		}
 	}

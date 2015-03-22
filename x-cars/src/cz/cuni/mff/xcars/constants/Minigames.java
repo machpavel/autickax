@@ -125,7 +125,8 @@ public final class Minigames {
 	public final String RACE_MINIGAME_LINE_TEXTURE = "minigames/Race/roadLine";
 	public final String ENVIRONMENT_BACKGROUND_TEXTURE = "minigames/Race/environmentBackground";
 	public final String ENVIRONMENT_FOREGROUND_TEXTURE = "minigames/Race/environmentForeground";
-	public final float ENVIRONMENT_FOREGROUND_OFFSET = 20;
+	public final float ENVIRONMENT_FOREGROUND_OFFSET = -20;
+	public final float ENVIRONMENT_BACKGROUND_OFFSET = 20;
 	public final float MIN_SPEED_ADDITION = 100;
 	public final float MAX_SPEED_ADDITION = 300;
 	public final float MIN_CAR_DISTANCE = 100;
