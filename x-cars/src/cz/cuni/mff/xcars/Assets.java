@@ -96,7 +96,7 @@ public class Assets {
 		return retVal;
 	}
 
-	public TextureRegion getAnyGraphic(String name, TextureAtlas atlas, Map<String, TextureRegion> cacheMap) {
+	private TextureRegion getAnyGraphic(String name, TextureAtlas atlas, Map<String, TextureRegion> cacheMap) {
 		if (cacheMap.containsKey(name)) {
 			return cacheMap.get(name);
 		}
@@ -131,7 +131,7 @@ public class Assets {
 		return anyGraphicExists(name, this.graphicsAtlas, this.graphicsCacheMap);
 	}
 
-	public boolean anyGraphicExists(String name, TextureAtlas atlas, Map<String, TextureRegion> cacheMap) {
+	private boolean anyGraphicExists(String name, TextureAtlas atlas, Map<String, TextureRegion> cacheMap) {
 		if (cacheMap.containsKey(name)) {
 			return true;
 		}

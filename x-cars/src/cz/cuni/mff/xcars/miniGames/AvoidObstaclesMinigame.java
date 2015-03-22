@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
+import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.dialogs.MessageDialog;
@@ -47,9 +47,8 @@ public final class AvoidObstaclesMinigame extends Minigame {
 
 		setDifficulty(this.level.getDifficulty());
 
-		this.backgroundTexture = new NinePatchDrawable(
-				Xcars.getInstance().assets
-						.getNinePatch(Constants.minigames.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
+		this.backgroundTexture = new TextureRegionDrawable(
+				Xcars.getInstance().assets.getGraphics(Constants.minigames.AVOID_OBSTACLES_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Xcars.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(gameScreen, parent,

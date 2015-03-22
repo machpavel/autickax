@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.cuni.mff.xcars.Difficulty;
 import cz.cuni.mff.xcars.Xcars;
@@ -38,8 +38,8 @@ public final class RepairingMinigame extends Minigame {
 		super(screen, parent);
 		this.leavingDelay = Constants.minigames.REPAIRING_MINIGAME_LEAVING_DELAY;
 		setDifficulty(this.level.getDifficulty());
-		this.backgroundTexture = new NinePatchDrawable(
-				Xcars.getInstance().assets.getNinePatch(Constants.minigames.REPAIRING_MINIGAME_BACKGROUND_TEXTURE));
+		this.backgroundTexture = new TextureRegionDrawable(
+				Xcars.getInstance().assets.getGraphics(Constants.minigames.REPAIRING_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Xcars.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(screen, parent,

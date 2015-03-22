@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import cz.cuni.mff.xcars.Difficulty;
@@ -72,8 +71,8 @@ public final class RaceMinigame extends Minigame {
 
 		setDifficulty(this.level.getDifficulty());
 
-		this.backgroundTexture = new NinePatchDrawable(
-				Xcars.getInstance().assets.getNinePatch(Constants.minigames.RACE_MINIGAME_BACKGROUND_TEXTURE));
+		this.backgroundTexture = new TextureRegionDrawable(
+				Xcars.getInstance().assets.getGraphics(Constants.minigames.RACE_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Xcars.settings.isShowTooltips())
 			this.parent.setDialog(new MessageDialog(gameScreen, parent,

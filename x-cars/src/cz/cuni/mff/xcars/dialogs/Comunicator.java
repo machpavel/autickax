@@ -1,12 +1,7 @@
 package cz.cuni.mff.xcars.dialogs;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
@@ -19,8 +14,6 @@ import cz.cuni.mff.xcars.scene.ScreenInputListener;
 
 public abstract class Comunicator extends SubLevel {
 	protected ShapeRendererStretched shapeRenderer = new ShapeRendererStretched();
-	protected final Color backgroundColor = Constants.dialog.DIALOG_BACKGROUND_COLOR;
-	protected NinePatchDrawable backgroundTexture;
 	protected DialogAbstractStatus status;
 	protected SubLevel parent;
 
@@ -40,26 +33,9 @@ public abstract class Comunicator extends SubLevel {
 		stage.act(delta);
 	}
 
-	// Draws background texture
-	// It is separated because it can be rewritten by minigames (different size
-	// needed)
-	protected void drawBackGroundTexture(SpriteBatch batch) {
-		batch.begin();
-		this.backgroundTexture.draw(batch, Constants.dialog.DIALOG_WORLD_X_OFFSET,
-				Constants.dialog.DIALOG_WORLD_Y_OFFSET, Constants.dialog.DIALOG_WORLD_WIDTH,
-				Constants.dialog.DIALOG_WORLD_HEIGHT);
-		batch.end();
-	}
+	protected abstract void drawBackGroundTexture(SpriteBatch batch);
 
 	public void draw(SpriteBatch batch) {
-		// Draws transparent layer behind background
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-		shapeRenderer.begin(ShapeType.Filled);
-		shapeRenderer.setColor(backgroundColor);
-		shapeRenderer.rect(0, 0, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT);
-		shapeRenderer.end();
-		Gdx.gl.glDisable(GL20.GL_BLEND);
-
 		drawBackGroundTexture(batch);
 		stage.draw();
 

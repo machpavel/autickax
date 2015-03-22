@@ -2,10 +2,10 @@ package cz.cuni.mff.xcars.miniGames;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.Difficulty;
+import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.dialogs.MessageDialog;
 import cz.cuni.mff.xcars.exceptions.IllegalDifficultyException;
@@ -33,13 +33,12 @@ public final class BoostMinigame extends Minigame {
 	public BoostMinigame(GameScreen screen, SubLevel parent) {
 		super(screen, parent);
 		setDifficulty(this.level.getDifficulty());
-		this.backgroundTexture = new NinePatchDrawable(
-				Xcars.getInstance().assets
-						.getNinePatch(Constants.minigames.BOOST_MINIGAME_BACKGROUND_TEXTURE));
+		this.backgroundTexture = new TextureRegionDrawable(
+				Xcars.getInstance().assets.getGraphics(Constants.minigames.BOOST_MINIGAME_BACKGROUND_TEXTURE));
 
 		if (Xcars.settings.isShowTooltips())
-			this.parent.setDialog(new MessageDialog(screen, parent,
-					Constants.strings.TOOLTIP_MINIGAME_BOOST_WHAT_TO_DO));
+			this.parent
+					.setDialog(new MessageDialog(screen, parent, Constants.strings.TOOLTIP_MINIGAME_BOOST_WHAT_TO_DO));
 
 		createButtons();
 	}
@@ -51,16 +50,13 @@ public final class BoostMinigame extends Minigame {
 		Vector2 originPosition = null;
 		for (int row = 0; row < this.rowsCount; row++) {
 			for (int column = 0; column < this.columnCount; column++) {
-				BoostMinigameButton newWaitingButton = new BoostMinigameButton(
-						this.columnCount * row + column,
-						this,
+				BoostMinigameButton newWaitingButton = new BoostMinigameButton(this.columnCount * row + column, this,
 						Xcars.getInstance().assets
 								.getGraphics(Constants.minigames.BOOST_MINIGAME_WAITING_BUTTON_TEXTURE));
 				buttonsWaiting[this.columnCount * row + column] = newWaitingButton;
 				this.stage.addActor(newWaitingButton);
 
-				BoostMinigameButton newHighlightedButton = new BoostMinigameButton(
-						this.columnCount * row + column,
+				BoostMinigameButton newHighlightedButton = new BoostMinigameButton(this.columnCount * row + column,
 						this,
 						Xcars.getInstance().assets
 								.getGraphics(Constants.minigames.BOOST_MINIGAME_HIGHLIGHTED_BUTTON_TEXTURE));
@@ -69,15 +65,12 @@ public final class BoostMinigame extends Minigame {
 				this.stage.addActor(newHighlightedButton);
 
 				if (originPosition == null) {
-					originPosition = new Vector2(midPosition.x - newWaitingButton.getWidth()
-							* (float) columnCount / 2, midPosition.y - newWaitingButton.getHeight()
-							* (float) rowsCount / 2);
+					originPosition = new Vector2(midPosition.x - newWaitingButton.getWidth() * (float) columnCount / 2,
+							midPosition.y - newWaitingButton.getHeight() * (float) rowsCount / 2);
 				}
-				newHighlightedButton.setPosition(
-						originPosition.x + column * newWaitingButton.getWidth(), originPosition.y
-								+ row * newHighlightedButton.getHeight());
-				newWaitingButton.setPosition(newHighlightedButton.getX(),
-						newHighlightedButton.getY());
+				newHighlightedButton.setPosition(originPosition.x + column * newWaitingButton.getWidth(),
+						originPosition.y + row * newHighlightedButton.getHeight());
+				newWaitingButton.setPosition(newHighlightedButton.getX(), newHighlightedButton.getY());
 			}
 		}
 	}
