@@ -20,7 +20,7 @@ import cz.cuni.mff.xcars.scene.GameScreen;
 public final class SwitchingMinigame extends Minigame {
 
 	private static final float progressBarXPosition = 400;
-	private static final float progressBarYPosition = 420;
+	private static final float progressBarYPosition = 370;
 	private static final float progressStep = 5.f;
 
 	private static final float RESULT_WIN_VALUE = Constants.minigames.SWITCHING_MINIGAME_WIN_VALUE;
@@ -46,7 +46,6 @@ public final class SwitchingMinigame extends Minigame {
 
 	private void createProgressBar() {
 		SliderStyle style = new SliderStyle();
-		// TODO Figure out how to show the progress
 		style.background = new TextureRegionDrawable(
 				Xcars.getInstance().assets
 						.getGraphics(Constants.minigames.SWITCHING_MINIGAME_SLIDER_BACKGROUND_TEXTURE));
