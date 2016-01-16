@@ -26,8 +26,9 @@ public class TimeStatusBar extends Actor {
 
 	public TimeStatusBar(float timeLimit) {
 
-		bigfont.setScale(consts.BIG_FONT_SCALE);
-		smallfont.setScale(consts.SMALL_FONT_SCALE);
+		bigfont.getData().setScale(consts.BIG_FONT_SCALE);
+		smallfont.getData().setScale(consts.SMALL_FONT_SCALE);
+
 
 		this.timeLimit = timeLimit;
 

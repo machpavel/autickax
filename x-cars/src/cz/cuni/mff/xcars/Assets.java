@@ -194,28 +194,28 @@ public class Assets {
 		lightFontParameter.size = (int) (30 * Input.xStretchFactorInv);
 
 		this.timeIntFont = lightFontGenerator.generateFont(lightFontParameter);
-		this.timeIntFont.setScale(Input.xStretchFactor);
+		this.timeIntFont.getData().setScale(Input.xStretchFactor);
 
 		FreeTypeFontParameter dialogFontParameter = new FreeTypeFontParameter();
 		dialogFontParameter.size = (int) (30 * Input.xStretchFactorInv);
 
 		this.dialogFont = lightFontGenerator.generateFont(dialogFontParameter);
-		this.dialogFont.setScale(Input.xStretchFactor);
+		this.dialogFont.getData().setScale(Input.xStretchFactor);
 
 		FreeTypeFontParameter boldFontParameter = new FreeTypeFontParameter();
 		boldFontParameter.size = (int) (30 * Input.xStretchFactorInv);
 
 		this.menuFont = lightFontGenerator.generateFont(boldFontParameter);
-		this.menuFont.setScale(Input.xStretchFactor);
+		this.menuFont.getData().setScale(Input.xStretchFactor);
 
 		this.levelNumberFont = boldFontGenerator.generateFont(boldFontParameter);
-		this.levelNumberFont.setScale(Input.xStretchFactor);
+		this.levelNumberFont.getData().setScale(Input.xStretchFactor);
 
 		this.timeStringFont = lightFontGenerator.generateFont(boldFontParameter);
-		this.timeStringFont.setScale(Input.xStretchFactor);
+		this.timeStringFont.getData().setScale(Input.xStretchFactor);
 
 		this.finishDialogFont = lightFontGenerator.generateFont(boldFontParameter);
-		this.finishDialogFont.setScale(Input.xStretchFactor);
+		this.finishDialogFont.getData().setScale(Input.xStretchFactor);
 
 		lightFontGenerator.dispose();
 		boldFontGenerator.dispose();
