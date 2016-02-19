@@ -65,7 +65,8 @@ public class XcarsAndroid extends AndroidApplication {
 		boolean isOnline = isNetworkAvailable();
 		this.adsHandler.setIsOnline(isOnline);
 		Gdx.app.log("Ads", "Is online: " + isOnline);
-		startAdvertising(this.adView);
+		// TODO: uncomment
+		//startAdvertising(this.adView);
 	}
 
 	private AdView createAdView() {
