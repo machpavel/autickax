@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import cz.cuni.mff.xcars.PlayedLevel;
@@ -11,6 +12,7 @@ import cz.cuni.mff.xcars.Scenario;
 import cz.cuni.mff.xcars.Xcars;
 import cz.cuni.mff.xcars.constants.Constants;
 import cz.cuni.mff.xcars.constants.Menu;
+import cz.cuni.mff.xcars.menu.LevelButton;
 import cz.cuni.mff.xcars.screenObjects.ScreenAdaptiveTextButton;
 
 public class LevelSelectScreen extends SelectScreenBase {
@@ -61,35 +63,17 @@ public class LevelSelectScreen extends SelectScreenBase {
 	 */
 	private ScreenAdaptiveTextButton createButton(final int levelIndex, Vector<PlayedLevel> playedLevels,
 			final Scenario levelsSet) {
-
-		String buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
-		String buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
-
+		byte starsNumber = 0;
 		if (levelIndex < playedLevels.size()) {
-			switch (playedLevels.get(levelIndex).starsNumber) {
-			case 0:
-				buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR;
-				buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_NO_STAR_HOVER;
-				break;
-			case 1:
-				buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_ONE_STAR;
-				buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_ONE_STAR_HOVER;
-				break;
-			case 2:
-				buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_TWO_STARS;
-				buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_TWO_STARS_HOVER;
-				break;
-			case 3:
-				buttonTexture = Constants.menu.BUTTON_MENU_LEVEL_THREE_STARS;
-				buttonTextureHover = Constants.menu.BUTTON_MENU_LEVEL_THREE_STARS_HOVER;
-				break;
-			default:
-				throw new RuntimeException("Stars can't be more then three");
-			}
+			starsNumber = playedLevels.get(levelIndex).starsNumber;
 		}
+		
+		TextureRegion buttonTexture = LevelButton.getButtonTexture(starsNumber);
+		TextureRegion buttonTextureHover = LevelButton.getButtonHoverTexture(starsNumber);
+
 		ScreenAdaptiveTextButton levelButton = new ScreenAdaptiveTextButton(Integer.toString(levelIndex + 1),
-				Xcars.getInstance().assets.getGraphics(buttonTexture),
-				Xcars.getInstance().assets.getGraphics(buttonTextureHover),
+				buttonTexture,
+				buttonTextureHover,
 				Xcars.getInstance().assets.getGraphics(Constants.menu.BUTTON_MENU_LEVEL_DISABLED),
 				Xcars.getInstance().assets.getLevelNumberFont(), levelIndex < playedLevels.size()) {
 			@Override

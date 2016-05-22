@@ -50,14 +50,11 @@ public final class Menu {
 	public final String BUTTON_MENU_EXIT_HOVER = "menu/menuExitHover";
 
 	public final String BUTTON_MENU_LEVEL_DISABLED = "menu/menuLevelDisabled";
-	public final String BUTTON_MENU_LEVEL_NO_STAR = "menu/menuLevelNoStar";
-	public final String BUTTON_MENU_LEVEL_NO_STAR_HOVER = "menu/menuLevelNoStarHover";
-	public final String BUTTON_MENU_LEVEL_ONE_STAR = "menu/menuLevelOneStar";
-	public final String BUTTON_MENU_LEVEL_ONE_STAR_HOVER = "menu/menuLevelOneStarHover";
-	public final String BUTTON_MENU_LEVEL_TWO_STARS = "menu/menuLevelTwoStars";
-	public final String BUTTON_MENU_LEVEL_TWO_STARS_HOVER = "menu/menuLevelTwoStarsHover";
-	public final String BUTTON_MENU_LEVEL_THREE_STARS = "menu/menuLevelThreeStars";
-	public final String BUTTON_MENU_LEVEL_THREE_STARS_HOVER = "menu/menuLevelThreeStarsHover";
+	public final String BUTTON_MENU_LEVEL = "menu/menuLevel";
+	public final String BUTTON_MENU_LEVEL_HOVER = "menu/menuLevelHover";
+	public final String LEVEL_STAR_FULL = "menu/menuLevelStarFull";
+	public final String LEVEL_STAR_EMPTY = "menu/menuLevelStarEmpty";
+	
 	public final String SLIDER_MENU_LEVEL_BACKGROUND = "menu/menuSelectScreenProgressBar";
 	public final String SLIDER_MENU_LEVEL_KNOB = "menu/menuSelectScreenKnob";
 	public final String SLIDER_MENU_LEVEL_ANCHOR = "menu/menuSelectScreenPageAnchor";
