@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 
 import cz.cuni.mff.xcars.debug.Debug;
 import cz.cuni.mff.xcars.input.Input;
+import cz.cuni.mff.xcars.menu.LevelButton;
 import cz.cuni.mff.xcars.serialization.AvailableLevelsLoader;
 import cz.cuni.mff.xcars.sfx.SoundAndMusicManager;
 
@@ -65,6 +66,9 @@ public class Assets {
 		this.loadFonts();
 		this.loadSfx();
 		this.loadAvailableLevels();
+		
+		// TODO: consider level buttons preloading
+		
 		// loadLevels(); it has to be loaded manually after loading whole assets
 		// because levels uses these assets
 	}
@@ -167,6 +171,13 @@ public class Assets {
 			this.loadingGraphicsAtlas = null;
 		}
 		this.loadingGraphicsCacheMap = new HashMap<String, TextureRegion>();
+	}
+	
+	private void preLoadLevelButtons() {
+		for (byte i = 0; i < LevelButton.MAXIMAL_STARS_COUNT + 1; ++i) {
+			LevelButton.getButtonHoverTexture(i);
+			LevelButton.getButtonTexture(i);
+		}
 	}
 
 	private void loadGraphics() {
